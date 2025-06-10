@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" prefix="schema: http://schema.org/">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stetson LATAM</title>
+    <meta name="description" content="Stetson LATAM - Legendary Hats for Latin America and Central America">
+    <link rel="stylesheet" href="homepage.css">
+    <script defer src="homepage.js"></script>
+</head>
+
+<body typeof="schema:WebPage">
+    <nav class="main-nav">
+        <ul>
+            <li><a href="#hats">Hats</a></li>
+            <li><a href="#boots">Boots</a></li>
+            <li><a href="#mens">Mens</a></li>
+            <li><a href="#womens">Womens</a></li>
+            <li><a href="#accessories">Accessories</a></li>
+            <li><a href="#stories">Stories</a></li>
+        </ul>
+        <div class="cart-icon">
+            <a href="/cart.html">
+                <img src="/Images/cart.png"/>
+            </a>
+        </div>
+    </nav>
+    <header class="hero" style="background-image: url('img/andes-background.jpg');">
+        <div class="overlay">
+            <h1 property="schema:headline">Legendary Hats</h1>
+            <p property="schema:description">Crafted for Generations – Now in Latin America</p>
+            <a href="#shop" class="cta">Shop Now</a>
+        </div>
+    </header>
+
+    <section id="categories" class="categories" typeof="schema:OfferCatalog">
+        <h2 property="schema:name">Shop by Category</h2>
+        <div class="category-grid">
+            <article class="category-item" typeof="schema:Offer">
+                <img src="img/hats.jpg" alt="Hats">
+                <p property="schema:itemOffered">Hats</p>
+            </article>
+            <article class="category-item" typeof="schema:Offer">
+                <img src="img/caps.jpg" alt="Caps">
+                <p property="schema:itemOffered">Caps</p>
+            </article>
+            <article class="category-item" typeof="schema:Offer">
+                <img src="img/accessories.jpg" alt="Accessories">
+                <p property="schema:itemOffered">Accessories</p>
+            </article>
+        </div>
+    </section>
+
+    <section id="featured" class="featured" typeof="schema:ItemList">
+        <h2 property="schema:name">Featured Hats</h2>
+        <div class="hat-grid">
+            <article class="hat-item" typeof="schema:Product">
+                <img src="img/open-road.jpg" alt="Open Road Hat">
+                <p property="schema:name">Open Road</p>
+            </article>
+            <article class="hat-item" typeof="schema:Product">
+                <img src="img/bridger.jpg" alt="Bridger Hat">
+                <p property="schema:name">Bridger</p>
+            </article>
+            <article class="hat-item" typeof="schema:Product">
+                <img src="img/nantucket.jpg" alt="Nantucket Hat">
+                <p property="schema:name">Nantucket</p>
+            </article>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Stetson LATAM. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>
