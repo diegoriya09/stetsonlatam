@@ -6,39 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stetson LATAM</title>
     <meta name="description" content="Stetson LATAM - Legendary Hats for Latin America and Central America">
-    <link rel="stylesheet" href="index.css">
-    <script defer src="index.js"></script>
+    <link rel="stylesheet" href="styles/index.css">
+    <script defer src="js/index.js"></script>
 </head>
-
-<!-- Modal para login/registro -->
-<div id="user-modal" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-
-    <!-- Formulario de inicio de sesión -->
-    <div id="login-form" class="form-section">
-      <h2>Iniciar sesión</h2>
-      <form>
-        <input type="email" placeholder="Correo electrónico" required />
-        <input type="password" placeholder="Contraseña" required />
-        <button type="submit">Entrar</button>
-      </form>
-      <p>¿No tienes cuenta? <a href="#" id="switch-to-register">Regístrate</a></p>
-    </div>
-
-    <!-- Formulario de registro -->
-    <div id="register-form" class="form-section" style="display: none;">
-      <h2>Crear cuenta</h2>
-      <form>
-        <input type="text" placeholder="Nombre completo" required />
-        <input type="email" placeholder="Correo electrónico" required />
-        <input type="password" placeholder="Contraseña" required />
-        <button type="submit">Registrarse</button>
-      </form>
-      <p>¿Ya tienes cuenta? <a href="#" id="switch-to-login">Inicia sesión</a></p>
-    </div>
-  </div>
-</div>
 
 
 <body typeof="schema:WebPage">
@@ -67,6 +37,28 @@
             <a href="#"><img src="/img/cart.png" alt="Cart" class="icon" /></a>
         </div>
     </nav>
+    <!-- Modal para login/registro -->
+    <div id="user-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+
+            <!-- Formulario de inicio de sesión -->
+            <form id="login-form-element" action="php/login.php" method="POST">
+                <input type="email" name="username" id="login-email" placeholder="Correo electrónico" required />
+                <input type="password" name="password" id="login-password" placeholder="Contraseña" required />
+                <button type="submit">Entrar</button>
+            </form>
+            <!-- Formulario de registro -->
+            <form id="registerForm" action="php/register.php" method="POST">
+                <input type="text" name="username" id="name" placeholder="Nombre completo" required />
+                <input type="email" name="email" id="email" placeholder="Correo electrónico" required />
+                <input type="password" name="password" id="password" placeholder="Contraseña" required />
+                <button type="submit">Registrarse</button>
+            </form>
+
+
+        </div>
+    </div>
     <header class="hero" style="background-image: url('img/andes-background.jpg');">
         <div class="overlay">
             <h1 property="schema:headline">Legendary Hats</h1>
