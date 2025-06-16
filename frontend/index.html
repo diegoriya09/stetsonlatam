@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" prefix="schema: http://schema.org/">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stetson LATAM</title>
+    <meta name="description" content="Stetson LATAM - Legendary Hats for Latin America and Central America">
+    <link rel="stylesheet" href="index.css">
+    <script defer src="index.js"></script>
+</head>
+
+<!-- Modal para login/registro -->
+<div id="user-modal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+
+    <!-- Formulario de inicio de sesión -->
+    <div id="login-form" class="form-section">
+      <h2>Iniciar sesión</h2>
+      <form>
+        <input type="email" placeholder="Correo electrónico" required />
+        <input type="password" placeholder="Contraseña" required />
+        <button type="submit">Entrar</button>
+      </form>
+      <p>¿No tienes cuenta? <a href="#" id="switch-to-register">Regístrate</a></p>
+    </div>
+
+    <!-- Formulario de registro -->
+    <div id="register-form" class="form-section" style="display: none;">
+      <h2>Crear cuenta</h2>
+      <form>
+        <input type="text" placeholder="Nombre completo" required />
+        <input type="email" placeholder="Correo electrónico" required />
+        <input type="password" placeholder="Contraseña" required />
+        <button type="submit">Registrarse</button>
+      </form>
+      <p>¿Ya tienes cuenta? <a href="#" id="switch-to-login">Inicia sesión</a></p>
+    </div>
+  </div>
+</div>
+
+
+<body typeof="schema:WebPage">
+    <nav class="main-nav">
+        <!-- Puedes agregar el logo aquí si deseas -->
+        <div class="nav-left">
+            <a href="#">
+                <img src="/img/logo.png" alt="Stetson Logo" class="logo" />
+            </a>
+        </div>
+
+        <!-- Enlaces centrados -->
+        <ul class="nav-center">
+            <li><a href="#hats">Hats</a></li>
+            <li><a href="#boots">Boots</a></li>
+            <li><a href="#mens">Mens</a></li>
+            <li><a href="#womens">Womens</a></li>
+            <li><a href="#accessories">Accessories</a></li>
+            <li><a href="#stories">Stories</a></li>
+        </ul>
+
+        <!-- Íconos a la derecha -->
+        <div class="nav-right">
+            <a href="#"><img src="/img/user.png" alt="User" class="icon" /></a>
+            <a href="#"><img src="/img/search.png" alt="Search" class="icon" /></a>
+            <a href="#"><img src="/img/cart.png" alt="Cart" class="icon" /></a>
+        </div>
+    </nav>
+    <header class="hero" style="background-image: url('img/andes-background.jpg');">
+        <div class="overlay">
+            <h1 property="schema:headline">Legendary Hats</h1>
+            <p property="schema:description">Crafted for Generations – Now in Latin America</p>
+            <a href="#shop" class="cta">Shop Now</a>
+        </div>
+    </header>
+
+    <section id="categories" class="categories" typeof="schema:OfferCatalog">
+        <h2 property="schema:name">Shop by Category</h2>
+        <div class="category-grid">
+            <article class="category-item" typeof="schema:Offer">
+                <img src="img/hats.jpg" alt="Hats">
+                <p property="schema:itemOffered">Hats</p>
+            </article>
+            <article class="category-item" typeof="schema:Offer">
+                <img src="img/caps.jpg" alt="Caps">
+                <p property="schema:itemOffered">Caps</p>
+            </article>
+            <article class="category-item" typeof="schema:Offer">
+                <img src="img/accessories.jpg" alt="Accessories">
+                <p property="schema:itemOffered">Accessories</p>
+            </article>
+        </div>
+    </section>
+
+    <section id="featured" class="featured" typeof="schema:ItemList">
+        <h2 property="schema:name">Featured Hats</h2>
+        <div class="hat-grid">
+            <article class="hat-item" typeof="schema:Product">
+                <img src="img/open-road.jpg" alt="Open Road Hat">
+                <p property="schema:name">Open Road</p>
+            </article>
+            <article class="hat-item" typeof="schema:Product">
+                <img src="img/bridger.jpg" alt="Bridger Hat">
+                <p property="schema:name">Bridger</p>
+            </article>
+            <article class="hat-item" typeof="schema:Product">
+                <img src="img/nantucket.jpg" alt="Nantucket Hat">
+                <p property="schema:name">Nantucket</p>
+            </article>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Stetson LATAM. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>
