@@ -1,3 +1,20 @@
+document.querySelector('#registerForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const name = document.querySelector('#name').value;
+  const email = document.querySelector('#email').value;
+  const password = document.querySelector('#password').value;
+
+  const res = await fetch('http://localhost:3001/api/auth/register', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name, email, password })
+  });
+
+  const data = await res.json();
+  alert(data.message);
+});
+
 document.addEventListener('DOMContentLoaded', function () {
   const cta = document.querySelector('.cta');
   if (cta) {
