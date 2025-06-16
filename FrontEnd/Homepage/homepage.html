@@ -12,7 +12,15 @@
 
 <body typeof="schema:WebPage">
     <nav class="main-nav">
-        <ul>
+        <!-- Puedes agregar el logo aquí si deseas -->
+        <div class="nav-left">
+            <a href="#">
+                <img src="/Images/logo.png" alt="Stetson Logo" class="logo" />
+            </a>
+        </div>
+
+        <!-- Enlaces centrados -->
+        <ul class="nav-center">
             <li><a href="#hats">Hats</a></li>
             <li><a href="#boots">Boots</a></li>
             <li><a href="#mens">Mens</a></li>
@@ -20,10 +28,12 @@
             <li><a href="#accessories">Accessories</a></li>
             <li><a href="#stories">Stories</a></li>
         </ul>
-        <div class="cart-icon">
-            <a href="/cart.html">
-                <img src="/Images/cart.png"/>
-            </a>
+
+        <!-- Íconos a la derecha -->
+        <div class="nav-right">
+            <a href="#"><img src="/Images/user.png" alt="User" class="icon" /></a>
+            <a href="#"><img src="/Images/search.png" alt="Search" class="icon" /></a>
+            <a href="#"><img src="/Images/cart.png" alt="Cart" class="icon" /></a>
         </div>
     </nav>
     <header class="hero" style="background-image: url('img/andes-background.jpg');">

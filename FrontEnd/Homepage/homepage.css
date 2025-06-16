@@ -5,32 +5,37 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #fdfaf7;
   color: #222;
+  overflow-x: hidden;
 }
 
 nav.main-nav {
-  
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   background-color: #bdbdbd;
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 1000;
-  padding: 1rem 0;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  padding: 0.8rem 2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-nav.main-nav ul {
+.nav-left img.logo {
+  height: 35px;
+}
+
+.nav-center {
   display: flex;
-  justify-content: center;
   list-style: none;
   margin: 0;
   padding: 0;
+  gap: 20px;
+  justify-content: center;
+  flex: 1;
 }
 
-nav.main-nav ul li {
-  margin: 0 20px;
-}
-
-nav.main-nav ul li a {
+.nav-center li a {
   text-decoration: none;
   font-weight: bold;
   color: #111;
@@ -38,9 +43,16 @@ nav.main-nav ul li a {
   font-size: 0.9rem;
 }
 
-.cart-icon img {
-  width: 24px;
-  height: 24px;
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding-right: 60px;
+}
+
+.nav-right .icon {
+  width: 22px;
+  height: 22px;
   cursor: pointer;
 }
 
@@ -56,7 +68,7 @@ nav.main-nav ul li a {
 }
 
 .overlay {
-  background: rgba(0,0,0,0.4);
+  background: rgba(0, 0, 0, 0.4);
   padding: 2rem;
   color: white;
   text-align: center;
@@ -81,12 +93,14 @@ nav.main-nav ul li a {
   font-weight: bold;
 }
 
-.categories, .featured {
+.categories,
+.featured {
   padding: 4rem 2rem;
   text-align: center;
 }
 
-.category-grid, .hat-grid {
+.category-grid,
+.hat-grid {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -94,11 +108,13 @@ nav.main-nav ul li a {
   margin-top: 2rem;
 }
 
-.category-item, .hat-item {
+.category-item,
+.hat-item {
   width: 200px;
 }
 
-.category-item img, .hat-item img {
+.category-item img,
+.hat-item img {
   width: 100%;
   border-radius: 10px;
 }
