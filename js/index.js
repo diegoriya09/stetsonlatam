@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const email = registerForm.querySelector('input[name="email"]').value;
       const password = registerForm.querySelector('input[name="password"]').value;
 
-      if (!username || !email || !password) {
+      if (!name || !email || !password) {
         alert("Por favor, completa todos los campos.");
         return;
       }
