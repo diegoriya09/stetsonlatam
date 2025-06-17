@@ -11,13 +11,13 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 require 'conexion.php';
 
-$username = $_POST['username'];
+$name = $_POST['name'];
 $email = $_POST['email'];
 $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-$sql = "INSERT INTO usuarios (username, email, password) VALUES (?, ?, ?)";
+$sql = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("sss", $username, $email, $password);
+$stmt->bind_param("sss", $name, $email, $password);
 
 if ($stmt->execute()) {
     echo "<script>alert('Registro exitoso'); window.location.href = '/';</script>";

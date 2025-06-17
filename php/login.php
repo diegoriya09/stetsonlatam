@@ -1,12 +1,12 @@
 <?php
 require 'conexion.php';
 
-$username = $_POST['username'];
+$name = $_POST['name'];
 $password = $_POST['password'];
 
-$sql = "SELECT password FROM usuarios WHERE email = ?";
+$sql = "SELECT password FROM users WHERE email = ?";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("s", $username);
+$stmt->bind_param("s", $name);
 $stmt->execute();
 $stmt->store_result();
 
