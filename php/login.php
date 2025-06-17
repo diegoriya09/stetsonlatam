@@ -31,7 +31,7 @@ if ($stmt->num_rows > 0) {
             "iss" => "stetsonlatam.com",
             "aud" => "stetsonlatam.com",
             "iat" => time(),
-            "exp" => time() + 3600,
+            "exp" => time() + 3600, //1 hour expiration
             "data" => [
                 "id" => $user_id,
                 "email" => $email
@@ -49,4 +49,6 @@ if ($stmt->num_rows > 0) {
     http_response_code(404);
     echo json_encode(["error" => "Usuario no encontrado"]);
 }
+echo json_encode(['token' => $jwt]);
+exit;
 ?>

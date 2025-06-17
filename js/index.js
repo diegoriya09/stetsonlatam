@@ -93,4 +93,22 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
   }
+
+  const logoutBtn = document.getElementById('logout-btn');
+
+  if (localStorage.getItem('jwt')) {
+    logoutBtn.style.display = 'inline-block';
+  }
+
+  logoutBtn.addEventListener('click', () => {
+    localStorage.removeItem('jwt');
+    Swal.fire({
+      title: 'Sesión cerrada',
+      icon: 'info',
+      confirmButtonText: 'OK'
+    }).then(() => {
+      location.reload();
+    });
+  });
+
 });

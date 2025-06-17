@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
       e.preventDefault();
       const formData = new FormData(loginForm);
 
-      const response = await fetch('php/login.php', {
+      const response = await fetch('/php/login.php', {
         method: 'POST',
         body: formData,
       });
@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (result.token) {
         localStorage.setItem('jwt', result.token);
-        Swal.fire({
+        Swal.fire({ 
           title: 'Bienvenido',
           text: 'Inicio de sesión exitoso',
           icon: 'success',
