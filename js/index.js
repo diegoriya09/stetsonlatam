@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
     registerForm.addEventListener("submit", function (e) {
       e.preventDefault();
 
-      const username = registerForm.querySelector('input[name="username"]').value;
+      const name = registerForm.querySelector('input[name="name"]').value;
       const email = registerForm.querySelector('input[name="email"]').value;
       const password = registerForm.querySelector('input[name="password"]').value;
 
@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
       fetch("php/register.php", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams({ username, email, password })
+        body: new URLSearchParams({ name, email, password })
       })
         .then(res => res.json())
         .then(data => {
