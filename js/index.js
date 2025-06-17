@@ -93,17 +93,4 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
   }
-
-  // Validar el formulario de login antes de enviar
-  if (loginForm) {
-    loginForm.addEventListener("submit", function (e) {
-      const email = loginForm.querySelector('input[name="email"]');
-      const password = loginForm.querySelector('input[name="password"]');
-
-      if (!email || !password || !email.value || !password.value) {
-        e.preventDefault();
-        alert("Por favor, completa todos los campos.");
-      }
-    });
-  }
 });
