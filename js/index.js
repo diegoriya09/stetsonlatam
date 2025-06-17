@@ -42,16 +42,35 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Validar el formulario de registro antes de enviar
+  document.addEventListener("DOMContentLoaded", () => {
+  const registerForm = document.getElementById("registerForm");
   if (registerForm) {
-    registerForm.addEventListener('submit', (e) => {
+    registerForm.addEventListener("submit", function (e) {
       const username = registerForm.querySelector('input[name="username"]');
       const email = registerForm.querySelector('input[name="email"]');
       const password = registerForm.querySelector('input[name="password"]');
 
       if (!username.value || !email.value || !password.value) {
-        e.preventDefault(); // No envía el formulario
-        alert('Por favor, completa todos los campos.');
+        e.preventDefault();
+        alert("Por favor, completa todos los campos.");
       }
     });
   }
+});
+  // Validar el formulario de login antes de enviar
+  document.addEventListener("DOMContentLoaded", () => {
+    const loginForm = document.getElementById("loginForm");
+    if (loginForm) {
+      loginForm.addEventListener("submit", function (e) {
+        const email = loginForm.querySelector('input[name="email"]');
+        const password = loginForm.querySelector('input[name="password"]');
+
+        if (!email.value || !password.value) {
+          e.preventDefault();
+          alert("Por favor, completa todos los campos.");
+        }
+      });
+    }
+  });
+
 });
