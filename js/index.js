@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const switchToRegister = document.getElementById('switch-to-register');
   const switchToLogin = document.getElementById('switch-to-login');
   const registerForm = document.getElementById('registerForm');
+  const loginForm = document.querySelector('#login-form form');
 
   // Abrir modal
   if (openModalBtn && modal) {
@@ -42,35 +43,29 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Validar el formulario de registro antes de enviar
-  document.addEventListener("DOMContentLoaded", () => {
-  const registerForm = document.getElementById("registerForm");
   if (registerForm) {
     registerForm.addEventListener("submit", function (e) {
       const username = registerForm.querySelector('input[name="username"]');
       const email = registerForm.querySelector('input[name="email"]');
       const password = registerForm.querySelector('input[name="password"]');
 
-      if (!username.value || !email.value || !password.value) {
+      if (!username || !email || !password || !username.value || !email.value || !password.value) {
         e.preventDefault();
         alert("Por favor, completa todos los campos.");
       }
     });
   }
-});
+
   // Validar el formulario de login antes de enviar
-  document.addEventListener("DOMContentLoaded", () => {
-    const loginForm = document.getElementById("loginForm");
-    if (loginForm) {
-      loginForm.addEventListener("submit", function (e) {
-        const email = loginForm.querySelector('input[name="email"]');
-        const password = loginForm.querySelector('input[name="password"]');
+  if (loginForm) {
+    loginForm.addEventListener("submit", function (e) {
+      const email = loginForm.querySelector('input[name="email"]');
+      const password = loginForm.querySelector('input[name="password"]');
 
-        if (!email.value || !password.value) {
-          e.preventDefault();
-          alert("Por favor, completa todos los campos.");
-        }
-      });
-    }
-  });
-
+      if (!email || !password || !email.value || !password.value) {
+        e.preventDefault();
+        alert("Por favor, completa todos los campos.");
+      }
+    });
+  }
 });
