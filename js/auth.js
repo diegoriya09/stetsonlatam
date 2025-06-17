@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
       e.preventDefault();
       const formData = new FormData(loginForm);
 
-      const response = await fetch('index.html', {
+      const response = await fetch('php/login.php', {
         method: 'POST',
         body: formData,
       });
@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
           icon: 'success',
           confirmButtonText: 'OK'
         }).then(() => {
-          window.location.href = "index.php";
+          window.location.href = "index.html"; // Redirigir al index
         });
       } else {
         Swal.fire("Error", result.error || "No se pudo iniciar sesión", "error");
