@@ -158,7 +158,7 @@ nav.main-nav {
   color: #333;
 }
 
-.story-grid {
+.card-grid {
   display: flex;
   flex-wrap: wrap;
   gap: 2rem;
@@ -166,31 +166,32 @@ nav.main-nav {
   margin-top: 2rem;
 }
 
-.story-card {
-  width: 300px;
+.card-item {
+  width: 250px;
   background-color: white;
   border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  text-align: left;
+  text-align: center;
+  transition: transform 0.2s ease;
 }
 
-.story-card img {
+.card-item img {
   width: 100%;
   height: 200px;
   object-fit: cover;
 }
 
-.story-card h3 {
-  margin: 1rem;
-  font-size: 1.2rem;
+.card-item h3 {
+  margin: 1rem 0;
+  font-size: 1.1rem;
+  color: #222;
 }
 
-.story-card p {
-  margin: 0 1rem 1rem;
-  font-size: 0.95rem;
-  color: #444;
+.card-item:hover {
+  transform: scale(1.03);
 }
+
 
 
 footer {
@@ -211,7 +212,7 @@ footer {
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: rgba(0,0,0,0.6);
+  background-color: rgba(0, 0, 0, 0.6);
 }
 
 .modal-content {
