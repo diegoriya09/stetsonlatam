@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stetson LATAM</title>
     <meta name="description" content="Stetson LATAM - Legendary Hats for Latin America and Central America">
-    <link rel="stylesheet" href="styles/index.css">
-    <script defer src="js/index.js"></script>
+    <link rel="stylesheet" href="/httpdocs/styles/index.css">
+    <script defer src="/httpdocs/js/index.js"></script>
 </head>
 <body typeof="schema:WebPage">
     <nav class="main-nav">
@@ -38,7 +38,7 @@
             <span class="close">&times;</span>
             <!-- Login Form -->
             <div id="login-form" class="form-section">
-                <form action="login.php" method="POST">
+                <form action="/httpdocs/login.php" method="POST">
                     <input type="email" name="email" placeholder="Correo electrónico" required />
                     <input type="password" name="password" placeholder="Contraseña" required />
                     <button type="submit">Entrar</button>
@@ -47,7 +47,7 @@
             </div>
             <!-- Register Form (oculto al inicio) -->
             <div id="register-form" class="form-section" style="display: none;">
-                <form id="registerForm" action="register.php" method="POST">
+                <form id="registerForm" action="/httpdocs/register.php" method="POST">
                     <input type="text" name="username" placeholder="Nombre completo" required />
                     <input type="email" name="email" placeholder="Correo electrónico" required />
                     <input type="password" name="password" placeholder="Contraseña" required />
