@@ -40,7 +40,6 @@ if ($stmt->num_rows > 0) {
 
         $jwt = JWT::encode($payload, $secret_key, 'HS256');
 
-        echo json_encode(["token" => $jwt]);
     } else {
         http_response_code(401);
         echo json_encode(["error" => "Contraseña incorrecta"]);
@@ -49,6 +48,6 @@ if ($stmt->num_rows > 0) {
     http_response_code(404);
     echo json_encode(["error" => "Usuario no encontrado"]);
 }
-echo json_encode(['token' => $jwt]);
+echo json_encode(["token" => $jwt]);
 exit;
 ?>
