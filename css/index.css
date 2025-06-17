@@ -261,3 +261,38 @@ footer {
 .form-section {
   transition: opacity 0.3s ease;
 }
+
+/* Botón Agregar al carrito */
+.add-to-cart {
+  margin-top: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: #f4a261;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+.add-to-cart:hover {
+  background-color: #e76f51;
+}
+
+/* Contador tipo notificación */
+.cart-notification {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: red;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 50%;
+  display: none;
+}
+
+/* Posición relativa para el contenedor del ícono del carrito */
+.cart-wrapper {
+  position: relative;
+}

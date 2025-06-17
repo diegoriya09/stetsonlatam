@@ -31,7 +31,10 @@
             <a href="#" id="open-user-modal"><img src="/img/user.png" alt="User" class="icon" /></a>
             <a id="logout-btn" style="display: none;"><img src="/img/logout.png" alt="Logout" class="icon"></a>
             <a href="#"><img src="/img/search.png" alt="Search" class="icon" /></a>
-            <a href="#"><img src="/img/cart.png" alt="Cart" class="icon" /></a>
+            <div class="cart-wrapper">
+                <a href="#"><img src="/img/cart.png" alt="Cart" class="icon" /></a>
+                <div id="cart-count" class="cart-notification">0</div>
+            </div>
         </div>
     </nav>
     <div class="carousel">
@@ -99,6 +102,7 @@
             <article class="card-item" typeof="schema:Product">
                 <img src="img/open-road.jpg" alt="Open Road Hat">
                 <h3 property="schema:name">Open Road</h3>
+                <button class="add-to-cart" data-product="Open Road">Agregar al carrito</button>
             </article>
             <article class="card-item" typeof="schema:Product">
                 <img src="img/bridger.jpg" alt="Bridger Hat">

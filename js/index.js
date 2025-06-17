@@ -110,6 +110,19 @@ document.addEventListener('DOMContentLoaded', () => {
       location.reload();
     });
   });
+
+  let cartCount = 0;
+  const cartCountElement = document.getElementById("cart-count");
+  const addToCartButtons = document.querySelectorAll(".add-to-cart");
+
+  addToCartButtons.forEach(button => {
+    button.addEventListener("click", () => {
+      cartCount++;
+      cartCountElement.textContent = cartCount;
+      cartCountElement.style.display = "block";
+    });
+  });
+
 });
 
 document.addEventListener('DOMContentLoaded', function () {
