@@ -20,10 +20,9 @@ $stmt = $conn->prepare($sql);
 $stmt->bind_param("sss", $name, $email, $password);
 
 if ($stmt->execute()) {
-    echo "<script>alert('Registro exitoso'); window.location.href = '/';</script>";
+    echo json_encode(['status' => 'success', 'message' => 'Registro exitoso']);
 } else {
-    echo "Error: " . $stmt->error;
+    echo json_encode(['status' => 'error', 'message' => 'Error: ' . $stmt->error]);
 }
-
 $conn->close();
 ?>

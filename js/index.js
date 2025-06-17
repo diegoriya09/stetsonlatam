@@ -45,14 +45,52 @@ document.addEventListener('DOMContentLoaded', () => {
   // Validar el formulario de registro antes de enviar
   if (registerForm) {
     registerForm.addEventListener("submit", function (e) {
-      const username = registerForm.querySelector('input[name="name"]');
-      const email = registerForm.querySelector('input[name="email"]');
-      const password = registerForm.querySelector('input[name="password"]');
+      e.preventDefault();
 
-      if (!username || !email || !password || !username.value || !email.value || !password.value) {
-        e.preventDefault();
+      const username = registerForm.querySelector('input[name="username"]').value;
+      const email = registerForm.querySelector('input[name="email"]').value;
+      const password = registerForm.querySelector('input[name="password"]').value;
+
+      if (!username || !email || !password) {
         alert("Por favor, completa todos los campos.");
+        return;
       }
+
+      // Enviar los datos por fetch
+      fetch("php/register.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({ username, email, password })
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.status === "success") {
+            // ✅ Aquí va Swal.fire
+            Swal.fire({
+              icon: 'success',
+              title: '¡Registro exitoso!',
+              text: 'Ahora puedes iniciar sesión',
+              confirmButtonText: 'Ir al login'
+            }).then(() => {
+              // ✅ Mostrar formulario de login
+              registerFormSection.style.display = 'none';
+              loginFormSection.style.display = 'block';
+            });
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: data.message || 'Hubo un error al registrar'
+            });
+          }
+        })
+        .catch(err => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error de red',
+            text: err.message
+          });
+        });
     });
   }
 
