@@ -47,10 +47,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // LOGOUT
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', () => {
-            localStorage.removeItem('jwt');
-            location.reload();
-        });
-    }
+    logoutBtn.addEventListener('click', () => {
+    Swal.fire({
+        title: 'Sesión cerrada',
+        text: 'Has cerrado sesión exitosamente',
+        icon: 'success',
+        showConfirmButton: false,
+        timer: 2000, // ⏳ duración de 2 segundos
+        timerProgressBar: true
+    }).then(() => {
+        localStorage.removeItem('jwt');
+        location.reload();
+    });
+});
+
 });
