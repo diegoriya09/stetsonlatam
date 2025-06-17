@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Validar el formulario de registro antes de enviar
   if (registerForm) {
     registerForm.addEventListener("submit", function (e) {
-      const username = registerForm.querySelector('input[name="username"]');
+      const username = registerForm.querySelector('input[name="name"]');
       const email = registerForm.querySelector('input[name="email"]');
       const password = registerForm.querySelector('input[name="password"]');
 
