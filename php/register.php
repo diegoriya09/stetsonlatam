@@ -20,9 +20,10 @@ $stmt = $conn->prepare($sql);
 $stmt->bind_param("sss", $username, $email, $password);
 
 if ($stmt->execute()) {
-    echo "Registro exitoso";
+    echo "<script>alert('Registro exitoso'); window.location.href = '/';</script>";
 } else {
     echo "Error: " . $stmt->error;
 }
+
 $conn->close();
 ?>

@@ -1,50 +1,57 @@
-document.addEventListener("DOMContentLoaded", function () {
-  const openModalBtn = document.getElementById("open-user-modal");
-  const modal = document.getElementById("user-modal");
-  const closeModalBtn = modal.querySelector(".close");
-
-  const loginForm = document.getElementById("login-form");
-  const registerForm = document.getElementById("register-form");
-  const switchToRegister = document.getElementById("switch-to-register");
-  const switchToLogin = document.getElementById("switch-to-login");
+document.addEventListener('DOMContentLoaded', () => {
+  const modal = document.getElementById('user-modal');
+  const openModalBtn = document.getElementById('open-user-modal');
+  const closeModalBtn = document.querySelector('.close');
+  const loginFormSection = document.getElementById('login-form');
+  const registerFormSection = document.getElementById('register-form');
+  const switchToRegister = document.getElementById('switch-to-register');
+  const switchToLogin = document.getElementById('switch-to-login');
+  const registerForm = document.getElementById('registerForm');
 
   // Abrir modal
-  openModalBtn.addEventListener("click", function (e) {
-    e.preventDefault();
-    modal.style.display = "block";
-    loginForm.style.display = "block";
-    registerForm.style.display = "none";
-  });
+  if (openModalBtn && modal) {
+    openModalBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      modal.style.display = 'block';
+    });
+  }
 
   // Cerrar modal
-  closeModalBtn.addEventListener("click", function () {
-    modal.style.display = "none";
-  });
-
-  // Cerrar modal si se hace clic fuera del contenido
-  window.addEventListener("click", function (e) {
-    if (e.target === modal) {
-      modal.style.display = "none";
-    }
-  });
+  if (closeModalBtn && modal) {
+    closeModalBtn.addEventListener('click', () => {
+      modal.style.display = 'none';
+    });
+  }
 
   // Cambiar a formulario de registro
-  if (switchToRegister) {
-    switchToRegister.addEventListener("click", function (e) {
+  if (switchToRegister && loginFormSection && registerFormSection) {
+    switchToRegister.addEventListener('click', (e) => {
       e.preventDefault();
-      loginForm.style.display = "none";
-      registerForm.style.display = "block";
+      loginFormSection.style.display = 'none';
+      registerFormSection.style.display = 'block';
     });
   }
 
   // Cambiar a formulario de login
-  if (switchToLogin) {
-    switchToLogin.addEventListener("click", function (e) {
+  if (switchToLogin && loginFormSection && registerFormSection) {
+    switchToLogin.addEventListener('click', (e) => {
       e.preventDefault();
-      registerForm.style.display = "none";
-      loginForm.style.display = "block";
+      registerFormSection.style.display = 'none';
+      loginFormSection.style.display = 'block';
+    });
+  }
+
+  // Validar el formulario de registro antes de enviar
+  if (registerForm) {
+    registerForm.addEventListener('submit', (e) => {
+      const username = registerForm.querySelector('input[name="username"]');
+      const email = registerForm.querySelector('input[name="email"]');
+      const password = registerForm.querySelector('input[name="password"]');
+
+      if (!username.value || !email.value || !password.value) {
+        e.preventDefault(); // No envía el formulario
+        alert('Por favor, completa todos los campos.');
+      }
     });
   }
 });
-
-
