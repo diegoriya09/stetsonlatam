@@ -131,7 +131,7 @@ footer {
 .modal {
   display: none;
   position: fixed;
-  z-index: 2000;
+  z-index: 999;
   left: 0;
   top: 0;
   width: 100%;
@@ -166,6 +166,15 @@ footer {
   border-radius: 4px;
   font-weight: bold;
   cursor: pointer;
+}
+
+.modal-content form {
+  margin-bottom: 1rem;
+}
+
+.modal-content p {
+  text-align: center;
+  margin-top: 0.5rem;
 }
 
 .close {

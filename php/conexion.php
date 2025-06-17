@@ -1,10 +1,10 @@
 <?php
-$host = "localhost";
-$usuario = "root";
-$contrasena = "Dinalsom1977";
-$basedatos = "stetsonlatamDB";
+$host = 'localhost';
+$user = 'root';
+$pass = 'Dinalsom1977';
+$dbname = 'stetsonlatamdb';
 
-$conn = new mysqli($host, $usuario, $contrasena, $basedatos);
+$conn = new mysqli($host, $user, $pass, $dbname);
 
 if ($conn->connect_error) {
     die("Conexión fallida: " . $conn->connect_error);

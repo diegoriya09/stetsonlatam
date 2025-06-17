@@ -1,53 +1,50 @@
-document.querySelector('#registerForm').addEventListener('submit', async (e) => {
-  e.preventDefault();
+document.addEventListener("DOMContentLoaded", function () {
+  const openModalBtn = document.getElementById("open-user-modal");
+  const modal = document.getElementById("user-modal");
+  const closeModalBtn = modal.querySelector(".close");
 
-  const name = document.querySelector('#name').value;
-  const email = document.querySelector('#email').value;
-  const password = document.querySelector('#password').value;
+  const loginForm = document.getElementById("login-form");
+  const registerForm = document.getElementById("register-form");
+  const switchToRegister = document.getElementById("switch-to-register");
+  const switchToLogin = document.getElementById("switch-to-login");
 
-  const res = await fetch('http://localhost:3001/api/auth/register', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name, email, password })
+  // Abrir modal
+  openModalBtn.addEventListener("click", function (e) {
+    e.preventDefault();
+    modal.style.display = "block";
+    loginForm.style.display = "block";
+    registerForm.style.display = "none";
   });
 
-  const data = await res.json();
-  alert(data.message);
-});
+  // Cerrar modal
+  closeModalBtn.addEventListener("click", function () {
+    modal.style.display = "none";
+  });
 
-// Abrir modal al hacer clic en el ícono de usuario
-const userIcon = document.querySelector('img[alt="User"]');
-const modal = document.getElementById('user-modal');
-const closeBtn = document.querySelector('.modal .close');
+  // Cerrar modal si se hace clic fuera del contenido
+  window.addEventListener("click", function (e) {
+    if (e.target === modal) {
+      modal.style.display = "none";
+    }
+  });
 
-userIcon.addEventListener('click', () => {
-  modal.style.display = 'block';
-});
+  // Cambiar a formulario de registro
+  if (switchToRegister) {
+    switchToRegister.addEventListener("click", function (e) {
+      e.preventDefault();
+      loginForm.style.display = "none";
+      registerForm.style.display = "block";
+    });
+  }
 
-closeBtn.addEventListener('click', () => {
-  modal.style.display = 'none';
-});
-
-window.addEventListener('click', function (event) {
-  if (event.target === modal) {
-    modal.style.display = 'none';
+  // Cambiar a formulario de login
+  if (switchToLogin) {
+    switchToLogin.addEventListener("click", function (e) {
+      e.preventDefault();
+      registerForm.style.display = "none";
+      loginForm.style.display = "block";
+    });
   }
 });
 
-// Switch entre login y registro
-const loginSection = document.getElementById('login-form');
-const registerSection = document.getElementById('register-form');
-const toRegister = document.getElementById('switch-to-register');
-const toLogin = document.getElementById('switch-to-login');
 
-toRegister.addEventListener('click', (e) => {
-  e.preventDefault();
-  loginSection.style.display = 'none';
-  registerSection.style.display = 'block';
-});
-
-toLogin.addEventListener('click', (e) => {
-  e.preventDefault();
-  registerSection.style.display = 'none';
-  loginSection.style.display = 'block';
-});
