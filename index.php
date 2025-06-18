@@ -140,28 +140,30 @@
         <h2 property="schema:name">Featured Hats</h2>
         <div class="card-grid">
             <?php
-        include 'php/productos.php';
-        if (count($productos) === 0) {
-            echo "<p style='color:red;'>✘ No hay productos disponibles.</p>";
-        } else {
-            foreach ($productos as $producto) {
-                echo '<article class="card-item" typeof="schema:Product">';
-                echo '<img src="' . htmlspecialchars($producto['image']) . '" alt="' . htmlspecialchars($producto['name']) . '">';
-                echo '<h3 property="schema:name">' . htmlspecialchars($producto['name']) . '</h3>';
-                echo '<p>$' . number_format($producto['price'], 0, ',', '.') . '</p>';
-                echo '<button class="add-to-cart-btn" 
+            include 'productos.php'; // Aquí se carga la variable $productos
+
+            if (!empty($productos)) {
+                foreach ($productos as $producto) {
+                    echo '<article class="card-item">';
+                    echo '<img src="' . htmlspecialchars($producto['image']) . '" alt="' . htmlspecialchars($producto['name']) . '">';
+                    echo '<h3>' . htmlspecialchars($producto['name']) . '</h3>';
+                    echo '<p>$' . number_format($producto['price'], 0, ',', '.') . '</p>';
+                    echo '<button class="add-to-cart-btn" 
                             data-id="' . $producto['id'] . '" 
                             data-name="' . htmlspecialchars($producto['name']) . '" 
                             data-price="' . $producto['price'] . '" 
                             data-image="' . htmlspecialchars($producto['image']) . '">
-                        🛒 Agregar al carrito
-                      </button>';
-                echo '</article>';
+                            🛒 Agregar al carrito
+                        </button>';
+                    echo '</article>';
+                }
+            } else {
+                echo '<p>No hay productos disponibles.</p>';
             }
-        }
-        ?>
+            ?>
         </div>
     </section>
+
 
     <!-- Historias de la marca -->
     <section id="stories" class="section stories">
