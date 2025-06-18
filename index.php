@@ -120,23 +120,6 @@
             <a href="#shop" class="cta">Shop Now</a>
         </div>
     </header>
-    <section id="categories" class="section categories" typeof="schema:OfferCatalog">
-        <h2 property="schema:name">Shop by Category</h2>
-        <div class="card-grid">
-            <article class="card-item" typeof="schema:Offer">
-                <img src="img/hats.jpg" alt="Hats">
-                <h3 property="schema:itemOffered">Hats</h3>
-            </article>
-            <article class="card-item" typeof="schema:Offer">
-                <img src="img/caps.jpg" alt="Caps">
-                <h3 property="schema:itemOffered">Caps</h3>
-            </article>
-            <article class="card-item" typeof="schema:Offer">
-                <img src="img/accessories.jpg" alt="Accessories">
-                <h3 property="schema:itemOffered">Accessories</h3>
-            </article>
-        </div>
-    </section>
     <section id="featured" class="section featured" typeof="schema:ItemList">
         <h2 property="schema:name">Featured Hats</h2>
         <div class="card-grid">

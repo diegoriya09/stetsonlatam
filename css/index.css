@@ -2,7 +2,7 @@
 @font-face {
   font-family: 'GT America';
   src: url('/fonts/gt-america/GT-America-Standard-Regular.woff2') format('woff2'),
-       url('/fonts/gt-america/GT-America-Standard-Regular.woff') format('woff');
+    url('/fonts/gt-america/GT-America-Standard-Regular.woff') format('woff');
   font-weight: 400;
   font-style: normal;
 }
@@ -81,36 +81,105 @@ nav.main-nav {
   height: 100vh;
   background-size: cover;
   background-position: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   position: relative;
-  padding-top: 60px;
 }
 
-.overlay {
-  padding: 1rem;
+.enhanced-overlay {
+  background: linear-gradient(to bottom right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.2));
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-align: center;
 }
 
-.overlay h1 {
-  font-size: 3rem;
+.hero-content {
+  color: #fff;
+  max-width: 700px;
+  padding: 20px;
+  animation: fadeIn 1.5s ease;
+}
+
+.hero-title {
+  font-size: 4rem;
+  font-weight: 700;
+  letter-spacing: 2px;
   margin-bottom: 1rem;
+  font-family: 'GT America', sans-serif;
 }
 
-.overlay p {
-  font-size: 1.2rem;
-  margin-bottom: 1.5rem;
+.hero-subtitle {
+  font-size: 1.5rem;
+  font-weight: 300;
+  margin-bottom: 2rem;
+  font-family: 'GT America', sans-serif;
 }
 
-.overlay .cta {
-  background: #f4a261;
-  padding: 0.75rem 2rem;
-  color: white;
+.cta {
+  background-color: #ffffff;
+  color: #000;
+  padding: 15px 30px;
   text-decoration: none;
-  border-radius: 4px;
   font-weight: bold;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  font-size: 1.2rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
+
+.cta:hover {
+  background-color: #000;
+  color: #fff;
+  transform: scale(1.05);
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animated-cta {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.6);
+  }
+
+  70% {
+    box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.2rem;
+  }
+
+  .cta {
+    font-size: 1rem;
+    padding: 12px 24px;
+  }
+}
+
 
 .section {
   padding: 5rem 2rem;
@@ -306,6 +375,3 @@ footer {
   cursor: pointer;
   width: 100%;
 }
-
-
-
