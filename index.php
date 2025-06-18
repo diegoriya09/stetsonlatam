@@ -42,26 +42,29 @@
     </nav>
     <div class="carousel">
         <div class="carousel-inner">
-            <div class="carousel-item active" style="background-image: url('img/slide1.png');">
-                <div class="carousel-caption">
-                    <h2>Producto 1</h2>
-                    <p>Descripción del producto 1</p>
-                    <a href="enlace1.html" class="buy-btn">Comprar ahora</a>
-                </div>
+            <div class="carousel-item active">
+            <img src="img/slide1.png" alt="Producto 1" />
+            <div class="carousel-caption">
+                <h2>Producto 1</h2>
+                <p>Descripción del producto 1</p>
+                <a href="enlace1.html" class="buy-btn">Comprar ahora</a>
             </div>
-            <div class="carousel-item" style="background-image: url('img/slide2.png');">
-                <div class="carousel-caption">
-                    <h2>Producto 2</h2>
-                    <p>Descripción del producto 2</p>
-                    <a href="enlace2.html" class="buy-btn">Comprar ahora</a>
-                </div>
             </div>
-            <div class="carousel-item" style="background-image: url('img/slide3.png');">
-                <div class="carousel-caption">
-                    <h2>Producto 3</h2>
-                    <p>Descripción del producto 3</p>
-                    <a href="enlace3.html" class="buy-btn">Comprar ahora</a>
-                </div>
+            <div class="carousel-item">
+            <img src="img/slide2.png" alt="Producto 2" />
+            <div class="carousel-caption">
+                <h2>Producto 2</h2>
+                <p>Descripción del producto 2</p>
+                <a href="enlace2.html" class="buy-btn">Comprar ahora</a>
+            </div>
+            </div>
+            <div class="carousel-item">
+            <img src="img/slide3.png" alt="Producto 3" />
+            <div class="carousel-caption">
+                <h2>Producto 3</h2>
+                <p>Descripción del producto 3</p>
+                <a href="enlace3.html" class="buy-btn">Comprar ahora</a>
+            </div>
             </div>
         </div>
         <button class="carousel-btn prev">&#10094;</button>
@@ -72,6 +75,7 @@
             <span class="dot" data-slide="2"></span>
         </div>
     </div>
+
     <!-- Sidebar del carrito -->
     <div id="carrito-sidebar" class="sidebar">
         <div class="sidebar-header">
@@ -113,7 +117,7 @@
     </div>
     <header class="hero-split">
         <div class="hero-left">
-            <img src="img/andes-background.jpg" alt="Hombre con sombrero" />
+            <img src="img/hero.png" alt="Hombre con sombrero" />
         </div>
         <div class="hero-right">
             <div class="hero-text">
