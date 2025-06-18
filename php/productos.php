@@ -1,5 +1,5 @@
 <?php
-require '/php/conexion.php';
+require_once '../conexion.php';
 
 if ($conexion->connect_error) {
     die("Conexión fallida: " . $conexion->connect_error);
