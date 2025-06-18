@@ -239,5 +239,64 @@ document.querySelectorAll('.btn-agregar-carrito').forEach(btn => {
 
 // Renderizar carrito al cargar
 document.addEventListener('DOMContentLoaded', renderizarCarrito);
+document.addEventListener("DOMContentLoaded", () => {
+  const carritoSidebar = document.getElementById("carrito-sidebar");
+  const cerrarCarrito = document.getElementById("cerrar-carrito");
+  const btnCarrito = document.getElementById("btn-carrito");
+  const carritoItems = document.getElementById("carrito-items");
+  const totalCarrito = document.getElementById("total-carrito");
+  const cartCount = document.getElementById("cart-count");
 
+  let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
+  function actualizarCarrito() {
+    carritoItems.innerHTML = "";
+    let total = 0;
+    carrito.forEach(producto => {
+      const item = document.createElement("div");
+      item.classList.add("cart-item");
+      item.innerHTML = `
+        <img src="${producto.imagen}" alt="${producto.nombre}" style="width: 50px; height: 50px;">
+        <div>
+          <p><strong>${producto.nombre}</strong></p>
+          <p>Cantidad: ${producto.cantidad}</p>
+          <p>$${producto.precio.toLocaleString()}</p>
+        </div>
+      `;
+      carritoItems.appendChild(item);
+      total += producto.precio * producto.cantidad;
+    });
+    totalCarrito.textContent = `Total: $${total.toLocaleString()}`;
+    cartCount.textContent = carrito.reduce((sum, p) => sum + p.cantidad, 0);
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+  }
+
+  document.querySelectorAll(".add-to-cart-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const id = btn.dataset.id;
+      const nombre = btn.dataset.nombre;
+      const precio = parseInt(btn.dataset.precio);
+      const imagen = btn.dataset.imagen;
+
+      const existente = carrito.find(p => p.id === id);
+      if (existente) {
+        existente.cantidad += 1;
+      } else {
+        carrito.push({ id, nombre, precio, imagen, cantidad: 1 });
+      }
+
+      actualizarCarrito();
+      carritoSidebar.classList.add("open");
+    });
+  });
+
+  btnCarrito.addEventListener("click", () => {
+    carritoSidebar.classList.toggle("open");
+  });
+
+  cerrarCarrito.addEventListener("click", () => {
+    carritoSidebar.classList.remove("open");
+  });
+
+  actualizarCarrito();
+});
