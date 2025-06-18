@@ -115,7 +115,7 @@
     </div>
     <header class="split-hero">
         <div class="hero-left">
-            <img src="img/andes-background.jpg" alt="Stetson Hat" />
+            <img src="img/hero.png" alt="Stetson Hat" />
         </div>
         <div class="hero-right">
             <div class="hero-text">
