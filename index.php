@@ -8,6 +8,7 @@
     <meta name="description" content="Stetson LATAM - Legendary Hats for Latin America and Central America">
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/carrousel.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
 <body typeof="schema:WebPage">
@@ -147,6 +148,7 @@
                         <img src="<?= htmlspecialchars($producto['image']) ?>" alt="<?= htmlspecialchars($producto['name']) ?>">
                         <h3><?= htmlspecialchars($producto['name']) ?></h3>
                         <p>$<?= number_format($producto['price'], 0, ',', '.') ?></p>
+                        <i class="fas fa-cart-plus"></i>
                     </article>
             <?php 
                 endforeach;
