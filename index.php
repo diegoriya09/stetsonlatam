@@ -113,13 +113,22 @@
             </div>
         </div>
     </div>
-    <header class="hero" style="background-image: url('img/hero.png');">
-        <div class="overlay">
-            <h1 property="schema:headline">Legendary Hats</h1>
-            <p property="schema:description">Crafted for Generations – Now in Latin America</p>
-            <a href="#shop" class="cta">Shop Now</a>
+    <header class="split-hero">
+        <div class="hero-left">
+            <img src="img/andes-background.jpg" alt="Stetson Hat" />
+        </div>
+        <div class="hero-right">
+            <div class="hero-text">
+            <h1>THE OPEN ROAD</h1>
+            <p>
+                Since 1937, it’s been the hat of choice for artists,<br />
+                outlaws, Presidents, and trailblazers of all kinds.
+            </p>
+            <a href="#shop" class="shop-btn">SHOP NOW</a>
+            </div>
         </div>
     </header>
+
     <section id="featured" class="section featured" typeof="schema:ItemList">
         <h2 property="schema:name">Featured Hats</h2>
         <div class="card-grid">
