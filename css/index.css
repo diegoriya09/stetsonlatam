@@ -77,12 +77,13 @@ nav.main-nav {
   cursor: pointer;
 }
 
-.hero-split {
+.hero {
   display: flex;
-  height: 500vh;
-  width: 100%;
-  overflow: hidden;
-  font-family: 'Work Sans', sans-serif;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  background-color: #fefefe;
+  min-height: 500px;
 }
 
 .hero-left,
