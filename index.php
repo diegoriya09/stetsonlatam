@@ -114,11 +114,9 @@
         </div>
     </div>
     <header class="hero-split">
-        <!-- Lado izquierdo: imagen visible -->
         <div class="hero-image">
             <img src="img/hero.png" alt="Hombre con sombrero" />
         </div>
-        <!-- Lado derecho: contenido -->
         <div class="hero-content">
             <h1>THE OPEN ROAD</h1>
             <p>
@@ -128,9 +126,6 @@
             <a href="#shop" class="shop-btn">SHOP NOW</a>
         </div>
     </header>
-
-
-
     <section id="featured" class="section featured" typeof="schema:ItemList">
         <h2 property="schema:name">Featured Hats</h2>
         <div class="card-grid">
