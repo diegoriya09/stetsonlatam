@@ -1,28 +1,40 @@
 <?php
+// Conexión a la base de datos
 require_once 'conexion.php';
 
+// Verificar conexión
 if ($conexion->connect_error) {
-    die("Conexión fallida: " . $conexion->connect_error);
+    die("<p style='color: red;'>✘ Conexión fallida: " . $conexion->connect_error . "</p>");
 }
 
-echo "<p style='color: green;'>✔ Conexión exitosa</p>";
-
+// Ejecutar consulta SQL
 $sql = "SELECT * FROM productos";
 $resultado = $conexion->query($sql);
 
-if ($resultado) {
-    echo "<p>Consulta ejecutada correctamente</p>";
-    echo "<p>Total filas: " . $resultado->num_rows . "</p>";
-
-    if ($resultado->num_rows > 0) {
-        while ($producto = $resultado->fetch_assoc()) {
-            echo "<pre>" . print_r($producto, true) . "</pre>"; // Muestra los datos crudos
-        }
-    } else {
-        echo "<p style='color: red;'>✘ No se encontraron productos.</p>";
-    }
+// Mostrar mensajes de prueba
+if (!$resultado) {
+    echo "<p style='color: red;'>✘ Error en la consulta: " . $conexion->error . "</p>";
+} elseif ($resultado->num_rows === 0) {
+    echo "<p style='color: orange;'>⚠ No se encontraron productos en la base de datos.</p>";
 } else {
-    echo "<p style='color: red;'>Error en la consulta: " . $conexion->error . "</p>";
+    echo "<p style='color: green;'>✔ Se encontraron productos: " . $resultado->num_rows . "</p>";
+
+    // Mostrar productos
+    while ($producto = $resultado->fetch_assoc()) {
+        echo '<article class="card-item" typeof="schema:Product">';
+        echo '<img src="' . htmlspecialchars($producto['image']) . '" alt="' . htmlspecialchars($producto['name']) . '">';
+        echo '<h3 property="schema:name">' . htmlspecialchars($producto['name']) . '</h3>';
+        echo '<p>$' . number_format($producto['price'], 0, ',', '.') . '</p>';
+        echo '<button class="add-to-cart-btn" 
+                    data-id="' . $producto['id'] . '" 
+                    data-name="' . htmlspecialchars($producto['name']) . '" 
+                    data-price="' . $producto['price'] . '" 
+                    data-image="' . htmlspecialchars($producto['image']) . '">
+                🛒 Agregar al carrito
+              </button>';
+        echo '</article>';
+    }
 }
 
+$conexion->close();
 ?>
