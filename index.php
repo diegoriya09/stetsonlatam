@@ -139,7 +139,7 @@
     <section id="featured" class="section featured" typeof="schema:ItemList">
         <h2 property="schema:name">Featured Hats</h2>
         <div class="card-grid">
-            <?php include 'productos.php'; ?>
+            <?php include '/php/productos.php'; ?>
         </div>
     </section>
 
