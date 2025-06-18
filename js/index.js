@@ -129,6 +129,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const slides = document.querySelectorAll(".carousel-item");
   const prevBtn = document.querySelector(".carousel-btn.prev");
   const nextBtn = document.querySelector(".carousel-btn.next");
+  const indicators = document.querySelectorAll(".indicator");
+  const carousel = document.querySelector(".carousel");
+
   let currentIndex = 0;
   let slideInterval;
 
@@ -136,21 +139,25 @@ document.addEventListener("DOMContentLoaded", function () {
     slides.forEach((slide, i) => {
       slide.classList.remove("active");
     });
+    indicators.forEach(ind => ind.classList.remove("active"));
+
     slides[index].classList.add("active");
+    indicators[index].classList.add("active");
+    currentIndex = index;
   }
 
   function nextSlide() {
-    currentIndex = (currentIndex + 1) % slides.length;
-    showSlide(currentIndex);
+    const nextIndex = (currentIndex + 1) % slides.length;
+    showSlide(nextIndex);
   }
 
   function prevSlide() {
-    currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-    showSlide(currentIndex);
+    const prevIndex = (currentIndex - 1 + slides.length) % slides.length;
+    showSlide(prevIndex);
   }
 
   function startAutoSlide() {
-    slideInterval = setInterval(nextSlide, 5000); // Cambia cada 5 segundos
+    slideInterval = setInterval(nextSlide, 5000);
   }
 
   function stopAutoSlide() {
@@ -159,17 +166,32 @@ document.addEventListener("DOMContentLoaded", function () {
 
   nextBtn.addEventListener("click", () => {
     nextSlide();
-    stopAutoSlide();
-    startAutoSlide();
+    restartAutoSlide();
   });
 
   prevBtn.addEventListener("click", () => {
     prevSlide();
+    restartAutoSlide();
+  });
+
+  indicators.forEach((indicator) => {
+    indicator.addEventListener("click", () => {
+      const slideIndex = parseInt(indicator.dataset.slide);
+      showSlide(slideIndex);
+      restartAutoSlide();
+    });
+  });
+
+  carousel.addEventListener("mouseenter", stopAutoSlide);
+  carousel.addEventListener("mouseleave", startAutoSlide);
+
+  function restartAutoSlide() {
     stopAutoSlide();
     startAutoSlide();
-  });
+  }
 
   showSlide(currentIndex);
   startAutoSlide();
 });
+
 
