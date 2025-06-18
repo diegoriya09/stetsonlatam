@@ -7,6 +7,7 @@
     <title>Stetson LATAM</title>
     <meta name="description" content="Stetson LATAM - Legendary Hats for Latin America and Central America">
     <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/carrousel.css">
 </head>
 
 <body typeof="schema:WebPage">
@@ -37,21 +38,27 @@
             </div>
         </div>
     </nav>
-    <div class="carousel">
-        <div class="carousel-inner">
-            <img src="img/slide1.png" class="carousel-item active" alt="Slide 1">
-            <img src="img/slide2.png" class="carousel-item" alt="Slide 2">
-            <img src="img/slide3.png" class="carousel-item" alt="Slide 3">
+    <section id="gallery">
+        <div class="gallery-container">
+            <figure class="gallery-item">
+                <img src="img/slide1.png" alt="Imagen 1">
+                <figcaption>Descripción de la imagen 1</figcaption>
+            </figure>
+            <figure class="gallery-item">
+                <img src="img/slide2.png" alt="Imagen 2">
+                <figcaption>Descripción de la imagen 2</figcaption>
+            </figure>
+            <figure class="gallery-item">
+                <img src="img/slide3.png" alt="Imagen 3">
+                <figcaption>Descripción de la imagen 3</figcaption>
+            </figure>
+            <!-- ... otras imágenes ... -->
         </div>
-        <button class="carousel-btn prev">&#10094;</button>
-        <button class="carousel-btn next">&#10095;</button>
-        <div class="carousel-indicators">
-            <span class="indicator active" data-slide="0"></span>
-            <span class="indicator" data-slide="1"></span>
-            <span class="indicator" data-slide="2"></span>
-        </div>
-
-    </div>
+        <nav class="gallery-navigation">
+            <button class="nav-button prev-button">Anterior</button>
+            <button class="nav-button next-button">Siguiente</button>
+        </nav>
+    </section>
 
     <!-- Modal para login/registro -->
     <div id="user-modal" class="modal">

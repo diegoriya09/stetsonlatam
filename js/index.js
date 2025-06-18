@@ -125,73 +125,45 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-document.addEventListener("DOMContentLoaded", function () {
-  const slides = document.querySelectorAll(".carousel-item");
-  const prevBtn = document.querySelector(".carousel-btn.prev");
-  const nextBtn = document.querySelector(".carousel-btn.next");
-  const indicators = document.querySelectorAll(".indicator");
-  const carousel = document.querySelector(".carousel");
+let currentIndex = 0;
 
-  let currentIndex = 0;
-  let slideInterval;
+document.querySelector('.prev-button').addEventListener('click', () => {
+   navigate(-1);
+});
 
-  function showSlide(index) {
-    slides.forEach((slide, i) => {
-      slide.classList.remove("active");
-    });
-    indicators.forEach(ind => ind.classList.remove("active"));
+document.querySelector('.next-button').addEventListener('click', () => {
+   navigate(1);
+});
 
-    slides[index].classList.add("active");
-    indicators[index].classList.add("active");
-    currentIndex = index;
-  }
+function navigate(direction) {
+   const galleryContainer = document.querySelector('.gallery-container');
+   const totalImages = document.querySelectorAll('.gallery-item').length;
 
-  function nextSlide() {
-    const nextIndex = (currentIndex + 1) % slides.length;
-    showSlide(nextIndex);
-  }
+   currentIndex = (currentIndex + direction + totalImages) % totalImages;
+   const offset = -currentIndex * 100;
 
-  function prevSlide() {
-    const prevIndex = (currentIndex - 1 + slides.length) % slides.length;
-    showSlide(prevIndex);
-  }
+   galleryContainer.style.transform = `translateX(${offset}%)`;
+}
 
-  function startAutoSlide() {
-    slideInterval = setInterval(nextSlide, 5000);
-  }
+let autoplayInterval = null;
 
-  function stopAutoSlide() {
-    clearInterval(slideInterval);
-  }
+function startAutoplay(interval) {
+   stopAutoplay(); // Detiene cualquier autoplay anterior para evitar múltiples intervalos.
+   autoplayInterval = setInterval(() => {
+      navigate(1); // Navega a la siguiente imagen cada intervalo de tiempo.
+   }, interval);
+}
 
-  nextBtn.addEventListener("click", () => {
-    nextSlide();
-    restartAutoSlide();
-  });
+function stopAutoplay() {
+   clearInterval(autoplayInterval);
+}
 
-  prevBtn.addEventListener("click", () => {
-    prevSlide();
-    restartAutoSlide();
-  });
+// Iniciar autoplay con un intervalo de 3 segundos.
+startAutoplay(3000);
 
-  indicators.forEach((indicator) => {
-    indicator.addEventListener("click", () => {
-      const slideIndex = parseInt(indicator.dataset.slide);
-      showSlide(slideIndex);
-      restartAutoSlide();
-    });
-  });
-
-  carousel.addEventListener("mouseenter", stopAutoSlide);
-  carousel.addEventListener("mouseleave", startAutoSlide);
-
-  function restartAutoSlide() {
-    stopAutoSlide();
-    startAutoSlide();
-  }
-
-  showSlide(currentIndex);
-  startAutoSlide();
+// Opcional: Detener autoplay cuando el usuario interactúa con los botones de navegación.
+document.querySelectorAll('.nav-button').forEach(button => {
+    button.addEventListener('click', stopAutoplay);
 });
 
 

@@ -1,0 +1,42 @@
+/* Estilo básico para el Slider*/
+#gallery {
+   width: 80%;
+   margin: auto;
+   overflow: hidden;
+}
+
+.gallery-container {
+   display: flex;
+   transition: transform 0.5s ease-in-out;
+}
+
+.gallery-item {
+   min-width: 100%;
+   box-sizing: border-box;
+}
+
+.gallery-item img {
+   width: 100%;
+   display: block;
+}
+
+/* Navegación del Slider */
+.gallery-navigation {
+   display: flex;
+   justify-content: space-between;
+   position: relative;
+   top: -50px;
+}
+
+.nav-button {
+   background-color: #008CBA;
+   color: white;
+   border: none;
+   padding: 10px 20px;
+   cursor: pointer;
+   border-radius: 5px;
+}
+
+.nav-button:hover {
+background-color: #005f5f;
+}
