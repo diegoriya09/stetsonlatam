@@ -113,7 +113,7 @@
             </div>
         </div>
     </div>
-    <header class="hero">
+    <header class="hero-split">
         <div class="hero-left">
             <img src="img/hero.png" alt="Hombre con sombrero" />
         </div>
