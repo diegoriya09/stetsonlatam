@@ -33,7 +33,7 @@
             <a id="logout-btn" style="display: none;"><img src="/img/logout.png" alt="Logout" class="icon"></a>
             <a href="#"><img src="/img/search.png" alt="Search" class="icon" /></a>
             <div class="cart-wrapper">
-                <a href="#"><img src="/img/cart.png" alt="Cart" class="icon" /></a>
+                <a id="btn-carrito"><img src="/img/cart.png" alt="Cart" class="icon" /></a>
                 <div id="cart-count" class="cart-notification">0</div>
             </div>
         </div>
@@ -70,6 +70,22 @@
             <span class="dot" data-slide="2"></span>
         </div>
     </div>
+
+    <!-- Sidebar del carrito -->
+    <div id="carrito-sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <h3>Tu Carrito</h3>
+            <span class="close-sidebar" id="cerrar-carrito">&times;</span>
+        </div>
+        <div class="sidebar-content" id="carrito-items">
+            <!-- Aquí se mostrarán los productos del carrito dinámicamente -->
+        </div>
+        <div class="sidebar-footer">
+            <p id="total-carrito">Total: $0</p>
+            <button class="pagar-btn">Pagar</button>
+        </div>
+    </div>
+
 
     <!-- Modal para login/registro -->
     <div id="user-modal" class="modal">

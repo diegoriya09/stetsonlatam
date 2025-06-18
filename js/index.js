@@ -164,5 +164,13 @@ setInterval(() => {
   showSlide((current + 1) % items.length);
 }, 7000);
 
+// Abrir y cerrar carrito (sidebar)
+document.getElementById('btn-carrito').addEventListener('click', () => {
+  document.getElementById('carrito-sidebar').classList.add('open');
+});
+
+document.getElementById('cerrar-carrito').addEventListener('click', () => {
+  document.getElementById('carrito-sidebar').classList.remove('open');
+});
 
 
