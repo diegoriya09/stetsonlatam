@@ -38,24 +38,39 @@
             </div>
         </div>
     </nav>
-    <section>
-        <div class="carousel">
-            <div class="carousel-inner">
-                <img src="img/slide1.png" class="carousel-item active" alt="Imagen 1">
-                <img src="img/slide2.png" class="carousel-item" alt="Imagen 2">
-                <img src="img/slide3.png" class="carousel-item" alt="Imagen 3">
+    <div class="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active" style="background-image: url('img/slide1.png');">
+                <div class="carousel-caption">
+                    <h2>Producto 1</h2>
+                    <p>Descripción del producto 1</p>
+                    <a href="enlace1.html" class="buy-btn">Comprar ahora</a>
+                </div>
             </div>
-
-            <button class="carousel-btn prev">&#10094;</button>
-            <button class="carousel-btn next">&#10095;</button>
-
-            <div class="carousel-indicators">
-                <span class="indicator active" data-slide="0"></span>
-                <span class="indicator" data-slide="1"></span>
-                <span class="indicator" data-slide="2"></span>
+            <div class="carousel-item" style="background-image: url('img/slide2.png');">
+                <div class="carousel-caption">
+                    <h2>Producto 2</h2>
+                    <p>Descripción del producto 2</p>
+                    <a href="enlace2.html" class="buy-btn">Comprar ahora</a>
+                </div>
+            </div>
+            <div class="carousel-item" style="background-image: url('img/slide3.png');">
+                <div class="carousel-caption">
+                    <h2>Producto 3</h2>
+                    <p>Descripción del producto 3</p>
+                    <a href="enlace3.html" class="buy-btn">Comprar ahora</a>
+                </div>
             </div>
         </div>
-    </section>
+        <button class="carousel-btn prev">&#10094;</button>
+        <button class="carousel-btn next">&#10095;</button>
+        <div class="carousel-dots">
+            <span class="dot active" data-slide="0"></span>
+            <span class="dot" data-slide="1"></span>
+            <span class="dot" data-slide="2"></span>
+        </div>
+    </div>
+
     <!-- Modal para login/registro -->
     <div id="user-modal" class="modal">
         <div class="modal-content">

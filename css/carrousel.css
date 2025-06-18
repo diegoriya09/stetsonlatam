@@ -1,27 +1,54 @@
 .carousel {
   position: relative;
   width: 100%;
-  max-width: 100vw;
   height: 500px;
   overflow: hidden;
-  background-color: #000;
 }
 
 .carousel-inner {
   display: flex;
+  width: 300%;
   height: 100%;
   transition: transform 0.5s ease-in-out;
 }
 
 .carousel-item {
-  min-width: 100%;
+  width: 100%;
   height: 100%;
-  object-fit: contain;
-  display: none;
+  flex-shrink: 0;
+  background-size: cover;
+  background-position: center;
+  position: relative;
 }
 
-.carousel-item.active {
-  display: block;
+.carousel-caption {
+  position: absolute;
+  bottom: 60px;
+  left: 50px;
+  color: white;
+  max-width: 400px;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 1.2rem;
+  border-radius: 8px;
+}
+
+.carousel-caption h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.8rem;
+}
+
+.carousel-caption p {
+  margin: 0 0 1rem;
+  font-size: 1rem;
+}
+
+.buy-btn {
+  background-color: #f4a261;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
 }
 
 .carousel-btn {
@@ -29,7 +56,7 @@
   top: 50%;
   transform: translateY(-50%);
   font-size: 2rem;
-  background: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.5);
   color: white;
   border: none;
   cursor: pointer;
@@ -45,25 +72,25 @@
   right: 10px;
 }
 
-.carousel-indicators {
+.carousel-dots {
   position: absolute;
-  bottom: 15px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 10px;
-  z-index: 2;
+  bottom: 20px;
+  width: 100%;
+  text-align: center;
 }
 
-.indicator {
-  width: 12px;
-  height: 12px;
-  background-color: rgba(255, 255, 255, 0.5);
-  border-radius: 50%;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.indicator.active {
+.carousel-dots .dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin: 0 5px;
   background-color: white;
+  border-radius: 50%;
+  opacity: 0.5;
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+
+.carousel-dots .dot.active {
+  opacity: 1;
 }

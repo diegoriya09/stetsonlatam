@@ -125,68 +125,44 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-document.addEventListener("DOMContentLoaded", () => {
-  const slides = document.querySelectorAll(".carousel-item");
-  const indicators = document.querySelectorAll(".indicator");
-  const prevBtn = document.querySelector(".carousel-btn.prev");
-  const nextBtn = document.querySelector(".carousel-btn.next");
-  let currentIndex = 0;
-  let interval;
+const items = document.querySelectorAll('.carousel-item');
+const dots = document.querySelectorAll('.dot');
+let current = 0;
 
-  const showSlide = (index) => {
-    slides.forEach(slide => slide.classList.remove("active"));
-    indicators.forEach(ind => ind.classList.remove("active"));
-    slides[index].classList.add("active");
-    indicators[index].classList.add("active");
-    currentIndex = index;
-  };
+function showSlide(index) {
+  const inner = document.querySelector('.carousel-inner');
+  inner.style.transform = `translateX(-${index * 100}%)`;
 
-  const nextSlide = () => {
-    const nextIndex = (currentIndex + 1) % slides.length;
-    showSlide(nextIndex);
-  };
-
-  const prevSlide = () => {
-    const prevIndex = (currentIndex - 1 + slides.length) % slides.length;
-    showSlide(prevIndex);
-  };
-
-  indicators.forEach(indicator => {
-    indicator.addEventListener("click", () => {
-      showSlide(Number(indicator.dataset.slide));
-      restartAutoSlide();
-    });
+  items.forEach((item, i) => {
+    item.classList.toggle('active', i === index);
   });
 
-  nextBtn.addEventListener("click", () => {
-    nextSlide();
-    restartAutoSlide();
+  dots.forEach((dot, i) => {
+    dot.classList.toggle('active', i === index);
   });
 
-  prevBtn.addEventListener("click", () => {
-    prevSlide();
-    restartAutoSlide();
-  });
+  current = index;
+}
 
-  const startAutoSlide = () => {
-    interval = setInterval(nextSlide, 5000);
-  };
-
-  const stopAutoSlide = () => {
-    clearInterval(interval);
-  };
-
-  const restartAutoSlide = () => {
-    stopAutoSlide();
-    startAutoSlide();
-  };
-
-  document.querySelector(".carousel").addEventListener("mouseenter", stopAutoSlide);
-  document.querySelector(".carousel").addEventListener("mouseleave", startAutoSlide);
-
-  showSlide(currentIndex);
-  startAutoSlide();
+document.querySelector('.prev').addEventListener('click', () => {
+  showSlide((current - 1 + items.length) % items.length);
 });
+
+document.querySelector('.next').addEventListener('click', () => {
+  showSlide((current + 1) % items.length);
+});
+
+dots.forEach(dot => {
+  dot.addEventListener('click', () => {
+    const index = parseInt(dot.dataset.slide);
+    showSlide(index);
+  });
+});
+
+// Auto-slide (opcional)
+setInterval(() => {
+  showSlide((current + 1) % items.length);
+}, 7000);
 
 
 
