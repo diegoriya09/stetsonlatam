@@ -173,4 +173,71 @@ document.getElementById('cerrar-carrito').addEventListener('click', () => {
   document.getElementById('carrito-sidebar').classList.remove('open');
 });
 
+// Función para obtener carrito desde localStorage
+function obtenerCarrito() {
+  return JSON.parse(localStorage.getItem('carrito')) || [];
+}
+
+// Función para guardar carrito en localStorage
+function guardarCarrito(carrito) {
+  localStorage.setItem('carrito', JSON.stringify(carrito));
+}
+
+// Función para renderizar el carrito en la ventanita
+function renderizarCarrito() {
+  const carrito = obtenerCarrito();
+  const contenedor = document.getElementById('carrito-items');
+  const totalEl = document.getElementById('total-carrito');
+  contenedor.innerHTML = '';
+  
+  let total = 0;
+
+  carrito.forEach((item, index) => {
+    const itemHTML = `
+      <div class="item-carrito">
+        <img src="${item.img}" alt="${item.nombre}" width="50" />
+        <div>
+          <p>${item.nombre}</p>
+          <p>$${item.precio.toLocaleString()} x ${item.cantidad}</p>
+        </div>
+      </div>
+    `;
+    contenedor.innerHTML += itemHTML;
+    total += item.precio * item.cantidad;
+  });
+
+  totalEl.textContent = `Total: $${total.toLocaleString()}`;
+  document.getElementById('cart-count').textContent = carrito.length;
+}
+
+// Función para agregar un producto al carrito
+function agregarAlCarrito(producto) {
+  const carrito = obtenerCarrito();
+  const existente = carrito.find(item => item.id === producto.id);
+  if (existente) {
+    existente.cantidad += 1;
+  } else {
+    carrito.push({ ...producto, cantidad: 1 });
+  }
+  guardarCarrito(carrito);
+  renderizarCarrito();
+}
+
+// Evento al hacer clic en botón "Agregar al carrito"
+document.querySelectorAll('.btn-agregar-carrito').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const producto = {
+      id: btn.dataset.id,
+      nombre: btn.dataset.nombre,
+      precio: parseInt(btn.dataset.precio),
+      img: btn.dataset.img
+    };
+    agregarAlCarrito(producto);
+    document.getElementById('carrito-sidebar').classList.add('open');
+  });
+});
+
+// Renderizar carrito al cargar
+document.addEventListener('DOMContentLoaded', renderizarCarrito);
+
 
