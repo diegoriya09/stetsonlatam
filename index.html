@@ -139,32 +139,10 @@
     <section id="featured" class="section featured" typeof="schema:ItemList">
         <h2 property="schema:name">Featured Hats</h2>
         <div class="card-grid">
-            <article class="card-item" typeof="schema:Product">
-                <img src="img/openroad.webp" alt="Open Road Hat">
-                <h3 property="schema:name">Open Road</h3>
-                <button class="add-to-cart-btn" data-id="1" data-nombre="Open Road" data-precio="129000"
-                    data-imagen="img/openroad.webp">
-                    🛒 Agregar al carrito
-                </button>
-            </article>
-            <article class="card-item" typeof="schema:Product">
-                <img src="img/westernstraw.webp" alt="Western Straw Hat">
-                <h3 property="schema:name">Western Straw</h3>
-                <button class="add-to-cart-btn" data-id="1" data-nombre="Western Straw" data-precio="129000"
-                    data-imagen="img/westernstraw.webp">
-                    🛒 Agregar al carrito
-                </button>
-            </article>
-            <article class="card-item" typeof="schema:Product">
-                <img src="img/lattemilan.webp" alt="Latte Milan Hat">
-                <h3 property="schema:name">Latte Milan</h3>
-                <button class="add-to-cart-btn" data-id="1" data-nombre="Latte Milan" data-precio="129000"
-                    data-imagen="img/lattemilan.webp">
-                    🛒 Agregar al carrito
-                </button>
-            </article>
+            <?php include 'productos.php'; ?>
         </div>
     </section>
+
 
     <!-- Historias de la marca -->
     <section id="stories" class="section stories">

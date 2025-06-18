@@ -301,16 +301,14 @@ footer {
   }
 }
 
-/* Sidebar del carrito */
 .sidebar {
   position: fixed;
   top: 0;
-  right: -400px;
-  width: 350px;
-  height: 100%;
+  right: -100%;
+  width: 320px;
+  height: 100vh;
   background-color: #fff;
-  box-shadow: -2px 0 8px rgba(0,0,0,0.2);
-  padding: 1rem;
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.3);
   z-index: 2000;
   transition: right 0.3s ease;
   display: flex;
@@ -325,42 +323,45 @@ footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 1rem;
   border-bottom: 1px solid #ddd;
-  padding-bottom: 0.5rem;
-}
-
-.sidebar-header h3 {
-  margin: 0;
-}
-
-.close-sidebar {
-  font-size: 1.5rem;
-  cursor: pointer;
 }
 
 .sidebar-content {
-  flex: 1;
+  flex-grow: 1;
   overflow-y: auto;
-  margin-top: 1rem;
+  padding: 1rem;
 }
 
 .sidebar-footer {
+  padding: 1rem;
   border-top: 1px solid #ddd;
-  padding-top: 1rem;
   text-align: center;
+}
+
+.carrito-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.carrito-img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  margin-right: 1rem;
 }
 
 .pagar-btn {
   background-color: #f4a261;
-  color: #fff;
-  border: none;
+  color: white;
   padding: 10px 20px;
-  border-radius: 5px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
   cursor: pointer;
+  width: 100%;
 }
 
-.pagar-btn:hover {
-  background-color: #e76f51;
-}
 
 
