@@ -139,27 +139,20 @@
     <section id="featured" class="section featured" typeof="schema:ItemList">
         <h2 property="schema:name">Featured Hats</h2>
         <div class="card-grid">
-            <?php
-            include 'productos.php'; // Aquí se carga la variable $productos
-
-            if (!empty($productos)) {
-                foreach ($productos as $producto) {
-                    echo '<article class="card-item">';
-                    echo '<img src="' . htmlspecialchars($producto['image']) . '" alt="' . htmlspecialchars($producto['name']) . '">';
-                    echo '<h3>' . htmlspecialchars($producto['name']) . '</h3>';
-                    echo '<p>$' . number_format($producto['price'], 0, ',', '.') . '</p>';
-                    echo '<button class="add-to-cart-btn" 
-                            data-id="' . $producto['id'] . '" 
-                            data-name="' . htmlspecialchars($producto['name']) . '" 
-                            data-price="' . $producto['price'] . '" 
-                            data-image="' . htmlspecialchars($producto['image']) . '">
-                            🛒 Agregar al carrito
-                        </button>';
-                    echo '</article>';
-                }
-            } else {
-                echo '<p>No hay productos disponibles.</p>';
-            }
+            <?php 
+            include 'productos.php'; 
+            if (count($productos) > 0):
+                foreach ($productos as $producto): ?>
+                    <article class="card-item">
+                        <img src="<?= htmlspecialchars($producto['image']) ?>" alt="<?= htmlspecialchars($producto['name']) ?>">
+                        <h3><?= htmlspecialchars($producto['name']) ?></h3>
+                        <p>$<?= number_format($producto['price'], 0, ',', '.') ?></p>
+                    </article>
+            <?php 
+                endforeach;
+            else:
+                echo "<p style='color:red;'>No hay productos disponibles.</p>";
+            endif;
             ?>
         </div>
     </section>

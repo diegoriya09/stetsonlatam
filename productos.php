@@ -1,14 +1,14 @@
 <?php
-require_once 'conexion.php';
+require_once 'php/conexion.php';
 
 $productos = [];
 
 if ($conn->connect_error) {
-    die("Conexión fallida: " . $conexion->connect_error);
+    die("Conexión fallida: " . $conn->connect_error);
 }
 
 $sql = "SELECT * FROM productos";
-$resultado = $conexion->query($sql);
+$resultado = $conn->query($sql);
 
 if ($resultado && $resultado->num_rows > 0) {
     while ($fila = $resultado->fetch_assoc()) {
