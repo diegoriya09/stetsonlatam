@@ -116,9 +116,8 @@
     <header class="hero-split">
         <!-- Lado izquierdo: imagen visible -->
         <div class="hero-image">
-            <img src="img/andes-background.jpg" alt="Hombre con sombrero" />
+            <img src="img/hero.png" alt="Hombre con sombrero" />
         </div>
-
         <!-- Lado derecho: contenido -->
         <div class="hero-content">
             <h1>THE OPEN ROAD</h1>
