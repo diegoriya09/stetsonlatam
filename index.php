@@ -113,21 +113,24 @@
             </div>
         </div>
     </div>
-    <header class="split-hero">
-        <div class="hero-left">
-            <img src="img/hero.png" alt="Stetson Hat" />
+    <header class="hero-split">
+        <!-- Lado izquierdo: imagen visible -->
+        <div class="hero-image">
+            <img src="img/andes-background.jpg" alt="Hombre con sombrero" />
         </div>
-        <div class="hero-right">
-            <div class="hero-text">
+
+        <!-- Lado derecho: contenido -->
+        <div class="hero-content">
             <h1>THE OPEN ROAD</h1>
             <p>
-                Since 1937, it’s been the hat of choice for artists,<br />
-                outlaws, Presidents, and trailblazers of all kinds.
+            Since 1937, it’s been the hat of choice for artists,<br />
+            outlaws, Presidents, and trailblazers of all kinds.
             </p>
             <a href="#shop" class="shop-btn">SHOP NOW</a>
-            </div>
         </div>
     </header>
+
+
 
     <section id="featured" class="section featured" typeof="schema:ItemList">
         <h2 property="schema:name">Featured Hats</h2>

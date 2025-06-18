@@ -77,59 +77,55 @@ nav.main-nav {
   cursor: pointer;
 }
 
-.split-hero {
+.hero-split {
   display: flex;
   height: 100vh;
   width: 100%;
   font-family: 'GT America', sans-serif;
 }
 
-.hero-left {
+.hero-image {
   flex: 1;
   overflow: hidden;
 }
 
-.hero-left img {
+.hero-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.hero-right {
+.hero-content {
   flex: 1;
-  background-color: #faf8f4;
+  background-color: #f5f3ef;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
-  padding: 40px;
+  align-items: center;
+  padding: 50px;
   text-align: center;
 }
 
-.hero-text {
-  max-width: 500px;
-}
-
-.hero-text h1 {
-  font-size: 2.5rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
+.hero-content h1 {
+  font-size: 2.8rem;
+  margin-bottom: 20px;
   color: #2a2a2a;
 }
 
-.hero-text p {
+.hero-content p {
   font-size: 1.1rem;
   line-height: 1.6;
-  margin-bottom: 2rem;
-  color: #4a4a4a;
+  margin-bottom: 30px;
+  color: #444;
 }
 
 .shop-btn {
   background-color: #2a2a2a;
   color: #fff;
-  padding: 12px 24px;
   text-decoration: none;
+  padding: 12px 30px;
+  font-size: 0.95rem;
   font-weight: 600;
-  font-size: 0.9rem;
   border-radius: 4px;
   transition: background-color 0.3s ease;
 }
@@ -138,27 +134,32 @@ nav.main-nav {
   background-color: #000;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
-  .split-hero {
+  .hero-split {
     flex-direction: column;
+    height: auto;
   }
 
-  .hero-left,
-  .hero-right {
-    flex: none;
+  .hero-image,
+  .hero-content {
     width: 100%;
     height: 50vh;
   }
 
-  .hero-text h1 {
+  .hero-content {
+    padding: 30px 20px;
+  }
+
+  .hero-content h1 {
     font-size: 2rem;
   }
 
-  .hero-text p {
+  .hero-content p {
     font-size: 1rem;
   }
 }
+
+
 
 .section {
   padding: 5rem 2rem;
