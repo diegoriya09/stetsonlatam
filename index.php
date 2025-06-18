@@ -113,7 +113,7 @@
             </div>
         </div>
     </div>
-    <header class="hero" style="background-image: url('img/andes-background.jpg');">
+    <header class="hero" style="background-image: url('img/hero.png');">
         <div class="overlay">
             <h1 property="schema:headline">Legendary Hats</h1>
             <p property="schema:description">Crafted for Generations – Now in Latin America</p>
