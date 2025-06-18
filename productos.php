@@ -3,7 +3,7 @@ require_once 'conexion.php';
 
 $productos = [];
 
-if ($conexion->connect_error) {
+if ($conn->connect_error) {
     die("Conexión fallida: " . $conexion->connect_error);
 }
 
@@ -16,5 +16,5 @@ if ($resultado && $resultado->num_rows > 0) {
     }
 }
 
-$conexion->close();
+$conn->close();
 ?>
