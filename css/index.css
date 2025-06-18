@@ -1,4 +1,19 @@
 /* styles.css */
+@font-face {
+  font-family: 'GT America';
+  src: url('/fonts/gt-america/GT-America-Standard-Regular.woff2') format('woff2'),
+       url('/fonts/gt-america/GT-America-Standard-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'GT America';
+  src: url('/fonts/gt-america/GT-America-Standard-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
 
 html {
   scroll-behavior: smooth;
@@ -14,6 +29,8 @@ body {
 
 nav.main-nav {
   display: flex;
+  font-family: 'GT America', sans-serif;
+  font-size: 16px;
   align-items: center;
   justify-content: space-between;
   background-color: #BCB9BD;
