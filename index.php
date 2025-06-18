@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/carrousel.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body typeof="schema:WebPage">
@@ -71,7 +72,6 @@
             <span class="dot" data-slide="2"></span>
         </div>
     </div>
-
     <!-- Sidebar del carrito -->
     <div id="carrito-sidebar" class="sidebar">
         <div class="sidebar-header">
@@ -86,8 +86,6 @@
             <button class="pagar-btn">Pagar</button>
         </div>
     </div>
-
-
     <!-- Modal para login/registro -->
     <div id="user-modal" class="modal">
         <div class="modal-content">
@@ -117,13 +115,14 @@
         <div class="hero-image">
             <img src="img/hero.png" alt="Hombre con sombrero" />
         </div>
+
         <div class="hero-content">
             <h1>THE OPEN ROAD</h1>
             <p>
             Since 1937, it’s been the hat of choice for artists,<br />
             outlaws, Presidents, and trailblazers of all kinds.
             </p>
-            <a href="#shop" class="shop-btn">SHOP NOW</a>
+            <a href="#featured" class="shop-btn">SHOP NOW</a>
         </div>
     </header>
     <section id="featured" class="section featured" typeof="schema:ItemList">
@@ -147,8 +146,6 @@
             ?>
         </div>
     </section>
-
-
     <!-- Historias de la marca -->
     <section id="stories" class="section stories">
         <h2>Our Legacy</h2>

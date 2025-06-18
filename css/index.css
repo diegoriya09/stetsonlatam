@@ -84,6 +84,7 @@ nav.main-nav {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'GT America', sans-serif;
 }
 
 .hero-image {
@@ -100,7 +101,7 @@ nav.main-nav {
 
 .hero-content {
   flex: 1;
-  background-color: #f5f3ef;
+  background-color: #fefcf9;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -117,23 +118,28 @@ nav.main-nav {
 }
 
 .hero-content p {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   color: #444;
   margin-bottom: 30px;
+  max-width: 500px;
+  line-height: 1.6;
 }
 
 .shop-btn {
   background-color: #2a2a2a;
   color: white;
-  padding: 12px 24px;
+  padding: 14px 28px;
   text-decoration: none;
   border-radius: 4px;
   font-weight: 600;
+  letter-spacing: 1px;
+  transition: background-color 0.3s ease;
 }
 
 .shop-btn:hover {
   background-color: black;
 }
+
 
 .section {
   padding: 5rem 2rem;
