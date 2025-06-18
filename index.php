@@ -114,9 +114,7 @@
     <header class="hero-split">
         <div class="hero-image">
             <img src="img/hero.png" alt="Hombre con sombrero" />
-        </div>
-
-        <div class="hero-content">
+            <div class="hero-content">
             <h1>THE OPEN ROAD</h1>
             <p>
             Since 1937, it’s been the hat of choice for artists,<br />
@@ -124,6 +122,9 @@
             </p>
             <a href="#featured" class="shop-btn">SHOP NOW</a>
         </div>
+        </div>
+
+        
     </header>
     <section id="featured" class="section featured" typeof="schema:ItemList">
         <h2 property="schema:name">Featured Hats</h2>
