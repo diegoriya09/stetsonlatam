@@ -144,12 +144,14 @@
             include 'productos.php'; 
             if (count($productos) > 0):
                 foreach ($productos as $producto): ?>
-                    <article class="card-item">
-                        <img src="<?= htmlspecialchars($producto['image']) ?>" alt="<?= htmlspecialchars($producto['name']) ?>">
-                        <h3><?= htmlspecialchars($producto['name']) ?></h3>
-                        <p>$<?= number_format($producto['price'], 0, ',', '.') ?></p>
-                        <i class="fas fa-cart-plus"></i>
-                    </article>
+                    <button class="add-to-cart-btn">    
+                        <article class="card-item">
+                            <img src="<?= htmlspecialchars($producto['image']) ?>" alt="<?= htmlspecialchars($producto['name']) ?>">
+                            <h3><?= htmlspecialchars($producto['name']) ?></h3>
+                            <p>$<?= number_format($producto['price'], 0, ',', '.') ?></p>
+                            <i class="fas fa-cart-plus"></i>
+                        </article>
+                    </button>
             <?php 
                 endforeach;
             else:
