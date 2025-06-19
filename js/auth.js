@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         icon: 'success',
                         confirmButtonText: 'OK'
                     }).then(() => {
-                        window.location.href = "index.html"; // Redirigir al index
+                        window.location.href = "index.php"; // Redirigir al index
                     });
                 } else {
                     Swal.fire("Error", result.error || "No se pudo iniciar sesión", "error");
