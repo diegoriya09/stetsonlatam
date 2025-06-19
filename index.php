@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stetson LATAM</title>
     <meta name="description" content="Stetson LATAM - Legendary Hats for Latin America and Central America">
-    <link rel="stylesheet" href="css/index.css?v=4">
-    <link rel="stylesheet" href="css/carrousel.css?v=7">
+    <link rel="stylesheet" href="css/index.css?v=5">
+    <link rel="stylesheet" href="css/carrousel.css?v=8">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
@@ -150,7 +150,7 @@
         <h2>Our Legacy</h2>
         <div class="card-grid">
             <article class="card-item">
-                <img src="img/story1.jpg" alt="Origen Stetson">
+                <img src="img/story1.png" alt="Origen Stetson">
                 <h3>Herencia Vaquera</h3>
                 <p>Desde el oeste americano hasta Latinoamérica, descubre la historia detrás del sombrero legendario.
                 </p>
@@ -162,8 +162,60 @@
             </article>
         </div>
     </section>
-    <footer>
-        <p>&copy; 2025 Stetson LATAM. All rights reserved.</p>
+    <footer class="site-footer">
+        <div class="footer-columns">
+            <div class="footer-column">
+            <h4>CUSTOMER SERVICE</h4>
+            <ul>
+                <li><a href="#">Contact Us</a></li>
+                <li><a href="#">Shipping</a></li>
+                <li><a href="#">Returns & Exchanges</a></li>
+                <li><a href="#">Order Status</a></li>
+                <li><a href="#">Fit Guide</a></li>
+                <li><a href="#">Gift Cards</a></li>
+                <li><a href="#">FAQ</a></li>
+            </ul>
+            </div>
+            <div class="footer-column">
+            <h4>OUR COMPANY</h4>
+            <ul>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Philanthropy</a></li>
+                <li><a href="#">Wholesale</a></li>
+            </ul>
+            </div>
+            <div class="footer-column">
+            <h4>STORES</h4>
+            <ul>
+                <li><a href="#">Store Locator</a></li>
+                <li><a href="#">Stetson Japan</a></li>
+                <li><a href="#">Stetson Europe</a></li>
+                <li><a href="#">Stetson Australia</a></li>
+            </ul>
+            </div>
+            <div class="footer-column">
+            <h4>CONNECT</h4>
+            <ul>
+                <li><a href="#">Instagram</a></li>
+                <li><a href="#">Facebook</a></li>
+                <li><a href="#">YouTube</a></li>
+                <li><a href="#">Pinterest</a></li>
+            </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 Stetson. All Rights Reserved.</p>
+            <div class="footer-links">
+            <a href="#">Terms & Conditions</a> |
+            <a href="#">Privacy Policy</a> |
+            <a href="#">California Privacy Notice</a> |
+            <a href="#">Accessibility Mode</a> |
+            <a href="#">Do Not Sell Or Share My Personal Information</a>
+            </div>
+        </div>
+    </footer>
+
     </footer>
     <script src="js/index.js"></script>
     <script src="js/auth.js"></script>
