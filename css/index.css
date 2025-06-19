@@ -286,7 +286,13 @@ nav.main-nav {
 
 .card-item h3 {
   margin: 1rem 0;
-  font-size: 1.1rem;
+  font-size: 16px;
+  color: #3c3737;
+}
+
+.card-item p {
+  margin: 1rem 0;
+  font-size: 16px;
   color: #3c3737;
 }
 
