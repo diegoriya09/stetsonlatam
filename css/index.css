@@ -93,6 +93,7 @@ nav.main-nav {
   min-height: 600px;
   background-color: #3F1E1F;
   font-family: 'GT America', sans-serif;
+  margin-top: 70px; /* Asegura que el hero no se superponga al navbar */
 }
 
 .hero-left,
