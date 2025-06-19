@@ -88,7 +88,7 @@ nav.main-nav {
 .hero-split {
   display: flex;
   flex-wrap: wrap;
-  width: 17in;
+  width: 100%;
   height: calc(100vh - 70px); /* Ajusta la altura para que no cubra el navbar */
   min-height: 600px;
   background-color: #3F1E1F;
@@ -180,7 +180,6 @@ nav.main-nav {
 .hero-slider {
   position: relative;
   display: flex;
-  width: 17in;
   height: calc(100vh -  70px);
   overflow: hidden;
 }
