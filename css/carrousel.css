@@ -2,7 +2,6 @@
   position: relative;
   width: 100%;
   height: calc(100vh - 63.92px); /* altura total menos la altura del nav fijo */
-  margin-top: 70px;
   overflow: hidden;
   z-index: 1;
 }
