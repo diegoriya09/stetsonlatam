@@ -23,7 +23,7 @@
                     <button class="buy-button">Comprar</button>
                 </div>
                 <div class="slide-image">
-                    <img src="img1.jpg" alt="Producto 1">
+                    <img src="img/slide1.png" alt="Producto 1">
                 </div>
                 </div>
             </li>
@@ -35,7 +35,7 @@
                     <button class="buy-button">Comprar</button>
                 </div>
                 <div class="slide-image">
-                    <img src="img2.jpg" alt="Producto 2">
+                    <img src="img/slide3.png" alt="Producto 2">
                 </div>
                 </div>
             </li>
@@ -47,7 +47,7 @@
                     <button class="buy-button">Comprar</button>
                 </div>
                 <div class="slide-image">
-                    <img src="img3.jpg" alt="Producto 3">
+                    <img src="img/slide3.png" alt="Producto 3">
                 </div>
                 </div>
             </li>

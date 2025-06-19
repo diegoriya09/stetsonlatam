@@ -123,6 +123,29 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  const track = document.querySelector('.carousel-track');
+  const slides = Array.from(track.children);
+  const nextBtn = document.querySelector('.carousel-button.right');
+  const prevBtn = document.querySelector('.carousel-button.left');
+
+  let currentIndex = 0;
+
+  function updateSlide(index) {
+    const slideWidth = slides[0].getBoundingClientRect().width;
+    track.style.transform = `translateX(-${slideWidth * index}px)`;
+    currentIndex = index;
+  }
+
+  nextBtn.addEventListener('click', () => {
+    const nextIndex = (currentIndex + 1) % slides.length;
+    updateSlide(nextIndex);
+  });
+
+  prevBtn.addEventListener('click', () => {
+    const prevIndex = (currentIndex - 1 + slides.length) % slides.length;
+    updateSlide(prevIndex);
+  });
+
 });
 
 // Abrir y cerrar carrito (sidebar)
@@ -135,27 +158,6 @@ document.getElementById('cerrar-carrito').addEventListener('click', () => {
   document.getElementById('carrito-sidebar').classList.remove('open');
 });
 
-const track = document.querySelector('.carousel-track');
-const slides = Array.from(track.children);
-const nextBtn = document.querySelector('.carousel-button.right');
-const prevBtn = document.querySelector('.carousel-button.left');
 
-let currentIndex = 0;
-
-function updateSlide(index) {
-  const slideWidth = slides[0].getBoundingClientRect().width;
-  track.style.transform = `translateX(-${slideWidth * index}px)`;
-  currentIndex = index;
-}
-
-nextBtn.addEventListener('click', () => {
-  const nextIndex = (currentIndex + 1) % slides.length;
-  updateSlide(nextIndex);
-});
-
-prevBtn.addEventListener('click', () => {
-  const prevIndex = (currentIndex - 1 + slides.length) % slides.length;
-  updateSlide(prevIndex);
-});
 
 
