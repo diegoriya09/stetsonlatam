@@ -1,7 +1,7 @@
 .carousel {
   position: relative;
-  width: 1200px;
-  height: 794px;
+  width: 100vh;
+  height: 80vh;
   overflow: hidden;
   margin-top: 70px; /* compensar altura del nav fijo */
 }
