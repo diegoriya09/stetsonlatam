@@ -50,6 +50,10 @@ nav.main-nav {
   margin: 0;
 }
 
+.nav-left a {
+  text-decoration: none;
+}
+
 .nav-center {
   display: flex;
   list-style: none;
