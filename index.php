@@ -112,8 +112,7 @@
     <header class="hero-split">
         <div class="hero-left">
             <img src="img/hero.png" alt="Hombre con sombrero" />
-        </div>
-        <div class="hero-right">
+            <div class="hero-right">
             <div class="hero-text">
             <h1>THE OPEN ROAD</h1>
             <p>
@@ -123,6 +122,7 @@
             <a href="#featured" class="shop-now-btn">SHOP NOW</a>
             </div>
         </div>
+        </div> 
     </header>
     <section id="featured" class="section featured" typeof="schema:ItemList">
         <h2 property="schema:name">Featured Hats</h2>
