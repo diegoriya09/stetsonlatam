@@ -1,6 +1,6 @@
 /* styles.css */
 @font-face {
-  font-family: 'GT America Regular';
+  font-family: 'GT America';
   src: url('/fonts/GT-America/GT-America-Standard-Regular-Trial.otf') format('opentype');
   font-weight: 400;
   font-style: normal;
@@ -246,13 +246,14 @@ nav.main-nav {
 .section {
   padding: 5rem 2rem;
   text-align: center;
-  background-color: #fdfaf7;
+  background-color: #f1eeea;
+  font-family: 'Lora', sans-serif;
 }
 
 .section h2 {
-  font-size: 2rem;
-  margin-bottom: 2rem;
-  color: #333;
+  font-size: 36px;
+  margin-bottom: 15px;
+  color: #3c3737;
 }
 
 .card-grid {
@@ -264,8 +265,10 @@ nav.main-nav {
 }
 
 .card-item {
+  font-family: 'GT America', sans-serif;
+  font-size: 16px;
   width: 250px;
-  background-color: white;
+  background-color: #f1eeea;
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
@@ -282,7 +285,7 @@ nav.main-nav {
 .card-item h3 {
   margin: 1rem 0;
   font-size: 1.1rem;
-  color: #222;
+  color: #3c3737;
 }
 
 .card-item:hover {
