@@ -16,50 +16,47 @@
         <div class="carousel-track-container">
             <ul class="carousel-track">
             <li class="carousel-slide current-slide">
-                <article class="slide-content">
+                <div class="slide-inner">
                 <div class="slide-text">
-                    <header><h2>Producto 1</h2></header>
+                    <h2>Producto 1</h2>
                     <p>Este es el primer producto destacado.</p>
-                    <footer><button class="buy-button">Comprar</button></footer>
+                    <button class="buy-button">Comprar</button>
                 </div>
-                <figure class="slide-image">
-                    <img src="img/slide1.png" alt="Producto 1">
-                </figure>
-                </article>
+                <div class="slide-image">
+                    <img src="img1.jpg" alt="Producto 1">
+                </div>
+                </div>
             </li>
             <li class="carousel-slide">
-                <article class="slide-content">
+                <div class="slide-inner">
                 <div class="slide-text">
-                    <header><h2>Producto 2</h2></header>
+                    <h2>Producto 2</h2>
                     <p>Innovación para tu vida diaria.</p>
-                    <footer><button class="buy-button">Comprar</button></footer>
+                    <button class="buy-button">Comprar</button>
                 </div>
-                <figure class="slide-image">
-                    <img src="img/slide2.png" alt="Producto 2">
-                </figure>
-                </article>
+                <div class="slide-image">
+                    <img src="img2.jpg" alt="Producto 2">
+                </div>
+                </div>
             </li>
             <li class="carousel-slide">
-                <article class="slide-content">
+                <div class="slide-inner">
                 <div class="slide-text">
-                    <header><h2>Producto 3</h2></header>
+                    <h2>Producto 3</h2>
                     <p>Calidad y estilo en un solo lugar.</p>
-                    <footer><button class="buy-button">Comprar</button></footer>
+                    <button class="buy-button">Comprar</button>
                 </div>
-                <figure class="slide-image">
-                    <img src="img/slide3.png" alt="Producto 3">
-                </figure>
-                </article>
+                <div class="slide-image">
+                    <img src="img3.jpg" alt="Producto 3">
+                </div>
+                </div>
             </li>
             </ul>
         </div>
-        <button class="carousel-button left" aria-label="Anterior">&#10094;</button>
-        <button class="carousel-button right" aria-label="Siguiente">&#10095;</button>
+        <button class="carousel-button left">&#10094;</button>
+        <button class="carousel-button right">&#10095;</button>
     </section>
 
-
-
-    
     <nav class="main-nav">
         <!-- Puedes agregar el logo aquí si deseas -->
         <div class="nav-left">
