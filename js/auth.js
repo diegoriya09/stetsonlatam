@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const formData = new FormData(loginForm);
 
             try {
-                const response = await fetch('/php/login.php', {
+                const response = await fetch('php/login.php', {
                     method: 'POST',
                     body: formData,
                 });
@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
         text: 'Has cerrado sesión exitosamente',
         icon: 'success',
         showConfirmButton: false,
-        timer: 2000, // ⏳ duración de 2 segundos
+        timer: 5000, // ⏳ duración de 5 segundos
         timerProgressBar: true
     }).then(() => {
         localStorage.removeItem('jwt');
