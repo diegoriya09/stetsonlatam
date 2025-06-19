@@ -6,43 +6,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stetson LATAM</title>
     <meta name="description" content="Stetson LATAM - Legendary Hats for Latin America and Central America">
-    <link rel="stylesheet" href="css/index.css?v=11">
+    <link rel="stylesheet" href="css/index.css?v=13">
     <link rel="stylesheet" href="css/carrousel.css?v=25">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
-<body typeof="schema:WebPage">
-    <section class="hero-slider">
-        <div class="slide active" data-title="THE OPEN ROAD"
-            data-text="Since 1937, it’s been the hat of choice for artists, outlaws, Presidents, and trailblazers."
-            data-link="#featured"
-            style="background-image: url('img/slide1.png');"></div>
-        <div class="slide" data-title="WESTERN STRAW"
-            data-text="Fresh and breezy for summer adventures."
-            data-link="#featured"
-            style="background-image: url('img/slide2.png');"></div>
-        <div class="slide" data-title="LATTE MILAN"
-            data-text="Sophisticated city charm meets ranch style."
-            data-link="#featured"
-            style="background-image: url('img/slide3.png');"></div>
 
-        <!-- Indicadores -->
-        <div class="dots">
+<body typeof="schema:WebPage">
+    <section class="hero-carousel">
+        <div class="slide active" data-title="THE OPEN ROAD"
+            data-text="Since 1937, it’s been the hat of choice for artists, outlaws, Presidents, and trailblazers of all kinds."
+            data-link="#featured">
+            <img src="img/slide1.png" alt="Open Road">
+        </div>
+        <div class="slide" data-title="WESTERN STRAW" data-text="Perfect for sunny days and southern charm."
+            data-link="#featured">
+            <img src="img/slide2.png" alt="Western Straw">
+        </div>
+        <div class="slide" data-title="LATTE MILAN" data-text="Elegance meets heritage in every detail."
+            data-link="#featured">
+            <img src="img/slide3.png" alt="Latte Milan">
+        </div>
+
+        <div class="hero-text-box">
+            <h1 id="hero-title">THE OPEN ROAD</h1>
+            <p id="hero-description">Since 1937, it’s been the hat of choice for artists, outlaws, Presidents, and
+                trailblazers of all kinds.</p>
+            <a id="hero-btn" href="#featured" class="hero-btn">SHOP NOW</a>
+        </div>
+
+        <div class="hero-dots">
             <span class="dot active" data-index="0"></span>
             <span class="dot" data-index="1"></span>
             <span class="dot" data-index="2"></span>
         </div>
-
-        <!-- Contenido dinámico (texto + botón) -->
-        <div class="hero-content">
-            <h1 id="hero-title">THE OPEN ROAD</h1>
-            <p id="hero-text">Since 1937, it’s been the hat of choice for artists, outlaws, Presidents, and trailblazers.</p>
-            <a id="hero-btn" href="#featured" class="cta-btn">SHOP NOW</a>
-        </div>
     </section>
-
-
-
     <nav class="main-nav">
         <!-- Puedes agregar el logo aquí si deseas -->
         <div class="nav-left">
@@ -112,16 +110,16 @@
         <div class="hero-left">
             <img src="img/hero.png" alt="Hombre con sombrero" />
             <div class="hero-right">
-            <div class="hero-text">
-            <h1>THE OPEN ROAD</h1>
-            <p>
-                Since 1937, it’s been the hat of choice for artists, outlaws,<br />
-                Presidents, and trailblazers of all kinds.
-            </p>
-            <a href="#featured" class="shop-now-btn">SHOP NOW</a>
+                <div class="hero-text">
+                    <h1>THE OPEN ROAD</h1>
+                    <p>
+                        Since 1937, it’s been the hat of choice for artists, outlaws,<br />
+                        Presidents, and trailblazers of all kinds.
+                    </p>
+                    <a href="#featured" class="shop-now-btn">SHOP NOW</a>
+                </div>
             </div>
         </div>
-        </div> 
     </header>
     <section id="featured" class="section featured" typeof="schema:ItemList">
         <h2 property="schema:name">Featured Hats</h2>
@@ -130,12 +128,16 @@
             include 'productos.php'; 
             if (count($productos) > 0):
                 foreach ($productos as $producto): ?>
-                    <article class="card-item">
-                        <img src="<?= htmlspecialchars($producto['image']) ?>" alt="<?= htmlspecialchars($producto['name']) ?>">
-                        <h3><?= htmlspecialchars($producto['name']) ?></h3>
-                        <p>$<?= number_format($producto['price'], 0, ',', '.') ?></p>
-                        <a class="add-to-cart"><i class="fas fa-cart-plus"></i></a>
-                    </article>
+            <article class="card-item">
+                <img src="<?= htmlspecialchars($producto['image']) ?>" alt="<?= htmlspecialchars($producto['name']) ?>">
+                <h3>
+                    <?= htmlspecialchars($producto['name']) ?>
+                </h3>
+                <p>$
+                    <?= number_format($producto['price'], 0, ',', '.') ?>
+                </p>
+                <a class="add-to-cart"><i class="fas fa-cart-plus"></i></a>
+            </article>
             <?php 
                 endforeach;
             else:
@@ -164,53 +166,53 @@
     <footer class="site-footer">
         <div class="footer-columns">
             <div class="footer-column">
-            <h4>CUSTOMER SERVICE</h4>
-            <ul>
-                <li><a href="#">Contact Us</a></li>
-                <li><a href="#">Shipping</a></li>
-                <li><a href="#">Returns & Exchanges</a></li>
-                <li><a href="#">Order Status</a></li>
-                <li><a href="#">Fit Guide</a></li>
-                <li><a href="#">Gift Cards</a></li>
-                <li><a href="#">FAQ</a></li>
-            </ul>
+                <h4>CUSTOMER SERVICE</h4>
+                <ul>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Shipping</a></li>
+                    <li><a href="#">Returns & Exchanges</a></li>
+                    <li><a href="#">Order Status</a></li>
+                    <li><a href="#">Fit Guide</a></li>
+                    <li><a href="#">Gift Cards</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
             </div>
             <div class="footer-column">
-            <h4>OUR COMPANY</h4>
-            <ul>
-                <li><a href="#">About Us</a></li>
-                <li><a href="#">Philanthropy</a></li>
-                <li><a href="#">Wholesale</a></li>
-            </ul>
+                <h4>OUR COMPANY</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Philanthropy</a></li>
+                    <li><a href="#">Wholesale</a></li>
+                </ul>
             </div>
             <div class="footer-column">
-            <h4>STORES</h4>
-            <ul>
-                <li><a href="#">Store Locator</a></li>
-                <li><a href="#">Stetson Japan</a></li>
-                <li><a href="#">Stetson Europe</a></li>
-                <li><a href="#">Stetson Australia</a></li>
-            </ul>
+                <h4>STORES</h4>
+                <ul>
+                    <li><a href="#">Store Locator</a></li>
+                    <li><a href="#">Stetson Japan</a></li>
+                    <li><a href="#">Stetson Europe</a></li>
+                    <li><a href="#">Stetson Australia</a></li>
+                </ul>
             </div>
             <div class="footer-column">
-            <h4>CONNECT</h4>
-            <ul>
-                <li><a href="#">Instagram</a></li>
-                <li><a href="#">Facebook</a></li>
-                <li><a href="#">YouTube</a></li>
-                <li><a href="#">Pinterest</a></li>
-            </ul>
+                <h4>CONNECT</h4>
+                <ul>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">YouTube</a></li>
+                    <li><a href="#">Pinterest</a></li>
+                </ul>
             </div>
         </div>
 
         <div class="footer-bottom">
             <p>&copy; 2025 Stetson Latam. All Rights Reserved.</p>
             <div class="footer-links">
-            <a href="#">Terms & Conditions</a> |
-            <a href="#">Privacy Policy</a> |
-            <a href="#">California Privacy Notice</a> |
-            <a href="#">Accessibility Mode</a> |
-            <a href="#">Do Not Sell Or Share My Personal Information</a>
+                <a href="#">Terms & Conditions</a> |
+                <a href="#">Privacy Policy</a> |
+                <a href="#">California Privacy Notice</a> |
+                <a href="#">Accessibility Mode</a> |
+                <a href="#">Do Not Sell Or Share My Personal Information</a>
             </div>
         </div>
     </footer>
