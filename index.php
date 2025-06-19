@@ -7,7 +7,7 @@
     <title>Stetson LATAM</title>
     <meta name="description" content="Stetson LATAM - Legendary Hats for Latin America and Central America">
     <link rel="stylesheet" href="css/index.css?v=6">
-    <link rel="stylesheet" href="css/carrousel.css?v=11">
+    <link rel="stylesheet" href="css/carrousel.css?v=12">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
@@ -48,6 +48,7 @@
             <span class="dot" data-slide="2"></span>
         </div>
     </section>
+
     
     <nav class="main-nav">
         <!-- Puedes agregar el logo aquí si deseas -->

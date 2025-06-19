@@ -1,9 +1,9 @@
 .carousel {
   position: relative;
   width: 100%;
-  height: calc(100vh - 63.92px); /* altura total menos la altura del nav fijo */
+  height: 100vh; /* Pantalla completa */
   overflow: hidden;
-  z-index: 1;
+  margin-top: 64px; /* si tu navbar es fixed */
 }
 
 .carousel-inner {
@@ -14,17 +14,16 @@
 }
 
 .carousel-item {
-  width: 100%;
-  height: 100%;
-  flex-shrink: 0;
+  flex: 0 0 100%;
   position: relative;
 }
 
 .carousel-img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: contain; /* Mostrar imagen completa sin zoom */
   display: block;
+  background-color: #000; /* para ver bien los bordes si sobra espacio */
 }
 
 .carousel-caption {
@@ -32,19 +31,19 @@
   bottom: 60px;
   left: 50px;
   color: white;
-  max-width: 400px;
   background-color: rgba(0, 0, 0, 0.5);
   padding: 1.2rem;
   border-radius: 8px;
+  max-width: 400px;
 }
 
 .carousel-caption h2 {
-  margin: 0 0 0.5rem;
+  margin-bottom: 0.5rem;
   font-size: 1.8rem;
 }
 
 .carousel-caption p {
-  margin: 0 0 1rem;
+  margin-bottom: 1rem;
   font-size: 1rem;
 }
 
@@ -57,6 +56,7 @@
   font-weight: bold;
 }
 
+/* Botones y dots */
 .carousel-btn {
   position: absolute;
   top: 50%;
@@ -94,13 +94,13 @@
   border-radius: 50%;
   opacity: 0.5;
   cursor: pointer;
-  transition: opacity 0.3s;
 }
 
 .carousel-dots .dot.active {
   opacity: 1;
 }
 
+/* Responsive ajustes */
 @media (max-width: 768px) {
   .carousel-caption {
     bottom: 20px;
