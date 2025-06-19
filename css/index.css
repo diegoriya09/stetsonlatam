@@ -20,16 +20,16 @@ html {
 body {
   margin: 0;
   padding-top: 70px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #fdfaf7;
+  font-family: 'GT America', sans-serif;
+  background-color: #f1eeea;
   color: #222;
   overflow-x: hidden;
 }
 
 nav.main-nav {
   display: flex;
-  font-family: 'GT America Bold', sans-serif;
-  font-size: 16px;
+  font-family: 'GT America', sans-serif;
+  font-size: 14px;
   align-items: center;
   justify-content: space-between;
   background-color: #fefffe;
@@ -119,15 +119,17 @@ nav.main-nav {
 }
 
 .hero-text h1 {
-  font-size: 3.2rem;
+  font-family: 'Lora', serif;
+  font-size: 36px;
   font-weight: 700;
-  margin-bottom: 25px;
+  margin: 9px;
   color: #f1eeea;
 }
 
 .hero-text p {
-  font-size: 1.2rem;
-  color: #ffffff;
+  font-family: 'GT America', sans-serif;
+  font-size: 16px;
+  color: #f1eeea;
   margin-bottom: 35px;
   line-height: 1.6;
 }
@@ -138,6 +140,7 @@ nav.main-nav {
   padding: 14px 28px;
   text-decoration: none;
   border-radius: 4px;
+  font-size: 14px;
   font-weight: 600;
   transition: background-color 0.3s ease;
 }
