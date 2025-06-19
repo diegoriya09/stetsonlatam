@@ -1,7 +1,7 @@
 .carousel {
   position: relative;
   width: 100%;
-  height: calc(100vh - 70px); /* altura total menos la altura del nav fijo */
+  height: calc(100vh - 63.92px); /* altura total menos la altura del nav fijo */
   overflow: hidden;
 }
 
