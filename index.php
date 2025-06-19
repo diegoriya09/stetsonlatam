@@ -15,32 +15,33 @@
     <header class="hero-carousel">
         <div class="hero-text-side">
             <div class="hero-texts">
-            <div class="hero-text active">
-                <h1>LEGENDARY HATS</h1>
-                <p>Tradición, estilo y carácter. Ahora en América Latina.</p>
-                <a href="#featured" class="shop-now-btn">Explorar</a>
+                <div class="hero-text active">
+                    <h1>LEGENDARY HATS</h1>
+                    <p>Tradición, estilo y carácter. Ahora en América Latina.</p>
+                    <a href="#featured" class="shop-now-btn">Explorar</a>
+                </div>
+                <div class="hero-text">
+                    <h1>ARTESANÍA PURA</h1>
+                    <p>Sombreros hechos a mano con herencia americana.</p>
+                    <a href="#featured" class="shop-now-btn">Ver más</a>
+                </div>
+                <div class="hero-text">
+                    <h1>ICONOS DE ESTILO</h1>
+                    <p>Elige lo que define tu personalidad.</p>
+                    <a href="#featured" class="shop-now-btn">Descubrir</a>
+                </div>
             </div>
-            <div class="hero-text">
-                <h1>ARTESANÍA PURA</h1>
-                <p>Sombreros hechos a mano con herencia americana.</p>
-                <a href="#featured" class="shop-now-btn">Ver más</a>
-            </div>
-            <div class="hero-text">
-                <h1>ICONOS DE ESTILO</h1>
-                <p>Elige lo que define tu personalidad.</p>
-                <a href="#featured" class="shop-now-btn">Descubrir</a>
-            </div>
-            </div>
-            <div class="hero-dots">
-            <span class="dot active" data-index="0"></span>
-            <span class="dot" data-index="1"></span>
-            <span class="dot" data-index="2"></span>
-            </div>
+
         </div>
         <div class="hero-image-side">
             <img src="img/slide1.png" class="hero-img active" />
             <img src="img/slide2.png" class="hero-img" />
             <img src="img/slide3.png" class="hero-img" />
+            <div class="hero-dots">
+                <span class="dot active" data-index="0"></span>
+                <span class="dot" data-index="1"></span>
+                <span class="dot" data-index="2"></span>
+            </div>
         </div>
     </header>
 
