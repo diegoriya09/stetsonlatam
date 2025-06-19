@@ -182,6 +182,7 @@ nav.main-nav {
 }
 
 .hero-slider {
+  font-family: 'GT America', sans-serif;
   position: relative;
   display: flex;
   height: calc(100vh -  70px);
@@ -215,17 +216,33 @@ nav.main-nav {
   font-family: 'Work Sans', sans-serif;
 }
 
-.hero-content h1 { font-size:2.5rem; margin-bottom:1rem; }
-.hero-content p { margin-bottom:1.5rem; font-size:1.1rem; color:#444; line-height:1.4; }
+.hero-content h1 {
+  font-family: 'Lora', serif;
+  font-size:36px; 
+  color: #3c3737;
+  margin-bottom:1rem; 
+}
+
+.hero-content p {
+  margin-bottom:1.5rem; 
+  font-family: 'GT America', sans-serif;
+  font-size:16px; 
+  color:#3c3737; 
+  line-height:1.4; 
+}
+
 .cta-btn {
-  background: #2a2a2a;
-  color: #fff;
+  background: #3c3737;
+  color: #f1eeea;
+  font-size: 14px;
   padding: 12px 24px;
   text-decoration: none;
   border-radius: 4px;
   font-weight:600;
 }
-.cta-btn:hover { background: #000; }
+.cta-btn:hover {
+  background: #3c3737; 
+}
 
 .dots {
   position:absolute;
@@ -406,7 +423,6 @@ footer {
 .form-section {
   transition: opacity 0.3s ease;
 }
-
 
 /* Botón Agregar al carrito */
 .add-to-cart {
