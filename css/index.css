@@ -176,7 +176,6 @@ nav.main-nav {
   position: relative;
   display: flex;
   height: calc(100vh -  70px);
-  margin-top: var(--nav-height, 60px); /* deja el slider justo debajo del navbar */
   overflow: hidden;
 }
 
