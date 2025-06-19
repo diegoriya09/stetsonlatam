@@ -1,8 +1,9 @@
 .carousel {
   position: relative;
   width: 100%;
-  height: calc(100vh - 60px); /* Ajusta la altura del carrusel */
+  height: calc(100vh - 63.92px); /* altura total menos la altura del nav fijo */
   overflow: hidden;
+  z-index: 1;
 }
 
 .carousel-inner {
@@ -22,9 +23,8 @@
 .carousel-img {
   width: 100%;
   height: 100%;
-  object-fit: contain; /* esto asegura que NO haga zoom */
+  object-fit: cover;
   display: block;
-  background-color: white; /* para evitar fondo negro */
 }
 
 .carousel-caption {
@@ -36,7 +36,25 @@
   background-color: rgba(0, 0, 0, 0.5);
   padding: 1.2rem;
   border-radius: 8px;
-  z-index: 2;
+}
+
+.carousel-caption h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.8rem;
+}
+
+.carousel-caption p {
+  margin: 0 0 1rem;
+  font-size: 1rem;
+}
+
+.buy-btn {
+  background-color: #f4a261;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
 }
 
 .carousel-btn {
@@ -83,7 +101,6 @@
   opacity: 1;
 }
 
-/* Responsive ajustes */
 @media (max-width: 768px) {
   .carousel-caption {
     bottom: 20px;
