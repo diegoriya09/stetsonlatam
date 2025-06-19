@@ -37,6 +37,7 @@ nav.main-nav {
   background-color: #BCB9BD;
   position: fixed;
   top: 0;
+  height: 70px;
   width: 100%;
   z-index: 1000;
   padding: 0.8rem 2rem;
