@@ -125,45 +125,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-const items = document.querySelectorAll('.carousel-item');
-const dots = document.querySelectorAll('.dot');
-let current = 0;
-
-function showSlide(index) {
-  const inner = document.querySelector('.carousel-inner');
-  inner.style.transform = `translateX(-${index * 100}%)`;
-
-  items.forEach((item, i) => {
-    item.classList.toggle('active', i === index);
-  });
-
-  dots.forEach((dot, i) => {
-    dot.classList.toggle('active', i === index);
-  });
-
-  current = index;
-}
-
-document.querySelector('.prev').addEventListener('click', () => {
-  showSlide((current - 1 + items.length) % items.length);
-});
-
-document.querySelector('.next').addEventListener('click', () => {
-  showSlide((current + 1) % items.length);
-});
-
-dots.forEach(dot => {
-  dot.addEventListener('click', () => {
-    const index = parseInt(dot.dataset.slide);
-    showSlide(index);
-  });
-});
-
-// Auto-slide (opcional)
-setInterval(() => {
-  showSlide((current + 1) % items.length);
-}, 7000);
-
 // Abrir y cerrar carrito (sidebar)
 document.getElementById('btn-carrito').addEventListener('click', () => {
   document.getElementById('carrito-sidebar').classList.add('open');
@@ -173,4 +134,28 @@ document.getElementById('btn-carrito').addEventListener('click', () => {
 document.getElementById('cerrar-carrito').addEventListener('click', () => {
   document.getElementById('carrito-sidebar').classList.remove('open');
 });
+
+const track = document.querySelector('.carousel-track');
+const slides = Array.from(track.children);
+const nextBtn = document.querySelector('.carousel-button.right');
+const prevBtn = document.querySelector('.carousel-button.left');
+
+let currentIndex = 0;
+
+function updateSlide(index) {
+  const slideWidth = slides[0].getBoundingClientRect().width;
+  track.style.transform = `translateX(-${slideWidth * index}px)`;
+  currentIndex = index;
+}
+
+nextBtn.addEventListener('click', () => {
+  const nextIndex = (currentIndex + 1) % slides.length;
+  updateSlide(nextIndex);
+});
+
+prevBtn.addEventListener('click', () => {
+  const prevIndex = (currentIndex - 1 + slides.length) % slides.length;
+  updateSlide(prevIndex);
+});
+
 
