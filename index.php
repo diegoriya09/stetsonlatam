@@ -90,9 +90,9 @@
                 <form action="php/login.php" method="POST">
                     <input type="email" name="email" placeholder="Correo electrónico" required />
                     <input type="password" name="password" placeholder="Contraseña" required />
-                    <button type="submit">Entrar</button>
+                    <button type="submit">Enter</button>
                 </form>
-                <p>¿No tienes cuenta? <a href="#" id="switch-to-register">Regístrate</a></p>
+                <p>Don't have an account? <a href="#" id="switch-to-register">Create account</a></p>
             </div>
             <!-- Register Form (oculto al inicio) -->
             <div id="register-form" class="form-section" style="display: none;">
@@ -101,9 +101,9 @@
                     <input type="text" name="name" placeholder="Nombre completo" required />
                     <input type="email" name="email" placeholder="Correo electrónico" required />
                     <input type="password" name="password" placeholder="Contraseña" required />
-                    <button type="submit">Registrarse</button>
+                    <button type="submit">Create</button>
                 </form>
-                <p>¿Ya tienes cuenta? <a href="#" id="switch-to-login">Inicia sesión</a></p>
+                <p>Already have an account? <a href="#" id="switch-to-login">Login</a></p>
             </div>
         </div>
     </div>
