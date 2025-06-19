@@ -172,6 +172,88 @@ nav.main-nav {
   }
 }
 
+.hero-inverted {
+  display: flex;
+  flex-direction: row-reverse;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  font-family: 'GT America', sans-serif;
+}
+
+.hero-image-side, .hero-text-side {
+  flex: 1;
+}
+
+.hero-image-side img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.hero-text-side {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fefcf9;
+  padding: 2rem;
+  text-align: center;
+}
+
+.hero-content h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #2a2a2a;
+}
+
+.hero-content p {
+  font-size: 1.2rem;
+  color: #444;
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+.shop-now-btn {
+  background-color: #2a2a2a;
+  color: white;
+  padding: 14px 28px;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.shop-now-btn:hover {
+  background-color: black;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .hero-inverted {
+    flex-direction: column-reverse;
+    height: auto;
+  }
+
+  .hero-image-side, .hero-text-side {
+    width: 100%;
+    height: auto;
+  }
+
+  .hero-image-side img {
+    height: auto;
+  }
+
+  .hero-content h1 {
+    font-size: 2rem;
+  }
+
+  .hero-content p {
+    font-size: 1rem;
+  }
+}
+
 .section {
   padding: 5rem 2rem;
   text-align: center;
