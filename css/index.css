@@ -317,14 +317,6 @@ nav.main-nav {
   transform: scale(1.03);
 }
 
-footer {
-  background-color: #333;
-  color: white;
-  text-align: center;
-  padding: 2rem 0;
-  margin-top: 4rem;
-}
-
 /* Estilo para el modal */
 .modal {
   display: none;
@@ -504,11 +496,11 @@ footer {
 }
 
 .site-footer {
-  background-color: #f6f4f1;
-  color: #333;
+  background-color: #f1eeea;
+  color: #3c3737;
   padding: 3rem 2rem 2rem;
-  font-family: 'Work Sans', sans-serif;
-  font-size: 0.95rem;
+  font-family: 'GT America', sans-serif;
+  font-size: 16px;
 }
 
 .footer-columns {
@@ -520,8 +512,9 @@ footer {
 
 .footer-column h4 {
   font-weight: 700;
-  font-size: 1rem;
-  margin-bottom: 1rem;
+  font-family: 'GT America Bold', sans-serif;
+  font-size: 16px;
+  margin-bottom: 5px;
   letter-spacing: 1px;
 }
 
@@ -536,6 +529,8 @@ footer {
 }
 
 .footer-column ul li a {
+  font-family: 'GT America', sans-serif;
+  font-size: 16px;
   text-decoration: none;
   color: #333;
   transition: color 0.2s ease;
