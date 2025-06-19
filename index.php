@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stetson LATAM</title>
     <meta name="description" content="Stetson LATAM - Legendary Hats for Latin America and Central America">
-    <link rel="stylesheet" href="css/index.css?v=5">
+    <link rel="stylesheet" href="css/index.css?v=6">
     <link rel="stylesheet" href="css/carrousel.css?v=8">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600;700&display=swap" rel="stylesheet">
@@ -156,7 +156,7 @@
                 </p>
             </article>
             <article class="card-item">
-                <img src="img/story2.jpg" alt="Fabricación artesanal">
+                <img src="img/story2.png" alt="Fabricación artesanal">
                 <h3>Artesanía Centenaria</h3>
                 <p>Sombreros hechos a mano con técnicas que han perdurado por generaciones.</p>
             </article>

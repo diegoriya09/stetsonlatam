@@ -84,7 +84,7 @@ nav.main-nav {
   width: 100%;
   height: auto;
   min-height: 600px;
-  background-color: #fefcf9;
+  background-color: #3F1E1F;
   font-family: 'Work Sans', sans-serif;
   margin-top: 0;
 }
@@ -117,18 +117,18 @@ nav.main-nav {
   font-size: 3.2rem;
   font-weight: 700;
   margin-bottom: 25px;
-  color: #2a2a2a;
+  color: #ffffff;
 }
 
 .hero-text p {
   font-size: 1.2rem;
-  color: #444;
+  color: #ffffff;
   margin-bottom: 35px;
   line-height: 1.6;
 }
 
 .shop-now-btn {
-  background-color: #2a2a2a;
+  background-color: #000000;
   color: white;
   padding: 14px 28px;
   text-decoration: none;
