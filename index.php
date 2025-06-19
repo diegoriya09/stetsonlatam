@@ -6,24 +6,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stetson LATAM</title>
     <meta name="description" content="Stetson LATAM - Legendary Hats for Latin America and Central America">
-    <link rel="stylesheet" href="css/index.css?v=8">
-    <link rel="stylesheet" href="css/carrousel.css?v=23">
+    <link rel="stylesheet" href="css/index.css?v=10">
+    <link rel="stylesheet" href="css/carrousel.css?v=25">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body typeof="schema:WebPage">
-    <header class="hero-inverted">
+    <header class="hero-carousel">
         <div class="hero-text-side">
-            <div class="hero-content">
-            <h1>LEGENDARY HATS</h1>
-            <p>Tradición, estilo y carácter. Ahora en América Latina.</p>
-            <a href="#featured" class="shop-now-btn">EXPLORAR</a>
+            <div class="hero-texts">
+            <div class="hero-text active">
+                <h1>LEGENDARY HATS</h1>
+                <p>Tradición, estilo y carácter. Ahora en América Latina.</p>
+                <a href="#featured" class="shop-now-btn">Explorar</a>
+            </div>
+            <div class="hero-text">
+                <h1>ARTESANÍA PURA</h1>
+                <p>Sombreros hechos a mano con herencia americana.</p>
+                <a href="#featured" class="shop-now-btn">Ver más</a>
+            </div>
+            <div class="hero-text">
+                <h1>ICONOS DE ESTILO</h1>
+                <p>Elige lo que define tu personalidad.</p>
+                <a href="#featured" class="shop-now-btn">Descubrir</a>
+            </div>
+            </div>
+            <div class="hero-dots">
+            <span class="dot active" data-index="0"></span>
+            <span class="dot" data-index="1"></span>
+            <span class="dot" data-index="2"></span>
             </div>
         </div>
         <div class="hero-image-side">
-            <img src="img/hero.png" alt="Stetson Modelo" />
+            <img src="img/slide1.png" class="hero-img active" />
+            <img src="img/slide2.png" class="hero-img" />
+            <img src="img/slide3.png" class="hero-img" />
         </div>
     </header>
+
+
     <nav class="main-nav">
         <!-- Puedes agregar el logo aquí si deseas -->
         <div class="nav-left">

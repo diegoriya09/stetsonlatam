@@ -123,28 +123,36 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  const track = document.querySelector('.carousel-track');
-  const slides = Array.from(track.children);
-  const nextBtn = document.querySelector('.carousel-button.right');
-  const prevBtn = document.querySelector('.carousel-button.left');
+  let currentSlide = 0;
+  const images = document.querySelectorAll('.hero-img');
+  const texts = document.querySelectorAll('.hero-text');
+  const dots = document.querySelectorAll('.dot');
 
-  let currentIndex = 0;
-
-  function updateSlide(index) {
-    const slideWidth = slides[0].getBoundingClientRect().width;
-    track.style.transform = `translateX(-${slideWidth * index}px)`;
-    currentIndex = index;
+  function showSlide(index) {
+    images.forEach((img, i) => {
+      img.classList.toggle('active', i === index);
+    });
+    texts.forEach((text, i) => {
+      text.classList.toggle('active', i === index);
+    });
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('active', i === index);
+    });
   }
 
-  nextBtn.addEventListener('click', () => {
-    const nextIndex = (currentIndex + 1) % slides.length;
-    updateSlide(nextIndex);
+  dots.forEach(dot => {
+    dot.addEventListener('click', () => {
+      currentSlide = parseInt(dot.getAttribute('data-index'));
+      showSlide(currentSlide);
+    });
   });
 
-  prevBtn.addEventListener('click', () => {
-    const prevIndex = (currentIndex - 1 + slides.length) % slides.length;
-    updateSlide(prevIndex);
-  });
+  // Auto-slide cada 6 segundos
+  setInterval(() => {
+    currentSlide = (currentSlide + 1) % images.length;
+    showSlide(currentSlide);
+  }, 6000);
+
 
 });
 
