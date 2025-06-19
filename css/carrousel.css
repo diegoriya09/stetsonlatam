@@ -1,9 +1,8 @@
 .carousel {
   position: relative;
-  width: 100vh;
-  height: 100vh;
+  width: 100%;
+  height: calc(100vh - 70px); /* altura total menos la altura del nav fijo */
   overflow: hidden;
-  margin-top: 70px; /* compensar altura del nav fijo */
 }
 
 .carousel-inner {
