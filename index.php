@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stetson LATAM</title>
     <meta name="description" content="Stetson LATAM - Legendary Hats for Latin America and Central America">
-    <link rel="stylesheet" href="css/index.css?v=16">
+    <link rel="stylesheet" href="css/index.css?v=17">
     <link rel="stylesheet" href="css/carrousel.css?v=25">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600;700&display=swap" rel="stylesheet">
@@ -40,10 +40,6 @@
             <a id="hero-btn" href="#featured" class="cta-btn">SHOP NOW</a>
         </div>
     </section>
-
-
-
-
     <nav class="main-nav">
         <!-- Puedes agregar el logo aquí si deseas -->
         <div class="nav-left">
@@ -86,7 +82,7 @@
     </div>
     <!-- Modal para login/registro -->
     <div id="user-modal" class="modal">
-        <div class="modal-content">
+        <div class="modal-content form-wrapper">
             <span class="close">&times;</span>
             <!-- Login Form -->
             <div id="login-form" class="form-section">
