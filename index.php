@@ -86,6 +86,7 @@
             <span class="close">&times;</span>
             <!-- Login Form -->
             <div id="login-form" class="form-section">
+                <h2>Login</h2>
                 <form action="php/login.php" method="POST">
                     <input type="email" name="email" placeholder="Correo electrónico" required />
                     <input type="password" name="password" placeholder="Contraseña" required />
@@ -95,6 +96,7 @@
             </div>
             <!-- Register Form (oculto al inicio) -->
             <div id="register-form" class="form-section" style="display: none;">
+                <h2>Create Account</h2>
                 <form id="registerForm" action="/php/register.php" method="POST">
                     <input type="text" name="name" placeholder="Nombre completo" required />
                     <input type="email" name="email" placeholder="Correo electrónico" required />
