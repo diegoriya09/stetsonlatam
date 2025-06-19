@@ -21,6 +21,7 @@ html {
 
 body {
   margin: 0;
+  padding: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #fdfaf7;
   color: #222;
@@ -34,7 +35,7 @@ nav.main-nav {
   align-items: center;
   justify-content: space-between;
   background-color: #BCB9BD;
-  position: fixed;
+  position: absolute;
   top: 0;
   width: 100%;
   z-index: 1000;
