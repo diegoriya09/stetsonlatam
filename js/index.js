@@ -135,38 +135,38 @@ document.getElementById('cerrar-carrito').addEventListener('click', () => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-  const slides = document.querySelectorAll('.slide');
-  const dots = document.querySelectorAll('.hero-dots .dot');
-  const title = document.getElementById('hero-title');
-  const text = document.getElementById('hero-description');
-  const btn = document.getElementById('hero-btn');
-  let current = 0;
+  const slides = document.querySelectorAll('.hero-slider .slide');
+  const dots   = document.querySelectorAll('.dot');
+  const title  = document.getElementById('hero-title');
+  const text   = document.getElementById('hero-text');
+  const btn    = document.getElementById('hero-btn');
 
-  function showSlide(index) {
+  let curr = 0;
+
+  function showSlide(i) {
     slides.forEach(s => s.classList.remove('active'));
     dots.forEach(d => d.classList.remove('active'));
+    slides[i].classList.add('active');
+    dots[i].classList.add('active');
 
-    slides[index].classList.add('active');
-    dots[index].classList.add('active');
-
-    title.textContent = slides[index].dataset.title;
-    text.textContent = slides[index].dataset.text;
-    btn.href = slides[index].dataset.link;
+    title.innerText = slides[i].dataset.title;
+    text.innerText  = slides[i].dataset.text;
+    btn.href        = slides[i].dataset.link;
   }
 
   dots.forEach(dot => {
     dot.addEventListener('click', () => {
-      current = parseInt(dot.dataset.index);
-      showSlide(current);
+      curr = parseInt(dot.dataset.index);
+      showSlide(curr);
     });
   });
 
+  // Avance automático cada 7 segundos
   setInterval(() => {
-    current = (current + 1) % slides.length;
-    showSlide(current);
+    curr = (curr + 1) % slides.length;
+    showSlide(curr);
   }, 7000);
 });
-
 
 
 
