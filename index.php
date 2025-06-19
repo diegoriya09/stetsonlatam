@@ -11,35 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
-
 <body typeof="schema:WebPage">
-    <nav class="main-nav">
-        <!-- Puedes agregar el logo aquí si deseas -->
-        <div class="nav-left">
-            <a href="#">
-                <img src="/img/logo.png" alt="Stetson Logo" class="logo" />
-            </a>
-        </div>
-        <!-- Enlaces centrados -->
-        <ul class="nav-center">
-            <li><a href="#hats">Hats</a></li>
-            <li><a href="#boots">Boots</a></li>
-            <li><a href="#mens">Mens</a></li>
-            <li><a href="#womens">Womens</a></li>
-            <li><a href="#accessories">Accessories</a></li>
-            <li><a href="#stories">Stories</a></li>
-        </ul>
-        <!-- Íconos a la derecha -->
-        <div class="nav-right">
-            <a href="#" id="open-user-modal"><img src="/img/user.png" alt="User" class="icon" /></a>
-            <a id="logout-btn" style="display: none;"><img src="/img/logout.png" alt="Logout" class="icon"></a>
-            <a href="#"><img src="/img/search.png" alt="Search" class="icon" /></a>
-            <div class="cart-wrapper">
-                <a id="btn-carrito"><img src="/img/cart.png" alt="Cart" class="icon" /></a>
-                <div id="cart-count" class="cart-notification">0</div>
-            </div>
-        </div>
-    </nav>
     <section class="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active" style="background-image: url('img/slide1.png');">
@@ -71,9 +43,34 @@
             <span class="dot" data-slide="1"></span>
             <span class="dot" data-slide="2"></span>
         </div>
-    </section>
-
-
+    </section>    
+    <nav class="main-nav">
+        <!-- Puedes agregar el logo aquí si deseas -->
+        <div class="nav-left">
+            <a href="#">
+                <img src="/img/logo.png" alt="Stetson Logo" class="logo" />
+            </a>
+        </div>
+        <!-- Enlaces centrados -->
+        <ul class="nav-center">
+            <li><a href="#hats">Hats</a></li>
+            <li><a href="#boots">Boots</a></li>
+            <li><a href="#mens">Mens</a></li>
+            <li><a href="#womens">Womens</a></li>
+            <li><a href="#accessories">Accessories</a></li>
+            <li><a href="#stories">Stories</a></li>
+        </ul>
+        <!-- Íconos a la derecha -->
+        <div class="nav-right">
+            <a href="#" id="open-user-modal"><img src="/img/user.png" alt="User" class="icon" /></a>
+            <a id="logout-btn" style="display: none;"><img src="/img/logout.png" alt="Logout" class="icon"></a>
+            <a href="#"><img src="/img/search.png" alt="Search" class="icon" /></a>
+            <div class="cart-wrapper">
+                <a id="btn-carrito"><img src="/img/cart.png" alt="Cart" class="icon" /></a>
+                <div id="cart-count" class="cart-notification">0</div>
+            </div>
+        </div>
+    </nav>
     <!-- Sidebar del carrito -->
     <div id="carrito-sidebar" class="sidebar">
         <div class="sidebar-header">
@@ -128,7 +125,6 @@
             </div>
         </div>
     </header>
-
     <section id="featured" class="section featured" typeof="schema:ItemList">
         <h2 property="schema:name">Featured Hats</h2>
         <div class="card-grid">
