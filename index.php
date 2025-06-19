@@ -7,7 +7,7 @@
     <title>Stetson LATAM</title>
     <meta name="description" content="Stetson LATAM - Legendary Hats for Latin America and Central America">
     <link rel="stylesheet" href="css/index.css?v=7">
-    <link rel="stylesheet" href="css/carrousel.css?v=19">
+    <link rel="stylesheet" href="css/carrousel.css?v=22">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
