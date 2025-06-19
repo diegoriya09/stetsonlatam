@@ -15,7 +15,7 @@
     <section class="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
-            <img src="img/slide1.png" alt="Slide 1" class="carousel-img" />
+            <img src="img/slide1.png" alt="Slide 1" class="carousel-img">
             <div class="carousel-caption">
                 <h2>Producto 1</h2>
                 <p>Descripción del producto 1</p>
@@ -23,7 +23,7 @@
             </div>
             </div>
             <div class="carousel-item">
-            <img src="img/slide2.png" alt="Slide 2" class="carousel-img" />
+            <img src="img/slide2.png" alt="Slide 2" class="carousel-img">
             <div class="carousel-caption">
                 <h2>Producto 2</h2>
                 <p>Descripción del producto 2</p>
@@ -31,7 +31,7 @@
             </div>
             </div>
             <div class="carousel-item">
-            <img src="img/slide3.png" alt="Slide 3" class="carousel-img" />
+            <img src="img/slide3.png" alt="Slide 3" class="carousel-img">
             <div class="carousel-caption">
                 <h2>Producto 3</h2>
                 <p>Descripción del producto 3</p>
@@ -48,6 +48,7 @@
             <span class="dot" data-slide="2"></span>
         </div>
     </section>
+
 
     
     <nav class="main-nav">

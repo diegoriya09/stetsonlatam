@@ -1,9 +1,8 @@
 .carousel {
   position: relative;
   width: 100%;
-  height: 100vh; /* Pantalla completa */
+  height: calc(100vh - 60px); /* Ajusta la altura del carrusel */
   overflow: hidden;
-  margin-top: 64px; /* si tu navbar es fixed */
 }
 
 .carousel-inner {
@@ -14,16 +13,18 @@
 }
 
 .carousel-item {
-  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  flex-shrink: 0;
   position: relative;
 }
 
 .carousel-img {
   width: 100%;
   height: 100%;
-  object-fit: contain; /* Mostrar imagen completa sin zoom */
+  object-fit: contain; /* esto asegura que NO haga zoom */
   display: block;
-  background-color: #000; /* para ver bien los bordes si sobra espacio */
+  background-color: white; /* para evitar fondo negro */
 }
 
 .carousel-caption {
@@ -31,32 +32,13 @@
   bottom: 60px;
   left: 50px;
   color: white;
+  max-width: 400px;
   background-color: rgba(0, 0, 0, 0.5);
   padding: 1.2rem;
   border-radius: 8px;
-  max-width: 400px;
+  z-index: 2;
 }
 
-.carousel-caption h2 {
-  margin-bottom: 0.5rem;
-  font-size: 1.8rem;
-}
-
-.carousel-caption p {
-  margin-bottom: 1rem;
-  font-size: 1rem;
-}
-
-.buy-btn {
-  background-color: #f4a261;
-  color: white;
-  padding: 0.6rem 1.2rem;
-  text-decoration: none;
-  border-radius: 5px;
-  font-weight: bold;
-}
-
-/* Botones y dots */
 .carousel-btn {
   position: absolute;
   top: 50%;
@@ -94,6 +76,7 @@
   border-radius: 50%;
   opacity: 0.5;
   cursor: pointer;
+  transition: opacity 0.3s;
 }
 
 .carousel-dots .dot.active {
