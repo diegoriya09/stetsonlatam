@@ -122,38 +122,6 @@ document.addEventListener('DOMContentLoaded', () => {
       cartCountElement.style.display = "block";
     });
   });
-
-  let currentSlide = 0;
-  const images = document.querySelectorAll('.hero-img');
-  const texts = document.querySelectorAll('.hero-text');
-  const dots = document.querySelectorAll('.dot');
-
-  function showSlide(index) {
-    images.forEach((img, i) => {
-      img.classList.toggle('active', i === index);
-    });
-    texts.forEach((text, i) => {
-      text.classList.toggle('active', i === index);
-    });
-    dots.forEach((dot, i) => {
-      dot.classList.toggle('active', i === index);
-    });
-  }
-
-  dots.forEach(dot => {
-    dot.addEventListener('click', () => {
-      currentSlide = parseInt(dot.getAttribute('data-index'));
-      showSlide(currentSlide);
-    });
-  });
-
-  // Auto-slide cada 6 segundos
-  setInterval(() => {
-    currentSlide = (currentSlide + 1) % images.length;
-    showSlide(currentSlide);
-  }, 6000);
-
-
 });
 
 // Abrir y cerrar carrito (sidebar)
@@ -164,6 +132,40 @@ document.getElementById('btn-carrito').addEventListener('click', () => {
 
 document.getElementById('cerrar-carrito').addEventListener('click', () => {
   document.getElementById('carrito-sidebar').classList.remove('open');
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  const slides = document.querySelectorAll('.hero-slider .slide');
+  const dots   = document.querySelectorAll('.dot');
+  const title  = document.getElementById('hero-title');
+  const text   = document.getElementById('hero-text');
+  const btn    = document.getElementById('hero-btn');
+
+  let curr = 0;
+
+  function showSlide(i) {
+    slides.forEach(s => s.classList.remove('active'));
+    dots.forEach(d => d.classList.remove('active'));
+    slides[i].classList.add('active');
+    dots[i].classList.add('active');
+
+    title.innerText = slides[i].dataset.title;
+    text.innerText  = slides[i].dataset.text;
+    btn.href        = slides[i].dataset.link;
+  }
+
+  dots.forEach(dot => {
+    dot.addEventListener('click', () => {
+      curr = parseInt(dot.dataset.index);
+      showSlide(curr);
+    });
+  });
+
+  // Avance automático cada 7 segundos
+  setInterval(() => {
+    curr = (curr + 1) % slides.length;
+    showSlide(curr);
+  }, 7000);
 });
 
 
