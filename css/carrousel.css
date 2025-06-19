@@ -2,7 +2,9 @@
   position: relative;
   width: 100%;
   height: calc(100vh - 63.92px); /* altura total menos la altura del nav fijo */
+  margin-top: 70px;
   overflow: hidden;
+  z-index: 1;
 }
 
 .carousel-inner {
@@ -16,10 +18,14 @@
   width: 100%;
   height: 100%;
   flex-shrink: 0;
-  background-size: cover; /* cambia contain por cover */
-  background-repeat: no-repeat;
-  background-position: center;
   position: relative;
+}
+
+.carousel-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .carousel-caption {
