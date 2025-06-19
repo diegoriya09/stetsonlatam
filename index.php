@@ -7,56 +7,50 @@
     <title>Stetson LATAM</title>
     <meta name="description" content="Stetson LATAM - Legendary Hats for Latin America and Central America">
     <link rel="stylesheet" href="css/index.css?v=7">
-    <link rel="stylesheet" href="css/carrousel.css?v=21">
+    <link rel="stylesheet" href="css/carrousel.css?v=19">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body typeof="schema:WebPage">
     <section class="carousel">
-        <div class="carousel-track-container">
-            <ul class="carousel-track">
-            <li class="carousel-slide current-slide">
-                <div class="slide-inner">
-                <div class="slide-text">
-                    <h2>Producto 1</h2>
-                    <p>Este es el primer producto destacado.</p>
-                    <button class="buy-button">Comprar</button>
-                </div>
-                <div class="slide-image">
-                    <img src="img/slide1.png" alt="Producto 1">
-                </div>
-                </div>
-            </li>
-            <li class="carousel-slide">
-                <div class="slide-inner">
-                <div class="slide-text">
-                    <h2>Producto 2</h2>
-                    <p>Innovación para tu vida diaria.</p>
-                    <button class="buy-button">Comprar</button>
-                </div>
-                <div class="slide-image">
-                    <img src="img/slide3.png" alt="Producto 2">
-                </div>
-                </div>
-            </li>
-            <li class="carousel-slide">
-                <div class="slide-inner">
-                <div class="slide-text">
-                    <h2>Producto 3</h2>
-                    <p>Calidad y estilo en un solo lugar.</p>
-                    <button class="buy-button">Comprar</button>
-                </div>
-                <div class="slide-image">
-                    <img src="img/slide3.png" alt="Producto 3">
-                </div>
-                </div>
-            </li>
-            </ul>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+            <img src="img/slide1.png" alt="Slide 1" class="carousel-img">
+            <div class="carousel-caption">
+                <h2>Producto 1</h2>
+                <p>Descripción del producto 1</p>
+                <a href="enlace1.html" class="buy-btn">Comprar ahora</a>
+            </div>
+            </div>
+            <div class="carousel-item">
+            <img src="img/slide2.png" alt="Slide 2" class="carousel-img">
+            <div class="carousel-caption">
+                <h2>Producto 2</h2>
+                <p>Descripción del producto 2</p>
+                <a href="enlace2.html" class="buy-btn">Comprar ahora</a>
+            </div>
+            </div>
+            <div class="carousel-item">
+            <img src="img/slide3.png" alt="Slide 3" class="carousel-img">
+            <div class="carousel-caption">
+                <h2>Producto 3</h2>
+                <p>Descripción del producto 3</p>
+                <a href="enlace3.html" class="buy-btn">Comprar ahora</a>
+            </div>
+            </div>
         </div>
-        <button class="carousel-button left">&#10094;</button>
-        <button class="carousel-button right">&#10095;</button>
+
+        <button class="carousel-btn prev">&#10094;</button>
+        <button class="carousel-btn next">&#10095;</button>
+        <div class="carousel-dots">
+            <span class="dot active" data-slide="0"></span>
+            <span class="dot" data-slide="1"></span>
+            <span class="dot" data-slide="2"></span>
+        </div>
     </section>
 
+
+    
     <nav class="main-nav">
         <!-- Puedes agregar el logo aquí si deseas -->
         <div class="nav-left">
