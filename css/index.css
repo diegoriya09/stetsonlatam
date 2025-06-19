@@ -1,19 +1,17 @@
 /* styles.css */
 @font-face {
-  font-family: 'GT America';
-  src: url('/fonts/gt-america/GT-America-Standard-Regular.woff2') format('woff2'),
-    url('/fonts/gt-america/GT-America-Standard-Regular.woff') format('woff');
+  font-family: 'GT America Regular';
+  src: url('/fonts/GT-America/GT-America-Standard-Regular-Trial.otf') format('woff2');
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'GT America';
-  src: url('/fonts/gt-america/GT-America-Standard-Bold.woff2') format('woff2');
+  font-family: 'GT America Bold';
+  src: url('/fonts/GT-America/GT-America-Standard-Bold-Trial.otf') format('woff2');
   font-weight: 700;
   font-style: normal;
 }
-
 
 html {
   scroll-behavior: smooth;
@@ -30,7 +28,7 @@ body {
 
 nav.main-nav {
   display: flex;
-  font-family: 'GT America', sans-serif;
+  font-family: 'GT America Bold', sans-serif;
   font-size: 16px;
   align-items: center;
   justify-content: space-between;
@@ -44,9 +42,12 @@ nav.main-nav {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.nav-left img.logo {
-  width: 133px;
-  height: 79px;
+.nav-left h2.logo {
+  font-family: 'Lora Regular', serif;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #3F1E1F;
+  margin: 0;
 }
 
 .nav-center {
