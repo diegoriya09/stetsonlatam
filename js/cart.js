@@ -102,9 +102,7 @@ function renderItem(id, name, price, image, quantity) {
       <div class="carrito-info">
         <h4>${name}</h4>
         <p>$${price.toLocaleString()} x ${quantity}</p>
-        <button class="remove-btn" data-id="${id}" style="color: red; background: none; border: none; cursor: pointer;">
-          <i class="fas fa-trash-alt"></i>
-        </button>
+        <a class="remove-btn" data-id="${id}"><i class="fas fa-trash-alt"></i></a>
       </div>
     </div>`;
 }
