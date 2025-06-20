@@ -67,7 +67,8 @@ nav.main-nav {
 .nav-center li a {
   text-decoration: none;
   font-family: 'GT America Bold', sans-serif;
-
+  padding-right: 15px;
+  margin-left: 15px;
   color: #3c3737;
   text-transform: uppercase;
   font-size: 14px;
