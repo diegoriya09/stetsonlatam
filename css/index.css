@@ -264,6 +264,73 @@ nav.main-nav {
 }
 .dot.active { opacity:1; }
 
+/* Estilos responsive */
+@media (max-width: 1024px) {
+  .hero-slider {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .hero-slider .slide {
+    position: relative;
+    width: 100%;
+    height: 50vh;
+    opacity: 1 !important; /* muestra siempre solo una imagen en dispositivos pequeños */
+  }
+
+  .hero-content {
+    position: relative;
+    width: 90%;
+    right: auto;
+    top: auto;
+    transform: none;
+    margin: 1rem auto;
+    padding: 1.5rem;
+  }
+
+  .hero-content h1 {
+    font-size: 28px;
+    text-align: center;
+  }
+
+  .hero-content p {
+    font-size: 15px;
+    text-align: center;
+  }
+
+  .cta-btn {
+    display: block;
+    width: fit-content;
+    margin: 0 auto;
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+
+  .dots {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 1rem;
+    bottom: auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero-content h1 {
+    font-size: 22px;
+  }
+
+  .hero-content p {
+    font-size: 14px;
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+  }
+}
+
+
 .section {
   padding: 5rem 2rem;
   text-align: center;

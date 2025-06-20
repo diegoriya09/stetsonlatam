@@ -70,7 +70,7 @@
     <!-- Sidebar del carrito -->
     <div id="carrito-sidebar" class="sidebar">
         <div class="sidebar-header">
-            <h3>Tu Carrito</h3>
+            <h3>My cart</h3>
             <span class="close-sidebar" id="cerrar-carrito">&times;</span>
         </div>
         <div class="sidebar-content" id="carrito-items">
