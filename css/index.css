@@ -458,10 +458,8 @@ nav.main-nav {
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-  border-bottom: solid #2c3737;
+  border-bottom: 0.5px solid #2c3737;
   background-color: #f1eeea;
-  height: 70px;
-  top: 0;
 }
 
 .sidebar-header .close-sidebar {
