@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     Swal.fire("Error", result.error || "No se pudo iniciar sesión", "error");
                 }
             } catch (error) {
-                Swal.fire("Error", "Error del servidor", "error");
+                Swal.fire("Error", "User doesn't exist", "error");
             }
         });
     }

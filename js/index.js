@@ -122,19 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
       cartCountElement.style.display = "block";
     });
   });
-});
 
-// Abrir y cerrar carrito (sidebar)
-document.getElementById('btn-carrito').addEventListener('click', () => {
-  document.getElementById('carrito-sidebar').classList.add('open');
-  loadCart(); // actualiza contenido
-});
-
-document.getElementById('cerrar-carrito').addEventListener('click', () => {
-  document.getElementById('carrito-sidebar').classList.remove('open');
-});
-
-document.addEventListener('DOMContentLoaded', () => {
   const slides = document.querySelectorAll('.hero-slider .slide');
   const dots   = document.querySelectorAll('.dot');
   const title  = document.getElementById('hero-title');
@@ -168,6 +156,12 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 7000);
 });
 
+// Abrir y cerrar carrito (sidebar)
+document.getElementById('btn-carrito').addEventListener('click', () => {
+  document.getElementById('carrito-sidebar').classList.add('open');
+  loadCart(); // actualiza contenido
+});
 
-
-
+document.getElementById('cerrar-carrito').addEventListener('click', () => {
+  document.getElementById('carrito-sidebar').classList.remove('open');
+});
