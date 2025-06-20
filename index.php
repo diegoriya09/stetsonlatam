@@ -150,14 +150,14 @@
         <div class="card-grid">
             <article class="card-item">
                 <img src="img/story1.png" alt="Origen Stetson">
-                <h3>Herencia Vaquera</h3>
-                <p>Desde el oeste americano hasta Latinoamérica, descubre la historia detrás del sombrero legendario.
+                <h3>Cowboy Heritage</h3>
+                <p>From the American West to Latin America, discover the history behind the legendary hat.
                 </p>
             </article>
             <article class="card-item">
                 <img src="img/story2.png" alt="Fabricación artesanal">
-                <h3>Artesanía Centenaria</h3>
-                <p>Sombreros hechos a mano con técnicas que han perdurado por generaciones.</p>
+                <h3>Centennial Crafts</h3>
+                <p>Handmade hats with techniques that have lasted for generations.</p>
             </article>
         </div>
     </section>
