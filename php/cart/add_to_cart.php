@@ -2,7 +2,7 @@
 session_start();
 require_once '../conexion.php';
 
-if (!isset($_SESSION['users_id'])) {
+if (!isset($_SESSION['user_id'])) {
     echo json_encode(['success' => false, 'message' => 'No logueado']);
     exit;
 }

@@ -134,7 +134,11 @@
                         <img src="<?= htmlspecialchars($producto['image']) ?>" alt="<?= htmlspecialchars($producto['name']) ?>">
                         <h3><?= htmlspecialchars($producto['name']) ?></h3>
                         <p>$<?= number_format($producto['price'], 0, ',', '.') ?></p>
-                        <a class="add-to-cart"><i class="fas fa-cart-plus"></i></a>
+                        <a class="add-to-cart" data-id="<?= $producto['id'] ?>"
+                        data-name="<?= htmlspecialchars($producto['name']) ?>"
+                        data-price="<?= $producto['price'] ?>"
+                        data-image="<?= $producto['image'] ?>">
+                        <i class="fas fa-cart-plus"></i></a>
                     </article>
             <?php 
                 endforeach;
@@ -213,9 +217,6 @@
             <a href="#">Do Not Sell Or Share My Personal Information</a>
             </div>
         </div>
-    </footer>
-
-    </footer>
     <script src="js/index.js?v=<?php echo time(); ?>"></script>
     <script src="js/auth.js?v=<?php echo time(); ?>"></script>
     <script src="js/cart.js?v=<?php echo time(); ?>"></script>
