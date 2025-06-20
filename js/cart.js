@@ -57,7 +57,7 @@ function loadCart() {
       .then(productos => {
         productos.forEach(p => {
           total += p.price * p.quantity;
-          carritoItems.innerHTML += renderItem(p.name, p.price, p.image, p.quantity);
+          carritoItems.innerHTML += renderItem(p.name, p.price, p.image, p.quantity, p.id || p.producto_id);
         });
         totalCarrito.textContent = `Total: $${total.toLocaleString()}`;
         updateCartCount(productos);
@@ -73,6 +73,25 @@ function loadCart() {
   }
 }
 
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('remove-btn')) {
+    const id = e.target.dataset.id;
+
+    if (isLoggedIn) {
+      fetch('php/cart/remove_from_cart.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ producto_id: id })
+      }).then(() => loadCart());
+    } else {
+      let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+      carrito = carrito.filter(p => p.id !== id);
+      localStorage.setItem('carrito', JSON.stringify(carrito));
+      loadCart();
+    }
+  }
+});
+
 function renderItem(name, price, image, quantity) {
   return `
     <div class="carrito-item">
@@ -80,6 +99,7 @@ function renderItem(name, price, image, quantity) {
       <div class="carrito-info">
         <h4>${name}</h4>
         <p>$${price.toLocaleString()} x ${quantity}</p>
+        <button class="remove-btn" data-id="${id}">Eliminar</button>
       </div>
     </div>`;
 }

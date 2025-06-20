@@ -494,6 +494,21 @@ nav.main-nav {
   margin-right: 1rem;
 }
 
+.remove-btn {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  font-size: 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 5px;
+}
+
+.remove-btn:hover {
+  background-color: #c62828;
+}
+
 .pagar-btn {
   background-color: #3c3737;
   color: #f1eeea;
