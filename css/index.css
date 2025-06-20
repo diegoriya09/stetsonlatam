@@ -436,7 +436,14 @@ nav.main-nav {
 }
 
 .add-to-cart-btn {
-  background-color: #3F1E1F
+  background-color: #3F1E1F;
+  color: #f1eeea;
+  border: none;
+  padding: 6px 10px;
+  font-size: 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 5px;
 }
 
 .sidebar {
