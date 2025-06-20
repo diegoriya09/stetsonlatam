@@ -460,6 +460,7 @@ nav.main-nav {
   padding: 1rem;
   border-bottom: 1px solid #2c3737;
   background-color: #f1eeea;
+  height: 70px;
 }
 
 .sidebar-header .close-sidebar {
