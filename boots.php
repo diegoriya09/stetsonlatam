@@ -38,7 +38,7 @@ $conn->close();
             <li><a href="mens.php">Mens</a></li>
             <li><a href="womens.php">Womens</a></li>
             <li><a href="accessories.php">Accessories</a></li>
-            <li><a href="#stories">Stories</a></li>
+            <li><a href="index.php#stories">Stories</a></li>
         </ul>
         <!-- Íconos a la derecha -->
         <div class="nav-right">
