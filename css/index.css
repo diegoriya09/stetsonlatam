@@ -459,6 +459,7 @@ nav.main-nav {
   align-items: center;
   padding: 1rem;
   border-bottom: 1px solid #f1eeea;
+  background-color: #f1eeea;
 }
 
 .sidebar-header .close-sidebar {
@@ -469,13 +470,14 @@ nav.main-nav {
 .sidebar-content {
   flex-grow: 1;
   overflow-y: auto;
-  color: #f1eeea;
+  background-color: #f1eeea;
   padding: 1rem;
 }
 
 .sidebar-footer {
   padding: 1rem;
   border-top: 1px solid #f1eeea;
+  background-color: #f1eeea;
   text-align: center;
 }
 
