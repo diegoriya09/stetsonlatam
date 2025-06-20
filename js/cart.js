@@ -72,7 +72,6 @@ function loadCart() {
       carritoItems.innerHTML += renderItem(p.id, p.name, p.price, p.image, p.quantity);
     });
     totalCarrito.textContent = `Total: $${total.toLocaleString()}`;
-    updateCartCount(carrito);
   }
 }
 
