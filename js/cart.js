@@ -57,7 +57,7 @@ function loadCart() {
       .then(productos => {
         productos.forEach(p => {
           total += p.price * p.quantity;
-          carritoItems.innerHTML += renderItem(p.name, p.price, p.image, p.quantity, p.id || p.producto_id);
+          carritoItems.innerHTML += renderItem(p.name, p.price, p.image, p.quantity);
         });
         totalCarrito.textContent = `Total: $${total.toLocaleString()}`;
         updateCartCount(productos);
