@@ -48,6 +48,7 @@
                 <h2 class="logo">STETSON LATAM</h2>
             </a>
         </div>
+        <div class="hamburger" id="hamburger">☰</div>
         <!-- Enlaces centrados -->
         <ul class="nav-center">
             <li><a href="hats.php">Hats</a></li>

@@ -87,6 +87,43 @@ nav.main-nav {
   cursor: pointer;
 }
 
+/* Oculta hamburguesa en pantallas grandes */
+.hamburger {
+  display: none;
+  font-size: 2rem;
+  cursor: pointer;
+  padding: 0 1rem;
+  user-select: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .nav-center {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 70px; /* ajusta según alto de tu navbar */
+    left: 0;
+    width: 100%;
+    background-color: #BCB9BD;
+    z-index: 999;
+    padding: 1rem 0;
+  }
+
+  .nav-center.show {
+    display: flex;
+  }
+
+  .hamburger {
+    display: block;
+  }
+
+  .nav-center li {
+    margin: 10px 0;
+    text-align: center;
+  }
+}
+
 .hero-split {
   display: flex;
   flex-wrap: wrap;
