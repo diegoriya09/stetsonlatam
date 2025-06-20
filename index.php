@@ -44,7 +44,7 @@
     <nav class="main-nav">
         <!-- Puedes agregar el logo aquí si deseas -->
         <div class="nav-left">
-            <a href="#">
+            <a href="index.php">
                 <h2 class="logo">STETSON LATAM</h2>
             </a>
         </div>
