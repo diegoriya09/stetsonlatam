@@ -212,7 +212,7 @@ nav.main-nav {
   transform: translateY(-50%);
   width: 40%;
   color: #222;
-  background: rgba(255,255,255,0.85);
+  background: #f1eeea;
   padding: 2rem;
   border-radius: 8px;
   font-family: 'GT America', sans-serif;
@@ -534,7 +534,7 @@ nav.main-nav {
   font-family: 'GT America', sans-serif;
   font-size: 16px;
   text-decoration: none;
-  color: #333;
+  color: #3c3737;
   transition: color 0.2s ease;
 }
 
@@ -545,7 +545,7 @@ nav.main-nav {
 .footer-bottom {
   text-align: center;
   font-size: 0.85rem;
-  color: #444;
+  color: #3c3737;
 }
 
 .footer-links {
@@ -553,7 +553,9 @@ nav.main-nav {
 }
 
 .footer-links a {
-  color: #444;
+  color: #3c3737;
+  font-family: 'GT America', sans-serif;
+  font-size: 12px;
   text-decoration: none;
   margin: 0 5px;
 }
