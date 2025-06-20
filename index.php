@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stetson LATAM</title>
     <meta name="description" content="Stetson LATAM - Legendary Hats for Latin America and Central America">
-    <link rel="stylesheet" href="css/index.css?v=39">
-    <link rel="stylesheet" href="css/carrousel.css?v=25">
+    <link rel="stylesheet" href="css/index.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/carrousel.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&display=swap" rel="stylesheet">
@@ -216,9 +216,9 @@
     </footer>
 
     </footer>
-    <script src="js/index.js"></script>
-    <script src="js/auth.js?v=2"></script>
-    <script src="js/cart.js"></script>
+    <script src="js/index.js?v=<?php echo time(); ?>"></script>
+    <script src="js/auth.js?v=<?php echo time(); ?>"></script>
+    <script src="js/cart.js?v=<?php echo time(); ?>"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 
