@@ -435,6 +435,10 @@ nav.main-nav {
   background-color: #e76f51;
 }
 
+.add-to-cart-btn {
+  background-color: #3F1E1F
+}
+
 .sidebar {
   position: fixed;
   top: 0;
