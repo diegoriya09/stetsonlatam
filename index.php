@@ -217,7 +217,8 @@
 
     </footer>
     <script src="js/index.js"></script>
-    <script src="js/auth.js"></script>
+    <script src="js/auth.js?v=2"></script>
+    <script src="js/cart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 
