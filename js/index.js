@@ -10,10 +10,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const loginForm = document.querySelector('#login-form form');
 
   const hamburger = document.getElementById('hamburger');
-  const navLinks = document.getElementById('nav-links');
+  const mobileMenu = document.getElementById('mobile-menu');
 
   hamburger.addEventListener('click', () => {
-    navLinks.classList.toggle('show');
+    mobileMenu.classList.toggle('show');
   });
 
   // Abrir modal

@@ -48,7 +48,6 @@
                 <h2 class="logo">STETSON LATAM</h2>
             </a>
         </div>
-        <div class="hamburger" id="hamburger">☰</div>
         <!-- Enlaces centrados -->
         <ul class="nav-center">
             <li><a href="hats.php">Hats</a></li>
@@ -58,10 +57,25 @@
             <li><a href="accesories.php">Accessories</a></li>
             <li><a href="#stories">Stories</a></li>
         </ul>
+        <!-- Menú responsive -->
+        <div class="mobile-menu" id="mobile-menu">
+        <div class="mobile-search">
+            <input type="text" placeholder="Buscar..." />
+        </div>
+        <ul>
+            <li><a href="#hats">Hats</a></li>
+            <li><a href="#boots">Boots</a></li>
+            <li><a href="#mens">Mens</a></li>
+            <li><a href="#womens">Womens</a></li>
+            <li><a href="#accessories">Accessories</a></li>
+            <li><a href="#stories">Stories</a></li>
+        </ul>
+        </div>
         <!-- Íconos a la derecha -->
         <div class="nav-right">
             <a href="#" id="open-user-modal"><img src="/img/user.png" alt="User" class="icon" /></a>
             <a id="logout-btn" style="display: none;"><img src="/img/logout.png" alt="Logout" class="icon"></a>
+            <div class="hamburger" id="hamburger">&#9776;</div>
             <a href="#"><img src="/img/search.png" alt="Search" class="icon" /></a>
             <div class="cart-wrapper">
                 <a id="btn-carrito"><img src="/img/cart.png" alt="Cart" class="icon" /></a>
