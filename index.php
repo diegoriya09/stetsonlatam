@@ -134,7 +134,7 @@
                         <img src="<?= htmlspecialchars($producto['image']) ?>" alt="<?= htmlspecialchars($producto['name']) ?>">
                         <h3><?= htmlspecialchars($producto['name']) ?></h3>
                         <p>$<?= number_format($producto['price'], 0, ',', '.') ?></p>
-                        <a class="add-to-cart" data-id="<?= $producto['id'] ?>"
+                        <a class="add-to-cart-btn" data-id="<?= $producto['id'] ?>"
                         data-name="<?= htmlspecialchars($producto['name']) ?>"
                         data-price="<?= $producto['price'] ?>"
                         data-image="<?= $producto['image'] ?>">
