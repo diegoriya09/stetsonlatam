@@ -14,7 +14,6 @@ fetch('php/check_session.php')
     }
 });
 
-document.addEventListener('DOMContentLoaded', function () {
   document.querySelectorAll('.add-to-cart-btn').forEach(button => {
     button.addEventListener('click', () => {
       const producto = {
@@ -44,7 +43,6 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
   });
-});
 
 function loadCart() {
   const carritoItems = document.getElementById('carrito-items');
