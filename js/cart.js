@@ -110,6 +110,5 @@ function renderItem(id, name, price, image, quantity) {
 function updateCartCount(productos) {
   const total = productos.reduce((acc, p) => acc + p.quantity, 0);
   const count = document.getElementById('cart-count');
-  count.textContent = total;
   count.style.display = total > 0 ? 'block' : 'none';
 }
