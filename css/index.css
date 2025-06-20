@@ -458,7 +458,7 @@ nav.main-nav {
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-  border-bottom: 1px solid #222;
+  border-bottom: 1px solid #2c3737;
   background-color: #f1eeea;
 }
 
@@ -476,7 +476,7 @@ nav.main-nav {
 
 .sidebar-footer {
   padding: 1rem;
-  border-top: 1px solid #222;
+  border-top: 1px solid #2c3737;
   background-color: #f1eeea;
   text-align: center;
 }
