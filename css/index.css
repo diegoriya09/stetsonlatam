@@ -461,6 +461,7 @@ nav.main-nav {
   border-bottom: 1px solid #2c3737;
   background-color: #f1eeea;
   height: 70px;
+  top: 0;
 }
 
 .sidebar-header .close-sidebar {
