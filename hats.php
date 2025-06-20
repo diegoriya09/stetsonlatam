@@ -18,22 +18,26 @@ $conn->close();
 <head>
   <meta charset="UTF-8">
   <title>Stetson Hats</title>
+  <meta name="description" content="Stetson LATAM - Legendary Hats for Latin America and Central America">
+  <link rel="icon" href="img/logo.png" type="image/x-icon">
   <link rel="stylesheet" href="css/index.css?v=<?php echo time(); ?>">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
   <nav class="main-nav">
         <div class="nav-left">
-            <a href="#">
+            <a href="index.php">
                 <h2 class="logo">STETSON LATAM</h2>
             </a>
         </div>
         <!-- Enlaces centrados -->
         <ul class="nav-center">
             <li><a href="hats.php">Hats</a></li>
-            <li><a href="#boots">Boots</a></li>
-            <li><a href="#mens">Mens</a></li>
-            <li><a href="#womens">Womens</a></li>
-            <li><a href="#accessories">Accessories</a></li>
+            <li><a href="boots.php">Boots</a></li>
+            <li><a href="mens.php">Mens</a></li>
+            <li><a href="womens.php">Womens</a></li>
+            <li><a href="accessories.php">Accessories</a></li>
             <li><a href="#stories">Stories</a></li>
         </ul>
         <!-- Íconos a la derecha -->
@@ -70,6 +74,61 @@ $conn->close();
       <?php endif; ?>
     </div>
   </section>
+  <footer class="site-footer">
+        <div class="footer-columns">
+            <div class="footer-column">
+            <h4>CUSTOMER SERVICE</h4>
+            <ul>
+                <li><a href="#">Contact Us</a></li>
+                <li><a href="#">Shipping</a></li>
+                <li><a href="#">Returns & Exchanges</a></li>
+                <li><a href="#">Order Status</a></li>
+                <li><a href="#">Fit Guide</a></li>
+                <li><a href="#">Gift Cards</a></li>
+                <li><a href="#">FAQ</a></li>
+            </ul>
+            </div>
+            <div class="footer-column">
+            <h4>OUR COMPANY</h4>
+            <ul>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Philanthropy</a></li>
+                <li><a href="#">Wholesale</a></li>
+            </ul>
+            </div>
+            <div class="footer-column">
+            <h4>STORES</h4>
+            <ul>
+                <li><a href="#">Store Locator</a></li>
+                <li><a href="#">Stetson Japan</a></li>
+                <li><a href="#">Stetson Europe</a></li>
+                <li><a href="#">Stetson Australia</a></li>
+            </ul>
+            </div>
+            <div class="footer-column">
+            <h4>CONNECT</h4>
+            <ul>
+                <li><a href="#">Instagram</a></li>
+                <li><a href="#">Facebook</a></li>
+                <li><a href="#">YouTube</a></li>
+                <li><a href="#">Pinterest</a></li>
+            </ul>
+            </div>
+        </div>
 
+        <div class="footer-bottom">
+            <p>&copy; 2025 Stetson Latam. All Rights Reserved.</p>
+            <div class="footer-links">
+            <a href="#">Terms & Conditions</a> |
+            <a href="#">Privacy Policy</a> |
+            <a href="#">California Privacy Notice</a> |
+            <a href="#">Accessibility Mode</a> |
+            <a href="#">Do Not Sell Or Share My Personal Information</a>
+            </div>
+        </div>
+    <script src="js/index.js?v=<?php echo time(); ?>"></script>
+    <script src="js/auth.js?v=<?php echo time(); ?>"></script>
+    <script src="js/cart.js?v=<?php echo time(); ?>"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>
