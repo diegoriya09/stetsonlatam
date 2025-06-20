@@ -458,7 +458,7 @@ nav.main-nav {
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #f1eeea;
 }
 
 .sidebar-header .close-sidebar {
@@ -469,12 +469,13 @@ nav.main-nav {
 .sidebar-content {
   flex-grow: 1;
   overflow-y: auto;
+  color: #f1eeea;
   padding: 1rem;
 }
 
 .sidebar-footer {
   padding: 1rem;
-  border-top: 1px solid #ddd;
+  border-top: 1px solid #f1eeea;
   text-align: center;
 }
 
@@ -492,8 +493,10 @@ nav.main-nav {
 }
 
 .pagar-btn {
-  background-color: #f4a261;
-  color: white;
+  background-color: #3c3737;
+  color: #f1eeea;
+  font-family: 'GT America', sans-serif;
+  font-size: 14px;
   padding: 10px 20px;
   border: none;
   border-radius: 6px;
