@@ -92,7 +92,7 @@ document.addEventListener('click', function(e) {
   }
 });
 
-function renderItem(name, price, image, quantity) {
+function renderItem(id, name, price, image, quantity) {
   return `
     <div class="carrito-item">
       <img src="${image}" alt="${name}" class="carrito-img">
