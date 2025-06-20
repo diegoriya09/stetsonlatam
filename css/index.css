@@ -461,6 +461,11 @@ nav.main-nav {
   border-bottom: 1px solid #ddd;
 }
 
+.sidebar-header .close-sidebar {
+  cursor: pointer;
+  color: #3c3737;
+}
+
 .sidebar-content {
   flex-grow: 1;
   overflow-y: auto;
