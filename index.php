@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="css/index.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="css/carrousel.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&display=swap" rel="stylesheet">
 </head>
 <body typeof="schema:WebPage">
@@ -135,11 +134,13 @@
                         <img src="<?= htmlspecialchars($producto['image']) ?>" alt="<?= htmlspecialchars($producto['name']) ?>">
                         <h3><?= htmlspecialchars($producto['name']) ?></h3>
                         <p>$<?= number_format($producto['price'], 0, ',', '.') ?></p>
-                        <a class="add-to-cart-btn" data-id="<?= $producto['id'] ?>"
-                        data-name="<?= htmlspecialchars($producto['name']) ?>"
-                        data-price="<?= $producto['price'] ?>"
-                        data-image="<?= $producto['image'] ?>">
-                        <i class="fas fa-cart-plus"></i></a>
+                        <button class="add-to-cart-btn"
+                            data-id="<?= $producto['id'] ?>"
+                            data-name="<?= htmlspecialchars($producto['name']) ?>"
+                            data-price="<?= $producto['price'] ?>"
+                            data-image="<?= htmlspecialchars($producto['image']) ?>">
+                            <i class="fas fa-cart-plus"></i>
+                        </button>
                     </article>
             <?php 
                 endforeach;

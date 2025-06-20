@@ -14,33 +14,35 @@ fetch('php/check_session.php')
     }
 });
 
-document.querySelectorAll('.add-to-cart-btn').forEach(button => {
-  button.addEventListener('click', () => {
-    const producto = {
-      id: button.dataset.id,
-      name: button.dataset.name,
-      price: parseFloat(button.dataset.price),
-      image: button.dataset.image,
-      quantity: 1
-    };
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+    button.addEventListener('click', () => {
+      const producto = {
+        id: button.dataset.id,
+        name: button.dataset.name,
+        price: parseFloat(button.dataset.price),
+        image: button.dataset.image,
+        quantity: 1
+      };
 
-    if (isLoggedIn) {
-      fetch('php/cart/add_to_cart.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ producto_id: producto.id, quantity: 1 })
-      }).then(() => loadCart());
-    } else {
-      let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-      const index = carrito.findIndex(p => p.id === producto.id);
-      if (index !== -1) {
-        carrito[index].quantity += 1;
+      if (isLoggedIn) {
+        fetch('php/cart/add_to_cart.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ producto_id: producto.id, quantity: 1 })
+        }).then(() => loadCart());
       } else {
-        carrito.push(producto);
+        let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+        const index = carrito.findIndex(p => p.id === producto.id);
+        if (index !== -1) {
+          carrito[index].quantity += 1;
+        } else {
+          carrito.push(producto);
+        }
+        localStorage.setItem('carrito', JSON.stringify(carrito));
+        loadCart();
       }
-      localStorage.setItem('carrito', JSON.stringify(carrito));
-      loadCart();
-    }
+    });
   });
 });
 
@@ -52,16 +54,17 @@ function loadCart() {
   carritoItems.innerHTML = '';
 
   if (isLoggedIn) {
-    fetch('php/cart/get_cart.php')
-      .then(res => res.json())
-      .then(productos => {
-        productos.forEach(p => {
-          total += p.price * p.quantity;
-          carritoItems.innerHTML += renderItem(p.id ,p.name, p.price, p.image, p.quantity);
-        });
-        totalCarrito.textContent = `Total: $${total.toLocaleString()}`;
-        updateCartCount(productos);
+    if (localStorage.getItem('carrito')) {
+    const localCarrito = JSON.parse(localStorage.getItem('carrito'));
+    localCarrito.forEach(item => {
+      fetch('php/cart/add_to_cart.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ producto_id: item.id, quantity: item.quantity })
       });
+    });
+    localStorage.removeItem('carrito'); // Limpiar localStorage tras sincronizar
+  }
   } else {
     const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
     carrito.forEach(p => {
@@ -99,7 +102,9 @@ function renderItem(id, name, price, image, quantity) {
       <div class="carrito-info">
         <h4>${name}</h4>
         <p>$${price.toLocaleString()} x ${quantity}</p>
-        <button class="remove-btn" data-id="${id}">Eliminar</button>
+        <button class="remove-btn" data-id="${id}" style="color: red; background: none; border: none; cursor: pointer;">
+          <i class="fas fa-trash-alt"></i>
+        </button>
       </div>
     </div>`;
 }
