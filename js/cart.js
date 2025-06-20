@@ -57,7 +57,7 @@ function loadCart() {
       .then(productos => {
         productos.forEach(p => {
           total += p.price * p.quantity;
-          carritoItems.innerHTML += renderItem(p.name, p.price, p.image, p.quantity);
+          carritoItems.innerHTML += renderItem(p.id ,p.name, p.price, p.image, p.quantity);
         });
         totalCarrito.textContent = `Total: $${total.toLocaleString()}`;
         updateCartCount(productos);
@@ -66,7 +66,7 @@ function loadCart() {
     const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
     carrito.forEach(p => {
       total += p.price * p.quantity;
-      carritoItems.innerHTML += renderItem(p.name, p.price, p.image, p.quantity);
+      carritoItems.innerHTML += renderItem(p.id, p.name, p.price, p.image, p.quantity);
     });
     totalCarrito.textContent = `Total: $${total.toLocaleString()}`;
     updateCartCount(carrito);
