@@ -81,11 +81,11 @@ $conn->close();
           <article class="card-item">
             <img src="<?= htmlspecialchars($producto['image']) ?>" alt="<?= htmlspecialchars($producto['name']) ?>">
             <h3><?= htmlspecialchars($producto['name']) ?></h3>
-            <p>$<?= number_format($producto['price'], 0, ',', '.') ?></p>
+            <p>$<?= number_format($producto['price'], 0, ',', '.') ?>.00</p>
             <button class="add-to-cart-btn"
               data-id="<?= $producto['id'] ?>"
               data-name="<?= htmlspecialchars($producto['name']) ?>"
-              data-price="<?= $producto['price'] ?>.00"
+              data-price="<?= $producto['price'] ?>"
               data-image="<?= htmlspecialchars($producto['image']) ?>">
               <i class="fas fa-cart-plus"></i>
             </button>
