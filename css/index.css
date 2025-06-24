@@ -51,7 +51,7 @@ nav.main-nav {
 }
 
 .logo .reg {
-  font-size: 0.5em;
+  font-size: 1px;
   position: absolute;
   bottom: 0;
   right: -1.2em; /* puedes ajustar la distancia */
