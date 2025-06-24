@@ -87,7 +87,9 @@ $conn->close();
     <div class="card-grid">
       <?php if (count($productos) > 0): ?>
         <?php foreach ($productos as $producto): ?>
-          <article class="card-item">
+          <article class="card-item"
+          data-name="<?= htmlspecialchars($producto['name']) ?>"
+          data-price="<?= $producto['price'] ?>">
             <img src="<?= htmlspecialchars($producto['image']) ?>" alt="<?= htmlspecialchars($producto['name']) ?>">
             <h3><?= htmlspecialchars($producto['name']) ?></h3>
             <p>$<?= number_format($producto['price'], 0, ',', '.') ?>.00</p>
@@ -101,7 +103,7 @@ $conn->close();
           </article>
         <?php endforeach; ?>
       <?php else: ?>
-        <p style="color:red;">There are no hats available at this time.</p>
+        <p style="color:#3c3737;">There are no hats available at this time.</p>
       <?php endif; ?>
     </div>
   </section>
