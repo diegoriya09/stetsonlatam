@@ -49,6 +49,14 @@ nav.main-nav {
   margin: 0;
 }
 
+.nav-left .logo .reg {
+  font-size: 0.5em;
+  position: absolute;
+  bottom: 0;
+  right: -1.2em; /* puedes ajustar la distancia */
+  line-height: 1;
+}
+
 .nav-left a {
   text-decoration: none;
 }
