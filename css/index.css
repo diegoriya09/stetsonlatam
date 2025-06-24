@@ -406,7 +406,7 @@ nav.main-nav {
 }
 
 .modal-content {
-  background-color: #fff;
+  background-color: #f1eeea;
   margin: 8% auto;
   padding: 2.5rem;
   border-radius: 12px;
@@ -421,7 +421,7 @@ nav.main-nav {
   margin-bottom: 1rem;
   font-size: 1.8rem;
   font-weight: 700;
-  color: #222;
+  color: #3c3737;
 }
 
 .modal-content input {
@@ -435,15 +435,15 @@ nav.main-nav {
 }
 
 .modal-content input:focus {
-  border-color: #f4a261;
+  border-color: #3F1E1F;
   outline: none;
 }
 
 .modal-content button {
   width: 100%;
   padding: 12px;
-  background-color: #2a2a2a;
-  color: white;
+  background-color: #3c3737;
+  color: #f1eeea;
   border: none;
   border-radius: 6px;
   font-weight: bold;
@@ -454,17 +454,17 @@ nav.main-nav {
 }
 
 .modal-content button:hover {
-  background-color: #000;
+  background-color: #3c3737;
 }
 
 .modal-content p {
   margin-top: 1rem;
   font-size: 0.9rem;
-  color: #555;
+  color: #3c3737;
 }
 
 .modal-content a {
-  color: #f4a261;
+  color: #3F1E1F;
   text-decoration: none;
   font-weight: 600;
 }
@@ -478,13 +478,13 @@ nav.main-nav {
   top: 18px;
   right: 22px;
   font-size: 1.4rem;
-  color: #999;
+  color: #f1eeea;
   cursor: pointer;
   transition: color 0.3s;
 }
 
 .close:hover {
-  color: #f4a261;
+  color: #3F1E1F;
 }
 
 .form-section {
