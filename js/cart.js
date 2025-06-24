@@ -40,16 +40,14 @@ document.querySelectorAll('.add-to-cart-btn').forEach(button => {
 
     if (isLoggedIn) {
       const jwt = localStorage.getItem('jwt');
-      Promise.all(localCarrito.map(item =>
-        fetch('php/cart/add_to_cart.php', {
-          method: 'POST',
-          headers: {
-            'Authorization': 'Bearer ' + jwt,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ producto_id: item.id, quantity: item.quantity })
-        })
-      )).then(() => loadCart());
+      fetch('php/cart/add_to_cart.php', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + jwt,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ producto_id: producto.id, quantity: 1 })
+      }).then(() => loadCart());
     } else {
       let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
       const index = carrito.findIndex(p => p.id === producto.id);
