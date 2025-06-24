@@ -50,10 +50,10 @@
         </div>
         <!-- Enlaces centrados -->
         <ul class="nav-center">
-            <li><a href="hats.php">Hats</a></li>
-            <li><a href="mens.php">Mens</a></li>
-            <li><a href="womens.php">Womens</a></li>
-            <li><a href="accesories.php">Accessories</a></li>
+            <li><a href="sections/hats.php">Hats</a></li>
+            <li><a href="sections/mens.php">Mens</a></li>
+            <li><a href="sections/womens.php">Womens</a></li>
+            <li><a href="sections/accesories.php">Accessories</a></li>
             <li><a href="#stories">Stories</a></li>
         </ul>
         <!-- Menú responsive -->
