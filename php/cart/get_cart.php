@@ -1,15 +1,32 @@
 <?php
-session_start();
 require_once '../conexion.php';
+require_once '../vendor/autoload.php';
+
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 
 header('Content-Type: application/json');
 
-if (!isset($_SESSION['user_id'])) {
+// Obtener JWT del header
+$headers = getallheaders();
+if (!isset($headers['Authorization'])) {
+    echo json_encode([]);
+    exit;
+}
+list($jwt) = sscanf($headers['Authorization'], 'Bearer %s');
+if (!$jwt) {
     echo json_encode([]);
     exit;
 }
 
-$user_id = $_SESSION['user_id'];
+$secret_key = "StetsonLatam1977";
+try {
+    $decoded = JWT::decode($jwt, new Key($secret_key, 'HS256'));
+    $user_id = $decoded->data->id;
+} catch (Exception $e) {
+    echo json_encode([]);
+    exit;
+}
 
 $sql = "SELECT c.producto_id AS id, p.name, p.price, p.image, c.quantity 
         FROM cart c 
