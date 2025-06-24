@@ -43,10 +43,19 @@ nav.main-nav {
 }
 
 .nav-left h2.logo {
-  font-family: 'Gt america', sans-serif;
-  font-size: 16px;
+  position: relative;
+  display: inline-block;
+  font-family: 'Lora', serif;
+  font-size: 36px;
   color: #3F1E1F;
-  margin: 0;
+}
+
+.logo .reg {
+  font-size: 0.5em;
+  position: absolute;
+  bottom: 0;
+  right: -1.2em; /* puedes ajustar la distancia */
+  line-height: 1;
 }
 
 .nav-left a {
