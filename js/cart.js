@@ -117,3 +117,21 @@ function renderItem(id, name, price, image, quantity) {
       </div>
     </div>`;
 }
+
+document.getElementById('logout-btn').addEventListener('click', function() {
+  fetch('php/logout.php', { method: 'POST' })
+    .then(() => {
+      isLoggedIn = false;
+      userId = null;
+      localStorage.removeItem('carrito'); // Opcional: limpia el carrito local
+      clearCartUI();
+      loadCart(); // Esto recargará el carrito vacío o desde localStorage
+    });
+});
+
+function clearCartUI() {
+  const carritoItems = document.getElementById('carrito-items');
+  const totalCarrito = document.getElementById('total-carrito');
+  if (carritoItems) carritoItems.innerHTML = '';
+  if (totalCarrito) totalCarrito.textContent = 'Total: $0';
+}
