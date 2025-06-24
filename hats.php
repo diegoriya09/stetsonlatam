@@ -75,6 +75,15 @@ $conn->close();
 
   <section class="section hats">
     <h2>Stetson Hats</h2>
+    <div class="sort-container">
+      <label for="sort-select" class="sort-label">Sort</label>
+      <select id="sort-select" class="sort-select">
+        <option value="name-asc">Name, A–Z</option>
+        <option value="name-desc">Name, Z–A</option>
+        <option value="price-asc">Price Low to High</option>
+        <option value="price-desc">Price High to Low</option>
+      </select>
+    </div>
     <div class="card-grid">
       <?php if (count($productos) > 0): ?>
         <?php foreach ($productos as $producto): ?>
@@ -110,6 +119,7 @@ $conn->close();
             <button class="pagar-btn">Pagar</button>
         </div>
     </div>
+
   <footer class="site-footer">
         <div class="footer-columns">
             <div class="footer-column">
