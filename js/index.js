@@ -9,13 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const registerForm = document.getElementById('registerForm');
   const loginForm = document.querySelector('#login-form form');
 
-  const hamburger = document.getElementById('hamburger');
-  const mobileMenu = document.getElementById('mobile-menu');
-
-  hamburger.addEventListener('click', () => {
-    mobileMenu.classList.toggle('show');
-  });
-
   // Abrir modal
   if (openModalBtn && modal) {
     openModalBtn.addEventListener('click', (e) => {
