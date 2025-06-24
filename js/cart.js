@@ -5,10 +5,10 @@ let userId = null;
 fetch('php/check_session.php')
   .then(response => response.json())
   .then(data => {
-    if (data.logged_in) {
+    const jwt = localStorage.getItem('jwt');
+    if (data.logged_in && jwt) { // <-- Solo sincroniza si hay JWT
       isLoggedIn = true;
       userId = data.user_id;
-      const jwt = localStorage.getItem('jwt');
       const localCarrito = JSON.parse(localStorage.getItem('carrito'));
       if (localCarrito && localCarrito.length > 0) {
         Promise.all(localCarrito.map(item =>
@@ -19,8 +19,12 @@ fetch('php/check_session.php')
               'Content-Type': 'application/json'
             },
             body: JSON.stringify({ producto_id: item.id, quantity: item.quantity })
-          })
-        )).then(() => {
+          }).then(res => res.json())
+        )).then(responses => {
+          // Puedes revisar aquí si alguna respuesta tiene success: false
+          if (responses.some(r => r.success === false)) {
+            alert('Error al sincronizar el carrito');
+          }
           localStorage.removeItem('carrito');
           loadCart();
         });
