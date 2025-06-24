@@ -50,7 +50,7 @@
         </div>
         <!-- Enlaces centrados -->
         <ul class="nav-center">
-            <li><a href="sections/hats.php">Hats</a></li>
+            <li><a href="/sections/hats.php">Hats</a></li>
             <li><a href="sections/mens.php">Mens</a></li>
             <li><a href="sections/womens.php">Womens</a></li>
             <li><a href="sections/accesories.php">Accessories</a></li>
