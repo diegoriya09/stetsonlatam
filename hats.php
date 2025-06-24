@@ -17,7 +17,7 @@ $conn->close();
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Stetson Latam</title>
+  <title>Hats | Stetson Latam</title>
   <meta name="description" content="Stetson LATAM - Legendary Hats for Latin America and Central America">
   <link rel="icon" href="img/logo.png" type="image/x-icon">
   <link rel="stylesheet" href="css/index.css?v=<?php echo time(); ?>">
@@ -34,9 +34,6 @@ $conn->close();
         <!-- Enlaces centrados -->
         <ul class="nav-center">
             <li><a href="hats.php">Hats</a></li>
-            <li><a href="mens.php">Mens</a></li>
-            <li><a href="womens.php">Womens</a></li>
-            <li><a href="accessories.php">Accessories</a></li>
             <li><a href="index.php#stories">Stories</a></li>
         </ul>
         <!-- Íconos a la derecha -->
