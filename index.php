@@ -134,7 +134,7 @@
         <h2 property="schema:name">Featured Hats</h2>
         <div class="card-grid">
             <?php 
-            include 'productos.php'; 
+            include 'featuredHats.php'; 
             if (count($productos) > 0):
                 foreach ($productos as $producto): ?>
                     <article class="card-item">
