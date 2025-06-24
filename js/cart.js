@@ -29,35 +29,41 @@ fetch('php/check_session.php')
     }
   });
 
-  document.querySelectorAll('.add-to-cart-btn').forEach(button => {
-    button.addEventListener('click', () => {
-      const producto = {
-        id: button.dataset.id,
-        name: button.dataset.name,
-        price: parseFloat(button.dataset.price),
-        image: button.dataset.image,
-        quantity: 1
-      };
+document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+  button.addEventListener('click', () => {
+    const producto = {
+      id: button.dataset.id,
+      name: button.dataset.name,
+      price: parseFloat(button.dataset.price),
+      image: button.dataset.image,
+      quantity: 1
+    };
 
-      if (isLoggedIn) {
+    if (isLoggedIn) {
+      const jwt = localStorage.getItem('jwt');
+      Promise.all(localCarrito.map(item =>
         fetch('php/cart/add_to_cart.php', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ producto_id: producto.id, quantity: 1 })
-        }).then(() => loadCart());
+          headers: {
+            'Authorization': 'Bearer ' + jwt,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ producto_id: item.id, quantity: item.quantity })
+        })
+      )).then(() => loadCart());
+    } else {
+      let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+      const index = carrito.findIndex(p => p.id === producto.id);
+      if (index !== -1) {
+        carrito[index].quantity += 1;
       } else {
-        let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-        const index = carrito.findIndex(p => p.id === producto.id);
-        if (index !== -1) {
-          carrito[index].quantity += 1;
-        } else {
-          carrito.push(producto);
-        }
-        localStorage.setItem('carrito', JSON.stringify(carrito));
-        loadCart();
+        carrito.push(producto);
       }
-    });
+      localStorage.setItem('carrito', JSON.stringify(carrito));
+      loadCart();
+    }
   });
+});
 
 function loadCart() {
   const carritoItems = document.getElementById('carrito-items');
@@ -67,8 +73,13 @@ function loadCart() {
   carritoItems.innerHTML = '';
 
   if (isLoggedIn) {
+    const jwt = localStorage.getItem('jwt');
     // Siempre carga desde backend
-    fetch('php/cart/get_cart.php')
+    fetch('php/cart/get_cart.php', {
+      headers: {
+        'Authorization': 'Bearer ' + jwt
+      }
+    })
       .then(response => response.json())
       .then(carrito => {
         carrito.forEach(p => {
@@ -87,15 +98,16 @@ function loadCart() {
   }
 }
 
-document.addEventListener('click', function(e) {
+document.addEventListener('click', function (e) {
   if (e.target.classList.contains('remove-btn')) {
     const id = e.target.dataset.id;
 
     if (isLoggedIn) {
+      const jwt = localStorage.getItem('jwt');
       fetch('php/cart/remove_from_cart.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ producto_id: id })
+        headers: {
+          'Authorization': 'Bearer ' + jwt
+        }
       }).then(() => loadCart());
     } else {
       let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
@@ -118,14 +130,15 @@ function renderItem(id, name, price, image, quantity) {
     </div>`;
 }
 
-document.getElementById('logout-btn').addEventListener('click', function() {
+document.getElementById('logout-btn').addEventListener('click', function () {
   fetch('php/logout.php', { method: 'POST' })
     .then(() => {
       isLoggedIn = false;
       userId = null;
-      localStorage.removeItem('carrito'); // Opcional: limpia el carrito local
+      localStorage.removeItem('carrito');
+      localStorage.removeItem('jwt'); // Limpia el token
       clearCartUI();
-      loadCart(); // Esto recargará el carrito vacío o desde localStorage
+      loadCart();
     });
 });
 
