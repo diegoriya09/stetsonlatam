@@ -85,7 +85,7 @@ $conn->close();
             <button class="add-to-cart-btn"
               data-id="<?= $producto['id'] ?>"
               data-name="<?= htmlspecialchars($producto['name']) ?>"
-              data-price="<?= $producto['price'] ?>"
+              data-price="<?= $producto['price'] ?>.00"
               data-image="<?= htmlspecialchars($producto['image']) ?>">
               <i class="fas fa-cart-plus"></i>
             </button>
