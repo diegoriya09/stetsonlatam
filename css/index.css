@@ -322,7 +322,7 @@ nav.main-nav {
   position:absolute;
   bottom:20px;
   left:50%;
-  transform:translateX(-100%);
+  transform:translateX(-200%);
   z-index: 10;
 }
 .dot {
