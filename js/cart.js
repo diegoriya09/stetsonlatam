@@ -8,11 +8,26 @@ fetch('php/check_session.php')
     if (data.logged_in) {
       isLoggedIn = true;
       userId = data.user_id;
-      loadCart(); // Cargar desde backend si está logueado
+      // Si hay carrito en localStorage, sincronízalo y luego bórralo
+      const localCarrito = JSON.parse(localStorage.getItem('carrito'));
+      if (localCarrito && localCarrito.length > 0) {
+        Promise.all(localCarrito.map(item =>
+          fetch('php/cart/add_to_cart.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ producto_id: item.id, quantity: item.quantity })
+          })
+        )).then(() => {
+          localStorage.removeItem('carrito');
+          loadCart();
+        });
+      } else {
+        loadCart();
+      }
     } else {
-      loadCart(); // Cargar desde localStorage si no
+      loadCart();
     }
-});
+  });
 
   document.querySelectorAll('.add-to-cart-btn').forEach(button => {
     button.addEventListener('click', () => {
@@ -52,17 +67,16 @@ function loadCart() {
   carritoItems.innerHTML = '';
 
   if (isLoggedIn) {
-    if (localStorage.getItem('carrito')) {
-    const localCarrito = JSON.parse(localStorage.getItem('carrito'));
-    localCarrito.forEach(item => {
-      fetch('php/cart/add_to_cart.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ producto_id: item.id, quantity: item.quantity })
+    // Siempre carga desde backend
+    fetch('php/cart/get_cart.php')
+      .then(response => response.json())
+      .then(carrito => {
+        carrito.forEach(p => {
+          total += p.price * p.quantity;
+          carritoItems.innerHTML += renderItem(p.id, p.name, p.price, p.image, p.quantity);
+        });
+        totalCarrito.textContent = `Total: $${total.toLocaleString()}`;
       });
-    });
-    localStorage.removeItem('carrito'); // Limpiar localStorage tras sincronizar
-  }
   } else {
     const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
     carrito.forEach(p => {

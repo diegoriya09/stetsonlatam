@@ -2,6 +2,8 @@
 session_start();
 require_once '../conexion.php';
 
+header('Content-Type: application/json');
+
 if (!isset($_SESSION['user_id'])) {
     echo json_encode(['success' => false, 'message' => 'No logueado']);
     exit;
@@ -12,6 +14,11 @@ $data = json_decode(file_get_contents('php://input'), true);
 
 $producto_id = $data['producto_id'];
 $cantidad = $data['quantity'];
+
+if ($cantidad <= 0) {
+    echo json_encode(['success' => false, 'message' => 'Cantidad inválida']);
+    exit;
+}
 
 // Verificar si ya está en el carrito
 $sql = "SELECT * FROM cart WHERE users_id = ? AND producto_id = ?";
@@ -35,3 +42,6 @@ if ($stmt->execute()) {
 } else {
     echo json_encode(['success' => false, 'message' => 'Error al agregar']);
 }
+
+$stmt->close();
+$conn->close();

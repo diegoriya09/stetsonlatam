@@ -2,6 +2,8 @@
 session_start();
 require_once '../conexion.php';
 
+header('Content-Type: application/json');
+
 if (!isset($_SESSION['user_id'])) {
     echo json_encode([]);
     exit;
@@ -9,7 +11,7 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-$sql = "SELECT c.id, p.name, p.price, p.image, c.quantity 
+$sql = "SELECT c.producto_id AS id, p.name, p.price, p.image, c.quantity 
         FROM cart c 
         JOIN productos p ON c.producto_id = p.id 
         WHERE c.users_id = ?";
@@ -24,3 +26,6 @@ while ($row = $result->fetch_assoc()) {
 }
 
 echo json_encode($carrito);
+
+$stmt->close();
+$conn->close();
