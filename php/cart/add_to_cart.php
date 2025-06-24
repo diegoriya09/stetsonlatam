@@ -1,24 +1,36 @@
 <?php
-session_start();
-require_once '../conexion.php';
+require_once 'php/conexion.php';
+require_once '../vendor/autoload.php';
+
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 
 header('Content-Type: application/json');
 
-if (!isset($_SESSION['user_id'])) {
-    echo json_encode(['success' => false, 'message' => 'No logueado']);
+// Obtener JWT del header
+$headers = getallheaders();
+if (!isset($headers['Authorization'])) {
+    echo json_encode(['success' => false, 'message' => 'No autorizado']);
+    exit;
+}
+list($jwt) = sscanf($headers['Authorization'], 'Bearer %s');
+if (!$jwt) {
+    echo json_encode(['success' => false, 'message' => 'No token']);
     exit;
 }
 
-$user_id = $_SESSION['user_id'];
-$data = json_decode(file_get_contents('php://input'), true);
+$secret_key = "StetsonLatam1977";
+try {
+    $decoded = JWT::decode($jwt, new Key($secret_key, 'HS256'));
+    $user_id = $decoded->data->id;
+} catch (Exception $e) {
+    echo json_encode(['success' => false, 'message' => 'Token inválido']);
+    exit;
+}
 
+$data = json_decode(file_get_contents('php://input'), true);
 $producto_id = $data['producto_id'];
 $cantidad = $data['quantity'];
-
-if ($cantidad <= 0) {
-    echo json_encode(['success' => false, 'message' => 'Cantidad inválida']);
-    exit;
-}
 
 // Verificar si ya está en el carrito
 $sql = "SELECT * FROM cart WHERE users_id = ? AND producto_id = ?";
