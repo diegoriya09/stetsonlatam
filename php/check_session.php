@@ -1,7 +1,34 @@
 <?php
-session_start();
+require_once 'conexion.php';
+require_once '../vendor/autoload.php';
+
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
+
 header('Content-Type: application/json');
-echo json_encode([
-  'logged_in' => isset($_SESSION['user_id']),
-  'user_id' => $_SESSION['user_id'] ?? null
-]);
+
+// Obtener el JWT del encabezado Authorization
+$headers = getallheaders();
+if (!isset($headers['Authorization'])) {
+    echo json_encode(['logged_in' => false]);
+    exit;
+}
+
+list($jwt) = sscanf($headers['Authorization'], 'Bearer %s');
+if (!$jwt) {
+    echo json_encode(['logged_in' => false]);
+    exit;
+}
+
+$secret_key = "StetsonLatam1977";
+
+try {
+    $decoded = JWT::decode($jwt, new Key($secret_key, 'HS256'));
+    echo json_encode([
+        'logged_in' => true,
+        'user_id' => $decoded->data->id
+    ]);
+} catch (Exception $e) {
+    echo json_encode(['logged_in' => false, 'message' => 'Token inválido']);
+}
+

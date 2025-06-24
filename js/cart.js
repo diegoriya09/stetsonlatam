@@ -2,7 +2,11 @@ let isLoggedIn = false;
 let userId = null;
 
 // Verifica si hay sesión activa desde PHP
-fetch('php/check_session.php')
+fetch('php/check_session.php', {
+  headers: {
+    'Authorization': 'Bearer ' + localStorage.getItem('jwt')
+  }
+})
   .then(response => response.json())
   .then(data => {
     const jwt = localStorage.getItem('jwt');
@@ -136,16 +140,27 @@ function renderItem(id, name, price, image, quantity) {
 }
 
 document.getElementById('logout-btn').addEventListener('click', function () {
-  fetch('php/logout.php', { method: 'POST' })
-    .then(() => {
-      isLoggedIn = false;
-      userId = null;
-      localStorage.removeItem('carrito');
-      localStorage.removeItem('jwt'); // Limpia el token
-      clearCartUI();
-      loadCart();
+  const jwt = localStorage.getItem('jwt');
+
+  // 1. Obtener el carrito del backend y guardarlo en localStorage
+  fetch('php/cart/get_cart.php', {
+    headers: { 'Authorization': 'Bearer ' + jwt }
+  })
+    .then(response => response.json())
+    .then(carrito => {
+      localStorage.setItem('carrito', JSON.stringify(carrito)); // 🔁 Guarda antes de cerrar sesión
+
+      // 2. Llamar al logout PHP
+      fetch('php/logout.php', { method: 'POST' }).then(() => {
+        isLoggedIn = false;
+        userId = null;
+        localStorage.removeItem('jwt');  // Elimina solo el token
+        clearCartUI();
+        loadCart();
+      });
     });
 });
+
 
 function clearCartUI() {
   const carritoItems = document.getElementById('carrito-items');
