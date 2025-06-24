@@ -2,32 +2,31 @@ let isLoggedIn = false;
 let userId = null;
 
 // Verifica si hay sesión activa desde PHP
-fetch('php/check_session.php')
-  .then(response => response.json())
-  .then(data => {
-    if (data.logged_in) {
-      isLoggedIn = true;
-      userId = data.user_id;
-      // Si hay carrito en localStorage, sincronízalo y luego bórralo
-      const localCarrito = JSON.parse(localStorage.getItem('carrito'));
-      if (localCarrito && localCarrito.length > 0) {
-        Promise.all(localCarrito.map(item =>
-          fetch('php/cart/add_to_cart.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ producto_id: item.id, quantity: item.quantity })
-          })
-        )).then(() => {
-          localStorage.removeItem('carrito');
-          loadCart();
-        });
-      } else {
-        loadCart();
-      }
-    } else {
+if (data.logged_in) {
+  isLoggedIn = true;
+  userId = data.user_id;
+  const jwt = localStorage.getItem('jwt'); // <-- Agrega esto
+  const localCarrito = JSON.parse(localStorage.getItem('carrito'));
+  if (localCarrito && localCarrito.length > 0) {
+    Promise.all(localCarrito.map(item =>
+      fetch('php/cart/add_to_cart.php', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + jwt, // <-- Agrega el JWT aquí
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ producto_id: item.id, quantity: item.quantity })
+      })
+    )).then(() => {
+      localStorage.removeItem('carrito');
       loadCart();
-    }
-  });
+    });
+  } else {
+    loadCart();
+  }
+} else {
+  loadCart();
+}
 
 document.querySelectorAll('.add-to-cart-btn').forEach(button => {
   button.addEventListener('click', () => {
