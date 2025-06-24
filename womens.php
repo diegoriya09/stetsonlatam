@@ -34,7 +34,6 @@ $conn->close();
         <!-- Enlaces centrados -->
         <ul class="nav-center">
             <li><a href="hats.php">Hats</a></li>
-            <li><a href="boots.php">Boots</a></li>
             <li><a href="mens.php">Mens</a></li>
             <li><a href="womens.php">Womens</a></li>
             <li><a href="accessories.php">Accessories</a></li>
@@ -95,7 +94,7 @@ $conn->close();
           </article>
         <?php endforeach; ?>
       <?php else: ?>
-        <p style="color:red;">There are no boots available at this time.</p>
+        <p style="color:red;">There are no women's items available at this time.</p>
       <?php endif; ?>
     </div>
   </section>

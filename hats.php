@@ -34,7 +34,6 @@ $conn->close();
         <!-- Enlaces centrados -->
         <ul class="nav-center">
             <li><a href="hats.php">Hats</a></li>
-            <li><a href="boots.php">Boots</a></li>
             <li><a href="mens.php">Mens</a></li>
             <li><a href="womens.php">Womens</a></li>
             <li><a href="accessories.php">Accessories</a></li>

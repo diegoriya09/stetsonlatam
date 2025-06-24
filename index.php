@@ -51,7 +51,6 @@
         <!-- Enlaces centrados -->
         <ul class="nav-center">
             <li><a href="hats.php">Hats</a></li>
-            <li><a href="boots.php">Boots</a></li>
             <li><a href="mens.php">Mens</a></li>
             <li><a href="womens.php">Womens</a></li>
             <li><a href="accesories.php">Accessories</a></li>
@@ -64,7 +63,6 @@
         </div>
         <ul>
             <li><a href="#hats">Hats</a></li>
-            <li><a href="#boots">Boots</a></li>
             <li><a href="#mens">Mens</a></li>
             <li><a href="#womens">Womens</a></li>
             <li><a href="#accessories">Accessories</a></li>

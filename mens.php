@@ -34,7 +34,6 @@ $conn->close();
         <!-- Enlaces centrados -->
         <ul class="nav-center">
             <li><a href="hats.php">Hats</a></li>
-            <li><a href="boots.php">Boots</a></li>
             <li><a href="mens.php">Mens</a></li>
             <li><a href="womens.php">Womens</a></li>
             <li><a href="accessories.php">Accessories</a></li>
@@ -77,7 +76,7 @@ $conn->close();
         </div>
     </div>
   <section class="section hats">
-    <h2>Stetson Boots</h2>
+    <h2>Stetson Mens</h2>
     <div class="card-grid">
       <?php if (count($productos) > 0): ?>
         <?php foreach ($productos as $producto): ?>
@@ -95,7 +94,7 @@ $conn->close();
           </article>
         <?php endforeach; ?>
       <?php else: ?>
-        <p style="color:red;">There are no boots available at this time.</p>
+        <p style="color:red;">There are no men's items available at this time.</p>
       <?php endif; ?>
     </div>
   </section>
