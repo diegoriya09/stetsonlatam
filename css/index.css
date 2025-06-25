@@ -386,7 +386,17 @@ nav.main-nav {
   background-color: #ffffff;
 }
 
-.section h2 {
+.sectionfeatured h2 {
+  font-size: 36px;
+  margin-bottom: 15px;
+  color: #3c3737;
+}
+
+.sectionstories {
+  background-color: #ffffff;
+}
+
+.sectionstories h2 {
   font-size: 36px;
   margin-bottom: 15px;
   color: #3c3737;
@@ -661,6 +671,7 @@ nav.main-nav {
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 2rem;
   margin-bottom: 2rem;
+  align-items: center;
 }
 
 .footer-column h4 {

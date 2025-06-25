@@ -159,7 +159,7 @@
         </div>
     </section>
     <!-- Historias de la marca -->
-    <section id="stories" class="section stories">
+    <section id="stories" class="sectionstories">
         <h2>Our Legacy</h2>
         <div class="card-grid">
             <article class="card-item">
