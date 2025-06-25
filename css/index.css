@@ -298,6 +298,8 @@ nav.main-nav {
   padding: 2rem;
   border-radius: 8px;
   font-family: 'GT America', sans-serif;
+  align-content: center;
+  overflow: hidden;
 }
 
 .hero-content h1 {
