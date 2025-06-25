@@ -69,6 +69,7 @@
             <a id="logout-btn" style="display: none;"><img src="/img/logout.png" alt="Logout" class="icon"></a>
             <div class="hamburger" id="hamburger">&#9776;</div>
             <a href="#"><img src="/img/search.png" alt="Search" class="icon" /></a>
+            <a href="#wishlist"><i class="fas fa-heart"></i></a>
             <div class="cart-wrapper">
                 <a id="btn-carrito"><img src="/img/cart.png" alt="Cart" class="icon" /></a>
             </div>
@@ -88,10 +89,6 @@
             <button class="pagar-btn">Pagar</button>
         </div>
     </div>
-    <section class="section wishlist">
-        <h2>Your Wishlist</h2>
-        <div class="card-grid" id="wishlist-items"></div>
-    </section>
     <!-- Modal para login/registro -->
     <div id="user-modal" class="modal">
         <div class="modal-content form-wrapper">
