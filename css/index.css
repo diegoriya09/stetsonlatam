@@ -299,7 +299,7 @@ nav.main-nav {
   border-radius: 8px;
   font-family: 'GT America', sans-serif;
   align-content: center;
-  overflow: hidden;
+  overflow: auto;
 }
 
 .hero-content h1 {
@@ -315,7 +315,7 @@ nav.main-nav {
   font-size:16px; 
   color:#3c3737; 
   line-height:1.4; 
-  overflow: hidden;
+  overflow: auto;
 }
 
 .cta-btn {
