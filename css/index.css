@@ -725,3 +725,18 @@ nav.main-nav {
 .footer-links a:hover {
   text-decoration: underline;
 }
+
+.breadcrumbs {
+  font-size: 0.9rem;
+  color: #555;
+  margin: 1rem 2rem;
+  font-family: 'GT America', sans-serif;
+}
+.breadcrumbs a {
+  color: #444;
+  text-decoration: none;
+}
+.breadcrumbs a:hover {
+  text-decoration: underline;
+}
+

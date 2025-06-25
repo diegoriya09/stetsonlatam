@@ -26,6 +26,11 @@ $conn->close();
   <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
+  <nav class="breadcrumbs">
+    <a href="index.php">Home</a> &gt;
+    <a href="hats.php">Hats</a> &gt;
+    <span>Stetson Hats</span>
+  </nav>
   <nav class="main-nav">
         <div class="nav-left">
             <a href="index.php">
@@ -94,6 +99,14 @@ $conn->close();
             <img src="<?= htmlspecialchars($producto['image']) ?>" alt="<?= htmlspecialchars($producto['name']) ?>">
             <h3><?= htmlspecialchars($producto['name']) ?></h3>
             <p>$<?= number_format($producto['price'], 0, ',', '.') ?>.00</p>
+            <!-- Botón de wishlist -->
+            <button class="wishlist-btn" 
+              data-id="<?= $producto['id'] ?>" 
+              data-name="<?= htmlspecialchars($producto['name']) ?>" 
+              data-price="<?= $producto['price'] ?>" 
+              data-image="<?= htmlspecialchars($producto['image']) ?>">
+              <i class="fas fa-heart"></i>
+            </button>
             <button class="add-to-cart-btn"
               data-id="<?= $producto['id'] ?>"
               data-name="<?= htmlspecialchars($producto['name']) ?>"
@@ -178,6 +191,7 @@ $conn->close();
     <script src="js/index.js?v=<?php echo time(); ?>"></script>
     <script src="js/auth.js?v=<?php echo time(); ?>"></script>
     <script src="js/cart.js?v=<?php echo time(); ?>"></script>
+    <script src="js/wishlist.js?v=<?php echo time(); ?>"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>
