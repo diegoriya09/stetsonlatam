@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log("Respuesta de check_session.php:", data); // 👈 Aquí deberías ver logged_in: true
       if (data.logged_in) {
         // ✅ Usuario autenticado
+        isLoggedIn = true;
         console.log("Usuario logueado:", data.user_id);
       } else {
         // ❌ Token inválido o expirado
@@ -39,26 +40,24 @@ document.addEventListener("DOMContentLoaded", () => {
           quantity: 1
         };
 
-        if (isLoggedIn) {
+        const localCarrito = JSON.parse(localStorage.getItem('carrito'));
+      if (localCarrito && localCarrito.length > 0) {
+        Promise.all(localCarrito.map(item =>
           fetch('php/cart/add_to_cart.php', {
             method: 'POST',
             headers: {
               'Authorization': 'Bearer ' + jwt,
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ producto_id: producto.id, quantity: 1 })
-          }).then(() => loadCart());
-        } else {
-          let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-          const index = carrito.findIndex(p => p.id === producto.id);
-          if (index !== -1) {
-            carrito[index].quantity += 1;
-          } else {
-            carrito.push(producto);
-          }
-          localStorage.setItem('carrito', JSON.stringify(carrito));
-          loadCart();
-        }
+            body: JSON.stringify({ producto_id: item.id, quantity: item.quantity })
+          }).then(res => res.json())
+        )).then(() => {
+          localStorage.removeItem('carrito');
+          loadCart(); // recarga desde base de datos
+        });
+      } else {
+        loadCart(); // sin nada en localStorage
+      }
       });
     });
 
@@ -99,6 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const id = e.target.dataset.id;
 
       if (isLoggedIn) {
+        console.log("Eliminando del backend:", id);
         fetch('php/cart/remove_from_cart.php', {
         method: 'POST',
         headers: {
