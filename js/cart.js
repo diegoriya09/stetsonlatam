@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
   } else {
     console.warn("No hay token guardado en localStorage");
   }
-});
+
 
   function setupAddToCartButtons() {
     document.querySelectorAll('.add-to-cart-btn').forEach(button => {
@@ -161,3 +161,4 @@ document.addEventListener("DOMContentLoaded", () => {
     if (carritoItems) carritoItems.innerHTML = '';
     if (totalCarrito) totalCarrito.textContent = 'Total: $0';
   }
+});
