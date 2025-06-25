@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
           quantity: 1
         };
 
-        if (isLoggedIn) {
+        if (jwt) {
           const jwt = localStorage.getItem('jwt');
           fetch('php/cart/add_to_cart.php', {
             method: 'POST',
