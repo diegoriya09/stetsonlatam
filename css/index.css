@@ -390,6 +390,7 @@ nav.main-nav {
   font-size: 36px;
   margin-bottom: 15px;
   color: #3c3737;
+  align-content: center;
 }
 
 .sectionstories {
@@ -400,6 +401,7 @@ nav.main-nav {
   font-size: 36px;
   margin-bottom: 15px;
   color: #3c3737;
+  align-content: center;
 }
 
 .card-grid {
