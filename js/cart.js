@@ -10,9 +10,10 @@ fetch('php/check_session.php', {
   .then(response => response.json())
   .then(data => {
     const jwt = localStorage.getItem('jwt');
-    if (data.logged_in && jwt) { // <-- Solo sincroniza si hay JWT
+    if (data.logged_in && jwt) {
       isLoggedIn = true;
       userId = data.user_id;
+
       const localCarrito = JSON.parse(localStorage.getItem('carrito'));
       if (localCarrito && localCarrito.length > 0) {
         Promise.all(localCarrito.map(item =>
@@ -24,55 +25,57 @@ fetch('php/check_session.php', {
             },
             body: JSON.stringify({ producto_id: item.id, quantity: item.quantity })
           }).then(res => res.json())
-        )).then(responses => {
-          // Puedes revisar aquí si alguna respuesta tiene success: false
-          if (responses.some(r => r.success === false)) {
-            alert('Error al sincronizar el carrito');
-          }
+        )).then(() => {
           localStorage.removeItem('carrito');
           loadCart();
+          setupAddToCartButtons(); // 👈 Aquí se agrega
         });
       } else {
         loadCart();
+        setupAddToCartButtons(); // 👈 Aquí también
       }
     } else {
       loadCart();
+      setupAddToCartButtons(); // 👈 Y aquí si no hay sesión
     }
   });
 
-document.querySelectorAll('.add-to-cart-btn').forEach(button => {
-  button.addEventListener('click', () => {
-    const producto = {
-      id: button.dataset.id,
-      name: button.dataset.name,
-      price: parseFloat(button.dataset.price),
-      image: button.dataset.image,
-      quantity: 1
-    };
 
-    if (isLoggedIn) {
-      const jwt = localStorage.getItem('jwt');
-      fetch('php/cart/add_to_cart.php', {
-        method: 'POST',
-        headers: {
-          'Authorization': 'Bearer ' + jwt,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ producto_id: producto.id, quantity: 1 })
-      }).then(() => loadCart());
-    } else {
-      let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-      const index = carrito.findIndex(p => p.id === producto.id);
-      if (index !== -1) {
-        carrito[index].quantity += 1;
+function setupAddToCartButtons() {
+  document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+    button.addEventListener('click', () => {
+      const producto = {
+        id: parseInt(button.dataset.id),
+        name: button.dataset.name,
+        price: parseFloat(button.dataset.price),
+        image: button.dataset.image,
+        quantity: 1
+      };
+
+      if (isLoggedIn) {
+        const jwt = localStorage.getItem('jwt');
+        fetch('php/cart/add_to_cart.php', {
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer ' + jwt,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ producto_id: producto.id, quantity: 1 })
+        }).then(() => loadCart());
       } else {
-        carrito.push(producto);
+        let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+        const index = carrito.findIndex(p => p.id === producto.id);
+        if (index !== -1) {
+          carrito[index].quantity += 1;
+        } else {
+          carrito.push(producto);
+        }
+        localStorage.setItem('carrito', JSON.stringify(carrito));
+        loadCart();
       }
-      localStorage.setItem('carrito', JSON.stringify(carrito));
-      loadCart();
-    }
+    });
   });
-});
+}
 
 function loadCart() {
   const carritoItems = document.getElementById('carrito-items');
@@ -114,10 +117,13 @@ document.addEventListener('click', function (e) {
     if (isLoggedIn) {
       const jwt = localStorage.getItem('jwt');
       fetch('php/cart/remove_from_cart.php', {
-        headers: {
-          'Authorization': 'Bearer ' + jwt
-        }
-      }).then(() => loadCart());
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + jwt,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ producto_id: id })
+    }).then(() => loadCart());
     } else {
       let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
       carrito = carrito.filter(p => p.id !== id);
