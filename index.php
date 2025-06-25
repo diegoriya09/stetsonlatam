@@ -131,7 +131,7 @@
         </div>
         </div> 
     </header>
-    <section id="featured" class="sectionfeatured" typeof="schema:ItemList">
+    <section id="featured" class="section featured" typeof="schema:ItemList">
         <h2 property="schema:name">Featured Hats</h2>
         <div class="card-grid">
             <?php 
@@ -159,7 +159,7 @@
         </div>
     </section>
     <!-- Historias de la marca -->
-    <section id="stories" class="sectionstories">
+    <section id="stories" class="section stories">
         <h2>Our Legacy</h2>
         <div class="card-grid">
             <article class="card-item">
