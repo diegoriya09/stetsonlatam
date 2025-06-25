@@ -37,7 +37,8 @@
         <!-- Contenido dinámico (texto + botón) -->
         <div class="hero-content">
             <h1 id="hero-title">THE OPEN ROAD</h1>
-            <p id="hero-text">Since 1937, it’s been the hat of choice for artists, outlaws, Presidents, and trailblazers.</p>
+            <p id="hero-text">Since 1937, it’s been the hat of choice for artists, <br>
+                outlaws, Presidents, and trailblazers.</p>
             <a id="hero-btn" href="#featured" class="cta-btn">SHOP NOW</a>
         </div>
     </section>
