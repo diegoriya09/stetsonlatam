@@ -26,11 +26,6 @@ $conn->close();
   <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <nav class="breadcrumbs">
-    <a href="index.php">Home</a> &gt;
-    <a href="hats.php">Hats</a> &gt;
-    <span>Stetson Hats</span>
-  </nav>
   <nav class="main-nav">
         <div class="nav-left">
             <a href="index.php">
@@ -78,7 +73,11 @@ $conn->close();
             </div>
         </div>
     </div>
-
+  <nav class="breadcrumbs">
+    <a href="index.php">Home</a> &gt;
+    <a href="hats.php">Hats</a> &gt;
+    <span>Stetson Hats</span>
+  </nav>
   <section class="section hats">
     <h2>Stetson Hats</h2>
     <div class="sort-container">
