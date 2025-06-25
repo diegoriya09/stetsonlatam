@@ -38,7 +38,6 @@ document.addEventListener("DOMContentLoaded", () => {
         };
 
         if (jwt) {
-          const jwt = localStorage.getItem('jwt');
           fetch('php/cart/add_to_cart.php', {
             method: 'POST',
             headers: {
@@ -69,7 +68,6 @@ document.addEventListener("DOMContentLoaded", () => {
     carritoItems.innerHTML = '';
 
     if (jwt) {
-      const jwt = localStorage.getItem('jwt');
       // Siempre carga desde backend
       fetch('php/cart/get_cart.php', {
         headers: {
@@ -99,7 +97,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const id = e.target.dataset.id;
 
       if (jwt) {
-        const jwt = localStorage.getItem('jwt');
         fetch('php/cart/remove_from_cart.php', {
         method: 'POST',
         headers: {
