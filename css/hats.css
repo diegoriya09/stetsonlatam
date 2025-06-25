@@ -12,16 +12,25 @@ body {
 }
 
 .breadcrumbs {
-  margin-top: 20%;
   font-size: 14px;
-  color: #3c3737;
   margin: 1rem 2rem;
+  margin-top: 80px;
+  padding-top: 10px;
+  color: #6b6b6b;
   font-family: 'GT America', sans-serif;
 }
+
 .breadcrumbs a {
   color: #3c3737;
   text-decoration: none;
+  font-weight: 500;
 }
+
 .breadcrumbs a:hover {
   text-decoration: underline;
+}
+
+.breadcrumbs span {
+  color: #999;
+  font-weight: 500;
 }
