@@ -131,7 +131,7 @@
         </div>
         </div> 
     </header>
-    <section id="featured" class="section featured" typeof="schema:ItemList">
+    <section id="featured" class="sectionfeatured" typeof="schema:ItemList">
         <h2 property="schema:name">Featured Hats</h2>
         <div class="card-grid">
             <?php 
