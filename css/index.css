@@ -289,8 +289,7 @@ nav.main-nav {
 
 .hero-content {
   position: absolute;
-  width: 75%;
-  right: 5%;
+  right: 30%;
   top: 50%;
   transform: translateY(-50%);
   width: 40%;
