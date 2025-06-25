@@ -131,102 +131,12 @@
         </div>
         </div> 
     </header>
-    <section id="featured" class="section featured" typeof="schema:ItemList">
-        <h2 property="schema:name">Featured Hats</h2>
-        <div class="card-grid">
-            <?php 
-            include 'featuredHats.php'; 
-            if (count($productos) > 0):
-                foreach ($productos as $producto): ?>
-                    <article class="card-item">
-                        <img src="<?= htmlspecialchars($producto['image']) ?>" alt="<?= htmlspecialchars($producto['name']) ?>">
-                        <h3><?= htmlspecialchars($producto['name']) ?></h3>
-                        <p>$<?= number_format($producto['price'], 0, ',', '.') ?></p>
-                        <button class="add-to-cart-btn"
-                            data-id="<?= $producto['id'] ?>"
-                            data-name="<?= htmlspecialchars($producto['name']) ?>"
-                            data-price="<?= $producto['price'] ?>"
-                            data-image="<?= htmlspecialchars($producto['image']) ?>">
-                            <i class="fas fa-cart-plus"></i>
-                        </button>
-                    </article>
-            <?php 
-                endforeach;
-            else:
-                echo "<p style='color:red;'>No hay productos disponibles.</p>";
-            endif;
-            ?>
-        </div>
-    </section>
+    <?php include 'featuredHats.php'; ?>
+    
     <!-- Historias de la marca -->
-    <section id="stories" class="section stories">
-        <h2>Our Legacy</h2>
-        <div class="card-grid">
-            <article class="card-item">
-                <img src="img/story1.png" alt="Origen Stetson">
-                <h3>Cowboy Heritage</h3>
-                <p>From the American West to Latin America, discover the history behind the legendary hat.
-                </p>
-            </article>
-            <article class="card-item">
-                <img src="img/story2.png" alt="Fabricación artesanal">
-                <h3>Centennial Crafts</h3>
-                <p>Handmade hats with techniques that have lasted for generations.</p>
-            </article>
-        </div>
-    </section>
-    <footer class="site-footer">
-        <div class="footer-columns">
-            <div class="footer-column">
-            <h4>CUSTOMER SERVICE</h4>
-            <ul>
-                <li><a href="#">Contact Us</a></li>
-                <li><a href="#">Shipping</a></li>
-                <li><a href="#">Returns & Exchanges</a></li>
-                <li><a href="#">Order Status</a></li>
-                <li><a href="#">Fit Guide</a></li>
-                <li><a href="#">Gift Cards</a></li>
-                <li><a href="#">FAQ</a></li>
-            </ul>
-            </div>
-            <div class="footer-column">
-            <h4>OUR COMPANY</h4>
-            <ul>
-                <li><a href="#">About Us</a></li>
-                <li><a href="#">Philanthropy</a></li>
-                <li><a href="#">Wholesale</a></li>
-            </ul>
-            </div>
-            <div class="footer-column">
-            <h4>STORES</h4>
-            <ul>
-                <li><a href="#">Store Locator</a></li>
-                <li><a href="https://stetson.jp/">Stetson Japan</a></li>
-                <li><a href="https://stetson.eu/">Stetson Europe</a></li>
-                <li><a href="https://stetsonaustralia.com.au/">Stetson Australia</a></li>
-            </ul>
-            </div>
-            <div class="footer-column">
-            <h4>CONNECT</h4>
-            <ul>
-                <li><a href="#">Instagram</a></li>
-                <li><a href="#">Facebook</a></li>
-                <li><a href="#">YouTube</a></li>
-                <li><a href="#">Pinterest</a></li>
-            </ul>
-            </div>
-        </div>
-
-        <div class="footer-bottom">
-            <p>&copy; 2025 Stetson Latam. All Rights Reserved.</p>
-            <div class="footer-links">
-            <a href="#">Terms & Conditions</a> |
-            <a href="#">Privacy Policy</a> |
-            <a href="#">California Privacy Notice</a> |
-            <a href="#">Accessibility Mode</a> |
-            <a href="#">Do Not Sell Or Share My Personal Information</a>
-            </div>
-        </div>
+    <?php include 'stories.php'; ?>
+    
+    <?php include 'footer.php'; ?>
     <script src="js/index.js?v=<?php echo time(); ?>"></script>
     <script src="js/auth.js?v=<?php echo time(); ?>"></script>
     <script src="js/cart.js?v=<?php echo time(); ?>"></script>
