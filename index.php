@@ -13,12 +13,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&display=swap" rel="stylesheet">
 </head>
 <body typeof="schema:WebPage">
-    <nav class="breadcrumbs">
-        <a href="index.php">Home</a> &gt;
-        <a href="hats.php">Hats</a> &gt;
-        <span>Stetson Hats</span>
-    </nav>
-
     <section class="hero-slider">
         <div class="slide active" data-title="THE OPEN ROAD"
             data-text="Since 1937, it’s been the hat of choice for artists,

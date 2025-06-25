@@ -727,13 +727,14 @@ nav.main-nav {
 }
 
 .breadcrumbs {
-  font-size: 0.9rem;
-  color: #555;
+  height: calc(100vh -  70px);
+  font-size: 14px;
+  color: #3c3737;
   margin: 1rem 2rem;
   font-family: 'GT America', sans-serif;
 }
 .breadcrumbs a {
-  color: #444;
+  color: #3c3737;
   text-decoration: none;
 }
 .breadcrumbs a:hover {
