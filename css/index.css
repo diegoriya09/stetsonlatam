@@ -664,6 +664,7 @@ nav.main-nav {
   padding: 3rem 2rem 2rem;
   font-family: 'GT America', sans-serif;
   font-size: 16px;
+  align-content: center;
 }
 
 .footer-columns {
@@ -671,7 +672,6 @@ nav.main-nav {
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 2rem;
   margin-bottom: 2rem;
-  align-items: center;
 }
 
 .footer-column h4 {
