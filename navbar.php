@@ -25,7 +25,7 @@
             <a id="logout-btn" style="display: none;"><img src="/img/logout.png" alt="Logout" class="icon"></a>
             <div class="hamburger" id="hamburger">&#9776;</div>
             <a href="#"><img src="/img/search.png" alt="Search" class="icon" /></a>
-            <a href="#wishlist"><i class="fas fa-heart"></i></a>
+            <a href="wishlist.php"><i class="fas fa-heart"></i></a>
             <div class="cart-wrapper">
                 <a id="btn-carrito"><img src="/img/cart.png" alt="Cart" class="icon" /></a>
             </div>
