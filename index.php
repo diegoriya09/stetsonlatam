@@ -42,8 +42,7 @@
             <a id="hero-btn" href="#featured" class="cta-btn">SHOP NOW</a>
         </div>
     </section>
-    <nav class="main-nav">
-        <!-- Puedes agregar el logo aquí si deseas -->
+    <nav class="main-nav"> 
         <div class="nav-left">
             <a href="index.php">
                 <h2 class="logo">STETSON LATAM<span class="reg">&reg;</sup></h2>
