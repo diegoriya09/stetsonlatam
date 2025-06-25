@@ -10,3 +10,18 @@ body {
   color: #222;
   overflow-x: hidden;
 }
+
+.breadcrumbs {
+  margin-top: 1rem;
+  font-size: 14px;
+  color: #3c3737;
+  margin: 1rem 2rem;
+  font-family: 'GT America', sans-serif;
+}
+.breadcrumbs a {
+  color: #3c3737;
+  text-decoration: none;
+}
+.breadcrumbs a:hover {
+  text-decoration: underline;
+}
