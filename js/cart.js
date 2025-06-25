@@ -37,7 +37,6 @@ document.addEventListener("DOMContentLoaded", () => {
           name: button.dataset.name,
           price: parseFloat(button.dataset.price),
           image: button.dataset.image,
-          quantity: 1
         };
 
         const localCarrito = JSON.parse(localStorage.getItem('carrito'));
@@ -49,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
               'Authorization': 'Bearer ' + jwt,
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ producto_id: item.id, quantity: item.quantity })
+            body: JSON.stringify({ producto_id: producto.id, quantity: 1 })
           }).then(res => res.json())
         )).then(() => {
           localStorage.removeItem('carrito');

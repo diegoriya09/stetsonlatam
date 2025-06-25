@@ -1,21 +1,26 @@
 <?php
-require_once 'php/conexion.php';
+require_once '../conexion.php';
 require_once '../vendor/autoload.php';
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
 header('Content-Type: application/json');
 
-// Obtener JWT del header
+// ✅ Leer token
 $headers = getallheaders();
 if (!isset($headers['Authorization'])) {
     echo json_encode(['success' => false, 'message' => 'No autorizado']);
     exit;
 }
+
 list($jwt) = sscanf($headers['Authorization'], 'Bearer %s');
 if (!$jwt) {
-    echo json_encode(['success' => false, 'message' => 'No token']);
+    echo json_encode(['success' => false, 'message' => 'Token inválido']);
     exit;
 }
 
@@ -28,32 +33,38 @@ try {
     exit;
 }
 
+// ✅ Leer datos del cuerpo JSON
 $data = json_decode(file_get_contents('php://input'), true);
-$producto_id = $data['producto_id'];
-$cantidad = $data['quantity'];
+$producto_id = $data['producto_id'] ?? null;
+$quantity = $data['quantity'] ?? 1;
 
-// Verificar si ya está en el carrito
-$sql = "SELECT * FROM cart WHERE users_id = ? AND producto_id = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("ii", $user_id, $producto_id);
-$stmt->execute();
-$result = $stmt->get_result();
+if (!$producto_id || !$quantity) {
+    echo json_encode(['success' => false, 'message' => 'Datos incompletos']);
+    exit;
+}
+
+// ✅ Verifica si ya está en el carrito
+$sql_check = "SELECT id FROM cart WHERE users_id = ? AND producto_id = ?";
+$stmt_check = $conn->prepare($sql_check);
+$stmt_check->bind_param("ii", $user_id, $producto_id);
+$stmt_check->execute();
+$result = $stmt_check->get_result();
 
 if ($result->num_rows > 0) {
-    $sql = "UPDATE cart SET quantity = quantity + ? WHERE users_id = ? AND producto_id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("iii", $cantidad, $user_id, $producto_id);
+    // Ya existe, actualiza
+    $sql_update = "UPDATE cart SET quantity = quantity + ? WHERE users_id = ? AND producto_id = ?";
+    $stmt_update = $conn->prepare($sql_update);
+    $stmt_update->bind_param("iii", $quantity, $user_id, $producto_id);
+    $stmt_update->execute();
+    $stmt_update->close();
 } else {
-    $sql = "INSERT INTO cart (users_id, producto_id, quantity) VALUES (?, ?, ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("iii", $user_id, $producto_id, $cantidad);
+    // No existe, inserta
+    $sql_insert = "INSERT INTO cart (users_id, producto_id, quantity) VALUES (?, ?, ?)";
+    $stmt_insert = $conn->prepare($sql_insert);
+    $stmt_insert->bind_param("iii", $user_id, $producto_id, $quantity);
+    $stmt_insert->execute();
+    $stmt_insert->close();
 }
 
-if ($stmt->execute()) {
-    echo json_encode(['success' => true]);
-} else {
-    echo json_encode(['success' => false, 'message' => 'Error al agregar']);
-}
-
-$stmt->close();
+echo json_encode(['success' => true]);
 $conn->close();
