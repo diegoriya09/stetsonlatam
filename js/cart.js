@@ -27,8 +27,6 @@ document.addEventListener("DOMContentLoaded", () => {
     console.warn("No hay token guardado en localStorage");
   }
 
-
-  function setupAddToCartButtons() {
     document.querySelectorAll('.add-to-cart-btn').forEach(button => {
       button.addEventListener('click', () => {
         const producto = {
@@ -62,7 +60,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
     });
-  }
 
   function loadCart() {
     const carritoItems = document.getElementById('carrito-items');
