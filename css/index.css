@@ -271,6 +271,7 @@ nav.main-nav {
   display: flex;
   height: calc(100vh -  70px);
   overflow: hidden;
+  background-color: #f1eeea;
 }
 
 .hero-slider .slide {
