@@ -1,47 +1,32 @@
-document.addEventListener('DOMContentLoaded', () => {  
-  let isLoggedIn = false;
-  let userId = null;
+document.addEventListener("DOMContentLoaded", () => {
+  const jwt = localStorage.getItem("jwt");
+  console.log("JWT encontrado:", jwt); // 👈 Verifica que sí está
 
-  const jwt = localStorage.getItem('jwt');
-  // Verifica si hay sesión activa desde PHP
-  fetch('php/check_session.php', {
-    headers: {
-      'Authorization': 'Bearer ' + localStorage.getItem('jwt')
-    }
-  })
-    .then(response => response.json())
-    .then(data => {
-      
-      if (data.logged_in && jwt) {
-        isLoggedIn = true;
-        userId = data.user_id;
-
-        const localCarrito = JSON.parse(localStorage.getItem('carrito'));
-        if (localCarrito && localCarrito.length > 0) {
-          Promise.all(localCarrito.map(item =>
-            fetch('php/cart/add_to_cart.php', {
-              method: 'POST',
-              headers: {
-                'Authorization': 'Bearer ' + jwt,
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({ producto_id: item.id, quantity: item.quantity })
-            }).then(res => res.json())
-          )).then(() => {
-            localStorage.removeItem('carrito');
-            loadCart();
-            setupAddToCartButtons(); // 👈 Aquí se agrega
-          });
-        } else {
-          loadCart();
-          setupAddToCartButtons(); // 👈 Aquí también
-        }
-      } else {
-        loadCart();
-        setupAddToCartButtons(); // 👈 Y aquí si no hay sesión
+  if (jwt) {
+    fetch("php/check_session.php", {
+      method: "GET",
+      headers: {
+        "Authorization": "Bearer " + jwt // 👈 Aquí va el token
       }
+    })
+    .then((res) => res.json())
+    .then((data) => {
+      console.log("Respuesta de check_session.php:", data); // 👈 Aquí deberías ver logged_in: true
+      if (data.logged_in) {
+        // ✅ Usuario autenticado
+        console.log("Usuario logueado:", data.user_id);
+      } else {
+        // ❌ Token inválido o expirado
+        console.warn("Sesión inválida:", data.message || data.error);
+      }
+    })
+    .catch((err) => {
+      console.error("Error en check_session.php:", err);
     });
-
+  } else {
+    console.warn("No hay token guardado en localStorage");
+  }
+});
 
   function setupAddToCartButtons() {
     document.querySelectorAll('.add-to-cart-btn').forEach(button => {
@@ -176,4 +161,3 @@ document.addEventListener('DOMContentLoaded', () => {
     if (carritoItems) carritoItems.innerHTML = '';
     if (totalCarrito) totalCarrito.textContent = 'Total: $0';
   }
-});
