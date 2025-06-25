@@ -315,6 +315,7 @@ nav.main-nav {
   font-size:16px; 
   color:#3c3737; 
   line-height:1.4; 
+  overflow: hidden;
 }
 
 .cta-btn {
