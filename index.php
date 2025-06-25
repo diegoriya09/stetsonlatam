@@ -15,7 +15,7 @@
 <body typeof="schema:WebPage">
     <section class="hero-slider">
         <div class="slide active" data-title="THE OPEN ROAD"
-            data-text="Since 1937, it’s been the hat of choice for artists, <br>
+            data-text="Since 1937, it’s been the hat of choice for artists,
             outlaws, Presidents, and trailblazers."
             data-link="#featured"
             style="background-image: url('img/slide1.png');"></div>

@@ -286,6 +286,7 @@ nav.main-nav {
 
 .hero-slider .slide.active {
   opacity: 1;
+  overflow: hidden;
 }
 
 .hero-content {

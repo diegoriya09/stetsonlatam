@@ -1,0 +1,12 @@
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding-top: 70px;
+  font-family: 'GT America', sans-serif;
+  background-color: #ffffff;
+  color: #222;
+  overflow-x: hidden;
+}
