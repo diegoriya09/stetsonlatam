@@ -50,4 +50,5 @@
             <a href="#">Do Not Sell Or Share My Personal Information</a>
             </div>
         </div>
+</footer>
     

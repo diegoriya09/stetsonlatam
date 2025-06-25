@@ -20,10 +20,10 @@ $conn->close();
 ?>
 
 <section id="featured" class="section featured" typeof="schema:ItemList">
-        <h2 property="schema:name">Featured Hats</h2>
-        <div class="card-grid">
-            <?php 
-            include 'featuredHats.php'; 
+    <h2 property="schema:name">Featured Hats</h2>
+    <div class="card-grid">
+        <?php
+        // Verificar si hay productos disponibles 
             if (count($productos) > 0):
                 foreach ($productos as $producto): ?>
                     <article class="card-item">
@@ -43,6 +43,6 @@ $conn->close();
             else:
                 echo "<p style='color:red;'>No hay productos disponibles.</p>";
             endif;
-            ?>
-        </div>
-    </section>
+        ?>
+    </div>
+</section>
