@@ -7,16 +7,16 @@ use Firebase\JWT\Key;
 
 header('Content-Type: application/json');
 
-// Obtener el JWT del encabezado Authorization
+// Obtener JWT del encabezado Authorization
 $headers = getallheaders();
 if (!isset($headers['Authorization'])) {
-    echo json_encode(['logged_in' => false]);
+    echo json_encode(['logged_in' => false, 'message' => 'No se envió el token']);
     exit;
 }
 
 list($jwt) = sscanf($headers['Authorization'], 'Bearer %s');
 if (!$jwt) {
-    echo json_encode(['logged_in' => false]);
+    echo json_encode(['logged_in' => false, 'message' => 'JWT vacío o malformado']);
     exit;
 }
 
@@ -29,6 +29,10 @@ try {
         'user_id' => $decoded->data->id
     ]);
 } catch (Exception $e) {
-    echo json_encode(['logged_in' => false, 'message' => 'Token inválido']);
+    echo json_encode([
+        'logged_in' => false,
+        'message' => 'Token inválido',
+        'error' => $e->getMessage()
+    ]);
 }
-
+?>
