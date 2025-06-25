@@ -11,10 +11,15 @@ body {
   overflow-x: hidden;
 }
 
+.breadcrumbs-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 70px; 
+  margin-bottom: 20px;
+}
+
 .breadcrumbs {
   font-size: 14px;
-  margin: 1rem 2rem;
-  padding-top: 12px;
   color: #6b6b6b;
   font-family: 'GT America', sans-serif;
 }
@@ -33,3 +38,20 @@ body {
   color: #999;
   font-weight: 500;
 }
+
+.wishlist-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #f1eeea;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 18px;
+  z-index: 10;
+}
+
+.wishlist-btn.active {
+  color: #3f1e1f;
+}
+

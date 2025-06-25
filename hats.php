@@ -47,11 +47,13 @@ $conn->close();
             </div>
         </div>
     </nav>
-    <nav class="breadcrumbs">
-      <a href="index.php">Home</a> &gt;
-      <a href="hats.php">Hats</a> &gt;
-      <span>Stetson Hats</span>
-    </nav>
+    <div class="breadcrumbs-container">
+      <nav class="breadcrumbs">
+        <a href="index.php">Home</a> &gt;
+        <a href="hats.php">Hats</a> &gt;
+        <span>Stetson Hats</span>
+      </nav>
+    </div>
     <div id="user-modal" class="modal">
         <div class="modal-content form-wrapper">
             <span class="close">&times;</span>
