@@ -38,7 +38,7 @@
         <div class="hero-content">
             <h1 id="hero-title">THE OPEN ROAD</h1>
             <p id="hero-text">Since 1937, it’s been the hat of choice for artists, outlaws, Presidents, and trailblazers.</p>
-            <a id="hero-btn" href="#featured" class="cta-btn">Shop Now</a>
+            <a id="hero-btn" href="#featured" class="cta-btn">SHOP NOW</a>
         </div>
     </section>
     <nav class="main-nav">
@@ -200,9 +200,9 @@
             <h4>STORES</h4>
             <ul>
                 <li><a href="#">Store Locator</a></li>
-                <li><a href="#">Stetson Japan</a></li>
-                <li><a href="#">Stetson Europe</a></li>
-                <li><a href="#">Stetson Australia</a></li>
+                <li><a href="https://stetson.jp/">Stetson Japan</a></li>
+                <li><a href="https://stetson.eu/">Stetson Europe</a></li>
+                <li><a href="https://stetsonaustralia.com.au/">Stetson Australia</a></li>
             </ul>
             </div>
             <div class="footer-column">
