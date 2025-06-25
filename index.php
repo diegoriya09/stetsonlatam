@@ -42,39 +42,7 @@
             <a id="hero-btn" href="#featured" class="cta-btn">SHOP NOW</a>
         </div>
     </section>
-    <nav class="main-nav"> 
-        <div class="nav-left">
-            <a href="index.php">
-                <h2 class="logo">STETSON LATAM<span class="reg">&reg;</sup></h2>
-            </a>
-        </div>
-        <!-- Enlaces centrados -->
-        <ul class="nav-center">
-            <li><a href="hats.php">Hats</a></li>
-            <li><a href="#stories">Stories</a></li>
-        </ul>
-        <!-- Menú responsive -->
-        <div class="mobile-menu" id="mobile-menu">
-        <div class="mobile-search">
-            <input type="text" placeholder="Buscar..." />
-        </div>
-        <ul>
-            <li><a href="#hats">Hats</a></li>
-            <li><a href="#stories">Stories</a></li>
-        </ul>
-        </div>
-        <!-- Íconos a la derecha -->
-        <div class="nav-right">
-            <a href="#" id="open-user-modal"><img src="/img/user.png" alt="User" class="icon" /></a>
-            <a id="logout-btn" style="display: none;"><img src="/img/logout.png" alt="Logout" class="icon"></a>
-            <div class="hamburger" id="hamburger">&#9776;</div>
-            <a href="#"><img src="/img/search.png" alt="Search" class="icon" /></a>
-            <a href="#wishlist"><i class="fas fa-heart"></i></a>
-            <div class="cart-wrapper">
-                <a id="btn-carrito"><img src="/img/cart.png" alt="Cart" class="icon" /></a>
-            </div>
-        </div>
-    </nav>
+    <?php include 'navbar.php'; ?>
     <!-- Sidebar del carrito -->
     <div id="carrito-sidebar" class="sidebar">
         <div class="sidebar-header">
@@ -135,8 +103,9 @@
     
     <!-- Historias de la marca -->
     <?php include 'stories.php'; ?>
-    
+
     <?php include 'footer.php'; ?>
+
     <script src="js/index.js?v=<?php echo time(); ?>"></script>
     <script src="js/auth.js?v=<?php echo time(); ?>"></script>
     <script src="js/cart.js?v=<?php echo time(); ?>"></script>
