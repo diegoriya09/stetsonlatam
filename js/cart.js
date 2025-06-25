@@ -1,6 +1,7 @@
 let isLoggedIn = false;
 let userId = null;
 
+const jwt = localStorage.getItem('jwt');
 // Verifica si hay sesión activa desde PHP
 fetch('php/check_session.php', {
   headers: {
@@ -9,7 +10,7 @@ fetch('php/check_session.php', {
 })
   .then(response => response.json())
   .then(data => {
-    const jwt = localStorage.getItem('jwt');
+    
     if (data.logged_in && jwt) {
       isLoggedIn = true;
       userId = data.user_id;
