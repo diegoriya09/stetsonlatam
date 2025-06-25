@@ -1,4 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
+  let isLoggedIn = false;
+  
   const jwt = localStorage.getItem("jwt");
   console.log("JWT encontrado:", jwt); // 👈 Verifica que sí está
 
@@ -37,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
           quantity: 1
         };
 
-        if (jwt) {
+        if (isLoggedIn) {
           fetch('php/cart/add_to_cart.php', {
             method: 'POST',
             headers: {
@@ -67,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     carritoItems.innerHTML = '';
 
-    if (jwt) {
+    if (isLoggedIn) {
       // Siempre carga desde backend
       fetch('php/cart/get_cart.php', {
         headers: {
@@ -96,7 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (e.target.classList.contains('remove-btn')) {
       const id = e.target.dataset.id;
 
-      if (jwt) {
+      if (isLoggedIn) {
         fetch('php/cart/remove_from_cart.php', {
         method: 'POST',
         headers: {
