@@ -145,3 +145,13 @@ function renderItem(id, name, price, image, quantity) {
       </div>
     </div>`;
 }
+
+const carritoIcon = document.getElementById('open-cart');
+if (carritoIcon) {
+  carritoIcon.addEventListener('click', () => {
+    const jwt = localStorage.getItem("jwt");
+    const isLoggedIn = !!jwt;
+    document.getElementById('carrito-sidebar').classList.add('open'); // Abre el carrito
+    loadCart(isLoggedIn); // Vuelve a cargar productos
+  });
+}
