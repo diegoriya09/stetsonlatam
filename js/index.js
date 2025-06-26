@@ -147,7 +147,9 @@ document.addEventListener('DOMContentLoaded', () => {
 // Abrir y cerrar carrito (sidebar)
 document.getElementById('btn-carrito').addEventListener('click', () => {
   document.getElementById('carrito-sidebar').classList.add('open');
-  loadCart(true); // actualiza contenido
+  const jwt = localStorage.getItem("jwt");
+  const isLoggedIn = !!jwt;
+  loadCart(isLoggedIn); // actualiza contenido
 });
 
 document.getElementById('cerrar-carrito').addEventListener('click', () => {
