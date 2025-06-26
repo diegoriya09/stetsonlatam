@@ -94,7 +94,6 @@ function loadCart(isLoggedIn) {
       .then(response => response.json())
       .then(carrito => {
         carrito.forEach(p => {
-          console.log("Producto recibido:", p); // 👈 Prueba de depuración
           total += p.price * p.quantity;
           carritoItems.innerHTML += renderItem(p.id, p.name, p.price, p.image, p.quantity);
         });
