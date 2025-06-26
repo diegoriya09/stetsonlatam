@@ -36,6 +36,8 @@ function setupAddToCartButtons() {
 }
 
 function handleAddToCart(e) {
+  console.log("👉 handleAddToCart activado");
+  
   const button = e.currentTarget;
   const jwt = localStorage.getItem("jwt");
 
