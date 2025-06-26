@@ -53,9 +53,11 @@ $conn->close();
           <article class="card-item"
           data-name="<?= htmlspecialchars($producto['name']) ?>"
           data-price="<?= $producto['price'] ?>">
-            <img src="<?= htmlspecialchars($producto['image']) ?>" alt="<?= htmlspecialchars($producto['name']) ?>">
-            <h3><?= htmlspecialchars($producto['name']) ?></h3>
-            <p>$<?= number_format($producto['price'], 0, ',', '.') ?>.00</p>
+            <a href="producto.php?id=<?= $producto['id'] ?>" class="card-link">
+              <img src="<?= htmlspecialchars($producto['image']) ?>" alt="<?= htmlspecialchars($producto['name']) ?>">
+              <h3><?= htmlspecialchars($producto['name']) ?></h3>
+              <p>$<?= number_format($producto['price'], 0, ',', '.') ?>.00</p>
+            </a>
             <!-- Botón de wishlist -->
             <button class="wishlist-btn" 
               data-id="<?= $producto['id'] ?>" 

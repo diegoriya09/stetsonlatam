@@ -7,7 +7,7 @@
             <!-- Aquí se mostrarán los productos del carrito dinámicamente -->
         </div>
         <div class="sidebar-footer">
-            <p id="total-carrito">Total: $0</p>
-            <button class="pagar-btn">Pagar</button>
+            <p id="total-carrito">Subtotal: $0</p>
+            <button class="pagar-btn">Check Out</button>
         </div>
 </div>

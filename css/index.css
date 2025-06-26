@@ -422,6 +422,16 @@ nav.main-nav {
   transition: transform 0.2s ease;
 }
 
+.card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+.card-link h3,
+.card-link p {
+  margin: 0.5rem 0;
+}
+
 .card-item img {
   width: 100%;
   height: 200px;
