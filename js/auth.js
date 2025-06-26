@@ -60,8 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         icon: 'success',
                         confirmButtonText: 'OK'
                     }).then(() => {
-                        loadCart(true); // Cargar el carrito actualizado
-                        window.location.href = 'index.php'; // Redirigir a la página principal
+                        window.location.reload();
                     });
 
                 } else {
