@@ -96,7 +96,6 @@ function loadCart(isLoggedIn) {
       });
   } else {
     const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-    console.log("Carrito local:", carrito);
     carrito.forEach(p => {
       total += p.price * p.quantity;
       carritoItems.innerHTML += renderItem(p.id, p.name, p.price, p.image, p.quantity);
