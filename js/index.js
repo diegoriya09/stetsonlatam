@@ -142,16 +142,14 @@ document.addEventListener('DOMContentLoaded', () => {
     curr = (curr + 1) % slides.length;
     showSlide(curr);
   }, 7000);
+});
 
-  const btnCarrito = document.getElementById('btn-carrito');
-  if (btnCarrito) {
-    btnCarrito.addEventListener('click', () => {
-      document.getElementById('carrito-sidebar').classList.add('open');
-      const jwt = localStorage.getItem("jwt");
-      const isLoggedIn = !!jwt;
-      loadCart(isLoggedIn);
-    });
-  }
+// Abrir y cerrar carrito (sidebar)
+document.getElementById('btn-carrito').addEventListener('click', () => {
+  document.getElementById('carrito-sidebar').classList.add('open');
+  const jwt = localStorage.getItem("jwt");
+  const isLoggedIn = !!jwt;
+  loadCart(isLoggedIn); // actualiza contenido
 });
 
 document.getElementById('cerrar-carrito').addEventListener('click', () => {

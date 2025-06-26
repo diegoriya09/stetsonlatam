@@ -36,7 +36,6 @@ function setupAddToCartButtons() {
 }
 
 function handleAddToCart(e) {
-  console.log("👉 handleAddToCart activado");
   
   const button = e.currentTarget;
   const jwt = localStorage.getItem("jwt");
@@ -146,14 +145,4 @@ function renderItem(id, name, price, image, quantity) {
         <a class="remove-btn" data-id="${id}"><i class="fas fa-trash-alt"></i></a>
       </div>
     </div>`;
-}
-
-const carritoIcon = document.getElementById('open-cart');
-if (carritoIcon) {
-  carritoIcon.addEventListener('click', () => {
-    const jwt = localStorage.getItem("jwt");
-    const isLoggedIn = !!jwt;
-    document.getElementById('carrito-sidebar').classList.add('open'); // Abre el carrito
-    loadCart(isLoggedIn); // Vuelve a cargar productos
-  });
 }
