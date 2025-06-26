@@ -144,3 +144,14 @@ function renderItem(id, name, price, image, quantity) {
       </div>
     </div>`;
 }
+
+// Escuchar cuando abren el carrito manualmente
+const carritoIcon = document.getElementById('open-cart'); // Asegúrate de tener este ID en el botón del carrito
+if (carritoIcon) {
+  carritoIcon.addEventListener('click', () => {
+    const jwt = localStorage.getItem("jwt");
+    const isLoggedIn = !!jwt;
+    loadCart(isLoggedIn);
+    document.getElementById('carrito-sidebar').classList.add('open');
+  });
+}

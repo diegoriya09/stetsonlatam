@@ -71,10 +71,9 @@ document.addEventListener("DOMContentLoaded", () => {
                         if (logoutBtn) logoutBtn.style.display = 'inline-block';
 
                         // Carga el carrito inmediatamente desde la BD
-                        loadCart(true);
-
                         document.getElementById('carrito-sidebar').classList.add('open');
                         loadCart(true);
+
                     });
 
                 } else {
