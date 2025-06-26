@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         icon: 'success',
                         confirmButtonText: 'OK'
                     }).then(() => {
-                        window.location.reload();
+                        loadCart(true); // Cargar el carrito actualizado
                     });
 
                 } else {
