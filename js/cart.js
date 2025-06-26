@@ -2,12 +2,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   const jwt = localStorage.getItem("jwt");
 
-  // Si no hay JWT, cargar local
-  if (!jwt) {
-    loadCart(false);
-    return;
-  }
-
   // Verificamos sesión válida
   fetch("php/check_session.php", {
     method: "GET",
