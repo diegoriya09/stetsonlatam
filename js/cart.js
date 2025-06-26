@@ -1,27 +1,30 @@
 // ✅ cart.js (final funcional)
 document.addEventListener("DOMContentLoaded", () => {
   const jwt = localStorage.getItem("jwt");
-  let isLoggedIn = false;
 
-  if (jwt) {
-    fetch("php/check_session.php", {
-      method: "GET",
-      headers: {
-        "Authorization": "Bearer " + jwt
+  // Si no hay JWT, cargar local
+  if (!jwt) {
+    loadCart(false);
+    return;
+  }
+
+  // Verificamos sesión válida
+  fetch("php/check_session.php", {
+    method: "GET",
+    headers: {
+      "Authorization": "Bearer " + jwt
+    }
+  })
+    .then(res => res.json())
+    .then(data => {
+      if (data.logged_in) {
+        loadCart(true);  // ✅ Usuario logueado, carga desde base de datos
+      } else {
+        localStorage.removeItem("jwt"); // Sesión inválida, limpiar
+        loadCart(false); // Cargar local
       }
     })
-      .then(res => res.json())
-      .then(data => {
-        if (data.logged_in) {
-          const loggedIn = data.logged_in === true;
-          loadCart(loggedIn);
-        } else {
-          loadCart(false);
-        }
-      });
-  } else {
-    loadCart(false);
-  }
+    .catch(() => loadCart(false));
 
   setupAddToCartButtons();
 });

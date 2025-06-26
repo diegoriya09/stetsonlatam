@@ -73,8 +73,8 @@ document.addEventListener("DOMContentLoaded", () => {
                         // Carga el carrito inmediatamente desde la BD
                         loadCart(true);
 
-                        const carritoSidebar = document.getElementById('carrito-sidebar');
-                        if (carritoSidebar) carritoSidebar.classList.add('open');
+                        document.getElementById('carrito-sidebar').classList.add('open');
+                        loadCart(true);
                     });
 
                 } else {
