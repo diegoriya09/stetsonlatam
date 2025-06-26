@@ -27,9 +27,11 @@ $conn->close();
             if (count($productos) > 0):
                 foreach ($productos as $producto): ?>
                     <article class="card-item">
-                        <img src="<?= htmlspecialchars($producto['image']) ?>" alt="<?= htmlspecialchars($producto['name']) ?>">
-                        <h3><?= htmlspecialchars($producto['name']) ?></h3>
-                        <p>$<?= number_format($producto['price'], 0, ',', '.') ?></p>
+                        <a href="producto.php?id=<?= $producto['id'] ?>" class="card-link">
+                            <img src="<?= htmlspecialchars($producto['image']) ?>" alt="<?= htmlspecialchars($producto['name']) ?>">
+                            <h3><?= htmlspecialchars($producto['name']) ?></h3>
+                            <p>$<?= number_format($producto['price'], 0, ',', '.') ?></p>
+                        </a>
                         <button class="add-to-cart-btn"
                             data-id="<?= $producto['id'] ?>"
                             data-name="<?= htmlspecialchars($producto['name']) ?>"
