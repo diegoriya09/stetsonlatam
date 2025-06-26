@@ -1,18 +1,28 @@
 <?php
 require_once 'php/conexion.php';
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 // Validar ID
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
-// Consultar producto
-$stmt = $conn->prepare("SELECT * FROM productos WHERE id = ?");
-$stmt->execute([$id]);
-$producto = $stmt->fetch(PDO::FETCH_ASSOC);
+// Seguridad: sanitizar el ID
+$id = $conn->real_escape_string($id);
 
-if (!$producto) {
+// Ejecutar la consulta directamente
+$sql = "SELECT * FROM productos WHERE id = $id";
+$result = $conn->query($sql);
+
+if ($result && $result->num_rows > 0) {
+  $producto = $result->fetch_assoc();
+} else {
   echo "Producto no encontrado.";
   exit;
 }
+
+$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -23,6 +33,8 @@ if (!$producto) {
   <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
+
+<?php include 'navbar.php'; ?>
 
 <!-- Breadcrumbs -->
 <nav class="breadcrumb">
@@ -71,6 +83,9 @@ if (!$producto) {
     </div>
   </div>
 </section>
+
+<?php include 'footer.php'; ?>
+
 
 <script src="js/cart.js?v=<?php echo time(); ?>"></script> <!-- Donde está handleAddToCart -->
 </body>
