@@ -41,6 +41,9 @@ $conn->close();
 
 <?php include 'navbar.php'; ?>
 
+<?php include 'modal.php'; ?>
+
+<?php include 'cart.php'; ?>
 <!-- Breadcrumbs -->
 <nav class="breadcrumb">
   <a href="index.php">Inicio</a> ›
