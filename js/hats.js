@@ -1,4 +1,3 @@
-document.addEventListener('DOMContentLoaded', () => {
   const modal = document.getElementById('user-modal');
   const openModalBtn = document.getElementById('open-user-modal');
   const closeModalBtn = document.querySelector('.close');
@@ -111,40 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  const slides = document.querySelectorAll('.hero-slider .slide');
-  const dots   = document.querySelectorAll('.dot');
-  const title  = document.getElementById('hero-title');
-  const text   = document.getElementById('hero-text');
-  const btn    = document.getElementById('hero-btn');
-
-  let curr = 0;
-
-  function showSlide(i) {
-    slides.forEach(s => s.classList.remove('active'));
-    dots.forEach(d => d.classList.remove('active'));
-    slides[i].classList.add('active');
-    dots[i].classList.add('active');
-
-    title.innerText = slides[i].dataset.title;
-    text.innerText  = slides[i].dataset.text;
-    btn.href        = slides[i].dataset.link;
-  }
-
-  dots.forEach(dot => {
-    dot.addEventListener('click', () => {
-      curr = parseInt(dot.dataset.index);
-      showSlide(curr);
-    });
-  });
-
-  // Avance automático cada 7 segundos
-  setInterval(() => {
-    curr = (curr + 1) % slides.length;
-    showSlide(curr);
-  }, 7000);
-});
-
-// Abrir y cerrar carrito (sidebar)
+  // Abrir y cerrar carrito (sidebar)
 document.getElementById('btn-carrito').addEventListener('click', () => {
   document.getElementById('carrito-sidebar').classList.add('open');
   loadCart(); // actualiza contenido
@@ -154,3 +120,25 @@ document.getElementById('cerrar-carrito').addEventListener('click', () => {
   document.getElementById('carrito-sidebar').classList.remove('open');
 });
 
+document.getElementById('sort-select').addEventListener('change', function () {
+  const sortValue = this.value;
+  const container = document.querySelector('.card-grid');
+  const items = Array.from(container.querySelectorAll('.card-item'));
+
+  items.sort((a, b) => {
+    const nameA = a.dataset.name.toLowerCase();
+    const nameB = b.dataset.name.toLowerCase();
+    const priceA = parseFloat(a.dataset.price);
+    const priceB = parseFloat(b.dataset.price);
+
+    switch (sortValue) {
+      case 'name-asc': return nameA.localeCompare(nameB);
+      case 'name-desc': return nameB.localeCompare(nameA);
+      case 'price-asc': return priceA - priceB;
+      case 'price-desc': return priceB - priceA;
+    }
+  });
+
+  container.innerHTML = '';
+  items.forEach(item => container.appendChild(item));
+});
