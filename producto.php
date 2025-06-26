@@ -95,6 +95,9 @@ $conn->close();
 <?php include 'footer.php'; ?>
 
 
-<script src="js/cart.js?v=<?php echo time(); ?>"></script> <!-- Donde está handleAddToCart -->
+    <script src="js/auth.js?v=<?php echo time(); ?>"></script>
+    <script src="js/cart.js?v=<?php echo time(); ?>"></script>
+    <script src="js/hats.js?v=<?php echo time(); ?>"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- Donde está handleAddToCart -->
 </body>
 </html>
