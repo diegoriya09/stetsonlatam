@@ -77,10 +77,12 @@ function handleAddToCart(e) {
 function loadCart(isLoggedIn) {
   const carritoItems = document.getElementById('carrito-items');
   const totalCarrito = document.getElementById('total-carrito');
+  const mensajeVacio = document.getElementById('carrito-vacio');
   const jwt = localStorage.getItem("jwt");
   let total = 0;
 
   carritoItems.innerHTML = ''; // ✅ limpia visualmente antes de renderizar
+  carritoItems.appendChild(mensajeVacio);
 
   if (isLoggedIn && jwt) {
     fetch('php/cart/get_cart.php', {
@@ -90,20 +92,28 @@ function loadCart(isLoggedIn) {
     })
       .then(response => response.json())
       .then(carrito => {
-        console.log("Productos desde backend:", carrito); // ✅ depuración
-        carrito.forEach(p => {
-          total += p.price * p.quantity;
-          carritoItems.innerHTML += renderItem(p.id, p.name, p.price, p.image, p.quantity);
-        });
+        if (carrito.length === 0) {
+          mensajeVacio.style.display = 'block';
+        } else {
+          mensajeVacio.style.display = 'none';
+          carrito.forEach(p => {
+            total += p.price * p.quantity;
+            carritoItems.innerHTML += renderItem(p.id, p.name, p.price, p.image, p.quantity);
+          });
+        }
         totalCarrito.textContent = `Total: $${total.toLocaleString()}`;
       });
   } else {
     const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-    console.log("Productos desde localStorage:", carrito); // ✅ depuración
-    carrito.forEach(p => {
-      total += p.price * p.quantity;
-      carritoItems.innerHTML += renderItem(p.id, p.name, p.price, p.image, p.quantity);
-    });
+    if (carrito.length === 0) {
+      mensajeVacio.style.display = 'block';
+    } else {
+      mensajeVacio.style.display = 'none';
+      carrito.forEach(p => {
+        total += p.price * p.quantity;
+        carritoItems.innerHTML += renderItem(p.id, p.name, p.price, p.image, p.quantity);
+      });
+    }
     totalCarrito.textContent = `Total: $${total.toLocaleString()}`;
   }
 }
