@@ -93,9 +93,18 @@ document.addEventListener("DOMContentLoaded", () => {
             showConfirmButton: false,
             timer: 5000,
             timerProgressBar: true
-        }).then(() => {
+        }).then(async () => {
+            const jwt = localStorage.getItem('jwt');
+            if (jwt) {
+                // Guarda el carrito actual en localStorage antes de cerrar sesión
+                const carrito = await fetch('php/cart/get_cart.php', {
+                    headers: { 'Authorization': 'Bearer ' + jwt }
+                }).then(r => r.json());
+
+                localStorage.setItem('carrito', JSON.stringify(carrito));
+            }
+
             localStorage.removeItem('jwt');
-            localStorage.removeItem('carrito'); // Limpia el carrito local
             location.reload();
         });
     });
