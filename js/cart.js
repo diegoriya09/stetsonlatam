@@ -56,7 +56,7 @@ function handleAddToCart(e) {
       .then(res => res.json())
       .then(data => {
         if (data.success) {
-          loadCart();
+          loadCart(true);
         } else {
           console.error("Error al agregar:", data.message);
         }
@@ -70,7 +70,7 @@ function handleAddToCart(e) {
       carrito.push(producto);
     }
     localStorage.setItem('carrito', JSON.stringify(carrito));
-    loadCart();
+    loadCart(false);
   }
 }
 
@@ -122,12 +122,12 @@ document.addEventListener('click', function (e) {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({ producto_id: id })
-      }).then(() => loadCart());
+      }).then(() => loadCart(true));
     } else {
       let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
       carrito = carrito.filter(p => p.id !== id);
       localStorage.setItem('carrito', JSON.stringify(carrito));
-      loadCart();
+      loadCart(false);
     }
   }
 });
