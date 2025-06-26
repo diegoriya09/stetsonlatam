@@ -61,7 +61,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         confirmButtonText: 'OK'
                     }).then(() => {
                         loadCart(true); // Cargar el carrito actualizado
-                        window.location.href = "index.php";
                     });
 
                 } else {
