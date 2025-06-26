@@ -5,7 +5,8 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 require_once '../conexion.php';
-require_once '../vendor/autoload.php';
+require_once '../../vendor/autoload.php';
+
 
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
