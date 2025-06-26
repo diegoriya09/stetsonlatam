@@ -7,7 +7,7 @@
         <!-- Enlaces centrados -->
         <ul class="nav-center">
             <li><a href="hats.php">Hats</a></li>
-            <li><a href="#stories">Stories</a></li>
+            <li><a href="index.php#stories">Stories</a></li>
         </ul>
         <!-- Menú responsive -->
         <div class="mobile-menu" id="mobile-menu">
