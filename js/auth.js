@@ -60,7 +60,18 @@ document.addEventListener("DOMContentLoaded", () => {
                         icon: 'success',
                         confirmButtonText: 'OK'
                     }).then(() => {
-                        loadCart(true); // Cargar el carrito actualizado
+                        // Cierra el modal si está presente
+                        const modal = document.getElementById('user-modal');
+                        if (modal) {
+                            modal.style.display = 'none';
+                        }
+
+                        // Oculta ícono usuario y muestra botón logout
+                        if (userIcon) userIcon.style.display = 'none';
+                        if (logoutBtn) logoutBtn.style.display = 'inline-block';
+
+                        // Carga el carrito inmediatamente desde la BD
+                        loadCart(true);
                     });
 
                 } else {
