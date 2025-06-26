@@ -61,7 +61,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         confirmButtonText: 'OK'
                     }).then(() => {
                         window.location.reload();
-                        loadCart(true); // Cargar el carrito actualizado
                     });
 
                 } else {
