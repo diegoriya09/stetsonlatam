@@ -82,7 +82,7 @@ function loadCart(isLoggedIn) {
   let total = 0;
 
   carritoItems.innerHTML = ''; // ✅ limpia visualmente antes de renderizar
-  carritoItems.appendChild(mensajeVacio);
+  mensajeVacio.style.display = 'none';
 
   if (isLoggedIn && jwt) {
     fetch('php/cart/get_cart.php', {
@@ -92,12 +92,11 @@ function loadCart(isLoggedIn) {
     })
       .then(response => response.json())
       .then(carrito => {
-        if (carrito.length === 0) {
+        if (!carrito || carrito.length === 0) {
           mensajeVacio.style.display = 'block';
         } else {
-          mensajeVacio.style.display = 'none';
           carrito.forEach(p => {
-            total += p.price * p.quantity;
+            total += parseFloat(p.price) * p.quantity;
             carritoItems.innerHTML += renderItem(p.id, p.name, p.price, p.image, p.quantity);
           });
         }
@@ -108,7 +107,6 @@ function loadCart(isLoggedIn) {
     if (carrito.length === 0) {
       mensajeVacio.style.display = 'block';
     } else {
-      mensajeVacio.style.display = 'none';
       carrito.forEach(p => {
         total += p.price * p.quantity;
         carritoItems.innerHTML += renderItem(p.id, p.name, p.price, p.image, p.quantity);
