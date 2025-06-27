@@ -18,7 +18,6 @@
             <li><a href="hats.php">Hats</a></li>
             <li><a href="index.php#stories">Stories</a></li>
         </ul>
-        </div>
         <!-- Íconos a la derecha -->
         <div class="nav-right">
             <!-- Visible siempre -->
