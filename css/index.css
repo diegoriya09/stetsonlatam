@@ -305,8 +305,8 @@ nav.main-nav {
 }
 
 .hero-slider .cta-btn {
-  background: #3F1E1F;
-  color: #f1eeea;
+  background: #f1eeea;
+  color: #3c3737;
   font-size: 1rem;
   padding: 14px 32px;
   border-radius: 6px;
@@ -315,6 +315,7 @@ nav.main-nav {
   border: none;
   cursor: pointer;
   transition: background 0.3s, color 0.3s;
+  text-decoration: none;
 }
 .hero-slider .cta-btn:hover {
   background: #f1eeea;
