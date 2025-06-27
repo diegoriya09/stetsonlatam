@@ -283,7 +283,8 @@ nav.main-nav {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-size: cover;
+  background-size: contain; /* Cambiado de cover a contain */
+  background-repeat: no-repeat; /* Para evitar repeticiones */
   background-position: center;
   opacity: 0;
   transition: opacity 1s ease-in-out;
@@ -398,6 +399,9 @@ nav.main-nav {
     position: static;
     width: 100vw;
     height: 180px;
+    background-size: contain; /* Asegura que la imagen no se corte en móvil */
+    background-repeat: no-repeat;
+    background-position: center;
     opacity: 1;
     transition: none;
   }
@@ -439,6 +443,9 @@ nav.main-nav {
   }
   .hero-slider .slide {
     height: 110px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
   }
   .hero-content {
     padding: 0.7rem 0.2rem;
