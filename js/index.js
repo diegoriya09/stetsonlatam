@@ -111,37 +111,41 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  const slides = document.querySelectorAll('.hero-slider .slide');
-  const dots   = document.querySelectorAll('.dot');
-  const title  = document.getElementById('hero-title');
-  const text   = document.getElementById('hero-text');
-  const btn    = document.getElementById('hero-btn');
+  const slides = document.querySelectorAll('.slide');
+  const dots = document.querySelectorAll('.dot');
+  const title = document.getElementById('hero-title');
+  const text = document.getElementById('hero-text');
+  const button = document.getElementById('hero-btn');
 
-  let curr = 0;
+  let currentIndex = 0;
 
-  function showSlide(i) {
-    slides.forEach(s => s.classList.remove('active'));
-    dots.forEach(d => d.classList.remove('active'));
-    slides[i].classList.add('active');
-    dots[i].classList.add('active');
+  function showSlide(index) {
+    slides.forEach((slide, i) => {
+      slide.classList.toggle('active', i === index);
+      dots[i].classList.toggle('active', i === index);
+    });
 
-    title.innerText = slides[i].dataset.title;
-    text.innerText  = slides[i].dataset.text;
-    btn.href        = slides[i].dataset.link;
+    const activeSlide = slides[index];
+    title.textContent = activeSlide.dataset.title;
+    text.innerHTML = activeSlide.dataset.text.replace(',', ',<br>');
+    button.setAttribute('href', activeSlide.dataset.link);
   }
 
+  function nextSlide() {
+    currentIndex = (currentIndex + 1) % slides.length;
+    showSlide(currentIndex);
+  }
+
+  // Cambio automático cada 5 segundos
+  setInterval(nextSlide, 5000);
+
+  // Click en los puntos
   dots.forEach(dot => {
     dot.addEventListener('click', () => {
-      curr = parseInt(dot.dataset.index);
-      showSlide(curr);
+      currentIndex = parseInt(dot.dataset.index);
+      showSlide(currentIndex);
     });
   });
-
-  // Avance automático cada 7 segundos
-  setInterval(() => {
-    curr = (curr + 1) % slides.length;
-    showSlide(curr);
-  }, 7000);
 });
 
 // Abrir y cerrar carrito (sidebar)
@@ -155,4 +159,3 @@ document.getElementById('btn-carrito').addEventListener('click', () => {
 document.getElementById('cerrar-carrito').addEventListener('click', () => {
   document.getElementById('carrito-sidebar').classList.remove('open');
 });
-
