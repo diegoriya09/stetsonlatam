@@ -142,6 +142,9 @@ nav.main-nav {
   margin-left: 16px;
   user-select: none;
 }
+.desktop-icons {
+  display: flex;
+}
 
 /* --- RESPONSIVE --- */
 @media (max-width: 900px) {
