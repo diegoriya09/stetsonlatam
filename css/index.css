@@ -98,90 +98,76 @@ nav.main-nav {
   cursor: pointer;
 }
 
-/* Escondemos el menú mobile por defecto */
+/* --- MOBILE MENU --- */
 .mobile-menu {
   display: none;
   flex-direction: column;
+  background: #fff;
   position: absolute;
-  top: 70px;
-  left: 0;
-  width: 100%;
-  background-color: #BCB9BD;
-  padding: 1rem;
-  z-index: 999;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-}
-
-.mobile-menu.active {
-  display: block;
+  top: 60px;
+  right: 0;
+  width: 220px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  border-radius: 0 0 8px 8px;
+  z-index: 100;
+  padding: 16px 0;
 }
 
 .mobile-menu ul {
   list-style: none;
   padding: 0;
-  margin-top: 1rem;
+  margin: 0;
 }
 
-.mobile-menu ul li {
-  margin: 10px 0;
+.mobile-menu li {
+  margin: 0;
 }
 
-.mobile-menu ul li a {
-  color: #111;
+.mobile-menu a {
+  display: block;
+  padding: 12px 24px;
+  color: #222;
   text-decoration: none;
-  font-weight: bold;
   font-size: 1rem;
 }
 
-.mobile-search input {
-  width: 100%;
-  padding: 10px;
-  border-radius: 4px;
-  border: none;
-  font-size: 0.9rem;
+.mobile-search {
+  padding: 0 24px 12px 24px;
 }
 
-/* Ícono hamburguesa */
 .hamburger {
   display: none;
-  font-size: 1.8rem;
+  font-size: 2rem;
   cursor: pointer;
+  margin-left: 16px;
+  user-select: none;
 }
 
-/* Íconos solo visibles en escritorio */
-.desktop-icons {
-  display: flex;
-  gap: 15px;
-}
-
-/* Para móviles */
-@media (max-width: 768px) {
-  .nav-center {
-    display: none;
-  }
-
+/* --- RESPONSIVE --- */
+@media (max-width: 900px) {
+  .nav-center,
   .desktop-icons {
     display: none;
   }
-
   .hamburger {
     display: block;
-    cursor: pointer;
   }
-
-  .mobile-menu.show {
+  .mobile-menu {
+    display: none;
+  }
+  .mobile-menu.active {
     display: flex;
-  }
-
-  .nav-right {
-    padding-right: 1rem;
-    gap: 10px;
   }
 }
 
-/* Opcional: para bloquear scroll al abrir menú */
-body.no-scroll {
-  overflow: hidden;
+/* Opcional: para que el menú cubra toda la pantalla en móvil */
+@media (max-width: 600px) {
+  .mobile-menu {
+    width: 100vw;
+    left: 0;
+    right: 0;
+    border-radius: 0;
+  }
 }
 
 
