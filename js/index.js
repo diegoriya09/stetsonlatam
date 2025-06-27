@@ -127,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const activeSlide = slides[index];
     title.textContent = activeSlide.dataset.title;
-    text.innerHTML = activeSlide.dataset.text.replace(',', ',<br>');
+    text.textContent = activeSlide.dataset.text;
     button.setAttribute('href', activeSlide.dataset.link);
   }
 
