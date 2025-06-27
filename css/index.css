@@ -54,7 +54,8 @@ nav.main-nav {
   font-size: 6px;
   position: absolute;
   bottom: 0;
-  right: 20; /* puedes ajustar la distancia */
+  right: 20;
+  /* puedes ajustar la distancia */
   line-height: 1;
   transform: translateY(-100%);
 }
@@ -161,6 +162,8 @@ nav.main-nav {
 
   .hamburger {
     display: block;
+    border: 1px solid red;
+    color: red;
   }
 
   .mobile-menu.show {
@@ -183,11 +186,13 @@ body.no-scroll {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  height: calc(100vh - 70px); /* Ajusta la altura para que no cubra el navbar */
+  height: calc(100vh - 70px);
+  /* Ajusta la altura para que no cubra el navbar */
   min-height: 600px;
   background-color: #f1eeea;
   font-family: 'GT America', sans-serif;
-  margin-top: 70px; /* Asegura que el hero no se superponga al navbar */
+  margin-top: 70px;
+  /* Asegura que el hero no se superponga al navbar */
 }
 
 .hero-left,
@@ -200,7 +205,8 @@ body.no-scroll {
 
 .hero-left img {
   width: 100%;
-  height: calc(100vh - 70px); /* Ajusta la altura para que no cubra el navbar */
+  height: calc(100vh - 70px);
+  /* Ajusta la altura para que no cubra el navbar */
   object-fit: cover;
 }
 
@@ -328,6 +334,7 @@ body.no-scroll {
   transition: background 0.3s, color 0.3s;
   text-decoration: none;
 }
+
 .hero-slider .cta-btn:hover {
   background: #3F1E1F;
   color: #f1eeea;
@@ -342,7 +349,8 @@ body.no-scroll {
 
 .hero-slider .slide {
   position: absolute;
-  top: 0; left: 0;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   background-size: cover;
@@ -357,6 +365,7 @@ body.no-scroll {
   content: attr(data-title);
   text-align: justify;
 }
+
 .hero-slider .slide.active {
   opacity: 1;
   z-index: 2;
@@ -370,9 +379,11 @@ body.no-scroll {
   transform: translateX(-50%);
   z-index: 10;
 }
+
 .hero-slider .dot {
   display: inline-block;
-  width: 12px; height: 12px;
+  width: 12px;
+  height: 12px;
   margin: 0 5px;
   background: #fff;
   border-radius: 50%;
@@ -380,7 +391,10 @@ body.no-scroll {
   cursor: pointer;
   transition: opacity 0.3s;
 }
-.hero-slider .dot.active { opacity: 1; }
+
+.hero-slider .dot.active {
+  opacity: 1;
+}
 
 /* Responsive */
 @media (max-width: 1024px) {
@@ -390,6 +404,7 @@ body.no-scroll {
     min-height: 400px;
     max-height: none;
   }
+
   .hero-slider .hero-left,
   .hero-slider .hero-right {
     width: 100vw;
@@ -398,6 +413,7 @@ body.no-scroll {
     height: 50vh;
     max-height: 400px;
   }
+
   .hero-slider .slide {
     left: 0;
     width: 100vw;
@@ -412,6 +428,7 @@ body.no-scroll {
     height: auto;
     min-height: 300px;
   }
+
   .hero-slider .hero-left,
   .hero-slider .hero-right {
     width: 100vw;
@@ -420,33 +437,40 @@ body.no-scroll {
     height: 40vh;
     max-height: 300px;
   }
+
   .hero-slider .slide {
     left: 0;
     width: 100vw;
     height: 40vh;
     max-height: 300px;
   }
+
   .hero-slider .hero-content h1 {
     font-size: 1.5rem;
   }
+
   .hero-slider .hero-content p {
     font-size: 1rem;
   }
 }
 
 @media (max-width: 480px) {
+
   .hero-slider .hero-left,
   .hero-slider .hero-right,
   .hero-slider .slide {
     height: 180px;
     max-height: 180px;
   }
+
   .hero-slider .hero-content h1 {
     font-size: 1.1rem;
   }
+
   .hero-slider .hero-content p {
     font-size: 0.92rem;
   }
+
   .hero-slider .cta-btn {
     font-size: 0.9rem;
     padding: 10px 18px;
@@ -508,6 +532,7 @@ body.no-scroll {
   color: inherit;
   display: block;
 }
+
 .card-link h3,
 .card-link p {
   margin: 0.5rem 0;
@@ -816,4 +841,3 @@ body.no-scroll {
 .footer-links a:hover {
   text-decoration: underline;
 }
-
