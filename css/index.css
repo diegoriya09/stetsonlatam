@@ -287,7 +287,7 @@ nav.main-nav {
 
 .hero-slider .hero-content {
   color: #f1eeea;
-  text-align: justify;
+  text-align: center;
   max-width: 500px;
   margin: 0 auto;
 }
@@ -299,13 +299,13 @@ nav.main-nav {
 }
 
 .hero-slider .hero-content p {
+  text-align: justify;
   font-size: 16px;
   margin-bottom: 2rem;
   line-height: 1.5;
 }
 
 .hero-slider .cta-btn {
-  text-align: center;
   background: #f1eeea;
   color: #3c3737;
   font-size: 14px;
