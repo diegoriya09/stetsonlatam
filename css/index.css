@@ -143,22 +143,39 @@ nav.main-nav {
   cursor: pointer;
 }
 
+/* Íconos solo visibles en escritorio */
+.desktop-icons {
+  display: flex;
+  gap: 15px;
+}
+
+/* Para móviles */
 @media (max-width: 768px) {
+  .nav-center {
+    display: none;
+  }
+
+  .desktop-icons {
+    display: none;
+  }
 
   .hamburger {
     display: block;
-    font-size: 1.8rem;
-    cursor: pointer;
+  }
+
+  .mobile-menu.show {
+    display: flex;
   }
 
   .nav-right {
+    padding-right: 1rem;
     gap: 10px;
   }
+}
 
-  .nav-right img.icon {
-    width: 22px;
-    height: 22px;
-  }
+/* Opcional: para bloquear scroll al abrir menú */
+body.no-scroll {
+  overflow: hidden;
 }
 
 
