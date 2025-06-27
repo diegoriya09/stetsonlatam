@@ -13,33 +13,40 @@
 </head>
 <body typeof="schema:WebPage">
     <section class="hero-slider">
-        <div class="slide active" data-title="THE OPEN ROAD"
-            data-text="Since 1937, it’s been the hat of choice for artists,
-            outlaws, Presidents, and trailblazers."
+        <!-- Columna izquierda: Texto -->
+        <div class="hero-left">
+            <div class="hero-content">
+            <h1 id="hero-title">THE OPEN ROAD</h1>
+            <p id="hero-text">
+                Since 1937, it’s been the hat of choice for artists,<br>
+                outlaws, Presidents, and trailblazers.
+            </p>
+            <a id="hero-btn" href="#featured" class="cta-btn">SHOP NOW</a>
+            </div>
+        </div>
+        <!-- Columna derecha: Slides de imagen -->
+        <div class="hero-right">
+            <div class="slide active"
+            data-title="THE OPEN ROAD"
+            data-text="Since 1937, it’s been the hat of choice for artists, outlaws, Presidents, and trailblazers."
             data-link="#featured"
             style="background-image: url('img/slide1.png');"></div>
-        <div class="slide" data-title="WESTERN STRAW"
+            <div class="slide"
+            data-title="WESTERN STRAW"
             data-text="Fresh and breezy for summer adventures."
             data-link="#featured"
             style="background-image: url('img/slide2.png');"></div>
-        <div class="slide" data-title="LATTE MILAN"
+            <div class="slide"
+            data-title="LATTE MILAN"
             data-text="Sophisticated city charm meets ranch style."
             data-link="#featured"
             style="background-image: url('img/slide3.png');"></div>
-
-        <!-- Indicadores -->
-        <div class="dots">
+            <!-- Indicadores -->
+            <div class="dots">
             <span class="dot active" data-index="0"></span>
             <span class="dot" data-index="1"></span>
             <span class="dot" data-index="2"></span>
-        </div>
-
-        <!-- Contenido dinámico (texto + botón) -->
-        <div class="hero-content">
-            <h1 id="hero-title">THE OPEN ROAD</h1>
-            <p id="hero-text">Since 1937, it’s been the hat of choice for artists, <br>
-                outlaws, Presidents, and trailblazers.</p>
-            <a id="hero-btn" href="#featured" class="cta-btn">SHOP NOW</a>
+            </div>
         </div>
     </section>
     <?php include 'navbar.php'; ?>
