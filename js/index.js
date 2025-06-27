@@ -146,6 +146,13 @@ document.addEventListener('DOMContentLoaded', () => {
       showSlide(currentIndex);
     });
   });
+
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  hamburger.addEventListener('click', () => {
+    mobileMenu.classList.toggle('show');
+  });
 });
 
 // Abrir y cerrar carrito (sidebar)
@@ -159,3 +166,4 @@ document.getElementById('btn-carrito').addEventListener('click', () => {
 document.getElementById('cerrar-carrito').addEventListener('click', () => {
   document.getElementById('carrito-sidebar').classList.remove('open');
 });
+

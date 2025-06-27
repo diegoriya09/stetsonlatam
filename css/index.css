@@ -143,24 +143,16 @@ nav.main-nav {
   cursor: pointer;
 }
 
-/* Versión para móviles */
 @media (max-width: 768px) {
-  .nav-center {
-    display: none;
-  }
 
   .hamburger {
     display: block;
-  }
-
-  .mobile-menu.show {
-    display: flex;
+    font-size: 1.8rem;
+    cursor: pointer;
   }
 
   .nav-right {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+    gap: 10px;
   }
 
   .nav-right img.icon {

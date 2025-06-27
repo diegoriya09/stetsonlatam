@@ -9,11 +9,6 @@
             <li><a href="hats.php">Hats</a></li>
             <li><a href="index.php#stories">Stories</a></li>
         </ul>
-        <!-- Menú responsive -->
-        <div class="mobile-menu" id="mobile-menu">
-        <div class="mobile-search">
-            <input type="text" placeholder="Buscar..." />
-        </div>
         <ul>
             <li><a href="#hats">Hats</a></li>
             <li><a href="#stories">Stories</a></li>
@@ -21,9 +16,10 @@
         </div>
         <!-- Íconos a la derecha -->
         <div class="nav-right">
+            <div class="hamburger" id="hamburger">&#9776;</div>
+        
             <a href="#" id="open-user-modal"><img src="/img/user.png" alt="User" class="icon" /></a>
             <a id="logout-btn" style="display: none;"><img src="/img/logout.png" alt="Logout" class="icon"></a>
-            <div class="hamburger" id="hamburger">&#9776;</div>
             <a href="#"><img src="/img/search.png" alt="Search" class="icon" /></a>
             <a href="wishlist.php"><i class="fas fa-heart"></i></a>
             <div class="cart-wrapper">
