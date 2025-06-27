@@ -16,10 +16,11 @@
         <!-- Columna izquierda: Texto -->
         <div class="hero-left">
             <div class="hero-content">
-            <h1 id="hero-title">THE OPEN ROAD</h1>
+            <h1 id="hero-title">WESTERN CLASSICS</h1>
             <p id="hero-text">
-                Since 1937, it’s been the hat of choice for artists,<br>
-                outlaws, Presidents, and trailblazers.
+                Discover the best straw hats in the west, from icons to 
+                all-new styles, each crafted in the U.S.A. for legendary 
+                quality and resilience.
             </p>
             <a id="hero-btn" href="#featured" class="cta-btn">SHOP NOW</a>
             </div>
@@ -27,18 +28,18 @@
         <!-- Columna derecha: Slides de imagen -->
         <div class="hero-right">
             <div class="slide active"
-            data-title="THE OPEN ROAD"
-            data-text="Since 1937, it’s been the hat of choice for artists, outlaws, Presidents, and trailblazers."
+            data-title="WESTERN CLASSICS"
+            data-text="Discover the best straw hats in the west, from icons to all-new styles, each crafted in the U.S.A. for legendary quality and resilience."
             data-link="#featured"
             style="background-image: url('img/slide1.png');"></div>
             <div class="slide"
-            data-title="WESTERN STRAW"
-            data-text="Fresh and breezy for summer adventures."
+            data-title="OUTDOOR STRAW HATS"
+            data-text="Designed for adventure, our handwoven outdoor straw hats bring breathable protection and style to the wild."
             data-link="#featured"
             style="background-image: url('img/slide2.png');"></div>
             <div class="slide"
-            data-title="LATTE MILAN"
-            data-text="Sophisticated city charm meets ranch style."
+            data-title="MEN'S APPAREL"
+            data-text="Timeless, western-inspired outerwear, range-ready denim and new short-sleeve snap-fronts for spring and beyond."
             data-link="#featured"
             style="background-image: url('img/slide3.png');"></div>
             <!-- Indicadores -->
