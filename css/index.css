@@ -736,3 +736,243 @@ nav.main-nav {
   text-decoration: underline;
 }
 
+/* Teléfonos pequeños (por debajo de 480px) */
+@media (max-width: 480px) {
+  .hero-slider {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .hero-slider .slide {
+    position: relative;
+    width: 100%;
+    height: 250px;
+  }
+
+  .hero-content {
+    position: relative;
+    top: auto;
+    right: auto;
+    transform: none;
+    width: 100%;
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .hero-content h1 {
+    font-size: 1.4rem;
+  }
+
+  .hero-content p {
+    font-size: 0.9rem;
+  }
+
+  .cta-btn {
+    font-size: 0.85rem;
+    padding: 10px 20px;
+  }
+
+  .dots {
+    position: relative;
+    transform: none;
+    left: 0;
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  .hero-split {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .hero-left img {
+    width: 100%;
+    height: auto;
+  }
+
+  .hero-right {
+    padding: 20px 15px;
+    text-align: center;
+  }
+
+  .hero-text h1 {
+    font-size: 1.4rem;
+  }
+
+  .hero-text p {
+    font-size: 0.9rem;
+  }
+
+  .shop-now-btn {
+    padding: 10px 20px;
+    font-size: 0.85rem;
+  }
+}
+
+/* Teléfonos medianos (481px – 767px) */
+@media (min-width: 481px) and (max-width: 767px) {
+  .hero-slider {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .hero-slider .slide {
+    position: relative;
+    width: 100%;
+    height: 300px;
+  }
+
+  .hero-content {
+    position: relative;
+    top: auto;
+    right: auto;
+    transform: none;
+    width: 100%;
+    padding: 1.5rem;
+    text-align: center;
+  }
+
+  .hero-content h1 {
+    font-size: 1.8rem;
+  }
+
+  .hero-content p {
+    font-size: 1rem;
+  }
+
+  .cta-btn {
+    font-size: 0.9rem;
+    padding: 12px 24px;
+  }
+
+  .dots {
+    position: relative;
+    transform: none;
+    left: 0;
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  .hero-split {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .hero-left img {
+    width: 100%;
+    height: auto;
+  }
+
+  .hero-right {
+    padding: 30px 20px;
+    text-align: center;
+  }
+
+  .hero-text h1 {
+    font-size: 1.8rem;
+  }
+
+  .hero-text p {
+    font-size: 1rem;
+  }
+
+  .shop-now-btn {
+    padding: 12px 24px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Tablets (768px – 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .hero-content {
+    width: 70%;
+    padding: 2rem;
+    right: 0;
+    transform: translateY(-50%);
+    text-align: center;
+  }
+
+  .hero-content h1 {
+    font-size: 2rem;
+  }
+
+  .hero-content p {
+    font-size: 1.1rem;
+  }
+
+  .cta-btn {
+    font-size: 1rem;
+    padding: 14px 26px;
+  }
+
+  .hero-split {
+    flex-direction: column;
+  }
+
+  .hero-left img {
+    width: 100%;
+    height: auto;
+  }
+
+  .hero-right {
+    padding: 40px;
+    text-align: center;
+  }
+
+  .hero-text h1 {
+    font-size: 2rem;
+  }
+
+  .hero-text p {
+    font-size: 1.1rem;
+  }
+}
+
+/* Pantallas grandes (desde 1024px en adelante) */
+@media (min-width: 1024px) {
+  .hero-slider {
+    height: calc(100vh - 70px);
+  }
+
+  .hero-slider .slide {
+    height: 100%;
+  }
+
+  .hero-content {
+    position: absolute;
+    top: 50%;
+    right: -10%;
+    transform: translateY(-50%);
+    width: 40%;
+    text-align: left;
+  }
+
+  .hero-split {
+    flex-direction: row;
+    height: calc(100vh - 70px);
+  }
+
+  .hero-left,
+  .hero-right {
+    height: 100%;
+  }
+
+  .hero-left img {
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .hero-right {
+    padding: 60px;
+    text-align: left;
+  }
+
+  .hero-text h1 {
+    font-size: 2.2rem;
+  }
+
+  .hero-text p {
+    font-size: 1.2rem;
+  }
+}
+
