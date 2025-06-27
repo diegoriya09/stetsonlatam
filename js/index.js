@@ -151,8 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const mobileMenu = document.getElementById('mobile-menu');
 
   hamburger.addEventListener('click', () => {
-    mobileMenu.classList.toggle('show');
-    document.body.classList.toggle('no-scroll'); // Opcional: evita scroll cuando el menú está abierto
+    mobileMenu.classList.toggle('active');
   });
 });
 
