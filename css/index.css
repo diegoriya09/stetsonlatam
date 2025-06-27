@@ -1,7 +1,7 @@
 /* styles.css */
 @font-face {
   font-family: 'GT America';
-  src: url('/fonts/GT-America/GT-America-Standard-Regular-Trial.otf') format('opentype');
+  src: url('/fonts/GT-America/GT-America-Standard-Regular.otf') format('opentype');
   font-weight: 400;
   font-style: normal;
 }
@@ -277,6 +277,8 @@ nav.main-nav {
   background-color: #f1eeea;
   align-items: center;
   justify-content: center;
+  margin-top: 70px; /* Compensa el navbar fijo */
+  box-sizing: border-box;
 }
 
 .hero-slider .slide {
@@ -394,6 +396,7 @@ nav.main-nav {
     width: 100vw;
     flex-direction: column;
     align-items: flex-end;
+    margin-top: 60px; /* Ajusta para navbar en móvil si es más pequeño */
   }
   .hero-slider .slide {
     position: static;
