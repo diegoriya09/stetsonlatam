@@ -447,7 +447,7 @@ nav.main-nav {
 .section {
   padding: 5rem 2rem;
   text-align: center;
-  background-color: #f1eeea;
+  background-color: #ffffff;
   font-family: 'Lora', sans-serif;
 }
 
@@ -472,26 +472,6 @@ nav.main-nav {
   font-size: 0.9rem;
   border: 1px solid #ccc;
   border-radius: 4px;
-}
-
-.sectionfeatured {
-  background-color: #ffffff;
-}
-
-.sectionfeatured h2 {
-  font-size: 36px;
-  margin-bottom: 15px;
-  color: #3c3737;
-}
-
-.sectionstories {
-  background-color: #ffffff;
-}
-
-.sectionstories h2 {
-  font-size: 36px;
-  margin-bottom: 15px;
-  color: #3c3737;
 }
 
 .card-grid {
