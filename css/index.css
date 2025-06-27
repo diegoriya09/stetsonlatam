@@ -884,11 +884,19 @@ nav.main-nav {
 
 /* Tablets (768px – 1023px) */
 @media (min-width: 768px) and (max-width: 1023px) {
+  .hero-slider {
+    height: 60vh;
+  }
+  
   .hero-content {
-    width: 70%;
-    padding: 2rem;
-    right: 0;
-    transform: translateY(-50%);
+    width: 90%;
+    padding: 1rem;
+    right: auto;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    position: absolute;
+    background: rgba(255, 255, 255, 0.8);
     text-align: center;
   }
 
