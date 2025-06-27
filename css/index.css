@@ -176,7 +176,7 @@ nav.main-nav {
   width: 100%;
   height: calc(100vh - 70px); /* Ajusta la altura para que no cubra el navbar */
   min-height: 600px;
-  background-color: #3F1E1F;
+  background-color: #f1eeea;
   font-family: 'GT America', sans-serif;
   margin-top: 70px; /* Asegura que el hero no se superponga al navbar */
 }
@@ -196,7 +196,7 @@ nav.main-nav {
 }
 
 .hero-right {
-  background-color: #3F1E1F;
+  background-color: #f1eeea;
   text-align: left;
 }
 
@@ -209,20 +209,20 @@ nav.main-nav {
   font-size: 36px;
   font-weight: 700;
   margin: 9px;
-  color: #f1eeea;
+  color: #2c3737;
 }
 
 .hero-text p {
   font-family: 'GT America', sans-serif;
   font-size: 16px;
-  color: #f1eeea;
+  color: #2c3737;
   margin-bottom: 35px;
   line-height: 1.6;
 }
 
 .shop-now-btn {
-  background-color: #f1eeea;
-  color: #2c3737;
+  background-color: #2c3737;
+  color: #f1eeea;
   padding: 14px 28px;
   text-decoration: none;
   border-radius: 4px;
