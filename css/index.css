@@ -305,6 +305,7 @@ nav.main-nav {
 }
 
 .hero-slider .cta-btn {
+  text-align: center;
   background: #f1eeea;
   color: #3c3737;
   font-size: 14px;
