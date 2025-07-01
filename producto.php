@@ -88,7 +88,7 @@ $conn->close();
     </button>
 
     <div class="descripcion">
-      <p><?= nl2br(htmlspecialchars($producto['descripcion'])) ?></p>
+      <p><?= nl2br(htmlspecialchars($producto['description'])) ?></p>
     </div>
   </div>
 </section>
