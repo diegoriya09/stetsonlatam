@@ -48,7 +48,7 @@ $conn->close();
 <nav class="breadcrumb" aria-label="breadcrumb">
   <ol>
     <li><a href="index.php">Home</a></li>
-    <li><a href="catalogo.php">Hats</a></li>
+    <li><a href="hats.php">Hats</a></li>
     <li aria-current="page"><?= htmlspecialchars($producto['name']) ?></li>
   </ol>
 </nav>
