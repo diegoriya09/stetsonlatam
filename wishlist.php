@@ -32,6 +32,9 @@ $conn->close();
 <body>
   <?php include 'navbar.php'; ?>
 
+  <?php include 'modal.php'; ?>
+  <?php include 'cart.php'; ?>
+  
   <section class="section">
     <h2>Your Wishlist</h2>
     <div class="card-grid">
