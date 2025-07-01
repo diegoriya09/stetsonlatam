@@ -34,12 +34,16 @@ function handleAddToCart(e) {
   const button = e.currentTarget;
   const jwt = localStorage.getItem("jwt");
 
+  // Busca el input de cantidad relativo al botón presionado
+  const inputCantidad = button.closest('.info-producto').querySelector('#cantidad');
+  const quantity = inputCantidad ? parseInt(inputCantidad.value, 10) : 1;
+
   const producto = {
     id: parseInt(button.dataset.id),
     name: button.dataset.name,
     price: parseFloat(button.dataset.price),
     image: button.dataset.image,
-    quantity: 1
+    quantity: quantity
   };
 
   if (jwt) {
@@ -49,7 +53,7 @@ function handleAddToCart(e) {
         'Authorization': 'Bearer ' + jwt,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ producto_id: producto.id, quantity: 1 })
+      body: JSON.stringify({ producto_id: producto.id, quantity: quantity })
     })
       .then(res => res.json())
       .then(data => {
@@ -63,7 +67,7 @@ function handleAddToCart(e) {
     let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
     const index = carrito.findIndex(p => p.id === producto.id);
     if (index !== -1) {
-      carrito[index].quantity += 1;
+      carrito[index].quantity += quantity;
     } else {
       carrito.push(producto);
     }

@@ -73,7 +73,7 @@ $conn->close();
     </div>
 
     <div class="cantidad">
-      <label>Cantidad:</label>
+      <label>Quantity:</label>
       <button class="menos">-</button>
       <input type="number" id="cantidad" value="1" min="1">
       <button class="mas">+</button>
@@ -84,7 +84,7 @@ $conn->close();
       data-name="<?= htmlspecialchars($producto['name']) ?>"
       data-price="<?= $producto['price'] ?>"
       data-image="<?= htmlspecialchars($producto['image']) ?>">
-      <i class="fas fa-cart-plus"></i> Añadir al carrito
+      <i class="fas fa-cart-plus"></i> Add to Cart
     </button>
 
     <div class="descripcion">
@@ -99,6 +99,7 @@ $conn->close();
     <script src="js/auth.js?v=<?php echo time(); ?>"></script>
     <script src="js/cart.js?v=<?php echo time(); ?>"></script>
     <script src="js/hats.js?v=<?php echo time(); ?>"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- Donde está handleAddToCart -->
+    <script src="js/product.js?v=<?php echo time(); ?>"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>
