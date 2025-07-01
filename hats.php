@@ -21,21 +21,12 @@ $conn->close();
   <meta name="description" content="Stetson LATAM - Legendary Hats for Latin America and Central America">
   <link rel="icon" href="img/logo.png" type="image/x-icon">
   <link rel="stylesheet" href="css/index.css?v=<?php echo time(); ?>">
-  <link rel="stylesheet" href="css/hats.css?v=<?php echo time(); ?>">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
   <?php include 'navbar.php'; ?>
-    <div class="breadcrumbs-container">
-      <nav class="breadcrumbs">
-        <a href="index.php">Home</a> &gt;
-        <a href="hats.php">Hats</a> &gt;
-        <span>Stetson Hats</span>
-      </nav>
-    </div>
-  <?php include 'modal.php'; ?>
-  
+  <?php include 'modal.php'; ?> 
   <section class="section hats">
     <h2>Stetson Hats</h2>
     <div class="sort-container">
