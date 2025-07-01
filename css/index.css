@@ -101,16 +101,7 @@ nav.main-nav {
   transition: filter 0.2s;
 }
 
-.nav-right .fa-heart {
-  font-size: 22px;
-  color: #222; /* negro */
-  transition: color 0.2s;
-  vertical-align: middle;
-  margin-top: 1px;
-}
-
-.nav-right a:hover .icon,
-.nav-right a:hover .fa-heart {
+.nav-right a:hover .icon {
   filter: brightness(0.5);
   color: #3F1E1F;
 }
