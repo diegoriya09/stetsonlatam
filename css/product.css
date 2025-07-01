@@ -1,3 +1,10 @@
+@font-face {
+  font-family: 'GT America';
+  src: url('/fonts/GT-America/GT-America-Standard-Regular-Trial.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
 .producto-detalle {
   display: flex;
   gap: 2rem; /* Espacio entre imagen e info */
@@ -33,9 +40,11 @@
 }
 
 .info-producto h1 {
-  font-size: 36px;
+  font-family: 'Gt America', sans-serif;
+    font-size: 36px;
   color: #3c3737;
   margin-bottom: 0.5rem;
+
 }
 
 .tallas button {
