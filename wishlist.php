@@ -41,9 +41,11 @@ $conn->close();
       <?php if (!empty($productos)): ?>
         <?php foreach ($productos as $producto): ?>
           <article class="card-item">
-            <img src="<?= htmlspecialchars($producto['image']) ?>" alt="<?= htmlspecialchars($producto['name']) ?>">
-            <h3><?= htmlspecialchars($producto['name']) ?></h3>
-            <p>$<?= number_format($producto['price'], 0, ',', '.') ?></p>
+          <a href="producto.php?id=<?= $producto['id'] ?>" class="card-link">
+              <img src="<?= htmlspecialchars($producto['image']) ?>" alt="<?= htmlspecialchars($producto['name']) ?>">
+              <h3><?= htmlspecialchars($producto['name']) ?></h3>
+              <p>$<?= number_format($producto['price'], 0, ',', '.') ?></p>
+          </a>
           </article>
         <?php endforeach; ?>
       <?php else: ?>
