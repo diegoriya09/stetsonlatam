@@ -35,7 +35,7 @@ $conn->close();
                         <button class="wishlist-btn" 
                             data-id="<?= $producto['id'] ?>" 
                             data-name="<?= htmlspecialchars($producto['name']) ?>" 
-                            data-price="<?= $producto['price'] ?>" 
+                            data-price="<?= $producto['price'] ?>.00" 
                             data-image="<?= htmlspecialchars($producto['image']) ?>">
                             <i class="fas fa-heart"></i>
                         </button>
