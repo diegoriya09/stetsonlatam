@@ -69,6 +69,7 @@ $conn->close();
 
   <?php include 'footer.php'; ?>
     <script src="js/auth.js?v=<?php echo time(); ?>"></script>
+    <script src="js/index.js?v=<?php echo time(); ?>"></script>
     <script src="js/cart.js?v=<?php echo time(); ?>"></script>
     <script src="js/wishlist.js?v=<?php echo time(); ?>"></script>
     <script src="js/hats.js?v=<?php echo time(); ?>"></script>
