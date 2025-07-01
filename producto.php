@@ -22,6 +22,11 @@ if ($result && $result->num_rows > 0) {
   exit;
 }
 
+$imagenes = [];
+if (!empty($producto['images'])) {
+    $imagenes = json_decode($producto['images'], true);
+}
+
 $conn->close();
 ?>
 
@@ -57,7 +62,13 @@ $conn->close();
 <section class="producto-detalle">
   <div class="galeria">
     <img src="<?= htmlspecialchars($producto['image']) ?>" class="img-principal" alt="<?= htmlspecialchars($producto['name']) ?>">
-    <!-- Aquí podrías agregar miniaturas si tienes más imágenes -->
+    <?php if (!empty($imagenes)): ?>
+    <div class="miniaturas">
+      <?php foreach ($imagenes as $img): ?>
+        <img src="<?= htmlspecialchars($img) ?>" class="miniatura" alt="Miniatura" style="width:60px;cursor:pointer;">
+      <?php endforeach; ?>
+    </div>
+  <?php endif; ?>
   </div>
 
   <div class="info-producto">

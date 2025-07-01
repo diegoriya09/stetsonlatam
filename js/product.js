@@ -14,4 +14,10 @@ document.addEventListener('DOMContentLoaded', function() {
     let valor = parseInt(inputCantidad.value, 10);
     inputCantidad.value = valor + 1;
   });
+
+  document.querySelectorAll('.miniatura').forEach(function(mini) {
+    mini.addEventListener('click', function() {
+      document.getElementById('img-principal').src = this.src;
+    });
+  });
 });
