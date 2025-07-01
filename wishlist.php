@@ -34,7 +34,7 @@ $conn->close();
 
   <?php include 'modal.php'; ?>
   <?php include 'cart.php'; ?>
-  
+
   <section class="section">
     <h2>Your Wishlist</h2>
     <div class="card-grid">
@@ -44,13 +44,6 @@ $conn->close();
             <img src="<?= htmlspecialchars($producto['image']) ?>" alt="<?= htmlspecialchars($producto['name']) ?>">
             <h3><?= htmlspecialchars($producto['name']) ?></h3>
             <p>$<?= number_format($producto['price'], 0, ',', '.') ?></p>
-            <button class="add-to-cart-btn"
-              data-id="<?= $producto['id'] ?>"
-              data-name="<?= htmlspecialchars($producto['name']) ?>"
-              data-price="<?= $producto['price'] ?>"
-              data-image="<?= htmlspecialchars($producto['image']) ?>">
-              <i class="fas fa-cart-plus"></i>
-            </button>
           </article>
         <?php endforeach; ?>
       <?php else: ?>
