@@ -110,3 +110,48 @@
     max-width: 350px;
   }
 }
+
+.breadcrumb {
+  margin: 24px 0 32px 0;
+  font-family: 'Lora', serif;
+  font-size: 1rem;
+  color: #7a6c5d;
+  letter-spacing: 0.01em;
+}
+
+.breadcrumb ol {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0;
+  margin: 0;
+}
+
+.breadcrumb li {
+  display: flex;
+  align-items: center;
+}
+
+.breadcrumb li:not(:last-child)::after {
+  content: "/";
+  margin: 0 8px;
+  color: #b5a89e;
+  font-weight: bold;
+}
+
+.breadcrumb a {
+  color: #7a6c5d;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.breadcrumb a:hover {
+  color: #a67c52;
+  text-decoration: underline;
+}
+
+.breadcrumb li[aria-current="page"] {
+  color: #3d2c1e;
+  font-weight: bold;
+  pointer-events: none;
+}
