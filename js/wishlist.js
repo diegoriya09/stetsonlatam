@@ -98,17 +98,16 @@ function loadWishlist(isLoggedIn) {
       }
     })
       .then(response => response.json())
-      .then(data => {
-        const wishlist = data.wishlist || [];
-        if (productos.length === 0) {
+      .then(productos => {
+        if (!productos || productos.length === 0) {
           emptyMsg.style.display = '';
         } else {
           emptyMsg.style.display = 'none';
           productos.forEach(producto => {
             wishlistItems.innerHTML += renderWishlistItem(producto);
           });
-        }s
-        updateWishlistButtons(wishlist);
+        }
+        updateWishlistButtons(productos.map(p => String(p.id)));
       });
   } else {
     // No logueado: pide productos por IDs en localStorage
@@ -155,9 +154,9 @@ document.addEventListener('click', function (e) {
 });
 
 // Marca los botones activos según la wishlist actual
-function updateWishlistButtons(wishlist) {
+function updateWishlistButtons(wishlistIds) {
   document.querySelectorAll('.wishlist-btn').forEach(button => {
-    if (wishlist.includes(button.dataset.id)) {
+    if (wishlistIds.includes(button.dataset.id)) {
       button.classList.add('active');
     } else {
       button.classList.remove('active');
@@ -165,7 +164,7 @@ function updateWishlistButtons(wishlist) {
   });
 }
 
-function renderWishlistItem(id) {
+function renderWishlistItem(producto) {
   return `
     <article class="card-item">
       <a href="producto.php?id=${producto.id}" class="card-link">

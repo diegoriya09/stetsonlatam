@@ -7,7 +7,6 @@ error_reporting(E_ALL);
 require_once '../conexion.php';
 require_once '../../vendor/autoload.php';
 
-
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
@@ -40,19 +39,32 @@ try {
 }
 
 try {
-    // Obtener productos de la wishlist
-    $stmt = $conn->prepare("SELECT producto_id FROM wishlist WHERE user_id = ?");
+    $sql = "SELECT w.producto_id AS id, p.name, p.price, p.image
+            FROM wishlist w
+            JOIN productos p ON w.producto_id = p.id
+            WHERE w.user_id = ?";
+
+    $stmt = $conn->prepare($sql);
+    if (!$stmt) {
+        throw new Exception("Error al preparar la consulta: " . $conn->error);
+    }
+
     $stmt->bind_param("i", $user_id);
     $stmt->execute();
     $result = $stmt->get_result();
 
     $wishlist = [];
     while ($row = $result->fetch_assoc()) {
-        $wishlist[] = (string)$row['producto_id'];
+        $wishlist[] = $row;
     }
-    echo json_encode(['wishlist' => $wishlist]);
+
+    echo json_encode($wishlist);
+
+    $stmt->close();
+    $conn->close();
 
 } catch (Exception $e) {
     http_response_code(500);
     echo json_encode(['success' => false, 'message' => 'Error del servidor', 'error' => $e->getMessage()]);
 }
+?>

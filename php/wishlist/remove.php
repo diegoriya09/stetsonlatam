@@ -28,18 +28,24 @@ try {
     exit;
 }
 
-// Obtener producto_id del body
 $data = json_decode(file_get_contents('php://input'), true);
-$producto_id = intval($data['producto_id'] ?? 0);
+$producto_id = $data['producto_id'] ?? null;
 
-if ($producto_id > 0) {
-    $stmt = $conn->prepare("DELETE FROM wishlist WHERE user_id = ? AND producto_id = ?");
-    $stmt->bind_param("ii", $user_id, $producto_id);
-    $stmt->execute();
+if (!$producto_id) {
+    echo json_encode(['success' => false, 'message' => 'ID faltante']);
+    exit;
+}
+
+$sql = "DELETE FROM wishlist WHERE user_id = ? AND producto_id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("ii", $user_id, $producto_id);
+
+if ($stmt->execute()) {
     echo json_encode(['success' => true]);
 } else {
-    echo json_encode(['success' => false, 'message' => 'ID inválido']);
+    echo json_encode(['success' => false, 'message' => 'Error al eliminar']);
 }
 
 $stmt->close();
 $conn->close();
+?>
