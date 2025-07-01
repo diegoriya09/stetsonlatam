@@ -37,21 +37,10 @@ $conn->close();
 
   <section class="section">
     <h2>Your Wishlist</h2>
-    <div class="card-grid">
-      <?php if (!empty($productos)): ?>
-        <?php foreach ($productos as $producto): ?>
-          <article class="card-item">
-          <a href="producto.php?id=<?= $producto['id'] ?>" class="card-link">
-              <img src="<?= htmlspecialchars($producto['image']) ?>" alt="<?= htmlspecialchars($producto['name']) ?>">
-              <h3><?= htmlspecialchars($producto['name']) ?></h3>
-              <p>$<?= number_format($producto['price'], 0, ',', '.') ?></p>
-          </a>
-          </article>
-        <?php endforeach; ?>
-      <?php else: ?>
-        <p style="color:#3c3737">Your wishlist is empty.</p>
-      <?php endif; ?>
+    <div class="card-grid" id="wishlist-items">
+      <!-- Aquí se renderizan los productos con JS -->
     </div>
+    <p id="wishlist-empty" style="color:#3c3737">Your wishlist is empty.</p>
   </section>
 
   <?php include 'footer.php'; ?>
