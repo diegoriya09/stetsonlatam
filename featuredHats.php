@@ -32,12 +32,12 @@ $conn->close();
                             <h3><?= htmlspecialchars($producto['name']) ?></h3>
                             <p>$<?= number_format($producto['price'], 0, ',', '.') ?></p>
                         </a>
-                        <button class="add-to-cart-btn"
-                            data-id="<?= $producto['id'] ?>"
-                            data-name="<?= htmlspecialchars($producto['name']) ?>"
-                            data-price="<?= $producto['price'] ?>"
+                        <button class="wishlist-btn" 
+                            data-id="<?= $producto['id'] ?>" 
+                            data-name="<?= htmlspecialchars($producto['name']) ?>" 
+                            data-price="<?= $producto['price'] ?>" 
                             data-image="<?= htmlspecialchars($producto['image']) ?>">
-                            <i class="fas fa-cart-plus"></i>
+                            <i class="fas fa-heart"></i>
                         </button>
                     </article>
             <?php 
