@@ -16,8 +16,10 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   document.querySelectorAll('.miniatura').forEach(function(mini) {
-    mini.addEventListener('click', function() {
-      document.getElementById('img-principal').src = this.src;
-    });
+  mini.addEventListener('click', function() {
+    document.getElementById('img-principal').src = this.src;
+    document.querySelectorAll('.miniatura').forEach(m => m.classList.remove('active'));
+    this.classList.add('active');
   });
+});
 });

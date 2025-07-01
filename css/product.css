@@ -20,10 +20,11 @@
 .galeria {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  max-width: 400px;
+  align-items: flex-start;
+  gap: 1.5rem;
+  max-width: 500px;
   margin: 0 auto;
+  width: 100%;
 }
 
 .img-principal,
@@ -56,8 +57,9 @@
 
 .miniaturas {
   display: flex;
-  gap: 10px;
-  justify-content: center;
+  gap: 16px;
+  width: 100%;
+  justify-content: flex-start;
 }
 
 .miniatura:hover,
