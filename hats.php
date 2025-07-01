@@ -57,13 +57,6 @@ $conn->close();
               data-image="<?= htmlspecialchars($producto['image']) ?>">
               <i class="fas fa-heart"></i>
             </button>
-            <button class="add-to-cart-btn"
-              data-id="<?= $producto['id'] ?>"
-              data-name="<?= htmlspecialchars($producto['name']) ?>"
-              data-price="<?= $producto['price'] ?>"
-              data-image="<?= htmlspecialchars($producto['image']) ?>">
-              <i class="fas fa-cart-plus"></i>
-            </button>
           </article>
         <?php endforeach; ?>
       <?php else: ?>
