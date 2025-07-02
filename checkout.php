@@ -9,11 +9,27 @@
         <label>Email:<br>
             <input type="email" name="email" required>
         </label><br>
-        <label>Address:<br>
-            <input type="text" name="direccion" required>
+        <label>Country:<br>
+            <select name="pais" id="pais-select" required>
+                <option value="">Select</option>
+                <option value="CO" data-code="+57">Colombia</option>
+                <option value="MX" data-code="+52">México</option>
+                <option value="US" data-code="+1">Estados Unidos</option>
+                <option value="AR" data-code="+54">Argentina</option>
+                <!-- Agrega más países según necesites -->
+            </select>
         </label><br>
         <label>City:<br>
             <input type="text" name="ciudad" required>
+        </label><br>
+        <label>Address:<br>
+            <input type="text" name="direccion" required>
+        </label><br>
+        <label>Phone:<br>
+            <div style="display:flex;align-items:center;">
+                <span id="codigo-pais" style="margin-right:6px;">+57</span>
+                <input type="number" name="telefono" required style="flex:1;">
+            </div>
         </label><br>
         <label>Payment method:<br>
             <select name="metodo" required>

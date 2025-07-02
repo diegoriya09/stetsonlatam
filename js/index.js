@@ -183,6 +183,12 @@ document.getElementById('cerrar-checkout').addEventListener('click', function() 
   document.getElementById('checkout-confirm').style.display = 'none';
 });
 
+document.getElementById('pais-select').addEventListener('change', function() {
+  const selected = this.options[this.selectedIndex];
+  const code = selected.getAttribute('data-code') || '';
+  document.getElementById('codigo-pais').textContent = code;
+});
+
 document.querySelector('select[name="metodo"]').addEventListener('change', function() {
   const tarjetaFields = document.getElementById('tarjeta-fields');
   if (this.value === 'tarjeta') {
@@ -196,6 +202,11 @@ document.getElementById('checkout-form').addEventListener('submit', function(e) 
   e.preventDefault();
 
   const metodo = this.metodo.value;
+  // Concatenar código de país y teléfono
+  const codigoPais = document.getElementById('codigo-pais').textContent;
+  const telefono = this.telefono.value;
+  const telefonoCompleto = codigoPais + telefono;
+
   if (metodo === 'tarjeta') {
     const numero = this.numero_tarjeta.value.trim();
     const nombre = this.nombre_tarjeta.value.trim();
@@ -209,12 +220,16 @@ document.getElementById('checkout-form').addEventListener('submit', function(e) 
     // Puedes agregar validaciones adicionales aquí (longitud, formato, etc.)
   }
 
+  // Aquí puedes usar telefonoCompleto para enviarlo al backend o mostrarlo
+  // Ejemplo: console.log('Teléfono completo:', telefonoCompleto);
+
   // Simulación de pago exitoso
   document.getElementById('checkout-form').style.display = 'none';
   document.getElementById('checkout-confirm').style.display = 'block';
   document.getElementById('checkout-confirm').innerHTML = `
     <h3>¡Pago exitoso!</h3>
     <p>Gracias por tu compra. Te hemos enviado un correo con el resumen.</p>
+    <p><strong>Teléfono:</strong> ${telefonoCompleto}</p>
   `;
 });
 
