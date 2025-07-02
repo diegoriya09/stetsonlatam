@@ -826,3 +826,28 @@ nav.main-nav {
 .footer-links a:hover {
   text-decoration: underline;
 }
+
+/* Modal básico */
+.modalcheckout {
+  position: fixed;
+  z-index: 2000;
+  left: 0; top: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal-content-checkout {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+  min-width: 320px;
+  max-width: 90vw;
+  position: relative;
+}
+.close-modal {
+  position: absolute;
+  top: 1rem; right: 1rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+}

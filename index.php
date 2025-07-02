@@ -53,6 +53,7 @@
     <?php include 'navbar.php'; ?>
     <!-- Sidebar del carrito -->
     <?php include 'cart.php'; ?>
+    <?php include 'checkout.php'; ?>
     <!-- Modal para login/registro -->
     <?php include 'modal.php'; ?>
     <header class="hero-split">

@@ -174,3 +174,24 @@ document.getElementById('cerrar-carrito').addEventListener('click', () => {
   document.getElementById('carrito-sidebar').classList.remove('open');
 });
 
+document.querySelector('.pagar-btn').addEventListener('click', function() {
+  document.getElementById('checkout-modal').style.display = 'flex';
+});
+document.getElementById('cerrar-checkout').addEventListener('click', function() {
+  document.getElementById('checkout-modal').style.display = 'none';
+  document.getElementById('checkout-form').style.display = 'block';
+  document.getElementById('checkout-confirm').style.display = 'none';
+});
+
+document.getElementById('checkout-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  // Aquí puedes enviar los datos a tu backend o simular el pago
+  document.getElementById('checkout-form').style.display = 'none';
+  document.getElementById('checkout-confirm').style.display = 'block';
+  document.getElementById('checkout-confirm').innerHTML = `
+    <h3>¡Pago exitoso!</h3>
+    <p>Gracias por tu compra. Te hemos enviado un correo con el resumen.</p>
+  `;
+  // Aquí puedes limpiar el carrito si lo deseas
+});
+
