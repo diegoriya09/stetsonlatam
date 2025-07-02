@@ -32,13 +32,13 @@ nav.main-nav {
   font-size: 14px;
   align-items: center;
   justify-content: space-between;
-  background-color: #fefffe;
-  position: fixed;
+  background-color: #ffffff;
+  position: relative;
   top: 0;
   height: 70px;
   width: 100%;
-  z-index: 1000;
-  padding: 0.8rem 2rem;
+  z-index: 10;
+  padding: 0.7rem 2rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -70,8 +70,6 @@ nav.main-nav {
   margin: 0;
   padding: 0;
   gap: 20px;
-  justify-content: center;
-  flex: 1;
 }
 
 .nav-center li a {
@@ -106,19 +104,27 @@ nav.main-nav {
   color: #3F1E1F;
 }
 
-/* --- MOBILE MENU --- */
+/* Hamburger styles */
+.hamburger {
+  display: none;
+  font-size: 2rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Mobile menu hidden by default */
 .mobile-menu {
   display: none;
-  flex-direction: column;
-  background: #fff;
   position: absolute;
-  top: 60px;
+  top: 100%;
+  left: 0;
   right: 0;
-  width: 220px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-  border-radius: 0 0 8px 8px;
-  z-index: 100;
-  padding: 16px 0;
+  background: #fff;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  padding: 1.5rem 2rem;
+  z-index: 20;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .mobile-menu ul {
@@ -127,36 +133,29 @@ nav.main-nav {
   margin: 0;
 }
 
-.mobile-menu li {
-  margin: 0;
+.mobile-menu ul li {
+  margin-bottom: 1rem;
 }
 
-.mobile-menu a {
-  display: block;
-  padding: 12px 24px;
-  color: #222;
+.mobile-menu ul li a {
+  color: #4a2c1a;
   text-decoration: none;
-  font-size: 1rem;
+  font-size: 1.2rem;
 }
 
-.mobile-search {
-  padding: 0 24px 12px 24px;
+.mobile-menu .mobile-search {
+  margin-bottom: 1rem;
 }
 
-.hamburger {
-  display: none;
-  font-size: 2rem;
-  cursor: pointer;
-  margin-left: 16px;
-  user-select: none;
-}
-.desktop-icons {
+.mobile-menu.active {
   display: flex;
 }
 
-/* --- RESPONSIVE --- */
+/* Responsive styles */
 @media (max-width: 900px) {
-  .nav-center,
+  .nav-center {
+    display: none;
+  }
   .desktop-icons {
     display: none;
   }
@@ -168,16 +167,6 @@ nav.main-nav {
   }
   .mobile-menu.active {
     display: flex;
-  }
-}
-
-/* Opcional: para que el menú cubra toda la pantalla en móvil */
-@media (max-width: 600px) {
-  .mobile-menu {
-    width: 100vw;
-    left: 0;
-    right: 0;
-    border-radius: 0;
   }
 }
 
