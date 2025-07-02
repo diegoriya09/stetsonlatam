@@ -827,27 +827,95 @@ nav.main-nav {
   text-decoration: underline;
 }
 
-/* Modal básico */
+/* Modal de checkout igual al de login */
 .modalcheckout {
+  display: none;
   position: fixed;
-  z-index: 2000;
-  left: 0; top: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.4);
-  display: flex;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.6);
   align-items: center;
   justify-content: center;
 }
+
 .modal-content-checkout {
-  background: #fff;
-  padding: 2rem;
-  border-radius: 10px;
-  min-width: 320px;
-  max-width: 90vw;
+  background-color: #f1eeea;
+  margin: 8% auto;
+  padding: 2.5rem;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 420px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
   position: relative;
+  font-family: 'Work Sans', sans-serif;
 }
+
+.modal-content-checkout h2 {
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #3c3737;
+}
+
+.modal-content-checkout label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #3c3737;
+  font-weight: 500;
+}
+
+.modal-content-checkout input,
+.modal-content-checkout select {
+  width: 92%;
+  padding: 12px 16px;
+  margin: 0.6rem 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  transition: border-color 0.3s;
+  background: #fff;
+  color: #3c3737;
+  font-family: inherit;
+}
+
+.modal-content-checkout input:focus,
+.modal-content-checkout select:focus {
+  border-color: #3F1E1F;
+  outline: none;
+}
+
+.modal-content-checkout button {
+  width: 100%;
+  padding: 12px;
+  background-color: #3c3737;
+  color: #f1eeea;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 1rem;
+  margin-top: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.modal-content-checkout button:hover {
+  background-color: #3c3737;
+}
+
 .close-modal {
   position: absolute;
-  top: 1rem; right: 1rem;
-  font-size: 1.5rem;
+  top: 18px;
+  right: 22px;
+  font-size: 1.4rem;
+  color: #3c3737;
   cursor: pointer;
+  transition: color 0.3s;
+}
+
+.close-modal:hover {
+  color: #3F1E1F;
 }
