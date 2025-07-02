@@ -66,6 +66,8 @@ $conn->close();
   </section>
   <!-- Sidebar del carrito -->
   <?php include 'cart.php'; ?>
+  <!-- Modal de checkout -->
+  <?php include 'checkout.php'; ?>
 
   <?php include 'footer.php'; ?>
     <script src="js/auth.js?v=<?php echo time(); ?>"></script>

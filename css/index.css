@@ -849,9 +849,11 @@ nav.main-nav {
   border-radius: 12px;
   width: 90%;
   max-width: 420px;
+  max-height: 80vh;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
   position: relative;
   font-family: 'Work Sans', sans-serif;
+  overflow-y: auto;
 }
 
 .modal-content-checkout h2 {

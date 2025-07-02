@@ -60,6 +60,7 @@ $conn->close();
 <?php include 'modal.php'; ?>
 
 <?php include 'cart.php'; ?>
+<?php include 'checkout.php'; ?>
 <!-- Breadcrumbs -->
 <nav class="breadcrumb" aria-label="breadcrumb">
   <ol>

@@ -35,6 +35,7 @@ $conn->close();
 
   <?php include 'modal.php'; ?>
   <?php include 'cart.php'; ?>
+  <?php include 'checkout.php'; ?>
 
   <section class="section">
     <h2>Your Wishlist</h2>
