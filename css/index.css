@@ -916,6 +916,7 @@ nav.main-nav {
   color: #3c3737;
   cursor: pointer;
   transition: color 0.3s;
+  z-index: 10;
 }
 
 .close-modal:hover {
