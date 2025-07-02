@@ -27,6 +27,17 @@ if (!empty($producto['images'])) {
     $imagenes = json_decode($producto['images'], true);
 }
 
+// Obtener productos relacionados (misma categoría, excluyendo el actual)
+$relacionados = [];
+if (!empty($producto['category'])) {
+    $cat = $conn->real_escape_string($producto['category']);
+    $sql_rel = "SELECT id, name, price, image FROM productos WHERE category = '$cat' AND id != {$producto['id']} LIMIT 4";
+    $result_rel = $conn->query($sql_rel);
+    while ($row = $result_rel->fetch_assoc()) {
+        $relacionados[] = $row;
+    }
+}
+
 $conn->close();
 ?>
 
@@ -57,6 +68,9 @@ $conn->close();
     <li aria-current="page"><?= htmlspecialchars($producto['name']) ?></li>
   </ol>
 </nav>
+<button onclick="window.history.back()" class="btn-volver" style="margin: 1rem 0 0 0;">
+  &larr; Volver atrás
+</button>
 
 <!-- Vista de producto -->
 <section class="producto-detalle">
@@ -105,6 +119,20 @@ $conn->close();
   </div>
 </section>
 
+<?php if (!empty($relacionados)): ?>
+<section class="relacionados">
+  <h2>Productos relacionados</h2>
+  <div class="card-grid">
+    <?php foreach ($relacionados as $rel): ?>
+      <a href="producto.php?id=<?= $rel['id'] ?>" class="card-item">
+        <img src="<?= htmlspecialchars($rel['image']) ?>" alt="<?= htmlspecialchars($rel['name']) ?>">
+        <h3><?= htmlspecialchars($rel['name']) ?></h3>
+        <p>$<?= number_format($rel['price'], 2) ?></p>
+      </a>
+    <?php endforeach; ?>
+  </div>
+</section>
+<?php endif; ?>
 <?php include 'footer.php'; ?>
 
 
