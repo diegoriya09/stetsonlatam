@@ -53,6 +53,27 @@
             <input type="text" name="cvv" maxlength="4" placeholder="123">
             </label>
         </div>
+        <div id="pse-fields" style="display:none; margin-top:1rem;">
+            <label>Bank:<br>
+                <select name="banco_pse">
+                <option value="">Select your bank</option>
+                <option value="bancolombia">Bancolombia</option>
+                <option value="davivienda">Davivienda</option>
+                <option value="bbva">BBVA</option>
+                <!-- Agrega más bancos si lo deseas -->
+                </select>
+            </label><br>
+            <label>Account type:<br>
+                <select name="tipo_cuenta_pse">
+                <option value="">Select</option>
+                <option value="ahorro">Savings</option>
+                <option value="corriente">Checking</option>
+                </select>
+            </label><br>
+            <label>Document number:<br>
+                <input type="text" name="documento_pse" placeholder="ID or NIT">
+            </label>
+        </div>
         <button type="submit" class="pagar-btn">Pay</button>
         </form>
         <div id="checkout-confirm" style="display:none; margin-top:1rem;"></div>

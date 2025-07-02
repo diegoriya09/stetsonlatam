@@ -191,10 +191,16 @@ document.getElementById('pais-select').addEventListener('change', function() {
 
 document.querySelector('select[name="metodo"]').addEventListener('change', function() {
   const tarjetaFields = document.getElementById('tarjeta-fields');
+  const pseFields = document.getElementById('pse-fields');
   if (this.value === 'tarjeta') {
     tarjetaFields.style.display = 'block';
+    pseFields.style.display = 'none';
+  } else if (this.value === 'pse') {
+    tarjetaFields.style.display = 'none';
+    pseFields.style.display = 'block';
   } else {
     tarjetaFields.style.display = 'none';
+    pseFields.style.display = 'none';
   }
 });
 
@@ -220,8 +226,16 @@ document.getElementById('checkout-form').addEventListener('submit', function(e) 
     // Puedes agregar validaciones adicionales aquí (longitud, formato, etc.)
   }
 
-  // Aquí puedes usar telefonoCompleto para enviarlo al backend o mostrarlo
-  // Ejemplo: console.log('Teléfono completo:', telefonoCompleto);
+  if (metodo === 'pse') {
+    const banco = this.banco_pse.value;
+    const tipoCuenta = this.tipo_cuenta_pse.value;
+    const documento = this.documento_pse.value.trim();
+    if (!banco || !tipoCuenta || !documento) {
+      alert('Por favor, completa todos los datos de PSE.');
+      return;
+    }
+    // Aquí puedes simular el pago o enviar los datos a tu backend
+  }
 
   // Simulación de pago exitoso
   document.getElementById('checkout-form').style.display = 'none';
