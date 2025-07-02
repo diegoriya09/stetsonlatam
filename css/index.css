@@ -829,7 +829,7 @@ nav.main-nav {
 
 /* Modal de checkout igual al de login */
 .modalcheckout {
-  display: none;
+  display: flex;
   position: fixed;
   z-index: 999;
   left: 0;
@@ -838,13 +838,14 @@ nav.main-nav {
   height: 100%;
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.6);
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
+  padding-top: 80px; /* Espacio para el navbar */
 }
 
 .modal-content-checkout {
   background-color: #f1eeea;
-  margin: 8% auto;
+  margin: 90px;
   padding: 2.5rem;
   border-radius: 12px;
   width: 90%;
