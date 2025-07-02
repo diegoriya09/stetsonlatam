@@ -151,6 +151,15 @@
   gap: 1rem;
   flex-wrap: wrap;
 }
+
+.relacionados h2 {
+  font-family: 'Gt America', sans-serif;
+  font-size: 24px;
+  color: #3c3737;
+  margin-bottom: 1rem;
+  justify-content: center;
+}
+
 .relacionados .card-item {
   flex: 1 1 150px;
   min-width: 140px;
