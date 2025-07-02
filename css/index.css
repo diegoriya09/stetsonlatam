@@ -840,7 +840,7 @@ nav.main-nav {
   background-color: rgba(0, 0, 0, 0.6);
   align-items: flex-start;
   justify-content: center;
-  padding-top: 80px; /* Espacio para el navbar */
+  padding-top: 75px; /* Espacio para el navbar */
 }
 
 .modal-content-checkout {
