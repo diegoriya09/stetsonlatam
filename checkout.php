@@ -1,6 +1,6 @@
 <div id="checkout-modal" class="modalcheckout" style="display:none;">
     <div class="modal-content-checkout">
-        <span class="close" id="cerrar-checkout">&times;</span>
+        <span class="close-modal" id="cerrar-checkout">&times;</span>
         <h2>Checkout</h2>
         <form id="checkout-form">
         <label>Full Name:<br>
