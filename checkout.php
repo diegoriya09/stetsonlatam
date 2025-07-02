@@ -22,6 +22,21 @@
             <option value="tarjeta">Card (Simulated)</option>
             </select>
         </label><br>
+        <!-- Campos de tarjeta aquí -->
+        <div id="tarjeta-fields" style="display:none; margin-top:1rem;">
+            <label>Card number:<br>
+            <input type="text" name="numero_tarjeta" maxlength="19" placeholder="1234 5678 9012 3456">
+            </label><br>
+            <label>Name on card:<br>
+            <input type="text" name="nombre_tarjeta" placeholder="Como aparece en la tarjeta">
+            </label><br>
+            <label>Expiration date:<br>
+            <input type="text" name="expiracion" maxlength="5" placeholder="MM/AA">
+            </label><br>
+            <label>CVV:<br>
+            <input type="text" name="cvv" maxlength="4" placeholder="123">
+            </label>
+        </div>
         <button type="submit" class="pagar-btn">Pay</button>
         </form>
         <div id="checkout-confirm" style="display:none; margin-top:1rem;"></div>

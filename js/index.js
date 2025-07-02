@@ -183,15 +183,38 @@ document.getElementById('cerrar-checkout').addEventListener('click', function() 
   document.getElementById('checkout-confirm').style.display = 'none';
 });
 
+document.querySelector('select[name="metodo"]').addEventListener('change', function() {
+  const tarjetaFields = document.getElementById('tarjeta-fields');
+  if (this.value === 'tarjeta') {
+    tarjetaFields.style.display = 'block';
+  } else {
+    tarjetaFields.style.display = 'none';
+  }
+});
+
 document.getElementById('checkout-form').addEventListener('submit', function(e) {
   e.preventDefault();
-  // Aquí puedes enviar los datos a tu backend o simular el pago
+
+  const metodo = this.metodo.value;
+  if (metodo === 'tarjeta') {
+    const numero = this.numero_tarjeta.value.trim();
+    const nombre = this.nombre_tarjeta.value.trim();
+    const expiracion = this.expiracion.value.trim();
+    const cvv = this.cvv.value.trim();
+
+    if (!numero || !nombre || !expiracion || !cvv) {
+      alert('Por favor, completa todos los datos de la tarjeta.');
+      return;
+    }
+    // Puedes agregar validaciones adicionales aquí (longitud, formato, etc.)
+  }
+
+  // Simulación de pago exitoso
   document.getElementById('checkout-form').style.display = 'none';
   document.getElementById('checkout-confirm').style.display = 'block';
   document.getElementById('checkout-confirm').innerHTML = `
     <h3>¡Pago exitoso!</h3>
     <p>Gracias por tu compra. Te hemos enviado un correo con el resumen.</p>
   `;
-  // Aquí puedes limpiar el carrito si lo deseas
 });
 
