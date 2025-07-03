@@ -94,6 +94,7 @@ nav.main-nav {
 
 .nav-right .icon {
   width: 22px;
+  margin-left: 5px;
   height: 22px;
   cursor: pointer;
   object-fit: contain;
