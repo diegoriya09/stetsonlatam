@@ -76,46 +76,16 @@ tr:hover {
 tbody tr:last-child td {
     border-bottom: none;
 }
-
-.logout-container {
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-    margin: 0 auto;
-    max-width: 90%;
-}
-.logout-form {
-    background: #fff;
-    padding: 16px 28px;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(60,55,55,0.08);
-    margin: 24px 0 0 0;
-}
-.logout-form button {
-    background: #3c3737;
-    color: #f1eeea;
-    border: none;
-    padding: 10px 22px;
-    border-radius: 5px;
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 1em;
-    transition: background 0.2s;
-}
-.logout-form button:hover {
-    background: #3c3737;
-}
 </style>
 
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 
-<div class="logout-container">
-    <form action="php/logout.php" method="POST" class="logout-form">
-        <button type="submit">Logout</button>
-    </form>
-</div>
+<button id="logout-btn" style="display:none; background:#b33a3a; color:#fff; border:none; padding:10px 22px; border-radius:5px; font-weight:bold; cursor:pointer; font-size:1em;">
+    <i class="fa-solid fa-right-from-bracket" style="margin-right:8px;"></i>
+    Logout
+</button>
 
 <h1>Management Panel</h1>
 
@@ -190,3 +160,21 @@ tbody tr:last-child td {
         ?>
     </tbody>
 </table>
+<script>
+    const logoutBtn = document.getElementById('logout-btn');
+
+  if (localStorage.getItem('jwt')) {
+    logoutBtn.style.display = 'inline-block';
+  }
+
+  logoutBtn.addEventListener('click', () => {
+    localStorage.removeItem('jwt');
+    Swal.fire({
+      title: 'Sesión cerrada',
+      icon: 'info',
+      confirmButtonText: 'OK'
+    }).then(() => {
+      location.reload();
+    });
+  });
+</script>
