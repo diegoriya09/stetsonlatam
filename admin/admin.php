@@ -103,7 +103,6 @@ tbody tr:last-child td {
     <select name="categoria" onchange="this.form.submit()">
         <option value="">All categories</option>
         <option value="sombreros">Hats</option>
-        <option value="accesorios">Accessories</option>
     </select>
 </form>
 
