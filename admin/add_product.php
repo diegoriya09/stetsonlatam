@@ -22,7 +22,7 @@ $imagen = null;
 if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
     $ext = pathinfo($_FILES['imagen']['name'], PATHINFO_EXTENSION);
     $nombreArchivo = uniqid('prod_') . '.' . $ext;
-    $ruta = "../uploads/" . $nombreArchivo;
+    $ruta = "../img/" . $nombreArchivo;
     if (move_uploaded_file($_FILES['imagen']['tmp_name'], $ruta)) {
         $imagen = $nombreArchivo;
     }
