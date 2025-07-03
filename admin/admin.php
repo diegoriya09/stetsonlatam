@@ -92,8 +92,9 @@ tbody tr:last-child td {
 
 <!-- Formulario para agregar producto -->
 <form id="add-product-form" action="add_product.php" method="POST" enctype="multipart/form-data">
-    <input type="text" name="nombre" placeholder="Nombre del producto" required>
-    <input type="number" name="precio" placeholder="Precio" required>
+    <input type="text" name="nombre" placeholder="Product's Name" required>
+    <input type="number" name="precio" placeholder="Price" required>
+    <input type="text" name="descripcion" placeholder="Description" required>
     <select name="categoria" required>
         <option value="">Categories</option>
         <option value="hats">Hats</option>
@@ -116,6 +117,7 @@ tbody tr:last-child td {
         <tr>
             <th>ID</th>
             <th>Name</th>
+            <th>Description</th>
             <th>Price</th>
             <th>Category</th>
             <th>Image</th>
@@ -129,10 +131,10 @@ tbody tr:last-child td {
         // Filtro por categoría si se selecciona
         $category = $_GET['category'] ?? '';
         if ($category) {
-            $stmt = $conn->prepare("SELECT id, name, price, category, image FROM productos WHERE category = ?");
+            $stmt = $conn->prepare("SELECT id, name, description, price, category, image FROM productos WHERE category = ?");
             $stmt->bind_param("s", $category);
         } else {
-            $stmt = $conn->prepare("SELECT id, name, price, category, image FROM productos");
+            $stmt = $conn->prepare("SELECT id, name, description, price, category, image FROM productos");
         }
         $stmt->execute();
         $result = $stmt->get_result();
@@ -141,6 +143,7 @@ tbody tr:last-child td {
             echo "<tr>";
             echo "<td>{$row['id']}</td>";
             echo "<td>" . htmlspecialchars($row['name']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['description']) . "</td>";
             echo "<td>$" . number_format($row['price'], 2) . "</td>";
             echo "<td>" . htmlspecialchars($row['category']) . "</td>";
             echo "<td>";
@@ -172,7 +175,7 @@ if (logoutBtn) {
   logoutBtn.addEventListener('click', () => {
     localStorage.removeItem('jwt');
     Swal.fire({
-      title: 'Sesión cerrada',
+      title: 'Closed session',
       icon: 'info',
       confirmButtonText: 'OK'
     }).then(() => {

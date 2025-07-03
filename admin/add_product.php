@@ -9,12 +9,13 @@ require '../php/conexion.php';
 
 // Validar y sanitizar entradas
 $nombre = trim(strip_tags($_POST['nombre'] ?? ''));
+$descripcion = trim(strip_tags($_POST['descripcion'] ?? ''));
 $precio = floatval($_POST['precio'] ?? 0);
 $categoria = trim(strip_tags($_POST['categoria'] ?? ''));
 
 // Validar campos obligatorios
-if (!$nombre || !$precio || !$categoria) {
-    die("Todos los campos son obligatorios.");
+if (!$nombre || !$descripcion || !$precio || !$categoria) {
+    die("All fields are required. Please fill in all fields.");
 }
 
 // Procesar imagen si se subió
@@ -30,11 +31,11 @@ if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
 
 // Insertar producto
 $stmt = $conn->prepare("INSERT INTO productos (name, price, category, image) VALUES (?, ?, ?, ?)");
-$stmt->bind_param("sdss", $nombre, $precio, $categoria, $imagen);
+$stmt->bind_param("sdss", $nombre, $precio, $descripcion, $categoria, $imagen);
 if ($stmt->execute()) {
     header("Location: admin.php?msg=Producto+agregado");
     exit;
 } else {
-    die("Error al agregar producto: " . $stmt->error);
+    die("Error adding product: " . $stmt->error);
 }
 ?>

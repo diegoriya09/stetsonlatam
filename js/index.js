@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const password = registerForm.querySelector('input[name="password"]').value;
 
       if (!name || !email || !password) {
-        alert("Por favor, completa todos los campos.");
+        alert("Please complete all fields.");
         return;
       }
 
@@ -68,9 +68,9 @@ document.addEventListener('DOMContentLoaded', () => {
             // ✅ Aquí va Swal.fire
             Swal.fire({
               icon: 'success',
-              title: '¡Registro exitoso!',
-              text: 'Ahora puedes iniciar sesión',
-              confirmButtonText: 'Ir al login'
+              title: 'Successful registration!',
+              text: 'You can now log in',
+              confirmButtonText: 'Go to login'
             }).then(() => {
               // ✅ Mostrar formulario de login
               registerFormSection.style.display = 'none';
@@ -80,14 +80,14 @@ document.addEventListener('DOMContentLoaded', () => {
             Swal.fire({
               icon: 'error',
               title: 'Oops...',
-              text: data.message || 'Hubo un error al registrar'
+              text: data.message || 'There was an error while registering'
             });
           }
         })
         .catch(err => {
           Swal.fire({
             icon: 'error',
-            title: 'Error de red',
+            title: 'Network error',
             text: err.message
           });
         });
@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
   logoutBtn.addEventListener('click', () => {
     localStorage.removeItem('jwt');
     Swal.fire({
-      title: 'Sesión cerrada',
+      title: 'Closed session',
       icon: 'info',
       confirmButtonText: 'OK'
     }).then(() => {
@@ -220,7 +220,7 @@ document.getElementById('checkout-form').addEventListener('submit', function(e) 
     const cvv = this.cvv.value.trim();
 
     if (!numero || !nombre || !expiracion || !cvv) {
-      alert('Por favor, completa todos los datos de la tarjeta.');
+      alert('Please complete all card information.');
       return;
     }
     // Puedes agregar validaciones adicionales aquí (longitud, formato, etc.)
@@ -231,7 +231,7 @@ document.getElementById('checkout-form').addEventListener('submit', function(e) 
     const tipoCuenta = this.tipo_cuenta_pse.value;
     const documento = this.documento_pse.value.trim();
     if (!banco || !tipoCuenta || !documento) {
-      alert('Por favor, completa todos los datos de PSE.');
+      alert('Please complete all PSE data.');
       return;
     }
     // Aquí puedes simular el pago o enviar los datos a tu backend
@@ -241,9 +241,9 @@ document.getElementById('checkout-form').addEventListener('submit', function(e) 
   document.getElementById('checkout-form').style.display = 'none';
   document.getElementById('checkout-confirm').style.display = 'block';
   document.getElementById('checkout-confirm').innerHTML = `
-    <h3>¡Pago exitoso!</h3>
-    <p>Gracias por tu compra. Te hemos enviado un correo con el resumen.</p>
-    <p><strong>Teléfono:</strong> ${telefonoCompleto}</p>
+    <h3>Successful payment!</h3>
+    <p>Thank you for your purchase. We have sent you a message with the summary.</p>
+    <p><strong>Phone:</strong> ${telefonoCompleto}</p>
   `;
 });
 

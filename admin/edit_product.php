@@ -11,10 +11,11 @@ require '../php/conexion.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id = intval($_POST['id'] ?? 0);
     $name = trim(strip_tags($_POST['name'] ?? ''));
+    $description = trim(strip_tags($_POST['description'] ?? ''));
     $price = floatval($_POST['price'] ?? 0);
     $category = trim(strip_tags($_POST['category'] ?? ''));
 
-    if (!$id || !$name || !$price || !$category) {
+    if (!$id || !$name || !$description || !$price || !$category) {
         die("All fields are required.");
     }
 
@@ -30,32 +31,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if ($image) {
-        $stmt = $conn->prepare("UPDATE productos SET name=?, price=?, category=?, image=? WHERE id=?");
-        $stmt->bind_param("sdssi", $name, $price, $category, $image, $id);
+        $stmt = $conn->prepare("UPDATE productos SET name=?, description=?, price=?, category=?, image=? WHERE id=?");
+        $stmt->bind_param("ssdssi", $name, $description, $price, $category, $image, $id);
     } else {
-        $stmt = $conn->prepare("UPDATE productos SET name=?, price=?, category=? WHERE id=?");
-        $stmt->bind_param("sdsi", $name, $price, $category, $id);
+        $stmt = $conn->prepare("UPDATE productos SET name=?, description=?, price=?, category=? WHERE id=?");
+        $stmt->bind_param("ssdsi", $name, $description, $price, $category, $id);
     }
 
     if ($stmt->execute()) {
         header("Location: admin.php?msg=Producto+editado");
         exit;
     } else {
-        die("Error al editar producto: " . $stmt->error);
+        die("Error while editing product: " . $stmt->error);
     }
 }
 
 // Si llega por GET, mostrar el formulario con los datos actuales
 $id = intval($_GET['id'] ?? 0);
 if (!$id) {
-    die("ID inválido.");
+    die("ID invalid.");
 }
-$stmt = $conn->prepare("SELECT name, price, category, image FROM productos WHERE id=?");
+$stmt = $conn->prepare("SELECT name, description, price, category, image FROM productos WHERE id=?");
 $stmt->bind_param("i", $id);
 $stmt->execute();
-$stmt->bind_result($name, $price, $category, $image);
+$stmt->bind_result($name, $description, $price, $category, $image);
 if (!$stmt->fetch()) {
-    die("Producto no encontrado.");
+    die("Product not found.");
 }
 $stmt->close();
 ?>
@@ -127,6 +128,7 @@ body {
     <form action="edit_product.php" method="POST" enctype="multipart/form-data">
         <input type="hidden" name="id" value="<?php echo $id; ?>">
         <label>Name: <input type="text" name="name" value="<?php echo htmlspecialchars($name); ?>" required></label><br>
+        <label>Description: <input type="text" name="description" value="<?php echo htmlspecialchars($description); ?>" required></label><br>
         <label>Price: <input type="number" name="price" value="<?php echo $price; ?>" required></label><br>
         <label>Category:
             <select name="category" required>
