@@ -124,12 +124,12 @@ tbody tr:last-child td {
         require '../php/conexion.php';
 
         // Filtro por categoría si se selecciona
-        $categoria = $_GET['categoria'] ?? '';
-        if ($categoria) {
-            $stmt = $conn->prepare("SELECT id, nombre, precio, categoria, imagen FROM productos WHERE categoria = ?");
-            $stmt->bind_param("s", $categoria);
+        $category = $_GET['category'] ?? '';
+        if ($category) {
+            $stmt = $conn->prepare("SELECT id, name, price, category, image FROM productos WHERE category = ?");
+            $stmt->bind_param("s", $category);
         } else {
-            $stmt = $conn->prepare("SELECT id, nombre, precio, categoria, imagen FROM productos");
+            $stmt = $conn->prepare("SELECT id, name, price, category, image FROM productos");
         }
         $stmt->execute();
         $result = $stmt->get_result();
@@ -137,12 +137,12 @@ tbody tr:last-child td {
         while ($row = $result->fetch_assoc()) {
             echo "<tr>";
             echo "<td>{$row['id']}</td>";
-            echo "<td>" . htmlspecialchars($row['name']) . "</td>";
-            echo "<td>$" . number_format($row['price'], 2) . "</td>";
-            echo "<td>" . htmlspecialchars($row['category']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['nombre']) . "</td>";
+            echo "<td>$" . number_format($row['precio'], 2) . "</td>";
+            echo "<td>" . htmlspecialchars($row['categoria']) . "</td>";
             echo "<td>";
             if (!empty($row['image'])) {
-                echo "<img src='../{$row['image']}' alt='img' style='max-width:60px;max-height:60px;'>";
+                echo "<img src='../{$row['imagen']}' alt='img' style='max-width:60px;max-height:60px;'>";
             } else {
                 echo "-";
             }
