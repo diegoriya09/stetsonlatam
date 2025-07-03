@@ -66,8 +66,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     // ✅ 6. Redirigir con alerta
                     Swal.fire({
-                        title: 'Bienvenido',
-                        text: 'Inicio de sesión exitoso',
+                        title: 'Welcome back!',
+                        text: 'Successful login',
                         icon: 'success',
                         confirmButtonText: 'OK'
                     }).then(() => {
@@ -78,11 +78,11 @@ document.addEventListener("DOMContentLoaded", () => {
                         }
                     });
                 } else {
-                    Swal.fire("Error", result.error || "No se pudo iniciar sesión", "error");
+                    Swal.fire("Error", result.error || "Could not log in", "error");
                 }
 
             } catch (error) {
-                Swal.fire("Error", "Error en la conexión al servidor", "error");
+                Swal.fire("Error", "Server connection error", "error");
             }
         });
 
@@ -101,8 +101,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // LOGOUT
     logoutBtn.addEventListener('click', () => {
         Swal.fire({
-            title: 'Sesión cerrada',
-            text: 'Has cerrado sesión exitosamente',
+            title: 'Closed session',
+            text: 'You have successfully logged out',
             icon: 'success',
             showConfirmButton: false,
             timer: 5000,
