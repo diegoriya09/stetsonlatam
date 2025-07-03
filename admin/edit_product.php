@@ -122,23 +122,24 @@ body {
     background: #5a2323;
 }
 </style>
-
-<h2>Edit Product</h2>
-<form action="edit_product.php" method="POST" enctype="multipart/form-data">
-    <input type="hidden" name="id" value="<?php echo $id; ?>">
-    <label>Name: <input type="text" name="name" value="<?php echo htmlspecialchars($name); ?>" required></label><br>
-    <label>Price: <input type="number" name="price" value="<?php echo $price; ?>" required></label><br>
-    <label>Category:
-        <select name="category" required>
-            <option value="">Select</option>
-            <option value="hats" <?php if($category=='hats') echo 'selected'; ?>>hats</option>
-        </select>
-    </label><br>
-    <label>Current image:
-        <?php if ($image) { ?>
-            <img src="../<?php echo $image; ?>" style="max-width:60px;max-height:60px;">
-        <?php } else { echo "-"; } ?>
-    </label><br>
-    <label>New image: <input type="file" name="image"></label><br>
-    <button type="submit">Save changes</button>
-</form>
+<div class="edit-container">
+    <h2>Edit Product</h2>
+    <form action="edit_product.php" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="id" value="<?php echo $id; ?>">
+        <label>Name: <input type="text" name="name" value="<?php echo htmlspecialchars($name); ?>" required></label><br>
+        <label>Price: <input type="number" name="price" value="<?php echo $price; ?>" required></label><br>
+        <label>Category:
+            <select name="category" required>
+                <option value="">Select</option>
+                <option value="hats" <?php if($category=='hats') echo 'selected'; ?>>hats</option>
+            </select>
+        </label><br>
+        <label>Current image:
+            <?php if ($image) { ?>
+                <img src="../<?php echo $image; ?>" style="max-width:60px;max-height:60px;">
+            <?php } else { echo "-"; } ?>
+        </label><br>
+        <label>New image: <input type="file" name="image"></label><br>
+        <button type="submit">Save changes</button>
+    </form>
+</div>
