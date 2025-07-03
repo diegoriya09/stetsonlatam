@@ -137,12 +137,12 @@ tbody tr:last-child td {
         while ($row = $result->fetch_assoc()) {
             echo "<tr>";
             echo "<td>{$row['id']}</td>";
-            echo "<td>" . htmlspecialchars($row['nombre']) . "</td>";
-            echo "<td>$" . number_format($row['precio'], 2) . "</td>";
-            echo "<td>" . htmlspecialchars($row['categoria']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['name']) . "</td>";
+            echo "<td>$" . number_format($row['price'], 2) . "</td>";
+            echo "<td>" . htmlspecialchars($row['category']) . "</td>";
             echo "<td>";
-            if (!empty($row['imagen'])) {
-                echo "<img src='../{$row['imagen']}' alt='img' style='max-width:60px;max-height:60px;'>";
+            if (!empty($row['image'])) {
+                echo "<img src='../{$row['image']}' alt='img' style='max-width:60px;max-height:60px;'>";
             } else {
                 echo "-";
             }
