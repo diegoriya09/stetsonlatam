@@ -92,7 +92,7 @@ tbody tr:last-child td {
     <input type="number" name="precio" placeholder="Precio" required>
     <select name="categoria" required>
         <option value="">Categories</option>
-        <option value="sombreros">Hats</option>
+        <option value="hats">Hats</option>
     </select>
     <input type="file" name="imagen" accept="image/*">
     <button type="submit">Add product</button>
