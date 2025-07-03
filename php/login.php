@@ -3,6 +3,9 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+
+session_start();
+
 require 'conexion.php';
 require '../vendor/autoload.php';
 
@@ -28,7 +31,6 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
 // (Opcional) Validar token CSRF
 if (isset($_POST['csrf_token'])) {
-    session_start();
     if (!isset($_SESSION['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
         http_response_code(403);
         echo json_encode(["error" => "Token CSRF inválido"]);
@@ -47,7 +49,6 @@ if ($stmt->num_rows > 0) {
     $stmt->fetch();
 
     if (password_verify($password, $hashed_password)) {
-        session_start();
         $_SESSION['user_role'] = $user_role;
         $_SESSION['user_id'] = $user_id;
         
