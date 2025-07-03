@@ -6,6 +6,9 @@ error_reporting(E_ALL);
 
 session_start();
 
+error_log("POST token: " . ($_POST['csrf_token'] ?? ''));
+error_log("SESSION token: " . ($_SESSION['csrf_token'] ?? ''));
+
 require 'conexion.php';
 require '../vendor/autoload.php';
 
