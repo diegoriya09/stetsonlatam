@@ -36,17 +36,21 @@ if (isset($_POST['csrf_token'])) {
     }
 }
 
-$sql = "SELECT id, password FROM users WHERE email = ?";
+$sql = "SELECT id, password, role FROM users WHERE email = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $email);
 $stmt->execute();
 $stmt->store_result();
 
 if ($stmt->num_rows > 0) {
-    $stmt->bind_result($user_id, $hashed_password);
+    $stmt->bind_result($user_id, $hashed_password, $user_role);
     $stmt->fetch();
 
     if (password_verify($password, $hashed_password)) {
+        session_start();
+        $_SESSION['user_role'] = $user_role;
+        $_SESSION['user_id'] = $user_id;
+        
         $secret_key = "StetsonLatam1977";
 
         $payload = [
