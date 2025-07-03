@@ -79,9 +79,12 @@ tbody tr:last-child td {
 
 td.description-cell {
     max-width: 320px;
-    white-space: nowrap;
+    white-space: normal;      
+    overflow-wrap: break-word;
+    word-break: break-word;   
     overflow: hidden;
-    text-overflow: ellipsis;
+    text-overflow: ellipsis;  
+    font-size: 1em;
 }
 th.description-header {
     max-width: 320px;
