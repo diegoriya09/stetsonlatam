@@ -3,6 +3,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const userIcon = document.getElementById('open-user-modal');
     const logoutBtn = document.getElementById('logout-btn');
 
+    // Agregar aquí para actualizar el token CSRF al abrir el modal
+    if (userIcon) {
+        userIcon.addEventListener('click', async () => {
+            const res = await fetch('php/csrf_token.php', { credentials: 'same-origin' });
+            const data = await res.json();
+            const csrfInput = document.querySelector('#login-form input[name="csrf_token"]');
+            if (csrfInput) csrfInput.value = data.csrf_token;
+        });
+    }
+
     // LOGIN
     if (loginForm) {
         loginForm.addEventListener('submit', async (e) => {
