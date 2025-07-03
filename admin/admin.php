@@ -176,7 +176,7 @@ if (logoutBtn) {
       icon: 'info',
       confirmButtonText: 'OK'
     }).then(() => {
-      location.reload();
+      window.location.href = '/index.php';
     });
   });
 }
