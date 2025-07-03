@@ -24,7 +24,7 @@ if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
     $nombreArchivo = uniqid('prod_') . '.' . $ext;
     $ruta = "../img/" . $nombreArchivo;
     if (move_uploaded_file($_FILES['imagen']['tmp_name'], $ruta)) {
-        $imagen = $nombreArchivo;
+        $imagen = "img/" . $nombreArchivo; // Ruta para la base de datos
     }
 }
 
