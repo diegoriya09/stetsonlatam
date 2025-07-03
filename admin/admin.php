@@ -163,6 +163,7 @@ tbody tr:last-child td {
 <script>
     const logoutBtn = document.getElementById('logout-btn');
 
+if (logoutBtn) {
   if (localStorage.getItem('jwt')) {
     logoutBtn.style.display = 'inline-block';
   }
@@ -177,4 +178,6 @@ tbody tr:last-child td {
       location.reload();
     });
   });
+}
 </script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
