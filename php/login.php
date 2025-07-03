@@ -11,8 +11,30 @@ use Firebase\JWT\Key;
 
 header('Content-Type: application/json');
 
-$email = $_POST['email'] ?? '';
+// Sanitizar y validar entradas
+$email = trim(filter_var($_POST['email'] ?? '', FILTER_SANITIZE_EMAIL));
 $password = $_POST['password'] ?? '';
+
+if (empty($email) || empty($password)) {
+    http_response_code(400);
+    echo json_encode(["error" => "Email y contraseña son obligatorios"]);
+    exit;
+}
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    http_response_code(400);
+    echo json_encode(["error" => "Email inválido"]);
+    exit;
+}
+
+// (Opcional) Validar token CSRF
+if (isset($_POST['csrf_token'])) {
+    session_start();
+    if (!isset($_SESSION['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        http_response_code(403);
+        echo json_encode(["error" => "Token CSRF inválido"]);
+        exit;
+    }
+}
 
 $sql = "SELECT id, password FROM users WHERE email = ?";
 $stmt = $conn->prepare($sql);

@@ -14,6 +14,7 @@ if (empty($_SESSION['csrf_token'])) {
                 <form action="php/login.php" method="POST">
                     <input type="email" name="email" placeholder="Email" required />
                     <input type="password" name="password" placeholder="Password" required />
+                    <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                     <button type="submit">Enter</button>
                 </form>
                 <p>Don't have an account? <a href="#" id="switch-to-register">Create account</a></p>
