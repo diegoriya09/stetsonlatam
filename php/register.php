@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 require 'conexion.php';
 
 // Sanitizar entradas
-$name = trim(filter_var($_POST['name'], FILTER_SANITIZE_STRING));
+$name = trim(strip_tags($_POST['name']));
 $email = trim(filter_var($_POST['email'], FILTER_SANITIZE_EMAIL));
 $password = $_POST['password'];
 
