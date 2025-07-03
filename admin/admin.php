@@ -78,6 +78,10 @@ tbody tr:last-child td {
 }
 </style>
 
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+
 <form action="logout.php" method="POST" style="text-align:right; margin: 20px;">
     <button type="submit" style="background:#b33a3a; color:#fff; border:none; padding:8px 18px; border-radius:5px; font-weight:bold; cursor:pointer;">
         Logout
@@ -147,8 +151,13 @@ tbody tr:last-child td {
             }
             echo "</td>";
             echo "<td>
-                <a href='edit_product.php?id={$row['id']}' style='color:#1a73e8;'>Edit</a> | 
-                <a href='delete_product.php?id={$row['id']}' style='color:#b33a3a;' onclick=\"return confirm('¿Eliminar este producto?');\">Delete</a>
+                <a href='edit_product.php?id={$row['id']}' title='Edit'>
+                    <i class='fa-solid fa-pen-to-square' style='color:#1a73e8; font-size:20px;'></i>
+                </a>
+                &nbsp;
+                <a href='delete_product.php?id={$row['id']}' title='Delete' onclick=\"return confirm('¿Eliminar este producto?');\">
+                    <i class='fa-solid fa-trash' style='color:#b33a3a; font-size:20px;'></i>
+                </a>
             </td>";
             echo "</tr>";
         }
