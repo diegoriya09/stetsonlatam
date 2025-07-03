@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const response = await fetch('php/login.php', {
                     method: 'POST',
                     body: formData,
+                    credentials: 'same-origin'
                 });
 
                 const result = await response.json();
