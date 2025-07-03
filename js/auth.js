@@ -60,9 +60,12 @@ document.addEventListener("DOMContentLoaded", () => {
                         icon: 'success',
                         confirmButtonText: 'OK'
                     }).then(() => {
-                        window.location.reload();
+                        if (result.role === 'admin') {
+                            window.location.href = '/admin/admin.php';
+                        } else {
+                            window.location.reload();
+                        }
                     });
-
                 } else {
                     Swal.fire("Error", result.error || "No se pudo iniciar sesión", "error");
                 }

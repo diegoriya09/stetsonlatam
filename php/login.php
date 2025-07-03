@@ -65,7 +65,10 @@ if ($stmt->num_rows > 0) {
         ];
 
         $jwt = JWT::encode($payload, $secret_key, 'HS256');
-        echo json_encode(["token" => $jwt]);
+        echo json_encode([
+        "token" => $jwt,
+        "role" => $user_role // <-- agrega el rol aquí
+    ]);
         exit;
     } else {
         http_response_code(401);
