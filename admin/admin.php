@@ -151,12 +151,8 @@ tbody tr:last-child td {
             }
             echo "</td>";
             echo "<td>
-                <a href='edit_product.php?id={$row['id']}' title='Edit'>
-                    <i class='fa-solid fa-pen-to-square' style='color:#1a73e8; font-size:20px;'></i>
-                </a>
-                <a href='delete_product.php?id={$row['id']}' title='Delete' onclick=\"return confirm('¿Eliminar este producto?');\">
-                    <i class='fa-solid fa-trash' style='color:#b33a3a; font-size:20px;'></i>
-                </a>
+                <a href='edit_product.php?id={$row['id']}' title='Edit'><i class='fa-solid fa-pen-to-square' style='color:#1a73e8; font-size:20px;'></i></a>
+                <a href='delete_product.php?id={$row['id']}' title='Delete' onclick=\"return confirm('¿Eliminar este producto?');\"><i class='fa-solid fa-trash' style='color:#b33a3a; font-size:20px; margin-left:10px;'></i></a>
             </td>";
             echo "</tr>";
         }
