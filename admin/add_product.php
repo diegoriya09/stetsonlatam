@@ -30,10 +30,10 @@ if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
 }
 
 // Insertar producto
-$stmt = $conn->prepare("INSERT INTO productos (name, price, category, image) VALUES (?, ?, ?, ?)");
-$stmt->bind_param("sdss", $nombre, $precio, $descripcion, $categoria, $imagen);
+$stmt = $conn->prepare("INSERT INTO productos (name, description, price, category, image) VALUES (?, ?, ?, ?, ?)");
+$stmt->bind_param("ssdss", $nombre, $descripcion, $precio, $categoria, $imagen);
 if ($stmt->execute()) {
-    header("Location: admin.php?msg=Producto+agregado");
+    header("Location: admin.php?msg=added+product");
     exit;
 } else {
     die("Error adding product: " . $stmt->error);
