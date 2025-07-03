@@ -76,6 +76,16 @@ tr:hover {
 tbody tr:last-child td {
     border-bottom: none;
 }
+
+td.description-cell {
+    max-width: 320px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+th.description-header {
+    max-width: 320px;
+}
 </style>
 
 <head>
@@ -117,7 +127,7 @@ tbody tr:last-child td {
         <tr>
             <th>ID</th>
             <th>Name</th>
-            <th>Description</th>
+            <th class="description-header">Description</th>
             <th>Price</th>
             <th>Category</th>
             <th>Image</th>
@@ -143,7 +153,7 @@ tbody tr:last-child td {
             echo "<tr>";
             echo "<td>{$row['id']}</td>";
             echo "<td>" . htmlspecialchars($row['name']) . "</td>";
-            echo "<td>" . htmlspecialchars($row['description']) . "</td>";
+            echo "<td class='description-cell'>" . htmlspecialchars($row['description']) . "</td>";
             echo "<td>$" . number_format($row['price'], 2) . "</td>";
             echo "<td>" . htmlspecialchars($row['category']) . "</td>";
             echo "<td>";
