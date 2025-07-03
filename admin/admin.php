@@ -76,17 +76,46 @@ tr:hover {
 tbody tr:last-child td {
     border-bottom: none;
 }
+
+.logout-container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin: 0 auto;
+    max-width: 90%;
+}
+.logout-form {
+    background: #fff;
+    padding: 16px 28px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(60,55,55,0.08);
+    margin: 24px 0 0 0;
+}
+.logout-form button {
+    background: #3c3737;
+    color: #f1eeea;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background 0.2s;
+}
+.logout-form button:hover {
+    background: #3c3737;
+}
 </style>
 
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 
-<form action="logout.php" method="POST" style="text-align:right; margin: 20px;">
-    <button type="submit" style="background:#b33a3a; color:#fff; border:none; padding:8px 18px; border-radius:5px; font-weight:bold; cursor:pointer;">
-        Logout
-    </button>
-</form>
+<div class="logout-container">
+    <form action="php/logout.php" method="POST" class="logout-form">
+        <button type="submit">Logout</button>
+    </form>
+</div>
 
 <h1>Management Panel</h1>
 
