@@ -78,6 +78,12 @@ tbody tr:last-child td {
 }
 </style>
 
+<form action="logout.php" method="POST" style="text-align:right; margin: 20px;">
+    <button type="submit" style="background:#b33a3a; color:#fff; border:none; padding:8px 18px; border-radius:5px; font-weight:bold; cursor:pointer;">
+        Logout
+    </button>
+</form>
+
 <h1>Management Panel</h1>
 
 <!-- Formulario para agregar producto -->
@@ -114,6 +120,41 @@ tbody tr:last-child td {
         </tr>
     </thead>
     <tbody>
-        
+        <?php
+        require '../php/conexion.php';
+
+        // Filtro por categoría si se selecciona
+        $categoria = $_GET['categoria'] ?? '';
+        if ($categoria) {
+            $stmt = $conn->prepare("SELECT id, nombre, precio, categoria, imagen FROM productos WHERE categoria = ?");
+            $stmt->bind_param("s", $categoria);
+        } else {
+            $stmt = $conn->prepare("SELECT id, nombre, precio, categoria, imagen FROM productos");
+        }
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        while ($row = $result->fetch_assoc()) {
+            echo "<tr>";
+            echo "<td>{$row['id']}</td>";
+            echo "<td>" . htmlspecialchars($row['nombre']) . "</td>";
+            echo "<td>$" . number_format($row['precio'], 2) . "</td>";
+            echo "<td>" . htmlspecialchars($row['categoria']) . "</td>";
+            echo "<td>";
+            if (!empty($row['imagen'])) {
+                echo "<img src='../{$row['imagen']}' alt='img' style='max-width:60px;max-height:60px;'>";
+            } else {
+                echo "-";
+            }
+            echo "</td>";
+            echo "<td>
+                <a href='edit_product.php?id={$row['id']}' style='color:#1a73e8;'>Edit</a> | 
+                <a href='delete_product.php?id={$row['id']}' style='color:#b33a3a;' onclick=\"return confirm('¿Eliminar este producto?');\">Delete</a>
+            </td>";
+            echo "</tr>";
+        }
+        $stmt->close();
+        $conn->close();
+        ?>
     </tbody>
 </table>
