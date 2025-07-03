@@ -12,12 +12,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Sanitizar y validar campos
-    $nombre = trim(filter_var($_POST['nombre'], FILTER_SANITIZE_STRING));
+    $nombre = trim(strip_tags($_POST['nombre']));
     $email = trim(filter_var($_POST['email'], FILTER_SANITIZE_EMAIL));
     $pais = $_POST['pais'];
-    $ciudad = trim(filter_var($_POST['ciudad'], FILTER_SANITIZE_STRING));
-    $direccion = trim(filter_var($_POST['direccion'], FILTER_SANITIZE_STRING));
-    $telefono = trim($_POST['telefono']);
+    $ciudad = trim(strip_tags($_POST['ciudad']));
+    $direccion = trim(strip_tags($_POST['direccion']));
+    $telefono = trim(strip_tags($_POST['telefono']));
     $metodo = $_POST['metodo'];
 
     // Validaciones básicas
