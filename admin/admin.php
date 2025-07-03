@@ -80,6 +80,7 @@ tbody tr:last-child td {
 
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <button id="logout-btn" style="display:none; background:#b33a3a; color:#fff; border:none; padding:10px 22px; border-radius:5px; font-weight:bold; cursor:pointer; font-size:1em;">
@@ -180,4 +181,3 @@ if (logoutBtn) {
   });
 }
 </script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
