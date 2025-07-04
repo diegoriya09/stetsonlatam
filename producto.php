@@ -47,7 +47,7 @@ $conn->close();
   <meta charset="UTF-8">
   <title><?= htmlspecialchars($producto['name']) ?></title>
   <meta name="description" content="Stetson LATAM - Legendary Hats for Latin America and Central America">
-  <link rel="icon" href="img/logo.png" type="image/x-icon" loading="lazy">
+  <link rel="icon" href="img/logo.webp" type="image/x-icon" loading="lazy">
   <link rel="stylesheet" href="css/index.css?v=<?php echo time(); ?>">
   <link rel="stylesheet" href="css/product.css?v=<?php echo time(); ?>">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
