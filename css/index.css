@@ -54,7 +54,7 @@ nav.main-nav {
   font-size: 6px;
   position: absolute;
   bottom: 0;
-  right: 20;
+  right: 20px;
   /* puedes ajustar la distancia */
   line-height: 1;
   transform: translateY(-100%);
