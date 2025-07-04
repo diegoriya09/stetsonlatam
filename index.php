@@ -31,17 +31,17 @@
             data-title="WESTERN CLASSICS"
             data-text="Discover the best straw hats in the west, from icons to all-new styles, each crafted in the U.S.A. for legendary quality and resilience."
             data-link="#featured"
-            style="background-image: url('img/slide1.webp') loading='lazy';"></div>
+            style="background-image: url('img/slide1.webp');"></div>
             <div class="slide"
             data-title="OUTDOOR STRAW HATS"
             data-text="Designed for adventure, our handwoven outdoor straw hats bring breathable protection and style to the wild."
             data-link="#featured"
-            style="background-image: url('img/slide2.webp') loading='lazy';"></div>
+            style="background-image: url('img/slide2.webp');"></div>
             <div class="slide"
             data-title="MEN'S APPAREL"
             data-text="Timeless, western-inspired outerwear, range-ready denim and new short-sleeve snap-fronts for spring and beyond."
             data-link="#featured"
-            style="background-image: url('img/slide3.webp') loading='lazy';"></div>
+            style="background-image: url('img/slide3.webp');"></div>
             <!-- Indicadores -->
             <div class="dots">
             <span class="dot active" data-index="0"></span>
