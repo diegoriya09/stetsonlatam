@@ -168,7 +168,7 @@ function renderWishlistItem(producto) {
   return `
     <article class="card-item">
       <a href="producto.php?id=${producto.id}" class="card-link">
-        <img src="${producto.image}" alt="${producto.name}">
+        <img src="${producto.image}" alt="${producto.name}" loading="lazy">
         <h3>${producto.name}</h3>
         <p>$${Number(producto.price).toLocaleString()}</p>
       </a>

@@ -19,7 +19,7 @@ $conn->close();
   <meta charset="UTF-8">
   <title>Hats | Stetson Latam</title>
   <meta name="description" content="Stetson LATAM - Legendary Hats for Latin America and Central America">
-  <link rel="icon" href="img/logo.png" type="image/x-icon">
+  <link rel="icon" href="img/logo.png" type="image/x-icon" loading="lazy">
   <link rel="stylesheet" href="css/index.css?v=<?php echo time(); ?>">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&display=swap" rel="stylesheet">
@@ -45,7 +45,7 @@ $conn->close();
           data-name="<?= htmlspecialchars($producto['name']) ?>"
           data-price="<?= $producto['price'] ?>">
             <a href="producto.php?id=<?= $producto['id'] ?>" class="card-link">
-              <img src="<?= htmlspecialchars($producto['image']) ?>" alt="<?= htmlspecialchars($producto['name']) ?>">
+              <img src="<?= htmlspecialchars($producto['image']) ?>" alt="<?= htmlspecialchars($producto['name']) ?>" loading="lazy">
               <h3><?= htmlspecialchars($producto['name']) ?></h3>
               <p>$<?= number_format($producto['price'], 2, ',', '.') ?></p>
             </a>

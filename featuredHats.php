@@ -28,7 +28,7 @@ $conn->close();
                 foreach ($productos as $producto): ?>
                     <article class="card-item">
                         <a href="producto.php?id=<?= $producto['id'] ?>" class="card-link">
-                            <img src="<?= htmlspecialchars($producto['image']) ?>" alt="<?= htmlspecialchars($producto['name']) ?>">
+                            <img src="<?= htmlspecialchars($producto['image']) ?>" alt="<?= htmlspecialchars($producto['name']) ?>" loading="lazy">
                             <h3><?= htmlspecialchars($producto['name']) ?></h3>
                             <p>$<?= number_format($producto['price'], 2, ',', '.') ?></p>
                         </a>

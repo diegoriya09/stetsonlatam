@@ -47,7 +47,7 @@ $conn->close();
   <meta charset="UTF-8">
   <title><?= htmlspecialchars($producto['name']) ?></title>
   <meta name="description" content="Stetson LATAM - Legendary Hats for Latin America and Central America">
-  <link rel="icon" href="img/logo.png" type="image/x-icon">
+  <link rel="icon" href="img/logo.png" type="image/x-icon" loading="lazy">
   <link rel="stylesheet" href="css/index.css?v=<?php echo time(); ?>">
   <link rel="stylesheet" href="css/product.css?v=<?php echo time(); ?>">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -76,11 +76,11 @@ $conn->close();
 <!-- Vista de producto -->
 <section class="producto-detalle">
   <div class="galeria">
-    <img src="<?= htmlspecialchars($producto['image']) ?>" class="img-principal" alt="<?= htmlspecialchars($producto['name']) ?>">
+    <img src="<?= htmlspecialchars($producto['image']) ?>" class="img-principal" alt="<?= htmlspecialchars($producto['name']) ?>" loading="lazy">
     <?php if (!empty($imagenes)): ?>
     <div class="miniaturas">
       <?php foreach ($imagenes as $img): ?>
-        <img src="<?= htmlspecialchars($img) ?>" class="miniatura" alt="Miniatura" style="width:60px;cursor:pointer;">
+        <img src="<?= htmlspecialchars($img) ?>" class="miniatura" alt="Miniatura" style="width:60px;cursor:pointer;" loading="lazy">
       <?php endforeach; ?>
     </div>
   <?php endif; ?>
@@ -126,7 +126,7 @@ $conn->close();
   <div class="card-grid">
     <?php foreach ($relacionados as $rel): ?>
       <a href="producto.php?id=<?= $rel['id'] ?>" class="card-item">
-        <img src="<?= htmlspecialchars($rel['image']) ?>" alt="<?= htmlspecialchars($rel['name']) ?>">
+        <img src="<?= htmlspecialchars($rel['image']) ?>" alt="<?= htmlspecialchars($rel['name']) ?>" loading="lazy">
         <h3><?= htmlspecialchars($rel['name']) ?></h3>
         <p>$<?= number_format($rel['price'], 2) ?></p>
       </a>

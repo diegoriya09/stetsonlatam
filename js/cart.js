@@ -135,7 +135,7 @@ document.addEventListener('click', function (e) {
 function renderItem(id, name, price, image, quantity) {
   return `
     <div class="carrito-item">
-      <img src="${image}" alt="${name}" class="carrito-img">
+      <img src="${image}" alt="${name}" class="carrito-img" loading="lazy">
       <div class="carrito-info">
         <h4>${name}</h4>
         <p>$${price.toLocaleString()} x ${quantity}</p>
