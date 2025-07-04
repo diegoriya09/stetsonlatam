@@ -24,12 +24,12 @@
             <div class="hamburger" id="hamburger">&#9776;</div>
             <!-- Solo para escritorio -->
             <div class="desktop-icons">
-                <a href="#" id="open-user-modal"><img src="/img/user.png" alt="User" class="icon" /></a>
-                <a id="logout-btn" style="display: none;"><img src="/img/logout.png" alt="Logout" class="icon"></a>
-                <a href="#"><img src="/img/search.png" alt="Search" class="icon" /></a>
-                <a href="wishlist.php"><img src="/img/heart.png" alt="Wishlist" class="icon" /></a>
+                <a href="#" id="open-user-modal"><img src="/img/user.webp" alt="User" class="icon" /></a>
+                <a id="logout-btn" style="display: none;"><img src="/img/logout.webp" alt="Logout" class="icon"></a>
+                <a href="#"><img src="/img/search.webp" alt="Search" class="icon" /></a>
+                <a href="wishlist.php"><img src="/img/heart.webp" alt="Wishlist" class="icon" /></a>
                 <div class="cart-wrapper">
-                    <a id="btn-carrito"><img src="/img/cart.png" alt="Cart" class="icon" /></a>
+                    <a id="btn-carrito"><img src="/img/cart.webp" alt="Cart" class="icon" /></a>
                 </div>
             </div>
         </div>
