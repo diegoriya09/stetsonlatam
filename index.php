@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stetson Latam</title>
     <meta name="description" content="Stetson LATAM - Legendary Hats for Latin America and Central America">
-    <link rel="icon" href="img/logo.webp" type="image/x-icon">
+    <link rel="icon" href="img/logo.webp" type="image/x-icon" loading="lazy">
     <link rel="stylesheet" href="css/index.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&display=swap" rel="stylesheet">
@@ -31,17 +31,17 @@
             data-title="WESTERN CLASSICS"
             data-text="Discover the best straw hats in the west, from icons to all-new styles, each crafted in the U.S.A. for legendary quality and resilience."
             data-link="#featured"
-            style="background-image: url('img/slide1.webp');"></div>
+            style="background-image: url('img/slide1.webp'); loading='lazy'"></div>
             <div class="slide"
             data-title="OUTDOOR STRAW HATS"
             data-text="Designed for adventure, our handwoven outdoor straw hats bring breathable protection and style to the wild."
             data-link="#featured"
-            style="background-image: url('img/slide2.webp');"></div>
+            style="background-image: url('img/slide2.webp'); loading='lazy'"></div>
             <div class="slide"
             data-title="MEN'S APPAREL"
             data-text="Timeless, western-inspired outerwear, range-ready denim and new short-sleeve snap-fronts for spring and beyond."
             data-link="#featured"
-            style="background-image: url('img/slide3.webp');"></div>
+            style="background-image: url('img/slide3.webp'); loading='lazy'"></div>
             <!-- Indicadores -->
             <div class="dots">
             <span class="dot active" data-index="0"></span>
@@ -58,7 +58,7 @@
     <?php include 'modal.php'; ?>
     <header class="hero-split">
         <div class="hero-left">
-            <img src="img/hero.webp" alt="Hombre con sombrero" />
+            <img src="img/hero.webp" alt="Hombre con sombrero" loading="lazy"/>
             <div class="hero-right">
             <div class="hero-text">
             <h1>THE OPEN ROAD</h1>
