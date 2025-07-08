@@ -24,18 +24,39 @@ if ($result && $result->num_rows > 0) {
 
 $imagenes = [];
 if (!empty($producto['images'])) {
-    $imagenes = json_decode($producto['images'], true);
+  $imagenes = json_decode($producto['images'], true);
+}
+
+// Obtener tallas del producto
+$tallas = [];
+$stmt = $conn->prepare("SELECT s.id, s.name FROM sizes s JOIN product_sizes ps ON s.id = ps.size_id WHERE ps.product_id = ?");
+$stmt->bind_param("i", $producto['id']);
+$stmt->execute();
+$result_tallas = $stmt->get_result();
+while ($row = $result_tallas->fetch_assoc()) {
+  $tallas[] = $row;
+}
+$stmt->close();
+
+// Obtener colores del producto
+$colores = [];
+$stmt = $conn->prepare("SELECT c.id, c.name, c.hex FROM colors c JOIN product_colors pc ON c.id = pc.color_id WHERE pc.product_id = ?");
+$stmt->bind_param("i", $producto['id']);
+$stmt->execute();
+$result_colores = $stmt->get_result();
+while ($row = $result_colores->fetch_assoc()) {
+  $colores[] = $row;
 }
 
 // Obtener productos relacionados (misma categoría, excluyendo el actual)
 $relacionados = [];
 if (!empty($producto['category'])) {
-    $cat = $conn->real_escape_string($producto['category']);
-    $sql_rel = "SELECT id, name, price, image FROM productos WHERE category = '$cat' AND id != {$producto['id']} LIMIT 4";
-    $result_rel = $conn->query($sql_rel);
-    while ($row = $result_rel->fetch_assoc()) {
-        $relacionados[] = $row;
-    }
+  $cat = $conn->real_escape_string($producto['category']);
+  $sql_rel = "SELECT id, name, price, image FROM productos WHERE category = '$cat' AND id != {$producto['id']} LIMIT 4";
+  $result_rel = $conn->query($sql_rel);
+  while ($row = $result_rel->fetch_assoc()) {
+    $relacionados[] = $row;
+  }
 }
 
 $conn->close();
@@ -43,6 +64,7 @@ $conn->close();
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <title><?= htmlspecialchars($producto['name']) ?></title>
@@ -53,95 +75,109 @@ $conn->close();
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&display=swap" rel="stylesheet">
 </head>
+
 <body>
 
-<?php include 'navbar.php'; ?>
+  <?php include 'navbar.php'; ?>
 
-<?php include 'modal.php'; ?>
+  <?php include 'modal.php'; ?>
 
-<?php include 'cart.php'; ?>
-<?php include 'checkout.php'; ?>
-<!-- Breadcrumbs -->
-<nav class="breadcrumb" aria-label="breadcrumb">
-  <ol>
-    <li><a href="index.php">Home</a></li>
-    <li><a href="hats.php">Hats</a></li>
-    <li aria-current="page"><?= htmlspecialchars($producto['name']) ?></li>
-  </ol>
-</nav>
-<button onclick="window.history.back()" class="btn-volver" style="margin: 1rem 0 0 0;">
-  &larr; Volver atrás
-</button>
+  <?php include 'cart.php'; ?>
+  <?php include 'checkout.php'; ?>
+  <!-- Breadcrumbs -->
+  <nav class="breadcrumb" aria-label="breadcrumb">
+    <ol>
+      <li><a href="index.php">Home</a></li>
+      <li><a href="hats.php">Hats</a></li>
+      <li aria-current="page"><?= htmlspecialchars($producto['name']) ?></li>
+    </ol>
+  </nav>
+  <button onclick="window.history.back()" class="btn-volver" style="margin: 1rem 0 0 0;">
+    &larr; Volver atrás
+  </button>
 
-<!-- Vista de producto -->
-<section class="producto-detalle">
-  <div class="galeria">
-    <img src="<?= htmlspecialchars($producto['image']) ?>" class="img-principal" alt="<?= htmlspecialchars($producto['name']) ?>" loading="lazy">
-    <?php if (!empty($imagenes)): ?>
-    <div class="miniaturas">
-      <?php foreach ($imagenes as $img): ?>
-        <img src="<?= htmlspecialchars($img) ?>" class="miniatura" alt="Miniatura" style="width:60px;cursor:pointer;" loading="lazy">
-      <?php endforeach; ?>
+  <!-- Vista de producto -->
+  <section class="producto-detalle">
+    <div class="galeria">
+      <img src="<?= htmlspecialchars($producto['image']) ?>" class="img-principal" alt="<?= htmlspecialchars($producto['name']) ?>" loading="lazy">
+      <?php if (!empty($imagenes)): ?>
+        <div class="miniaturas">
+          <?php foreach ($imagenes as $img): ?>
+            <img src="<?= htmlspecialchars($img) ?>" class="miniatura" alt="Miniatura" style="width:60px;cursor:pointer;" loading="lazy">
+          <?php endforeach; ?>
+        </div>
+      <?php endif; ?>
     </div>
+
+    <div class="info-producto">
+      <h1><?= htmlspecialchars($producto['name']) ?></h1>
+      <p class="precio">$<?= number_format($producto['price'], 2) ?></p>
+      <?php if (!empty($colores)): ?>
+        <div class="colores">
+          <strong>Color:</strong>
+          <?php foreach ($colores as $color): ?>
+            <label style="display:inline-block; margin-right:10px;">
+              <input type="radio" name="color" value="<?= $color['id'] ?>">
+              <span style="display:inline-block;width:18px;height:18px;border-radius:50%;background:<?= htmlspecialchars($color['hex']) ?>;border:1px solid #ccc;vertical-align:middle;"></span>
+              <?= htmlspecialchars($color['name']) ?>
+            </label>
+          <?php endforeach; ?>
+        </div>
+      <?php endif; ?>
+
+      <?php if (!empty($tallas)): ?>
+        <div class="tallas">
+          <strong>Size:</strong>
+          <?php foreach ($tallas as $talla): ?>
+            <button type="button" class="btn-talla" data-talla="<?= $talla['id'] ?>"><?= htmlspecialchars($talla['name']) ?></button>
+          <?php endforeach; ?>
+        </div>
+      <?php endif; ?>
+
+      <div class="cantidad">
+        <strong>Quantity:</strong>
+        <button class="menos">-</button>
+        <input type="number" id="cantidad" value="1" min="1">
+        <button class="mas">+</button>
+      </div>
+
+      <button class="add-to-cart-btn"
+        data-id="<?= $producto['id'] ?>"
+        data-name="<?= htmlspecialchars($producto['name']) ?>"
+        data-price="<?= $producto['price'] ?>"
+        data-image="<?= htmlspecialchars($producto['image']) ?>">
+        <i class="fas fa-cart-plus"></i> Add to Cart
+      </button>
+
+      <div class="descripcion">
+        <p><?= nl2br(htmlspecialchars($producto['description'])) ?></p>
+      </div>
+    </div>
+  </section>
+
+  <?php if (!empty($relacionados)): ?>
+    <section class="relacionados">
+      <h2>Related Products</h2>
+      <div class="card-grid">
+        <?php foreach ($relacionados as $rel): ?>
+          <a href="producto.php?id=<?= $rel['id'] ?>" class="card-item">
+            <img src="<?= htmlspecialchars($rel['image']) ?>" alt="<?= htmlspecialchars($rel['name']) ?>" loading="lazy">
+            <h3><?= htmlspecialchars($rel['name']) ?></h3>
+            <p>$<?= number_format($rel['price'], 2) ?></p>
+          </a>
+        <?php endforeach; ?>
+      </div>
+    </section>
   <?php endif; ?>
-  </div>
-
-  <div class="info-producto">
-    <h1><?= htmlspecialchars($producto['name']) ?></h1>
-    <p class="precio">$<?= number_format($producto['price'], 2) ?></p>
-    <p><strong>Color:</strong> Natural</p>
-
-    <div class="tallas">
-      <strong>Size:</strong>
-      <button>6 3/4</button>
-      <button>7</button>
-      <button>7 1/4</button>
-      <!-- Opcional: manejar tallas desde base de datos -->
-    </div>
-
-    <div class="cantidad">
-      <label>Quantity:</label>
-      <button class="menos">-</button>
-      <input type="number" id="cantidad" value="1" min="1">
-      <button class="mas">+</button>
-    </div>
-
-    <button class="add-to-cart-btn"
-      data-id="<?= $producto['id'] ?>"
-      data-name="<?= htmlspecialchars($producto['name']) ?>"
-      data-price="<?= $producto['price'] ?>"
-      data-image="<?= htmlspecialchars($producto['image']) ?>">
-      <i class="fas fa-cart-plus"></i> Add to Cart
-    </button>
-
-    <div class="descripcion">
-      <p><?= nl2br(htmlspecialchars($producto['description'])) ?></p>
-    </div>
-  </div>
-</section>
-
-<?php if (!empty($relacionados)): ?>
-<section class="relacionados">
-  <h2>Productos relacionados</h2>
-  <div class="card-grid">
-    <?php foreach ($relacionados as $rel): ?>
-      <a href="producto.php?id=<?= $rel['id'] ?>" class="card-item">
-        <img src="<?= htmlspecialchars($rel['image']) ?>" alt="<?= htmlspecialchars($rel['name']) ?>" loading="lazy">
-        <h3><?= htmlspecialchars($rel['name']) ?></h3>
-        <p>$<?= number_format($rel['price'], 2) ?></p>
-      </a>
-    <?php endforeach; ?>
-  </div>
-</section>
-<?php endif; ?>
-<?php include 'footer.php'; ?>
+  <?php include 'footer.php'; ?>
 
 
-    <script src="js/auth.js?v=<?php echo time(); ?>"></script>
-    <script src="js/index.js?v=<?php echo time(); ?>"></script>
-    <script src="js/cart.js?v=<?php echo time(); ?>"></script>
-    <script src="js/hats.js?v=<?php echo time(); ?>"></script>
-    <script src="js/product.js?v=<?php echo time(); ?>"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="js/auth.js?v=<?php echo time(); ?>"></script>
+  <script src="js/index.js?v=<?php echo time(); ?>"></script>
+  <script src="js/cart.js?v=<?php echo time(); ?>"></script>
+  <script src="js/hats.js?v=<?php echo time(); ?>"></script>
+  <script src="js/product.js?v=<?php echo time(); ?>"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
+
 </html>

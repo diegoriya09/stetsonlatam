@@ -111,7 +111,7 @@
 .tallas button:hover,
 .add-to-cart-btn:hover,
 .cantidad button:hover {
-  background: #e0e0e0;
+  background: #3c3737;
 }
 
 .precio {
@@ -178,10 +178,8 @@
 }
 .relacionados img {
   width: 100%;
-  aspect-ratio: 1/1;
+  height: 200px;
   object-fit: cover;
-  border-radius: 6px;
-  margin-bottom: 0.5rem;
 }
 
 /* Responsive para móviles */
@@ -258,4 +256,68 @@
 .btn-volver:hover {
   background: #bfa76a;
   color: #fff;
+}
+
+/* Tallas */
+.tallas {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.tallas button {
+  margin: 0 0.25rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  background: #f1eeea;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border 0.2s;
+  color: #3c3737;
+  font-weight: 500;
+  font-size: 1rem;
+  outline: none;
+}
+.tallas button.active,
+.tallas button:focus {
+  background: #bfa76a;
+  color: #fff;
+  border: 2px solid #bfa76a;
+}
+
+/* Colores */
+.colores {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.color-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid #e0e0e0;
+  background: #fff;
+  cursor: pointer;
+  transition: border 0.2s, box-shadow 0.2s;
+  position: relative;
+  outline: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.color-btn .color-circle {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+  background: var(--color, #fff);
+  display: block;
+}
+.color-btn.active,
+.color-btn:focus {
+  border: 2px solid #bfa76a;
+  box-shadow: 0 0 0 2px #bfa76a33;
+}
+.color-btn .color-circle.selected {
+  box-shadow: 0 0 0 2px #bfa76a;
 }

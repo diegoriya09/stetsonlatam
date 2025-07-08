@@ -98,41 +98,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </label><br>
             <label>Payment method:<br>
                 <select name="metodo" required>
-                <option value="">Select</option>
-                <option value="pse">PSE (Simulated)</option>
-                <option value="tarjeta">Card (Simulated)</option>
+                    <option value="">Select</option>
+                    <option value="pse">PSE (Simulated)</option>
+                    <option value="tarjeta">Card (Simulated)</option>
                 </select>
             </label><br>
             <!-- Campos de tarjeta aquí -->
             <div id="tarjeta-fields" style="display:none; margin-top:1rem;">
                 <label>Card number:<br>
-                <input type="text" name="numero_tarjeta" maxlength="19" placeholder="1234 5678 9012 3456">
+                    <input type="text" name="numero_tarjeta" maxlength="19" placeholder="1234 5678 9012 3456">
                 </label><br>
                 <label>Name on card:<br>
-                <input type="text" name="nombre_tarjeta" placeholder="Como aparece en la tarjeta">
+                    <input type="text" name="nombre_tarjeta" placeholder="Como aparece en la tarjeta">
                 </label><br>
                 <label>Expiration date:<br>
-                <input type="text" name="expiracion" maxlength="5" placeholder="MM/AA">
+                    <input type="text" name="expiracion" maxlength="5" placeholder="MM/AA">
                 </label><br>
                 <label>CVV:<br>
-                <input type="text" name="cvv" maxlength="4" placeholder="123">
+                    <input type="text" name="cvv" maxlength="4" placeholder="123">
                 </label>
             </div>
             <div id="pse-fields" style="display:none; margin-top:1rem;">
                 <label>Bank:<br>
                     <select name="banco_pse">
-                    <option value="">Select your bank</option>
-                    <option value="bancolombia">Bancolombia</option>
-                    <option value="davivienda">Davivienda</option>
-                    <option value="bbva">BBVA</option>
-                    <!-- Agrega más bancos si lo deseas -->
+                        <option value="">Select your bank</option>
+                        <option value="bancolombia">Bancolombia</option>
+                        <option value="davivienda">Davivienda</option>
+                        <option value="bbva">BBVA</option>
+                        <!-- Agrega más bancos si lo deseas -->
                     </select>
                 </label><br>
                 <label>Account type:<br>
                     <select name="tipo_cuenta_pse">
-                    <option value="">Select</option>
-                    <option value="ahorro">Savings</option>
-                    <option value="corriente">Checking</option>
+                        <option value="">Select</option>
+                        <option value="ahorro">Savings</option>
+                        <option value="corriente">Checking</option>
                     </select>
                 </label><br>
                 <label>Document number:<br>

@@ -15,6 +15,7 @@ $conn->close();
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <title>Hats | Stetson Latam</title>
@@ -24,9 +25,10 @@ $conn->close();
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&display=swap" rel="stylesheet">
 </head>
+
 <body>
   <?php include 'navbar.php'; ?>
-  <?php include 'modal.php'; ?> 
+  <?php include 'modal.php'; ?>
   <section class="section hats">
     <h2>Stetson Hats</h2>
     <div class="sort-container">
@@ -42,18 +44,18 @@ $conn->close();
       <?php if (count($productos) > 0): ?>
         <?php foreach ($productos as $producto): ?>
           <article class="card-item"
-          data-name="<?= htmlspecialchars($producto['name']) ?>"
-          data-price="<?= $producto['price'] ?>">
+            data-name="<?= htmlspecialchars($producto['name']) ?>"
+            data-price="<?= $producto['price'] ?>">
             <a href="producto.php?id=<?= $producto['id'] ?>" class="card-link">
               <img src="<?= htmlspecialchars($producto['image']) ?>" alt="<?= htmlspecialchars($producto['name']) ?>" loading="lazy">
               <h3><?= htmlspecialchars($producto['name']) ?></h3>
               <p>$<?= number_format($producto['price'], 2, ',', '.') ?></p>
             </a>
             <!-- Botón de wishlist -->
-            <button class="wishlist-btn" 
-              data-id="<?= $producto['id'] ?>" 
-              data-name="<?= htmlspecialchars($producto['name']) ?>" 
-              data-price="<?= $producto['price'] ?>" 
+            <button class="wishlist-btn"
+              data-id="<?= $producto['id'] ?>"
+              data-name="<?= htmlspecialchars($producto['name']) ?>"
+              data-price="<?= $producto['price'] ?>"
               data-image="<?= htmlspecialchars($producto['image']) ?>">
               <i class="fas fa-heart"></i>
             </button>
@@ -70,11 +72,12 @@ $conn->close();
   <?php include 'checkout.php'; ?>
 
   <?php include 'footer.php'; ?>
-    <script src="js/auth.js?v=<?php echo time(); ?>"></script>
-    <script src="js/index.js?v=<?php echo time(); ?>"></script>
-    <script src="js/cart.js?v=<?php echo time(); ?>"></script>
-    <script src="js/wishlist.js?v=<?php echo time(); ?>"></script>
-    <script src="js/hats.js?v=<?php echo time(); ?>"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="js/auth.js?v=<?php echo time(); ?>"></script>
+  <script src="js/index.js?v=<?php echo time(); ?>"></script>
+  <script src="js/cart.js?v=<?php echo time(); ?>"></script>
+  <script src="js/wishlist.js?v=<?php echo time(); ?>"></script>
+  <script src="js/hats.js?v=<?php echo time(); ?>"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
+
 </html>
