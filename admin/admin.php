@@ -8,87 +8,99 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
 ?>
 
 <style>
-body {
-    font-family: 'Segoe UI', Arial, sans-serif;
-    background: #f1eeea;
-    margin: 0;
-    padding: 0;
-}
-h1 {
-    text-align: center;
-    color: #3c3737;
-    margin-top: 30px;
-}
-form {
-    background: #fff;
-    padding: 20px 30px;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(60,55,55,0.08);
-    max-width: 500px;
-    margin: 30px auto 10px auto;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    align-items: center;
-}
-form input[type="text"],
-form input[type="number"],
-form select,
-form input[type="file"] {
-    flex: 1 1 180px;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-form button {
-    background: #3c3737;
-    color: #fff;
-    border: none;
-    padding: 10px 22px;
-    border-radius: 5px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-form button:hover {
-    background: #5a2323;
-}
-table {
-    width: 90%;
-    margin: 30px auto;
-    border-collapse: collapse;
-    background: #fff;
-    box-shadow: 0 2px 8px rgba(60,55,55,0.08);
-}
-th, td {
-    padding: 12px 10px;
-    border-bottom: 1px solid #eee;
-    text-align: center;
-}
-th {
-    background: #3c3737;
-    color: #fff;
-    font-weight: 600;
-}
-tr:hover {
-    background: #f1eeea;
-}
-tbody tr:last-child td {
-    border-bottom: none;
-}
+    body {
+        font-family: 'Segoe UI', Arial, sans-serif;
+        background: #f1eeea;
+        margin: 0;
+        padding: 0;
+    }
 
-td.description-cell {
-    max-width: 320px;
-    white-space: normal;      
-    overflow-wrap: break-word;
-    word-break: break-word;   
-    overflow: hidden;
-    text-overflow: ellipsis;  
-    font-size: 1em;
-}
-th.description-header {
-    max-width: 320px;
-}
+    h1 {
+        text-align: center;
+        color: #3c3737;
+        margin-top: 30px;
+    }
+
+    form {
+        background: #fff;
+        padding: 20px 30px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(60, 55, 55, 0.08);
+        max-width: 500px;
+        margin: 30px auto 10px auto;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        align-items: center;
+    }
+
+    form input[type="text"],
+    form input[type="number"],
+    form select,
+    form input[type="file"] {
+        flex: 1 1 180px;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    form button {
+        background: #3c3737;
+        color: #fff;
+        border: none;
+        padding: 10px 22px;
+        border-radius: 5px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+
+    form button:hover {
+        background: #5a2323;
+    }
+
+    table {
+        width: 90%;
+        margin: 30px auto;
+        border-collapse: collapse;
+        background: #fff;
+        box-shadow: 0 2px 8px rgba(60, 55, 55, 0.08);
+    }
+
+    th,
+    td {
+        padding: 12px 10px;
+        border-bottom: 1px solid #eee;
+        text-align: center;
+    }
+
+    th {
+        background: #3c3737;
+        color: #fff;
+        font-weight: 600;
+    }
+
+    tr:hover {
+        background: #f1eeea;
+    }
+
+    tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    td.description-cell {
+        max-width: 320px;
+        white-space: normal;
+        overflow-wrap: break-word;
+        word-break: break-word;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 1em;
+    }
+
+    th.description-header {
+        max-width: 320px;
+    }
 </style>
 
 <head>
@@ -120,7 +132,7 @@ th.description-header {
 <!-- Filtro por categoría -->
 <form method="GET" style="margin-top:20px;">
     <select name="category" onchange="this.form.submit()">
-        <option value="">All categories</option>
+        <option value="all">All categories</option>
         <option value="hats">Hats</option>
         <option value="caps">Caps</option>
     </select>
@@ -149,7 +161,9 @@ th.description-header {
             $stmt = $conn->prepare("SELECT id, name, description, price, category, image FROM productos WHERE category = ?");
             $stmt->bind_param("s", $category);
         } else {
-            $stmt = $conn->prepare("SELECT id, name, description, price, category, image FROM productos");
+            if (isset($_GET['category']) && $_GET['category'] === 'all') {
+                $stmt = $conn->prepare("SELECT id, name, description, price, category, image FROM productos");
+            }
         }
         $stmt->execute();
         $result = $stmt->get_result();
@@ -182,20 +196,20 @@ th.description-header {
 <script>
     const logoutBtn = document.getElementById('logout-btn');
 
-if (logoutBtn) {
-  if (localStorage.getItem('jwt')) {
-    logoutBtn.style.display = 'inline-block';
-  }
+    if (logoutBtn) {
+        if (localStorage.getItem('jwt')) {
+            logoutBtn.style.display = 'inline-block';
+        }
 
-  logoutBtn.addEventListener('click', () => {
-    localStorage.removeItem('jwt');
-    Swal.fire({
-      title: 'Closed session',
-      icon: 'info',
-      confirmButtonText: 'OK'
-    }).then(() => {
-      window.location.href = '/index.php';
-    });
-  });
-}
+        logoutBtn.addEventListener('click', () => {
+            localStorage.removeItem('jwt');
+            Swal.fire({
+                title: 'Closed session',
+                icon: 'info',
+                confirmButtonText: 'OK'
+            }).then(() => {
+                window.location.href = '/index.php';
+            });
+        });
+    }
 </script>
