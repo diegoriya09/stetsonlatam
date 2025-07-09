@@ -116,11 +116,7 @@ $conn->close();
         <div class="colores">
           <strong>Color:</strong>
           <?php foreach ($colores as $color): ?>
-            <label style="display:inline-block; margin-right:10px;">
-              <input type="radio" name="color" value="<?= $color['id'] ?>">
-              <span style="display:inline-block;width:18px;height:18px;border-radius:50%;background:<?= htmlspecialchars($color['hex']) ?>;border:1px solid #ccc;vertical-align:middle;"></span>
-              <?= htmlspecialchars($color['name']) ?>
-            </label>
+            <button class="color-btn" style="--color: <?= $color['hex'] ?>;" title="<?= $color['name'] ?>"></button>
           <?php endforeach; ?>
         </div>
       <?php endif; ?>
