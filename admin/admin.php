@@ -111,6 +111,7 @@ th.description-header {
     <select name="categoria" required>
         <option value="">Categories</option>
         <option value="hats">Hats</option>
+        <option value="caps">Caps</option>
     </select>
     <input type="file" name="imagen" accept="image/*">
     <button type="submit">Add product</button>
@@ -121,6 +122,7 @@ th.description-header {
     <select name="categoria" onchange="this.form.submit()">
         <option value="">All categories</option>
         <option value="sombreros">Hats</option>
+        <option value="cachuchas">Caps</option>
     </select>
 </form>
 
