@@ -163,6 +163,8 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
         } else {
             if (isset($_GET['category']) && $_GET['category'] === 'all') {
                 $stmt = $conn->prepare("SELECT id, name, description, price, category, image FROM productos");
+            } else {
+                $stmt = $conn->prepare("SELECT id, name, description, price, category, image FROM productos");
             }
         }
         $stmt->execute();
