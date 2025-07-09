@@ -12,8 +12,9 @@ if (empty($_SESSION['csrf_token'])) {
             <h2>Login</h2>
             <form action="php/login.php" method="POST">
                 <input type="email" name="email" placeholder="Email" required />
-                <input type="password" name="password" placeholder="Password" id="pwd" required />
-                <input type="checkbox" onclick="pwd.type = this.checked ? 'text' : 'password'" />
+                <input type="password" name="password" placeholder="Password" id="pwd" required /><input type="checkbox" onclick="pwd.type = this.checked ? 'text' : 'password'" />
+                <label for="pwd">Show Password</label>
+                <!-- Campo oculto CSRF aquí --> 
                 <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                 <button type="submit">Enter</button>
             </form>
