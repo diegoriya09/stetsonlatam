@@ -10,12 +10,14 @@
         </div>
         <ul>
             <li><a href="hats.php">Hats</a></li>
+            <li><a href="caps.php">Caps</a></li>
             <li><a href="index.php#stories">Stories</a></li>
         </ul>
     </div>
     <!-- Enlaces centrados -->
     <ul class="nav-center">
         <li><a href="hats.php">Hats</a></li>
+        <li><a href="caps.php">Caps</a></li>
         <li><a href="index.php#stories">Stories</a></li>
     </ul>
     <!-- Íconos a la derecha -->
