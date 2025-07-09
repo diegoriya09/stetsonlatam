@@ -121,8 +121,8 @@ th.description-header {
 <form method="GET" style="margin-top:20px;">
     <select name="category" onchange="this.form.submit()">
         <option value="">All categories</option>
-        <option value="sombreros">Hats</option>
-        <option value="cachuchas">Caps</option>
+        <option value="hats">Hats</option>
+        <option value="caps">Caps</option>
     </select>
 </form>
 
