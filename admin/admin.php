@@ -119,7 +119,7 @@ th.description-header {
 
 <!-- Filtro por categoría -->
 <form method="GET" style="margin-top:20px;">
-    <select name="categoria" onchange="this.form.submit()">
+    <select name="category" onchange="this.form.submit()">
         <option value="">All categories</option>
         <option value="sombreros">Hats</option>
         <option value="cachuchas">Caps</option>
