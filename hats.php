@@ -16,16 +16,24 @@ if ($result_colores && $result_colores->num_rows > 0) {
   }
 }
 
-$color_id = isset($_GET['color']) ? intval($_GET['color']) : 0;
+$color_ids = $_GET['colors'] ?? [];
 
-if ($color_id > 0) {
-  $sql = "SELECT p.* FROM productos p
+if (!empty($color_ids)) {
+  // Crear placeholders para query (?,?,?)
+  $placeholders = implode(',', array_fill(0, count($color_ids), '?'));
+
+  $sql = "SELECT DISTINCT p.* FROM productos p
           INNER JOIN product_colors pc ON p.id = pc.product_id
-          WHERE p.category = 'hats' AND pc.color_id = $color_id";
+          WHERE p.category = 'hats' AND pc.color_id IN ($placeholders)";
+
+  $stmt = $conn->prepare($sql);
+  $stmt->bind_param(str_repeat('i', count($color_ids)), ...$color_ids);
+  $stmt->execute();
+  $result = $stmt->get_result();
 } else {
   $sql = "SELECT * FROM productos WHERE category = 'hats'";
+  $result = $conn->query($sql);
 }
-$result = $conn->query($sql);
 
 $productos = [];
 if ($result && $result->num_rows > 0) {
@@ -65,22 +73,38 @@ $conn->close();
       </select>
     </div>
     <div class="color-filters" style="margin: 1rem 0;">
-      <form method="GET" style="display: inline;">
-        <div class="dropdown">
-          <button type="button" class="dropdown-toggle">
-            <?= $color_id > 0 ? 'Filter: ' . htmlspecialchars(array_filter($colores, fn($c) => $c['id'] == $color_id)[0]['name']) : 'Filter by color' ?>
-            <i class="fas fa-chevron-down"></i>
+      <form method="GET" id="color-filter-form">
+        <strong>Filter by colors:</strong><br><br>
+        <?php foreach ($colores as $color): ?>
+          <?php
+          $isSelected = in_array($color['id'], $_GET['colors'] ?? []);
+          ?>
+          <button
+            type="button"
+            class="color-filter-btn <?= $isSelected ? 'active' : '' ?>"
+            data-color-id="<?= $color['id'] ?>"
+            title="<?= htmlspecialchars($color['name']) ?>"
+            style="
+          background: <?= $color['hex'] ?>;
+          border: 2px solid #ccc;
+          border-radius: 50%;
+          width: 32px; 
+          height: 32px; 
+          margin-right: 8px;
+          cursor: pointer;
+          outline: none;
+          <?= $isSelected ? 'box-shadow: 0 0 0 3px #bfa76a;' : '' ?>
+        ">
           </button>
-          <div class="dropdown-menu">
-            <button type="submit" name="color" value="0" class="dropdown-item">All colors</button>
-            <?php foreach ($colores as $color): ?>
-              <button type="submit" name="color" value="<?= $color['id'] ?>" class="dropdown-item">
-                <span class="color-circle" style="background: <?= $color['hex'] ?>;"></span>
-                <?= htmlspecialchars($color['name']) ?>
-              </button>
-            <?php endforeach; ?>
-          </div>
-        </div>
+        <?php endforeach; ?>
+
+        <!-- Campos ocultos para enviar los colores -->
+        <div id="hidden-colors"></div>
+
+        <button type="submit" style="margin-left: 12px;">Apply Filter</button>
+        <?php if (!empty($_GET['colors'])): ?>
+          <a href="hats.php" style="margin-left: 12px; font-size: 0.9rem;">Clear filter</a>
+        <?php endif; ?>
       </form>
     </div>
     <div class="card-grid">
@@ -123,18 +147,45 @@ $conn->close();
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const toggle = document.querySelector('.dropdown-toggle');
-      const menu = document.querySelector('.dropdown-menu');
+      const buttons = document.querySelectorAll('.color-filter-btn');
+      const form = document.getElementById('color-filter-form');
+      const hiddenContainer = document.getElementById('hidden-colors');
 
-      toggle.addEventListener('click', () => {
-        menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+      let selectedColors = new Set(<?= json_encode($_GET['colors'] ?? []) ?>);
+
+      buttons.forEach(button => {
+        button.addEventListener('click', () => {
+          const colorId = button.dataset.colorId;
+
+          if (selectedColors.has(colorId)) {
+            selectedColors.delete(colorId);
+            button.classList.remove('active');
+            button.style.boxShadow = '';
+          } else {
+            selectedColors.add(colorId);
+            button.classList.add('active');
+            button.style.boxShadow = '0 0 0 3px #bfa76a';
+          }
+
+          // Actualizar campos ocultos
+          hiddenContainer.innerHTML = '';
+          selectedColors.forEach(id => {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'colors[]';
+            input.value = id;
+            hiddenContainer.appendChild(input);
+          });
+        });
       });
 
-      // Cierra el menú si haces clic fuera
-      document.addEventListener('click', (e) => {
-        if (!toggle.contains(e.target) && !menu.contains(e.target)) {
-          menu.style.display = 'none';
-        }
+      // Al cargar, rellenar hidden inputs
+      selectedColors.forEach(id => {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = 'colors[]';
+        input.value = id;
+        hiddenContainer.appendChild(input);
       });
     });
   </script>
