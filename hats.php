@@ -64,17 +64,23 @@ $conn->close();
         <option value="price-desc">Price High to Low</option>
       </select>
     </div>
-    <div class="color-filters" style="margin-top: 20px;">
-      <form method="GET">
-        <label for="color-select"><strong>Filter by color:</strong></label>
-        <select name="color" id="color-select" onchange="this.form.submit()" style="margin-left: 10px; padding: 5px;">
-          <option value="0">All colors</option>
-          <?php foreach ($colores as $color): ?>
-            <option value="<?= $color['id'] ?>" <?= $color_id == $color['id'] ? 'selected' : '' ?>>
-              <?= htmlspecialchars($color['name']) ?>
-            </option>
-          <?php endforeach; ?>
-        </select>
+    <div class="color-filters" style="margin: 1rem 0;">
+      <form method="GET" style="display: inline;">
+        <div class="dropdown">
+          <button type="button" class="dropdown-toggle">
+            <?= $color_id > 0 ? 'Filter: ' . htmlspecialchars(array_filter($colores, fn($c) => $c['id'] == $color_id)[0]['name']) : 'Filter by color' ?>
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="dropdown-menu">
+            <button type="submit" name="color" value="0" class="dropdown-item">All colors</button>
+            <?php foreach ($colores as $color): ?>
+              <button type="submit" name="color" value="<?= $color['id'] ?>" class="dropdown-item">
+                <span class="color-circle" style="background: <?= $color['hex'] ?>;"></span>
+                <?= htmlspecialchars($color['name']) ?>
+              </button>
+            <?php endforeach; ?>
+          </div>
+        </div>
       </form>
     </div>
     <div class="card-grid">
@@ -115,6 +121,23 @@ $conn->close();
   <script src="js/wishlist.js?v=<?php echo time(); ?>"></script>
   <script src="js/hats.js?v=<?php echo time(); ?>"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const toggle = document.querySelector('.dropdown-toggle');
+      const menu = document.querySelector('.dropdown-menu');
+
+      toggle.addEventListener('click', () => {
+        menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+      });
+
+      // Cierra el menú si haces clic fuera
+      document.addEventListener('click', (e) => {
+        if (!toggle.contains(e.target) && !menu.contains(e.target)) {
+          menu.style.display = 'none';
+        }
+      });
+    });
+  </script>
 </body>
 
 </html>

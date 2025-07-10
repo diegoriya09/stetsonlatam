@@ -925,11 +925,58 @@ nav.main-nav {
   color: #3F1E1F;
 }
 
-.color-filters select {
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-toggle {
+  background: #fff;
   border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 6px 10px;
-  background-color: #f1eeea;
-  color: #3c3737;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 6px;
   font-size: 1rem;
+  color: #3c3737;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 105%;
+  left: 0;
+  background: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  border-radius: 6px;
+  z-index: 1000;
+  min-width: 180px;
+}
+
+.dropdown-item {
+  padding: 8px 12px;
+  border: none;
+  background: transparent;
+  text-align: left;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  color: #3c3737;
+}
+
+.dropdown-item:hover {
+  background-color: #f8f8f8;
+}
+
+.color-circle {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1px solid #ccc;
 }
