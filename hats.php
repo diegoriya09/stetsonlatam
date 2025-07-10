@@ -1,7 +1,30 @@
 <?php
 require_once 'php/conexion.php';
 
-$sql = "SELECT * FROM productos WHERE category = 'hats'";
+// Obtener colores disponibles para sombreros
+$sql_colores = "SELECT DISTINCT c.id, c.name, c.hex 
+                FROM colors c 
+                INNER JOIN product_colors pc ON c.id = pc.color_id 
+                INNER JOIN productos p ON pc.product_id = p.id 
+                WHERE p.category = 'hats'";
+$result_colores = $conn->query($sql_colores);
+
+$colores = [];
+if ($result_colores && $result_colores->num_rows > 0) {
+  while ($row = $result_colores->fetch_assoc()) {
+    $colores[] = $row;
+  }
+}
+
+$color_id = isset($_GET['color']) ? intval($_GET['color']) : 0;
+
+if ($color_id > 0) {
+  $sql = "SELECT p.* FROM productos p
+          INNER JOIN product_colors pc ON p.id = pc.product_id
+          WHERE p.category = 'hats' AND pc.color_id = $color_id";
+} else {
+  $sql = "SELECT * FROM productos WHERE category = 'hats'";
+}
 $result = $conn->query($sql);
 
 $productos = [];
@@ -10,6 +33,7 @@ if ($result && $result->num_rows > 0) {
     $productos[] = $row;
   }
 }
+
 $conn->close();
 ?>
 
@@ -39,6 +63,27 @@ $conn->close();
         <option value="price-asc">Price Low to High</option>
         <option value="price-desc">Price High to Low</option>
       </select>
+    </div>
+    <div class="color-filters">
+      <strong>Filter by color:</strong>
+      <form method="GET" style="margin-top:10px;">
+        <?php foreach ($colores as $color): ?>
+          <button type="submit" name="color" value="<?= $color['id'] ?>"
+            style="background: <?= $color['hex'] ?>; 
+               border: 2px solid #ccc;
+               border-radius: 50%; 
+               width: 30px; height: 30px; 
+               margin-right: 8px;
+               cursor: pointer;
+               outline: none;
+               <?= $color_id == $color['id'] ? 'box-shadow: 0 0 0 3px #bfa76a;' : '' ?>"
+            title="<?= htmlspecialchars($color['name']) ?>">
+          </button>
+        <?php endforeach; ?>
+        <?php if ($color_id > 0): ?>
+          <a href="hats.php" style="margin-left: 12px; font-size: 0.9rem;">Clear filter</a>
+        <?php endif; ?>
+      </form>
     </div>
     <div class="card-grid">
       <?php if (count($productos) > 0): ?>
