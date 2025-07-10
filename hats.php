@@ -72,39 +72,31 @@ $conn->close();
         <option value="price-desc">Price High to Low</option>
       </select>
     </div>
-    <div class="color-filters" style="margin: 1rem 0;">
+    <div class="multi-color-dropdown">
       <form method="GET" id="color-filter-form">
-        <strong>Filter by colors:</strong><br><br>
-        <?php foreach ($colores as $color): ?>
-          <?php
-          $isSelected = in_array($color['id'], $_GET['colors'] ?? []);
+        <button type="button" class="dropdown-toggle">
+          Filter by colors <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="dropdown-menu">
+          <?php foreach ($colores as $color):
+            $selected = in_array($color['id'], $color_ids);
           ?>
-          <button
-            type="button"
-            class="color-filter-btn <?= $isSelected ? 'active' : '' ?>"
-            data-color-id="<?= $color['id'] ?>"
-            title="<?= htmlspecialchars($color['name']) ?>"
-            style="
-          background: <?= $color['hex'] ?>;
-          border: 2px solid #ccc;
-          border-radius: 50%;
-          width: 32px; 
-          height: 32px; 
-          margin-right: 8px;
-          cursor: pointer;
-          outline: none;
-          <?= $isSelected ? 'box-shadow: 0 0 0 3px #bfa76a;' : '' ?>
-        ">
-          </button>
-        <?php endforeach; ?>
-
-        <!-- Campos ocultos para enviar los colores -->
-        <div id="hidden-colors"></div>
-
-        <button type="submit" style="margin-left: 12px;">Apply Filter</button>
-        <?php if (!empty($_GET['colors'])): ?>
-          <a href="hats.php" style="margin-left: 12px; font-size: 0.9rem;">Clear filter</a>
-        <?php endif; ?>
+            <label class="dropdown-item">
+              <input type="checkbox"
+                name="colors[]"
+                value="<?= $color['id'] ?>"
+                <?= $selected ? 'checked' : '' ?>>
+              <span class="color-circle" style="background: <?= $color['hex'] ?>;"></span>
+              <?= htmlspecialchars($color['name']) ?>
+            </label>
+          <?php endforeach; ?>
+          <div style="margin-top:10px;">
+            <button type="submit" class="apply-btn">Apply Filter</button>
+            <?php if (!empty($color_ids)): ?>
+              <a href="hats.php" class="clear-filter">Clear</a>
+            <?php endif; ?>
+          </div>
+        </div>
       </form>
     </div>
     <div class="card-grid">
@@ -147,45 +139,18 @@ $conn->close();
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const buttons = document.querySelectorAll('.color-filter-btn');
-      const form = document.getElementById('color-filter-form');
-      const hiddenContainer = document.getElementById('hidden-colors');
+      const dropdown = document.querySelector('.multi-color-dropdown');
+      const toggleBtn = dropdown.querySelector('.dropdown-toggle');
 
-      let selectedColors = new Set(<?= json_encode($_GET['colors'] ?? []) ?>);
-
-      buttons.forEach(button => {
-        button.addEventListener('click', () => {
-          const colorId = button.dataset.colorId;
-
-          if (selectedColors.has(colorId)) {
-            selectedColors.delete(colorId);
-            button.classList.remove('active');
-            button.style.boxShadow = '';
-          } else {
-            selectedColors.add(colorId);
-            button.classList.add('active');
-            button.style.boxShadow = '0 0 0 3px #bfa76a';
-          }
-
-          // Actualizar campos ocultos
-          hiddenContainer.innerHTML = '';
-          selectedColors.forEach(id => {
-            const input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = 'colors[]';
-            input.value = id;
-            hiddenContainer.appendChild(input);
-          });
-        });
+      toggleBtn.addEventListener('click', () => {
+        dropdown.classList.toggle('open');
       });
 
-      // Al cargar, rellenar hidden inputs
-      selectedColors.forEach(id => {
-        const input = document.createElement('input');
-        input.type = 'hidden';
-        input.name = 'colors[]';
-        input.value = id;
-        hiddenContainer.appendChild(input);
+      // Cerrar si se hace clic fuera
+      document.addEventListener('click', (e) => {
+        if (!dropdown.contains(e.target)) {
+          dropdown.classList.remove('open');
+        }
       });
     });
   </script>
