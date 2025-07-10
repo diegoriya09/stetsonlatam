@@ -5,6 +5,10 @@
   font-style: normal;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 .producto-detalle {
   display: flex;
   gap: 2rem; /* Espacio entre imagen e info */
