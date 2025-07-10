@@ -924,3 +924,12 @@ nav.main-nav {
 .close-modal:hover {
   color: #3F1E1F;
 }
+
+.color-filters select {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 6px 10px;
+  background-color: #f1eeea;
+  color: #3c3737;
+  font-size: 1rem;
+}

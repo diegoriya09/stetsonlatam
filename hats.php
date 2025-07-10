@@ -64,25 +64,17 @@ $conn->close();
         <option value="price-desc">Price High to Low</option>
       </select>
     </div>
-    <div class="color-filters">
-      <strong>Filter by color:</strong>
-      <form method="GET" style="margin-top:10px;">
-        <?php foreach ($colores as $color): ?>
-          <button type="submit" name="color" value="<?= $color['id'] ?>"
-            style="background: <?= $color['hex'] ?>; 
-               border: 2px solid #ccc;
-               border-radius: 50%; 
-               width: 30px; height: 30px; 
-               margin-right: 8px;
-               cursor: pointer;
-               outline: none;
-               <?= $color_id == $color['id'] ? 'box-shadow: 0 0 0 3px #bfa76a;' : '' ?>"
-            title="<?= htmlspecialchars($color['name']) ?>">
-          </button>
-        <?php endforeach; ?>
-        <?php if ($color_id > 0): ?>
-          <a href="hats.php" style="margin-left: 12px; font-size: 0.9rem;">Clear filter</a>
-        <?php endif; ?>
+    <div class="color-filters" style="margin-top: 20px;">
+      <form method="GET">
+        <label for="color-select"><strong>Filter by color:</strong></label>
+        <select name="color" id="color-select" onchange="this.form.submit()" style="margin-left: 10px; padding: 5px;">
+          <option value="0">All colors</option>
+          <?php foreach ($colores as $color): ?>
+            <option value="<?= $color['id'] ?>" <?= $color_id == $color['id'] ? 'selected' : '' ?>>
+              <?= htmlspecialchars($color['name']) ?>
+            </option>
+          <?php endforeach; ?>
+        </select>
       </form>
     </div>
     <div class="card-grid">
