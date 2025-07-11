@@ -108,14 +108,17 @@ $conn->close();
           <?php foreach ($colores as $color):
             $selected = in_array($color['id'], $color_ids);
           ?>
-            <label class="dropdown-item">
+            <label class="dropdown-item<?= $selected ? ' selected' : '' ?>">
               <input type="checkbox"
                 name="colors[]"
                 value="<?= $color['id'] ?>"
-                <?= $selected ? 'checked' : '' ?>>
+                <?= $selected ? 'checked' : '' ?> >
               <span class="color-circle" style="background: <?= $color['hex'] ?>;"></span>
               <?= htmlspecialchars($color['name']) ?>
             </label>
+          <?php endforeach; ?>
+          <?php foreach ($talla_ids as $tid): ?>
+            <input type="hidden" name="sizes[]" value="<?= htmlspecialchars($tid) ?>">
           <?php endforeach; ?>
           <div style="margin-top:10px;">
             <button type="submit" class="apply-btn">Apply Filter</button>
@@ -135,13 +138,16 @@ $conn->close();
           <?php foreach ($tallas as $talla):
             $selected = in_array($talla['id'], $talla_ids);
           ?>
-            <label class="dropdown-item">
+            <label class="dropdown-item<?= $selected ? ' selected' : '' ?>">
               <input type="checkbox"
                 name="sizes[]"
                 value="<?= $talla['id'] ?>"
-                <?= $selected ? 'checked' : '' ?>>
+                <?= $selected ? 'checked' : '' ?> >
               <?= htmlspecialchars($talla['name']) ?>
             </label>
+          <?php endforeach; ?>
+          <?php foreach ($color_ids as $cid): ?>
+            <input type="hidden" name="colors[]" value="<?= htmlspecialchars($cid) ?>">
           <?php endforeach; ?>
           <div style="margin-top:10px;">
             <button type="submit" class="apply-btn">Apply Filter</button>
