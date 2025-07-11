@@ -197,10 +197,6 @@ $conn->close();
           dropdown.classList.remove('open');
         }
       });
-    });
-  </script>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
       const dropdowns = document.querySelectorAll('.multi-color-dropdown, .multi-size-dropdown');
 
       dropdowns.forEach(dropdown => {
