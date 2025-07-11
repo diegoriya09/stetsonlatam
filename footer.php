@@ -3,7 +3,7 @@
         <div class="footer-column">
             <h4>CUSTOMER SERVICE</h4>
             <ul>
-                <li><a href="#">Contact Us</a></li>
+                <li><a href="contacto.php">Contact Us</a></li>
                 <li><a href="#">Shipping</a></li>
                 <li><a href="#">Returns & Exchanges</a></li>
                 <li><a href="#">Order Status</a></li>
