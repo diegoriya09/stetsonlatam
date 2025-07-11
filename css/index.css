@@ -1002,6 +1002,12 @@ nav.main-nav {
   cursor: pointer;
 }
 
+.multi-size-dropdown {
+  position: relative;
+  display: inline-block;
+  margin-left: 1rem;
+}
+
 /* Contact Section */
 .contacto {
   background: #faf9f6;
