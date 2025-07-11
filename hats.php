@@ -184,30 +184,20 @@ $conn->close();
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const dropdown = document.querySelector('.multi-color-dropdown');
-      const toggleBtn = dropdown.querySelector('.dropdown-toggle');
-
-      toggleBtn.addEventListener('click', () => {
-        dropdown.classList.toggle('open');
-      });
-
-      // Cerrar si se hace clic fuera
-      document.addEventListener('click', (e) => {
-        if (!dropdown.contains(e.target)) {
-          dropdown.classList.remove('open');
-        }
-      });
       const dropdowns = document.querySelectorAll('.multi-color-dropdown, .multi-size-dropdown');
 
       dropdowns.forEach(dropdown => {
         const toggle = dropdown.querySelector('.dropdown-toggle');
-
-        toggle.addEventListener('click', () => {
+        if (!toggle) return;
+        toggle.addEventListener('click', (e) => {
+          e.stopPropagation();
+          // Cierra otros dropdowns
           dropdowns.forEach(d => d !== dropdown && d.classList.remove('open'));
           dropdown.classList.toggle('open');
         });
       });
 
+      // Cerrar todos los dropdowns si se hace clic fuera
       document.addEventListener('click', (e) => {
         dropdowns.forEach(dropdown => {
           if (!dropdown.contains(e.target)) {
