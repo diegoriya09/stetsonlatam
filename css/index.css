@@ -962,6 +962,13 @@ nav.main-nav {
   display: block;
 }
 
+.multi-size-dropdown .dropdown-menu {
+  display: none;
+}
+.multi-size-dropdown.open .dropdown-menu {
+  display: block;
+}
+
 .dropdown-item {
   display: flex;
   align-items: center;
