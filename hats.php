@@ -127,22 +127,30 @@ $conn->close();
       </form>
     </div>
     <div class="multi-size-dropdown">
-      <button type="button" class="dropdown-toggle">
-        Filter by sizes <i class="fas fa-chevron-down"></i>
-      </button>
-      <div class="dropdown-menu">
-        <?php foreach ($tallas as $talla):
-          $selected = in_array($talla['id'], $talla_ids);
-        ?>
-          <label class="dropdown-item">
-            <input type="checkbox"
-              name="sizes[]"
-              value="<?= $talla['id'] ?>"
-              <?= $selected ? 'checked' : '' ?>>
-            <?= htmlspecialchars($talla['name']) ?>
-          </label>
-        <?php endforeach; ?>
-      </div>
+      <form method="GET" id="size-filter-form">
+        <button type="button" class="dropdown-toggle">
+          Filter by sizes <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="dropdown-menu">
+          <?php foreach ($tallas as $talla):
+            $selected = in_array($talla['id'], $talla_ids);
+          ?>
+            <label class="dropdown-item">
+              <input type="checkbox"
+                name="sizes[]"
+                value="<?= $talla['id'] ?>"
+                <?= $selected ? 'checked' : '' ?>>
+              <?= htmlspecialchars($talla['name']) ?>
+            </label>
+          <?php endforeach; ?>
+          <div style="margin-top:10px;">
+            <button type="submit" class="apply-btn">Apply Filter</button>
+            <?php if (!empty($talla_ids)): ?>
+              <a href="hats.php" class="clear-filter">Clear</a>
+            <?php endif; ?>
+          </div>
+        </div>
+      </form>
     </div>
     <div class="card-grid">
       <?php if (count($productos) > 0): ?>
