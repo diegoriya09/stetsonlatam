@@ -2,7 +2,7 @@
 // Si necesitas código PHP aquí, colócalo antes del HTML
 ?>
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en" prefix="schema: http://schema.org/">
 
 <head>
    <meta charset="UTF-8">

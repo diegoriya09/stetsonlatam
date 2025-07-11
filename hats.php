@@ -46,7 +46,7 @@ $conn->close();
 ?>
 
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en" prefix="schema: http://schema.org/">
 
 <head>
   <meta charset="UTF-8">
