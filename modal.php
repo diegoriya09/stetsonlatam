@@ -62,11 +62,15 @@ document.addEventListener('DOMContentLoaded', function() {
         if (toggle && input) {
             toggle.innerHTML = eyeIcons.open;
             toggle.style.transition = 'color 0.2s';
+            toggle.addEventListener('mousedown', function(e) {
+                e.preventDefault(); // Evita perder el foco
+            });
             toggle.addEventListener('click', function() {
                 const isVisible = input.type === 'text';
                 input.type = isVisible ? 'password' : 'text';
                 toggle.innerHTML = isVisible ? eyeIcons.open : eyeIcons.closed;
                 toggle.classList.toggle('eye-closed', !isVisible);
+                input.focus(); // Mantiene el foco en el input
             });
         }
     }
