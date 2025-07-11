@@ -19,14 +19,14 @@
 
    <section class="contacto">
       <h1>Contact us</h1>
-      <p>Email: contacto@stetsonlatam.com</p>
-      <p>Phone: +52 123 456 7890</p>
-      <p>Address: Calle Ejemplo 123, Ciudad, País</p>
+      <p><strong>Email:</strong> contacto@stetsonlatam.com</p>
+      <p><strong>Phone:</strong> +52 123 456 7890</p>
+      <p><strong>Address:</strong> Calle Ejemplo 123, Ciudad, País</p>
       <form id="contact-form" action="php/contact/send_contact.php" method="POST" style="max-width:400px;margin:auto;">
-         <label>Name:<input type="text" name="nombre" required></label><br>
-         <label>Email:<input type="email" name="correo" required></label><br>
-         <label>Subject:<input type="text" name="asunto" required></label><br>
-         <label>Message:<textarea name="mensaje" required></textarea></label><br>
+         <input type="text" name="nombre" placeholder="Name" required style="margin-bottom:10px;">
+         <input type="email" name="correo" placeholder="Email" required style="margin-bottom:10px;">
+         <input type="text" name="asunto" placeholder="Subject" required style="margin-bottom:10px;">
+         <textarea name="mensaje" placeholder="Message" required style="margin-bottom:10px;"></textarea>
          <button type="submit">Send</button>
       </form>
       <div class="mapa">
