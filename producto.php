@@ -117,7 +117,7 @@ $conn->close();
         <div class="colores">
           <strong>Color:</strong>
           <?php foreach ($colores as $color): ?>
-            <button type="button" class="color-btn" data-color-id="<?= $color['id'] ?>" style="--color: <?= $color['hex'] ?>;" title="<?= $color['name'] ?>"></button>
+            <button type="button" class="color-btn" data-color="<?= $color['name'] ?>" style="--color: <?= $color['hex'] ?>;" title="<?= $color['name'] ?>"></button>
           <?php endforeach; ?>
         </div>
       <?php endif; ?>
@@ -126,7 +126,7 @@ $conn->close();
         <div class="tallas">
           <strong>Size:</strong>
           <?php foreach ($tallas as $talla): ?>
-            <button type="button" class="btn-talla" data-talla-id="<?= $talla['id'] ?>"><?= htmlspecialchars($talla['name']) ?></button>
+            <button type="button" class="size-btn" data-size="<?= $talla['name'] ?>"><?= htmlspecialchars($talla['name']) ?></button>
           <?php endforeach; ?>
         </div>
       <?php endif; ?>
@@ -146,6 +146,50 @@ $conn->close();
         <i class="fas fa-cart-plus"></i> Add to Cart
       </button>
 
+  <script>
+    // Selección de color y talla
+    document.addEventListener('DOMContentLoaded', function() {
+      let selectedColor = null;
+      let selectedSize = null;
+
+      // Color
+      document.querySelectorAll('.color-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('selected'));
+          this.classList.add('selected');
+          selectedColor = this.getAttribute('data-color');
+        });
+      });
+      // Talla
+      document.querySelectorAll('.size-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'));
+          this.classList.add('selected');
+          selectedSize = this.getAttribute('data-size');
+        });
+      });
+
+      // Interceptar el add-to-cart
+      const addToCartBtn = document.querySelector('.add-to-cart-btn');
+      if (addToCartBtn) {
+        addToCartBtn.addEventListener('click', function(e) {
+          if (document.querySelectorAll('.color-btn').length && !selectedColor) {
+            Swal.fire({ icon: 'warning', text: 'Please select a color.' });
+            e.preventDefault();
+            return;
+          }
+          if (document.querySelectorAll('.size-btn').length && !selectedSize) {
+            Swal.fire({ icon: 'warning', text: 'Please select a size.' });
+            e.preventDefault();
+            return;
+          }
+          // Agregar los datos al botón para que cart.js los lea
+          addToCartBtn.dataset.color = selectedColor || '';
+          addToCartBtn.dataset.size = selectedSize || '';
+        });
+      }
+    });
+  </script>
       <div class="descripcion">
         <p><?= nl2br(htmlspecialchars($producto['description'])) ?></p>
       </div>
