@@ -40,9 +40,10 @@ try {
 }
 
 try {
-    $sql = "SELECT c.producto_id AS id, p.name, p.price, p.image, c.quantity 
+    $sql = "SELECT c.producto_id AS id, p.name, p.price, p.image, c.quantity, c.color, c.size, co.hex 
             FROM cart c 
             JOIN productos p ON c.producto_id = p.id 
+            LEFT JOIN colors co ON co.name = c.color 
             WHERE c.users_id = ?";
 
     $stmt = $conn->prepare($sql);

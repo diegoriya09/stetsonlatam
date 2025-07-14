@@ -39,8 +39,11 @@ try {
 
 // Obtener datos del body
 $data = json_decode(file_get_contents('php://input'), true);
+
 $producto_id = $data['producto_id'] ?? null;
 $quantity = $data['quantity'] ?? 1;
+$color = isset($data['color']) ? $data['color'] : null;
+$size = isset($data['size']) ? $data['size'] : null;
 
 if (!$producto_id || $quantity < 1) {
     http_response_code(400);
@@ -48,10 +51,11 @@ if (!$producto_id || $quantity < 1) {
     exit;
 }
 
-// Verificar si el producto ya está en el carrito
-$sql_check = "SELECT quantity FROM cart WHERE users_id = ? AND producto_id = ?";
+// Verificar si el producto ya está en el carrito considerando color y talla
+$sql_check = "SELECT quantity FROM cart WHERE users_id = ? AND producto_id = ? AND 
+    (color <=> ? OR (color IS NULL AND ? IS NULL)) AND (size <=> ? OR (size IS NULL AND ? IS NULL))";
 $stmt_check = $conn->prepare($sql_check);
-$stmt_check->bind_param("ii", $user_id, $producto_id);
+$stmt_check->bind_param("iissss", $user_id, $producto_id, $color, $color, $size, $size);
 $stmt_check->execute();
 $result = $stmt_check->get_result();
 
@@ -60,18 +64,19 @@ if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
     $new_quantity = $row['quantity'] + $quantity;
 
-    $sql_update = "UPDATE cart SET quantity = ? WHERE users_id = ? AND producto_id = ?";
+    $sql_update = "UPDATE cart SET quantity = ? WHERE users_id = ? AND producto_id = ? AND 
+        (color <=> ? OR (color IS NULL AND ? IS NULL)) AND (size <=> ? OR (size IS NULL AND ? IS NULL))";
     $stmt_update = $conn->prepare($sql_update);
-    $stmt_update->bind_param("iii", $new_quantity, $user_id, $producto_id);
+    $stmt_update->bind_param("iiissss", $new_quantity, $user_id, $producto_id, $color, $color, $size, $size);
     $stmt_update->execute();
     $stmt_update->close();
 
     echo json_encode(['success' => true, 'message' => 'Cantidad actualizada']);
 } else {
     // No existe, insertar
-    $sql_insert = "INSERT INTO cart (users_id, producto_id, quantity) VALUES (?, ?, ?)";
+    $sql_insert = "INSERT INTO cart (users_id, producto_id, quantity, color, size) VALUES (?, ?, ?, ?, ?)";
     $stmt_insert = $conn->prepare($sql_insert);
-    $stmt_insert->bind_param("iii", $user_id, $producto_id, $quantity);
+    $stmt_insert->bind_param("iiiss", $user_id, $producto_id, $quantity, $color, $size);
     $stmt_insert->execute();
     $stmt_insert->close();
 

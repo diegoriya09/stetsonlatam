@@ -38,22 +38,32 @@ function handleAddToCart(e) {
   const inputCantidad = button.closest('.info-producto').querySelector('#cantidad');
   const quantity = inputCantidad ? parseInt(inputCantidad.value, 10) : 1;
 
+  // Obtener color y talla seleccionados de los data attributes del botón
+  const color = button.dataset.color || null;
+  const size = button.dataset.size || null;
+
   const producto = {
     id: parseInt(button.dataset.id),
     name: button.dataset.name,
     price: parseFloat(button.dataset.price),
     image: button.dataset.image,
-    quantity: quantity
+    quantity: quantity,
+    ...(color && { color }),
+    ...(size && { size })
   };
 
   if (jwt) {
+    // Enviar color y talla si existen
+    const body = { producto_id: producto.id, quantity: quantity };
+    if (color) body.color = color;
+    if (size) body.size = size;
     fetch('php/cart/add_to_cart.php', {
       method: 'POST',
       headers: {
         'Authorization': 'Bearer ' + jwt,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ producto_id: producto.id, quantity: quantity })
+      body: JSON.stringify(body)
     })
       .then(res => res.json())
       .then(data => {
@@ -65,7 +75,8 @@ function handleAddToCart(e) {
       });
   } else {
     let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-    const index = carrito.findIndex(p => p.id === producto.id);
+    // Buscar producto por id, color y talla (si existen)
+    const index = carrito.findIndex(p => p.id === producto.id && (!color || p.color === color) && (!size || p.size === size));
     if (index !== -1) {
       carrito[index].quantity += quantity;
     } else {
@@ -133,12 +144,30 @@ document.addEventListener('click', function (e) {
 });
 
 function renderItem(id, name, price, image, quantity) {
+  // Obtener color, hex y talla si existen en el objeto (compatibilidad con backend y localStorage)
+  let color = arguments.length > 6 ? arguments[6] : undefined;
+  let size = arguments.length > 7 ? arguments[7] : undefined;
+  let hex = arguments.length > 8 ? arguments[8] : undefined;
+  // Si se llama con un objeto, usar p.color, p.size y p.hex
+  if (typeof id === 'object') {
+    const p = id;
+    id = p.id;
+    name = p.name;
+    price = p.price;
+    image = p.image;
+    quantity = p.quantity;
+    color = p.color;
+    size = p.size;
+    hex = p.hex;
+  }
   return `
     <div class="carrito-item">
       <img src="${image}" alt="${name}" class="carrito-img" loading="lazy">
       <div class="carrito-info">
         <h4>${name}</h4>
         <p>$${price.toLocaleString()} x ${quantity}</p>
+        ${color ? `<p><strong>Color:</strong> ${color} ${hex ? `<span style='display:inline-block;width:18px;height:18px;border-radius:50%;background:${hex};border:1px solid #ccc;margin-left:6px;vertical-align:middle;'></span>` : ''}</p>` : ''}
+        ${size ? `<p><strong>Talla:</strong> ${size}</p>` : ''}
         <a class="remove-btn" data-id="${id}"><i class="fas fa-trash-alt"></i></a>
       </div>
     </div>`;
