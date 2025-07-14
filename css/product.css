@@ -94,8 +94,8 @@ html {
 .tallas button {
     margin: 0 0.25rem;
   padding: 0.5rem 1rem;
-  border: none;
-  background: #f1eeea;
+  border: 1px solid #3c3737;
+  background: #fff;
   border-radius: 4px;
   cursor: pointer;
   transition: background 0.2s;
