@@ -30,15 +30,17 @@ try {
 
 $data = json_decode(file_get_contents('php://input'), true);
 $producto_id = $data['producto_id'] ?? null;
+$color_id = $data['color_id'] ?? null;
+$size_id = $data['size_id'] ?? null;
 
-if (!$producto_id) {
-    echo json_encode(['success' => false, 'message' => 'ID faltante']);
+if (!$producto_id || !$color_id || !$size_id) {
+    echo json_encode(['success' => false, 'message' => 'Datos faltantes']);
     exit;
 }
 
-$sql = "DELETE FROM cart WHERE users_id = ? AND producto_id = ?";
+$sql = "DELETE FROM cart WHERE users_id = ? AND producto_id = ? AND color_id = ? AND size_id = ?";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("ii", $user_id, $producto_id);
+$stmt->bind_param("iiii", $user_id, $producto_id, $color_id, $size_id);
 
 if ($stmt->execute()) {
     echo json_encode(['success' => true]);
