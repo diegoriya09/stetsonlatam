@@ -165,9 +165,9 @@ function renderItem(product) {
       <div class="carrito-info">
         <h4>${name}</h4>
         <p>$${price.toLocaleString()} x ${quantity}</p>
-        ${color ? `<p><strong>Color:</strong> ${color} ${hex ? `<span style='display:inline-block;width:18px;height:18px;border-radius:50%;background:${hex};border:1px solid #ccc;margin-left:6px;vertical-align:middle;'></span>` : ''}</p>` : ''}
-        ${size ? `<p><strong>Talla:</strong> ${size}</p>` : ''}
-        <a class="remove-btn" data-id="${id}"><i class="fas fa-trash-alt"></i></a>
+        ${color ? `<p><strong>Color:</strong> ${color} ${hex ? `<span style="display:inline-block;width:18px;height:18px;border-radius:50%;background:${hex};border:1px solid #ccc;margin-left:6px;vertical-align:middle;"></span>` : ''}</p>` : ''}
+        ${size ? `<p><strong>Size:</strong> ${size}</p>` : ''}
+        <a class="remove-btn" data-id="${id}" data-color="${color}" data-size="${size}"><i class="fas fa-trash-alt"></i></a>
       </div>
     </div>`;
 }
