@@ -146,50 +146,55 @@ $conn->close();
         <i class="fas fa-cart-plus"></i> Add to Cart
       </button>
 
-  <script>
-    // Selección de color y talla
-    document.addEventListener('DOMContentLoaded', function() {
-      let selectedColor = null;
-      let selectedSize = null;
+      <script>
+        // Selección de color y talla
+        document.addEventListener('DOMContentLoaded', function() {
+          let selectedColor = null;
+          let selectedSize = null;
+          const addToCartBtn = document.querySelector('.add-to-cart-btn');
 
-      // Color
-      document.querySelectorAll('.color-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-          document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('selected'));
-          this.classList.add('selected');
-          selectedColor = this.getAttribute('data-color');
-        });
-      });
-      // Talla
-      document.querySelectorAll('.size-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-          document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'));
-          this.classList.add('selected');
-          selectedSize = this.getAttribute('data-size');
-        });
-      });
+          // Color
+          document.querySelectorAll('.color-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+              document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('selected'));
+              this.classList.add('selected');
+              selectedColor = this.getAttribute('data-color');
+              if (addToCartBtn) addToCartBtn.dataset.color = selectedColor || '';
+            });
+          });
+          // Talla
+          document.querySelectorAll('.size-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+              document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'));
+              this.classList.add('selected');
+              selectedSize = this.getAttribute('data-size');
+              if (addToCartBtn) addToCartBtn.dataset.size = selectedSize || '';
+            });
+          });
 
-      // Interceptar el add-to-cart
-      const addToCartBtn = document.querySelector('.add-to-cart-btn');
-      if (addToCartBtn) {
-        addToCartBtn.addEventListener('click', function(e) {
-          if (document.querySelectorAll('.color-btn').length && !selectedColor) {
-            Swal.fire({ icon: 'warning', text: 'Please select a color.' });
-            e.preventDefault();
-            return;
+          // Interceptar el add-to-cart
+          if (addToCartBtn) {
+            addToCartBtn.addEventListener('click', function(e) {
+              if (document.querySelectorAll('.color-btn').length && !selectedColor) {
+                Swal.fire({
+                  icon: 'warning',
+                  text: 'Please select a color.'
+                });
+                e.preventDefault();
+                return;
+              }
+              if (document.querySelectorAll('.size-btn').length && !selectedSize) {
+                Swal.fire({
+                  icon: 'warning',
+                  text: 'Please select a size.'
+                });
+                e.preventDefault();
+                return;
+              }
+            });
           }
-          if (document.querySelectorAll('.size-btn').length && !selectedSize) {
-            Swal.fire({ icon: 'warning', text: 'Please select a size.' });
-            e.preventDefault();
-            return;
-          }
-          // Agregar los datos al botón para que cart.js los lea
-          addToCartBtn.dataset.color = selectedColor || '';
-          addToCartBtn.dataset.size = selectedSize || '';
         });
-      }
-    });
-  </script>
+      </script>
       <div class="descripcion">
         <p><?= nl2br(htmlspecialchars($producto['description'])) ?></p>
       </div>
