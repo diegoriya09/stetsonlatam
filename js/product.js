@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
     btn.addEventListener('click', function() {
       document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('selected'));
       this.classList.add('selected');
-      selectedColor = this.dataset.color;
+      selectedColor = this.getAttribute('data-color') || null;
       // Actualizar el botón de añadir al carrito
       const addBtn = document.querySelector('.add-to-cart-btn');
       if (addBtn) addBtn.dataset.color = selectedColor;
