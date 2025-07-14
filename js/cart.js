@@ -30,7 +30,7 @@ function setupAddToCartButtons() {
 }
 
 function handleAddToCart(e) {
-  
+
   const button = e.currentTarget;
   const jwt = localStorage.getItem("jwt");
 

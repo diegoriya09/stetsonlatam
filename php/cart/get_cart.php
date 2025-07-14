@@ -40,10 +40,20 @@ try {
 }
 
 try {
-    $sql = "SELECT c.producto_id AS id, p.name, p.price, p.image, c.quantity, c.color, c.size, COALESCE(co.hex, '') as hex 
+    // Ajustar la consulta para usar color_id y size_id
+    $sql = "SELECT 
+                c.producto_id AS id, 
+                p.name, 
+                p.price, 
+                p.image, 
+                c.quantity, 
+                co.name AS color, 
+                co.hex, 
+                s.name AS size 
             FROM cart c 
             JOIN productos p ON c.producto_id = p.id 
-            LEFT JOIN colors co ON co.name = c.color 
+            LEFT JOIN colors co ON co.id = c.color_id 
+            LEFT JOIN sizes s ON s.id = c.size_id 
             WHERE c.users_id = ?";
 
     $stmt = $conn->prepare($sql);
