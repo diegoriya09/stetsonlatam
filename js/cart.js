@@ -136,8 +136,8 @@ function loadCart(isLoggedIn) {
 document.addEventListener('click', function (e) {
   if (e.target.classList.contains('remove-btn')) {
     const id = parseInt(e.target.dataset.id);
-    const color = e.target.dataset.color; // Obtener color del atributo data-color
-    const size = e.target.dataset.size;  // Obtener talla del atributo data-size
+    const color = e.target.dataset.color_id; // Obtener color del atributo data-color
+    const size = e.target.dataset.size_id;  // Obtener talla del atributo data-size
     const jwt = localStorage.getItem("jwt");
 
     if (jwt) {
@@ -151,7 +151,7 @@ document.addEventListener('click', function (e) {
       }).then(() => loadCart(true));
     } else {
       let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-      carrito = carrito.filter(p => !(p.id === id && p.color === color && p.size === size)); // Filtrar por id, color y talla
+      carrito = carrito.filter(p => !(p.id === id && p.color_id === color && p.size_id === size)); // Filtrar por id, color y talla
       localStorage.setItem('carrito', JSON.stringify(carrito));
       loadCart(false);
     }
