@@ -158,16 +158,17 @@ $conn->close();
             btn.addEventListener('click', function() {
               document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('selected'));
               this.classList.add('selected');
-              selectedColor = this.getAttribute('data-color');
+              selectedColor = this.getAttribute('data-color-id'); // Usar el ID del color
               if (addToCartBtn) addToCartBtn.dataset.color = selectedColor || '';
             });
           });
+
           // Talla
           document.querySelectorAll('.size-btn').forEach(btn => {
             btn.addEventListener('click', function() {
               document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'));
               this.classList.add('selected');
-              selectedSize = this.getAttribute('data-size');
+              selectedSize = this.getAttribute('data-size-id'); // Usar el ID de la talla
               if (addToCartBtn) addToCartBtn.dataset.size = selectedSize || '';
             });
           });
