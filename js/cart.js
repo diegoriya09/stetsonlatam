@@ -69,6 +69,7 @@ function handleAddToCart(e) {
   if (jwt) {
     // Enviar color y talla
     const body = { producto_id: producto.id, quantity: quantity, color_id: color, size_id: size };
+    console.log("Datos enviados al servidor:", body); //Depuración
     fetch('php/cart/add_to_cart.php', {
       method: 'POST',
       headers: {
@@ -167,7 +168,7 @@ function renderItem(product) {
         <p>$${price.toLocaleString()} x ${quantity}</p>
         ${color ? `<p><strong>Color:</strong> ${color} ${hex ? `<span style="display:inline-block;width:18px;height:18px;border-radius:50%;background:${hex};border:1px solid #ccc;margin-left:6px;vertical-align:middle;"></span>` : ''}</p>` : ''}
         ${size ? `<p><strong>Size:</strong> ${size}</p>` : ''}
-        <a class="remove-btn" data-id="${id}" data-color="${color}" data-size="${size}"><i class="fas fa-trash-alt"></i></a>
+        <a class="add-to-cart-btn" data-id="${id}" data-color="${color}" data-size="${size}"><i class="fas fa-cart-plus"></i></a>
       </div>
     </div>`;
 }

@@ -39,7 +39,7 @@ try {
 
 // Obtener datos del body
 $data = json_decode(file_get_contents('php://input'), true);
-
+error_log(print_r($data, true)); 
 $producto_id = $data['producto_id'] ?? null;
 $quantity = $data['quantity'] ?? 1;
 $color = isset($data['color']) ? $data['color'] : null;
