@@ -47,11 +47,11 @@ function handleAddToCart(e) {
     if (window.Swal) {
       Swal.fire({
         icon: 'warning',
-        title: 'Selecciona color y talla',
-        text: 'Debes elegir ambos antes de añadir al carrito.'
+        title: 'Choose color and size',
+        text: 'You must select both before adding to the cart.'
       });
     } else {
-      alert('Debes elegir color y talla antes de añadir al carrito.');
+      alert('You must choose color and size before adding to the cart.');
     }
     return;
   }
@@ -68,7 +68,7 @@ function handleAddToCart(e) {
 
   if (jwt) {
     // Enviar color y talla
-    const body = { producto_id: producto.id, quantity: quantity, color, size };
+    const body = { producto_id: producto.id, quantity: quantity, color_id: color, size_id: size };
     fetch('php/cart/add_to_cart.php', {
       method: 'POST',
       headers: {
@@ -82,7 +82,7 @@ function handleAddToCart(e) {
         if (data.success) {
           loadCart(true);
         } else {
-          console.error("Error al agregar:", data.message);
+          console.error("Error adding:", data.message);
         }
       });
   } else {
