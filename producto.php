@@ -219,50 +219,6 @@ $conn->close();
   <script src="js/hats.js?v=<?php echo time(); ?>"></script>
   <script src="js/product.js?v=<?php echo time(); ?>"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script>
-    // Selección de color y talla
-    document.addEventListener('DOMContentLoaded', function() {
-      let selectedColor = null;
-      let selectedTalla = null;
-
-      // Color
-      document.querySelectorAll('.color-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-          document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('selected'));
-          this.classList.add('selected');
-          selectedColor = this.getAttribute('data-color-id');
-        });
-      });
-      // Talla
-      document.querySelectorAll('.btn-talla').forEach(btn => {
-        btn.addEventListener('click', function() {
-          document.querySelectorAll('.btn-talla').forEach(b => b.classList.remove('selected'));
-          this.classList.add('selected');
-          selectedTalla = this.getAttribute('data-talla-id');
-        });
-      });
-
-      // Interceptar el add-to-cart
-      const addToCartBtn = document.querySelector('.add-to-cart-btn');
-      if (addToCartBtn) {
-        addToCartBtn.addEventListener('click', function(e) {
-          if (document.querySelectorAll('.color-btn').length && !selectedColor) {
-            Swal.fire({ icon: 'warning', text: 'Please select a color.' });
-            e.preventDefault();
-            return;
-          }
-          if (document.querySelectorAll('.btn-talla').length && !selectedTalla) {
-            Swal.fire({ icon: 'warning', text: 'Please select a size.' });
-            e.preventDefault();
-            return;
-          }
-          // Agregar los datos al botón para que cart.js los lea
-          addToCartBtn.dataset.color = selectedColor || '';
-          addToCartBtn.dataset.talla = selectedTalla || '';
-        });
-      }
-    });
-  </script>
 </body>
 
 </html>
