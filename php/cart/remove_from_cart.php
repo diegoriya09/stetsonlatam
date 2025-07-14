@@ -29,9 +29,9 @@ try {
 }
 
 $data = json_decode(file_get_contents('php://input'), true);
-$producto_id = $data['producto_id'] ?? null;
-$color_id = $data['color_id'] ?? null;
-$size_id = $data['size_id'] ?? null;
+$producto_id = isset($data['producto_id']) ? (int)$data['producto_id'] : null;
+$color_id = isset($data['color_id']) ? (int)$data['color_id'] : null;
+$size_id = isset($data['size_id']) ? (int)$data['size_id'] : null;
 
 if (!$producto_id || !$color_id || !$size_id) {
     echo json_encode(['success' => false, 'message' => 'Datos faltantes']);
