@@ -137,8 +137,8 @@ document.addEventListener('click', function (e) {
   const removeBtn = e.target.closest('.remove-btn');
   if (removeBtn) {
     const id = parseInt(removeBtn.dataset.id);
-    const color = removeBtn.dataset.color_id;
-    const size = removeBtn.dataset.size_id;
+    const color = removeBtn.dataset.colorId; // ✅ CAMEL CASE
+    const size = removeBtn.dataset.sizeId;
     const jwt = localStorage.getItem("jwt");
 
     if (jwt) {
