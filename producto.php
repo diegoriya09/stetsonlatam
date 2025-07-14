@@ -117,7 +117,7 @@ $conn->close();
         <div class="colores">
           <strong>Color:</strong>
           <?php foreach ($colores as $color): ?>
-            <button type="button" class="color-btn" data-color="<?= $color['name'] ?>" style="--color: <?= $color['hex'] ?>;" title="<?= $color['name'] ?>"></button>
+            <button type="button" class="color-btn" data-color-id="<?= $color['id'] ?>" data-color="<?= $color['name'] ?>" style="--color: <?= $color['hex'] ?>;" title="<?= $color['name'] ?>"></button>
           <?php endforeach; ?>
         </div>
       <?php endif; ?>
@@ -126,7 +126,7 @@ $conn->close();
         <div class="tallas">
           <strong>Size:</strong>
           <?php foreach ($tallas as $talla): ?>
-            <button type="button" class="size-btn" data-size="<?= $talla['name'] ?>"><?= htmlspecialchars($talla['name']) ?></button>
+            <button type="button" class="size-btn" data-size-id="<?= $talla['id'] ?>" data-size="<?= $talla['name'] ?>"><?= htmlspecialchars($talla['name']) ?></button>
           <?php endforeach; ?>
         </div>
       <?php endif; ?>
@@ -147,13 +147,12 @@ $conn->close();
       </button>
 
       <script>
-        // Selección de color y talla
         document.addEventListener('DOMContentLoaded', function() {
           let selectedColor = null;
           let selectedSize = null;
           const addToCartBtn = document.querySelector('.add-to-cart-btn');
 
-          // Color
+          // Selección de color
           document.querySelectorAll('.color-btn').forEach(btn => {
             btn.addEventListener('click', function() {
               document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('selected'));
@@ -163,7 +162,7 @@ $conn->close();
             });
           });
 
-          // Talla
+          // Selección de talla
           document.querySelectorAll('.size-btn').forEach(btn => {
             btn.addEventListener('click', function() {
               document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'));
@@ -173,7 +172,7 @@ $conn->close();
             });
           });
 
-          // Interceptar el add-to-cart
+          // Validar antes de agregar al carrito
           if (addToCartBtn) {
             addToCartBtn.addEventListener('click', function(e) {
               if (document.querySelectorAll('.color-btn').length && !selectedColor) {
