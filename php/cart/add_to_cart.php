@@ -42,40 +42,36 @@ $data = json_decode(file_get_contents('php://input'), true);
 error_log(print_r($data, true)); 
 $producto_id = $data['producto_id'] ?? null;
 $quantity = $data['quantity'] ?? 1;
-$color = isset($data['color']) ? $data['color'] : null;
-$size = isset($data['size']) ? $data['size'] : null;
+$color_id = isset($data['color_id']) ? intval($data['color_id']) : null;
+$size_id = isset($data['size_id']) ? intval($data['size_id']) : null;
 
-if (!$producto_id || $quantity < 1) {
+if (!$producto_id || $quantity < 1 || !$color_id || !$size_id) {
     http_response_code(400);
     echo json_encode(['success' => false, 'message' => 'Datos incompletos']);
     exit;
 }
 
-// Verificar si el color existe
-$sql_color = "SELECT id FROM colors WHERE name = ?";
-$stmt_color = $conn->prepare($sql_color);
-$stmt_color->bind_param("s", $color_name);
-$stmt_color->execute();
-$result_color = $stmt_color->get_result();
-if ($result_color->num_rows === 0) {
+// Validar que color exista
+$stmt = $conn->prepare("SELECT id FROM colors WHERE id = ?");
+$stmt->bind_param("i", $color_id);
+$stmt->execute();
+$result = $stmt->get_result();
+if ($result->num_rows === 0) {
     echo json_encode(['success' => false, 'message' => 'Color inválido']);
     exit;
 }
-$color_id = $result_color->fetch_assoc()['id'];
-$stmt_color->close();
+$stmt->close();
 
-// Verificar si la talla existe
-$sql_size = "SELECT id FROM sizes WHERE name = ?";
-$stmt_size = $conn->prepare($sql_size);
-$stmt_size->bind_param("s", $size_name);
-$stmt_size->execute();
-$result_size = $stmt_size->get_result();
-if ($result_size->num_rows === 0) {
+// Validar que talla exista
+$stmt = $conn->prepare("SELECT id FROM sizes WHERE id = ?");
+$stmt->bind_param("i", $size_id);
+$stmt->execute();
+$result = $stmt->get_result();
+if ($result->num_rows === 0) {
     echo json_encode(['success' => false, 'message' => 'Talla inválida']);
     exit;
 }
-$size_id = $result_size->fetch_assoc()['id'];
-$stmt_size->close();
+$stmt->close();
 
 // Verificar si el producto ya está en el carrito considerando color y talla
 $sql_check = "SELECT quantity FROM cart WHERE users_id = ? AND producto_id = ? AND color_id = ? AND size_id = ?";
