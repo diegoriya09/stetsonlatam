@@ -102,12 +102,12 @@ function handleAddToCart(e) {
 function loadCart(isLoggedIn) {
   const carritoItems = document.getElementById('carrito-items');
   const totalCarrito = document.getElementById('total-carrito');
-  const jwt = localStorage.getItem("jwt");
   let total = 0;
 
-  carritoItems.innerHTML = ''; // ✅ limpia visualmente antes de renderizar
+  carritoItems.innerHTML = ''; // Limpia el contenido del carrito antes de renderizar
 
-  if (isLoggedIn && jwt) {
+  if (isLoggedIn) {
+    const jwt = localStorage.getItem("jwt");
     fetch('php/cart/get_cart.php', {
       headers: {
         'Authorization': 'Bearer ' + jwt
@@ -125,7 +125,7 @@ function loadCart(isLoggedIn) {
     const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
     carrito.forEach(p => {
       total += p.price * p.quantity;
-      carritoItems.innerHTML += renderItem(p);
+      carritoItems.innerHTML += renderItem(p); // Renderiza cada producto
     });
     totalCarrito.textContent = `Total: $${total.toLocaleString()}`;
   }
@@ -155,9 +155,8 @@ document.addEventListener('click', function (e) {
   }
 });
 
-function renderItem(id, name, price, image, quantity) {
-  // Recibe siempre el objeto completo
-  const { id, name, price, image, quantity, color, size, hex } = typeof id === 'object' ? id : arguments[0];
+function renderItem(product) {
+  const { id, name, price, image, quantity, color, size, hex } = product;
   return `
     <div class="carrito-item">
       <img src="${image}" alt="${name}" class="carrito-img" loading="lazy">
