@@ -39,8 +39,8 @@ function handleAddToCart(e) {
   const quantity = inputCantidad ? parseInt(inputCantidad.value, 10) : 1;
 
   // Obtener color y talla seleccionados de los data attributes del botón
-  const color = button.dataset.color || null;
-  const size = button.dataset.size || null;
+  const color = button.dataset.color_id || null;
+  const size = button.dataset.size_id || null;
 
   // Validar selección antes de agregar
   if (!color || !size) {
@@ -55,9 +55,6 @@ function handleAddToCart(e) {
     }
     return;
   }
-
-  console.log("Color ID:", color); // Depuración
-  console.log("Size ID:", size);  // Depuración
 
   const producto = {
     id: parseInt(button.dataset.id),
