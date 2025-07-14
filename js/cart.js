@@ -137,9 +137,11 @@ document.addEventListener('click', function (e) {
   const removeBtn = e.target.closest('.remove-btn');
   if (removeBtn) {
     const id = parseInt(removeBtn.dataset.id);
-    const color = removeBtn.dataset.colorId; // ✅ CAMEL CASE
+    const color = removeBtn.dataset.colorId;
     const size = removeBtn.dataset.sizeId;
     const jwt = localStorage.getItem("jwt");
+
+    console.log("Eliminar:", { id, color, size }); // ✅ depuración
 
     if (jwt) {
       fetch('php/cart/remove_from_cart.php', {
