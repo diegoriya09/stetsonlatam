@@ -42,21 +42,33 @@ function handleAddToCart(e) {
   const color = button.dataset.color || null;
   const size = button.dataset.size || null;
 
+  // Validar selección antes de agregar
+  if (!color || !size) {
+    if (window.Swal) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Selecciona color y talla',
+        text: 'Debes elegir ambos antes de añadir al carrito.'
+      });
+    } else {
+      alert('Debes elegir color y talla antes de añadir al carrito.');
+    }
+    return;
+  }
+
   const producto = {
     id: parseInt(button.dataset.id),
     name: button.dataset.name,
     price: parseFloat(button.dataset.price),
     image: button.dataset.image,
     quantity: quantity,
-    ...(color && { color }),
-    ...(size && { size })
+    color,
+    size
   };
 
   if (jwt) {
-    // Enviar color y talla si existen
-    const body = { producto_id: producto.id, quantity: quantity };
-    if (color) body.color = color;
-    if (size) body.size = size;
+    // Enviar color y talla
+    const body = { producto_id: producto.id, quantity: quantity, color, size };
     fetch('php/cart/add_to_cart.php', {
       method: 'POST',
       headers: {
@@ -75,8 +87,8 @@ function handleAddToCart(e) {
       });
   } else {
     let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-    // Buscar producto por id, color y talla (si existen)
-    const index = carrito.findIndex(p => p.id === producto.id && (!color || p.color === color) && (!size || p.size === size));
+    // Buscar producto por id, color y talla
+    const index = carrito.findIndex(p => p.id === producto.id && p.color === color && p.size === size);
     if (index !== -1) {
       carrito[index].quantity += quantity;
     } else {
@@ -105,7 +117,7 @@ function loadCart(isLoggedIn) {
       .then(carrito => {
         carrito.forEach(p => {
           total += p.price * p.quantity;
-          carritoItems.innerHTML += renderItem(p.id, p.name, p.price, p.image, p.quantity);
+          carritoItems.innerHTML += renderItem(p);
         });
         totalCarrito.textContent = `Total: $${total.toLocaleString()}`;
       });
@@ -113,7 +125,7 @@ function loadCart(isLoggedIn) {
     const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
     carrito.forEach(p => {
       total += p.price * p.quantity;
-      carritoItems.innerHTML += renderItem(p.id, p.name, p.price, p.image, p.quantity);
+      carritoItems.innerHTML += renderItem(p);
     });
     totalCarrito.textContent = `Total: $${total.toLocaleString()}`;
   }
@@ -144,22 +156,8 @@ document.addEventListener('click', function (e) {
 });
 
 function renderItem(id, name, price, image, quantity) {
-  // Obtener color, hex y talla si existen en el objeto (compatibilidad con backend y localStorage)
-  let color = arguments.length > 6 ? arguments[6] : undefined;
-  let size = arguments.length > 7 ? arguments[7] : undefined;
-  let hex = arguments.length > 8 ? arguments[8] : undefined;
-  // Si se llama con un objeto, usar p.color, p.size y p.hex
-  if (typeof id === 'object') {
-    const p = id;
-    id = p.id;
-    name = p.name;
-    price = p.price;
-    image = p.image;
-    quantity = p.quantity;
-    color = p.color;
-    size = p.size;
-    hex = p.hex;
-  }
+  // Recibe siempre el objeto completo
+  const { id, name, price, image, quantity, color, size, hex } = typeof id === 'object' ? id : arguments[0];
   return `
     <div class="carrito-item">
       <img src="${image}" alt="${name}" class="carrito-img" loading="lazy">
