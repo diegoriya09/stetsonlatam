@@ -56,6 +56,9 @@ function handleAddToCart(e) {
     return;
   }
 
+  console.log("Color ID:", color); // Depuración
+  console.log("Size ID:", size);  // Depuración
+
   const producto = {
     id: parseInt(button.dataset.id),
     name: button.dataset.name,
