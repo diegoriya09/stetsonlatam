@@ -12,10 +12,39 @@ document.addEventListener("DOMContentLoaded", () => {
     .then(res => res.json())
     .then(data => {
       if (data.logged_in) {
-        loadCart(true);  // ✅ Usuario logueado, carga desde base de datos
-      } else {
-        localStorage.removeItem("jwt"); // Sesión inválida, limpiar
-        loadCart(false); // Cargar local
+        const localCart = JSON.parse(localStorage.getItem('carrito')) || [];
+
+        if (localCart.length > 0) {
+          // Enviamos cada ítem del carrito local al backend
+          const promises = localCart.map(item => {
+            return fetch('php/cart/add_to_cart.php', {
+              method: 'POST',
+              headers: {
+                'Authorization': 'Bearer ' + jwt,
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                producto_id: item.id,
+                quantity: item.quantity,
+                color_id: item.color_id,
+                size_id: item.size_id
+              })
+            });
+          });
+
+          // Esperamos que se sincronicen todos y luego limpiamos el local
+          Promise.all(promises)
+            .then(() => {
+              localStorage.removeItem('carrito'); // Eliminamos el localStorage una vez sincronizado
+              loadCart(true); // Ahora sí, cargamos desde la base de datos
+            })
+            .catch(err => {
+              console.error("Error sincronizando carrito local:", err);
+              loadCart(true); // De todas formas cargar
+            });
+        } else {
+          loadCart(true); // No hay nada local, solo carga del backend
+        }
       }
     })
     .catch(() => loadCart(false));
