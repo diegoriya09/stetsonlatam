@@ -39,11 +39,13 @@ function handleAddToCart(e) {
   const quantity = inputCantidad ? parseInt(inputCantidad.value, 10) : 1;
 
   // Obtener color y talla seleccionados de los data attributes del botón
-  const color = button.dataset.color_id || null;
-  const size = button.dataset.size_id || null;
+  const color_id = button.dataset.colorId || null;
+  const color_name = button.dataset.colorName || null;
+  const size_id = button.dataset.sizeId || null;
+  const size_name = button.dataset.sizeName || null;
 
   // Validar selección antes de agregar
-  if (!color || !size) {
+  if (!color_id || !size_id) {
     if (window.Swal) {
       Swal.fire({
         icon: 'warning',
@@ -62,14 +64,20 @@ function handleAddToCart(e) {
     price: parseFloat(button.dataset.price),
     image: button.dataset.image,
     quantity: quantity,
-    color,
-    size
+    color_id,
+    color_name,
+    size_id,
+    size_name
   };
 
   if (jwt) {
     // Enviar color y talla
-    const body = { producto_id: producto.id, quantity: quantity, color_id: color, size_id: size };
-    console.log("Datos enviados al servidor:", body); //Depuración
+    const body = {
+      producto_id: producto.id,
+      quantity: quantity,
+      color_id: color_id,
+      size_id: size_id
+    };
     fetch('php/cart/add_to_cart.php', {
       method: 'POST',
       headers: {
@@ -137,11 +145,11 @@ document.addEventListener('click', function (e) {
   const removeBtn = e.target.closest('.remove-btn');
   if (removeBtn) {
     const id = parseInt(removeBtn.dataset.id);
-    const color = removeBtn.dataset.color_id; // color_id numérico
-    const size = removeBtn.dataset.size_id;   // size_id numérico
+    const color_id = parseInt(removeBtn.dataset.colorId);
+    const size_id = parseInt(removeBtn.dataset.sizeId);
     const jwt = localStorage.getItem("jwt");
 
-    console.log("Eliminar:", { id, color, size }); // ✅ depuración
+    console.log("Eliminar:", { id, color_id, size_id }); // ✅ depuración
 
     if (jwt) {
       fetch('php/cart/remove_from_cart.php', {
@@ -150,11 +158,11 @@ document.addEventListener('click', function (e) {
           'Authorization': 'Bearer ' + jwt,
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ producto_id: id, color_id: color, size_id: size })
+        body: JSON.stringify({ producto_id: id, color_id, size_id })
       }).then(() => loadCart(true));
     } else {
       let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-      carrito = carrito.filter(p => !(p.id === id && p.color === color && p.size === size));
+      carrito = carrito.filter(p => !(p.id === id && p.color_id === color_id && p.size_id === size_id));
       localStorage.setItem('carrito', JSON.stringify(carrito));
       loadCart(false);
     }
@@ -162,16 +170,24 @@ document.addEventListener('click', function (e) {
 });
 
 function renderItem(product) {
-  const { id, name, price, image, quantity, color, size, hex } = product;
+  const {
+    id, name, price, image, quantity,
+    color_id, color_name, size_id, size_name, hex
+  } = product;
   return `
     <div class="carrito-item">
       <img src="${image}" alt="${name}" class="carrito-img" loading="lazy">
       <div class="carrito-info">
         <h4>${name}</h4>
         <p>$${price.toLocaleString()} x ${quantity}</p>
-        ${color ? `<p><strong>Color:</strong> ${color} ${hex ? `<span style="display:inline-block;width:18px;height:18px;border-radius:50%;background:${hex};border:1px solid #ccc;margin-left:6px;vertical-align:middle;"></span>` : ''}</p>` : ''}
-        ${size ? `<p><strong>Size:</strong> ${size}</p>` : ''}
-        <a class="remove-btn" data-id="${id}" data-color-id="${color}" data-size-id="${size}"><i class="fas fa-trash-alt"></i></a>
+        ${color_name ? `<p><strong>Color:</strong> ${color_name} ${hex ? `<span style="display:inline-block;width:18px;height:18px;border-radius:50%;background:${hex};border:1px solid #ccc;margin-left:6px;vertical-align:middle;"></span>` : ''}</p>` : ''}
+        ${size_name ? `<p><strong>Size:</strong> ${size_name}</p>` : ''}
+          <a class="remove-btn"
+           data-id="${id}"
+           data-color-id="${color_id}"
+           data-size-id="${size_id}">
+          <i class="fas fa-trash-alt"></i>
+        </a>
       </div>
     </div>`;
 }
