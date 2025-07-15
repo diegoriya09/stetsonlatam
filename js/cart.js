@@ -58,6 +58,10 @@ function handleAddToCart(e) {
     return;
   }
 
+  // Obtener el botón de color seleccionado para extraer el HEX
+  const colorBtn = document.querySelector('.color-btn.selected');
+  const hex = colorBtn ? getComputedStyle(colorBtn).getPropertyValue('--color') : '#000';
+
   const producto = {
     id: parseInt(button.dataset.id),
     name: button.dataset.name,
@@ -66,6 +70,7 @@ function handleAddToCart(e) {
     quantity: quantity,
     color_id,
     color_name,
+    hex,
     size_id,
     size_name
   };
