@@ -137,8 +137,8 @@ document.addEventListener('click', function (e) {
   const removeBtn = e.target.closest('.remove-btn');
   if (removeBtn) {
     const id = parseInt(removeBtn.dataset.id);
-    const color = parseInt(removeBtn.dataset.colorId); // color_id numérico
-    const size = parseInt(removeBtn.dataset.sizeId);   // size_id numérico
+    const color = parseInt(removeBtn.dataset.color_id); // color_id numérico
+    const size = parseInt(removeBtn.dataset.size_id);   // size_id numérico
     const jwt = localStorage.getItem("jwt");
 
     console.log("Eliminar:", { id, color, size }); // ✅ depuración
