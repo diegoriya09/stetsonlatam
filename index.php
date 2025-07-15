@@ -83,6 +83,7 @@
     <script src="js/auth.js?v=<?php echo time(); ?>"></script>
     <script src="js/cart.js?v=<?php echo time(); ?>"></script>
     <script src="js/wishlist.js?v=<?php echo time(); ?>"></script>
+    <script src="js/myorders.js?v=<?php echo time(); ?>"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 
