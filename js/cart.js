@@ -145,11 +145,15 @@ document.addEventListener('click', function (e) {
   const removeBtn = e.target.closest('.remove-btn');
   if (removeBtn) {
     const producto_id = parseInt(removeBtn.dataset.id);
-    const color_id = parseInt(removeBtn.dataset.colorId);
-    const size_id = parseInt(removeBtn.dataset.sizeId);
+    const color_id = removeBtn.dataset.colorId ? parseInt(removeBtn.dataset.colorId) : null;
+    const size_id = removeBtn.dataset.sizeId ? parseInt(removeBtn.dataset.sizeId) : null;
     const jwt = localStorage.getItem("jwt");
 
-    console.log("Eliminar:", { producto_id, color_id, size_id }); // ✅ depuración
+    console.log("Eliminar =>", {
+      producto_id,
+      color_id,
+      size_id
+    });
 
     if (jwt) {
       fetch('php/cart/remove_from_cart.php', {
@@ -160,14 +164,14 @@ document.addEventListener('click', function (e) {
         },
         body: JSON.stringify({ producto_id, color_id, size_id })
       })
-      .then(res => res.json())
-      .then(data => {
-        if (data.success) {
-          loadCart(true);
-        } else {
-          console.error('Error al eliminar:', data.message);
-        }
-      });
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            loadCart(true);
+          } else {
+            console.error('Error al eliminar:', data.message);
+          }
+        });
     } else {
       let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
       carrito = carrito.filter(p => !(p.id === producto_id && p.color_id == color_id && p.size_id == size_id));
