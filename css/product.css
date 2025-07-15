@@ -287,9 +287,10 @@ html {
   transition: all 0.2s ease;
 }
 .tallas button:hover,
-.tallas button.active {
+.tallas button.selected {
   border-color: #3c3737;
   background: #fff;
+  font-weight: bold;
 }
 
 /* Colores */
@@ -321,10 +322,10 @@ html {
   background: var(--color, #fff);
   display: block;
 }
-.color-btn.active,
+.color-btn.selected,
 .color-btn:focus {
-  border: 2px solid #bfa76a;
-  box-shadow: 0 0 0 2px #bfa76a33;
+  border: 2px solid #3f1e1f;
+  box-shadow: 0 0 0 2px #3c3737;
 }
 .color-btn .color-circle.selected {
   box-shadow: 0 0 0 2px #bfa76a;
