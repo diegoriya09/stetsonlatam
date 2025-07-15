@@ -149,7 +149,11 @@ $conn->close();
       <script>
         document.addEventListener('DOMContentLoaded', function() {
           let selectedColor = null;
+          let selectedColorName = null;
+          let selectedHex = null;
           let selectedSize = null;
+          let selectedSizeName = null;
+
           const addToCartBtn = document.querySelector('.add-to-cart-btn');
 
           // Selección de color
@@ -157,8 +161,16 @@ $conn->close();
             btn.addEventListener('click', function() {
               document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('selected'));
               this.classList.add('selected');
-              selectedColor = this.getAttribute('data-color-id'); // Usar el ID del color
-              if (addToCartBtn) addToCartBtn.dataset.colorId = selectedColor || '';
+              selectedColor = this.getAttribute('data-color-id');
+              selectedColorName = this.getAttribute('data-color');
+              selectedHex = getComputedStyle(this).getPropertyValue('--color');
+
+              // Guardar en el botón
+              if (addToCartBtn) {
+                addToCartBtn.dataset.colorId = selectedColor;
+                addToCartBtn.dataset.colorName = selectedColorName;
+                addToCartBtn.dataset.hex = selectedHex;
+              }
             });
           });
 
@@ -167,12 +179,17 @@ $conn->close();
             btn.addEventListener('click', function() {
               document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'));
               this.classList.add('selected');
-              selectedSize = this.getAttribute('data-size-id'); // Usar el ID de la talla
-              if (addToCartBtn) addToCartBtn.dataset.sizeId = selectedSize || '';
+              selectedSize = this.getAttribute('data-size-id');
+              selectedSizeName = this.getAttribute('data-size');
+
+              if (addToCartBtn) {
+                addToCartBtn.dataset.sizeId = selectedSize;
+                addToCartBtn.dataset.sizeName = selectedSizeName;
+              }
             });
           });
 
-          // Validar antes de agregar al carrito
+          // Validación antes de agregar
           if (addToCartBtn) {
             addToCartBtn.addEventListener('click', function(e) {
               if (document.querySelectorAll('.color-btn').length && !selectedColor) {
