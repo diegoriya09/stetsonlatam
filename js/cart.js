@@ -145,11 +145,11 @@ document.addEventListener('click', function (e) {
   const removeBtn = e.target.closest('.remove-btn');
   if (removeBtn) {
     const id = parseInt(removeBtn.dataset.id);
-    const color_id = parseInt(removeBtn.dataset.colorId);
-    const size_id = parseInt(removeBtn.dataset.sizeId);
+    const color = removeBtn.dataset.colorId;
+    const size = removeBtn.dataset.sizeId;
     const jwt = localStorage.getItem("jwt");
 
-    console.log("Eliminar:", { id, color_id, size_id }); // ✅ depuración
+    console.log("Eliminar:", { id, color, size }); // ✅ depuración
 
     if (jwt) {
       fetch('php/cart/remove_from_cart.php', {
@@ -170,23 +170,21 @@ document.addEventListener('click', function (e) {
 });
 
 function renderItem(product) {
-  const {
-    id, name, price, image, quantity,
-    color_id, color_name, size_id, size_name, hex
-  } = product;
+  const { id, name, price, image, quantity, color, size, hex, color_id, size_id } = product;
+
   return `
     <div class="carrito-item">
       <img src="${image}" alt="${name}" class="carrito-img" loading="lazy">
       <div class="carrito-info">
         <h4>${name}</h4>
         <p>$${price.toLocaleString()} x ${quantity}</p>
-        ${color_name ? `<p><strong>Color:</strong> ${color_name} ${hex ? `<span style="display:inline-block;width:18px;height:18px;border-radius:50%;background:${hex};border:1px solid #ccc;margin-left:6px;vertical-align:middle;"></span>` : ''}</p>` : ''}
-        ${size_name ? `<p><strong>Size:</strong> ${size_name}</p>` : ''}
-          <a class="remove-btn"
+        ${color ? `<p><strong>Color:</strong> ${color} ${hex ? `<span style="display:inline-block;width:18px;height:18px;border-radius:50%;background:${hex};border:1px solid #ccc;margin-left:6px;vertical-align:middle;"></span>` : ''}</p>` : ''}
+        ${size ? `<p><strong>Size:</strong> ${size}</p>` : ''}
+        <a class="remove-btn"
            data-id="${id}"
            data-color-id="${color_id}"
            data-size-id="${size_id}">
-          <i class="fas fa-trash-alt"></i>
+           <i class="fas fa-trash-alt"></i>
         </a>
       </div>
     </div>`;
