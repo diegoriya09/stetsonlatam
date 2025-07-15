@@ -42,19 +42,22 @@ try {
 try {
     // Ajustar la consulta para usar color_id y size_id
     $sql = "SELECT 
-                c.producto_id AS id, 
-                p.name, 
-                p.price, 
-                p.image, 
-                c.quantity, 
-                co.name AS color, 
-                co.hex, 
-                s.name AS size 
-            FROM cart c 
-            JOIN productos p ON c.producto_id = p.id 
-            LEFT JOIN colors co ON co.id = c.color_id 
-            LEFT JOIN sizes s ON s.id = c.size_id 
-            WHERE c.users_id = ?";
+            c.producto_id AS id, 
+            p.name, 
+            p.price, 
+            p.image, 
+            c.quantity, 
+            c.color_id, 
+            co.name AS color_name, 
+            co.hex, 
+            c.size_id, 
+            s.name AS size_name 
+        FROM cart c 
+        JOIN productos p ON c.producto_id = p.id 
+        LEFT JOIN colors co ON co.id = c.color_id 
+        LEFT JOIN sizes s ON s.id = c.size_id 
+        WHERE c.users_id = ?";
+
 
     $stmt = $conn->prepare($sql);
     if (!$stmt) {
@@ -74,7 +77,6 @@ try {
 
     $stmt->close();
     $conn->close();
-
 } catch (Exception $e) {
     http_response_code(500);
     echo json_encode(['success' => false, 'message' => 'Error del servidor', 'error' => $e->getMessage()]);
