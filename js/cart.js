@@ -171,7 +171,7 @@ function renderItem(product) {
         <p>$${price.toLocaleString()} x ${quantity}</p>
         ${color ? `<p><strong>Color:</strong> ${color} ${hex ? `<span style="display:inline-block;width:18px;height:18px;border-radius:50%;background:${hex};border:1px solid #ccc;margin-left:6px;vertical-align:middle;"></span>` : ''}</p>` : ''}
         ${size ? `<p><strong>Size:</strong> ${size}</p>` : ''}
-        <a class="remove-btn" data-id="${id}" data-color-id="${color_id}" data-size-id="${size_id}"><i class="fas fa-trash-alt"></i></a>
+        <a class="remove-btn" data-id="${id}" data-color-id="${color}" data-size-id="${size}"><i class="fas fa-trash-alt"></i></a>
       </div>
     </div>`;
 }
