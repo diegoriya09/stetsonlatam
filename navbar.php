@@ -12,6 +12,7 @@
             <li><a href="hats.php">Hats</a></li>
             <li><a href="caps.php">Caps</a></li>
             <li><a href="index.php#stories">Stories</a></li>
+            <li id="mis-pedidos-link" style="display:none;"><a href="myorders.php">My orders</a></li>
         </ul>
     </div>
     <!-- Enlaces centrados -->
@@ -19,6 +20,7 @@
         <li><a href="hats.php">Hats</a></li>
         <li><a href="caps.php">Caps</a></li>
         <li><a href="index.php#stories">Stories</a></li>
+        <li id="mis-pedidos-link" style="display:none;"><a href="myorders.php">My orders</a></li>
     </ul>
     <!-- Íconos a la derecha -->
     <div class="nav-right">

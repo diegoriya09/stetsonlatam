@@ -111,6 +111,30 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  const jwt = localStorage.getItem('jwt');
+  const misPedidosLink = document.getElementById('mis-pedidos-link');
+
+  if (jwt && misPedidosLink) {
+    fetch("php/check_session.php", {
+      method: "GET",
+      headers: {
+        "Authorization": "Bearer " + jwt
+      }
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.logged_in) {
+        misPedidosLink.style.display = "inline-block";
+        document.getElementById('logout-btn').style.display = 'inline-block';
+        document.getElementById('open-user-modal').style.display = 'none';
+      }
+    })
+    .catch(() => {
+      // Error o token inválido, ocultar por seguridad
+      misPedidosLink.style.display = "none";
+    });
+  }
+
   const slides = document.querySelectorAll('.slide');
   const dots = document.querySelectorAll('.dot');
   const title = document.getElementById('hero-title');
