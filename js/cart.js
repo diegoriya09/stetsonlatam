@@ -144,12 +144,12 @@ function loadCart(isLoggedIn) {
 document.addEventListener('click', function (e) {
   const removeBtn = e.target.closest('.remove-btn');
   if (removeBtn) {
-    const id = parseInt(removeBtn.dataset.id);
-    const color = removeBtn.dataset.colorId;
-    const size = removeBtn.dataset.sizeId;
+    const producto_id = parseInt(removeBtn.dataset.id);
+    const color_id = parseInt(removeBtn.dataset.colorId);
+    const size_id = parseInt(removeBtn.dataset.sizeId);
     const jwt = localStorage.getItem("jwt");
 
-    console.log("Eliminar:", { id, color, size }); // ✅ depuración
+    console.log("Eliminar:", { producto_id, color_id, size_id }); // ✅ depuración
 
     if (jwt) {
       fetch('php/cart/remove_from_cart.php', {
@@ -158,11 +158,19 @@ document.addEventListener('click', function (e) {
           'Authorization': 'Bearer ' + jwt,
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ producto_id: id, color_id, size_id })
-      }).then(() => loadCart(true));
+        body: JSON.stringify({ producto_id, color_id, size_id })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          loadCart(true);
+        } else {
+          console.error('Error al eliminar:', data.message);
+        }
+      });
     } else {
       let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-      carrito = carrito.filter(p => !(p.id === id && p.color_id === color_id && p.size_id === size_id));
+      carrito = carrito.filter(p => !(p.id === producto_id && p.color_id == color_id && p.size_id == size_id));
       localStorage.setItem('carrito', JSON.stringify(carrito));
       loadCart(false);
     }
@@ -170,7 +178,18 @@ document.addEventListener('click', function (e) {
 });
 
 function renderItem(product) {
-  const { id, name, price, image, quantity, color, size, hex, color_id, size_id } = product;
+  const {
+    id,
+    name,
+    price,
+    image,
+    quantity,
+    color_name,
+    color_id,
+    hex,
+    size_name,
+    size_id
+  } = product;
 
   return `
     <div class="carrito-item">
@@ -178,14 +197,14 @@ function renderItem(product) {
       <div class="carrito-info">
         <h4>${name}</h4>
         <p>$${price.toLocaleString()} x ${quantity}</p>
-        ${color ? `<p><strong>Color:</strong> ${color} ${hex ? `<span style="display:inline-block;width:18px;height:18px;border-radius:50%;background:${hex};border:1px solid #ccc;margin-left:6px;vertical-align:middle;"></span>` : ''}</p>` : ''}
-        ${size ? `<p><strong>Size:</strong> ${size}</p>` : ''}
+        ${color_name ? `<p><strong>Color:</strong> ${color_name} <span style="display:inline-block;width:16px;height:16px;border-radius:50%;background:${hex};border:1px solid #000;margin-left:5px;vertical-align:middle;"></span></p>` : ''}
+        ${size_name ? `<p><strong>Size:</strong> ${size_name}</p>` : ''}
         <a class="remove-btn"
            data-id="${id}"
            data-color-id="${color_id}"
            data-size-id="${size_id}">
-           <i class="fas fa-trash-alt"></i>
-        </a>
+           <i class="fas fa-trash-alt"></i></a>
       </div>
-    </div>`;
+    </div>
+  `;
 }

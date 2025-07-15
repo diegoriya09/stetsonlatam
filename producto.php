@@ -157,16 +157,8 @@ $conn->close();
             btn.addEventListener('click', function() {
               document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('selected'));
               this.classList.add('selected');
-              selectedColor = {
-                id: this.getAttribute('data-color-id'),
-                name: this.getAttribute('data-color'),
-                hex: this.style.getPropertyValue('--color')
-              };
-              if (addToCartBtn) {
-                addToCartBtn.dataset.color_id = selectedColor.id;
-                addToCartBtn.dataset.color_name = selectedColor.name;
-                addToCartBtn.dataset.hex = selectedColor.hex;
-              }
+              selectedColor = this.getAttribute('data-color-id'); // Usar el ID del color
+              if (addToCartBtn) addToCartBtn.dataset.color_id = selectedColor || '';
             });
           });
 
@@ -175,14 +167,8 @@ $conn->close();
             btn.addEventListener('click', function() {
               document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'));
               this.classList.add('selected');
-              selectedSize = {
-                id: this.getAttribute('data-size-id'),
-                name: this.getAttribute('data-size')
-              };
-              if (addToCartBtn) {
-                addToCartBtn.dataset.size_id = selectedSize.id;
-                addToCartBtn.dataset.size_name = selectedSize.name;
-              }
+              selectedSize = this.getAttribute('data-size-id'); // Usar el ID de la talla
+              if (addToCartBtn) addToCartBtn.dataset.size_id = selectedSize || '';
             });
           });
 
