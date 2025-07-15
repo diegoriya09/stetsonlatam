@@ -101,13 +101,24 @@ function handleAddToCart(e) {
       });
   } else {
     let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+
+    // Convertimos a número para comparar correctamente
+    const parsedColorId = parseInt(color_id);
+    const parsedSizeId = parseInt(size_id);
+
     // Buscar producto por id, color y talla
-    const index = carrito.findIndex(p => p.id === producto.id && p.color === color && p.size === size);
+    const index = carrito.findIndex(p =>
+      p.id === producto.id &&
+      parseInt(p.color_id) === parsedColorId &&
+      parseInt(p.size_id) === parsedSizeId
+    );
+
     if (index !== -1) {
       carrito[index].quantity += quantity;
     } else {
       carrito.push(producto);
     }
+
     localStorage.setItem('carrito', JSON.stringify(carrito));
     loadCart(false);
   }
