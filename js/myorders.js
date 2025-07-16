@@ -1,9 +1,29 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const jwt = localStorage.getItem('jwt');
-  if (!jwt) {
-    window.location.href = 'index.php';
-    return;
-  }
+
+  const jwt = localStorage.getItem("jwt");
+
+  // Verificamos sesión válida
+  fetch("php/check_session.php", {
+    method: "GET",
+    headers: {
+      "Authorization": "Bearer " + jwt
+    }
+  })
+    .then(res => {
+      if (!res.ok) throw new Error("Session invalid");
+      return res.json();
+    })
+    .then(data => {
+      if (!data.valid) {
+        localStorage.removeItem("jwt");
+        window.location.href = "index.php";
+      }
+    })
+    .catch(err => {
+      console.error("Error checking session:", err);
+      localStorage.removeItem("jwt");
+      window.location.href = "index.php";
+    });
 
   fetch('php/order/get_orders.php', {
     headers: {
