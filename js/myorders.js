@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   const jwt = localStorage.getItem("jwt");
 
-  // Si no hay JWT, no muestres la sección de órdenes ni lances el fetch
   if (!jwt) {
     document.getElementById("pedidos-container").innerHTML = `
       <p>Please log in to view your orders.</p>
@@ -9,43 +8,41 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  // Si hay JWT, validar sesión
+  // Validar sesión
   fetch("php/check_session.php", {
-  method: "GET",
-  headers: {
-    "Authorization": "Bearer " + jwt
-  }
-})
-  .then(res => {
-    if (!res.ok) throw new Error("Respuesta no OK desde el servidor");
-    return res.json();
-  })
-  .then(data => {
-    if (data && data.logged_in === true) {
-      loadOrders(jwt);
-    } else {
-      console.warn("JWT inválido o sesión expirada:", data);
-      // Mostrar mensaje, pero NO redireccionar de inmediato
-      document.getElementById("pedidos-container").innerHTML = `
-        <p>Your session has expired. <a href="login.php">Login again</a>.</p>
-      `;
+    method: "GET",
+    headers: {
+      "Authorization": "Bearer " + jwt
     }
   })
-  .catch(err => {
-    console.error("Error verificando sesión:", err);
-    document.getElementById("pedidos-container").innerHTML = `
-      <p>We couldn't verify your session. Please check your connection or try again later.</p>
-    `;
-  });
+    .then(res => {
+      if (!res.ok) throw new Error("Respuesta no OK desde el servidor");
+      return res.json();
+    })
+    .then(data => {
+      if (data && data.logged_in === true) {
+        loadOrders(jwt);
+      } else {
+        console.warn("JWT inválido o sesión expirada:", data);
+        document.getElementById("pedidos-container").innerHTML = `
+          <p>Your session has expired. <a href="login.php">Login again</a>.</p>
+        `;
+      }
+    })
+    .catch(err => {
+      console.error("Error verificando sesión:", err);
+      document.getElementById("pedidos-container").innerHTML = `
+        <p>We couldn't verify your session. Please check your connection or try again later.</p>
+      `;
+    });
 
   // Cierre del modal
   document.addEventListener("click", e => {
     if (e.target.classList.contains("close-btn")) {
       document.getElementById("detalle-modal").style.display = "none";
     }
-    });
   });
-
+});
 
 function redirectToLogin() {
   Swal.fire({
