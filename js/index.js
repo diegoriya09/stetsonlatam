@@ -94,28 +94,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  const logoutBtn = document.getElementById('logout-btn');
-
-  if (localStorage.getItem('jwt')) {
-    logoutBtn.style.display = 'inline-block';
-  }
-
-  logoutBtn.addEventListener('click', () => {
-    localStorage.removeItem('jwt');
-    Swal.fire({
-      title: 'Closed session',
-      icon: 'info',
-      confirmButtonText: 'OK'
-    }).then(() => {
-      location.reload();
-    });
-  });
-
   const jwt = localStorage.getItem('jwt');
   const misPedidosLink = document.getElementById('mis-pedidos-link');
   const misPedidosLinkMobile = document.getElementById('mis-pedidos-link-mobile');
+  const logoutBtn = document.getElementById('logout-btn');
+  const loginBtn = document.getElementById('open-user-modal');
 
-  if (jwt && misPedidosLink) {
+  if (jwt) {
     fetch("php/check_session.php", {
       method: "GET",
       headers: {
@@ -127,15 +112,21 @@ document.addEventListener('DOMContentLoaded', () => {
         if (data.logged_in) {
           if (misPedidosLink) misPedidosLink.style.display = "inline-block";
           if (misPedidosLinkMobile) misPedidosLinkMobile.style.display = "block";
-          document.getElementById('logout-btn').style.display = 'inline-block';
-          document.getElementById('open-user-modal').style.display = 'none';
+          if (logoutBtn) logoutBtn.style.display = "inline-block";
+          if (loginBtn) loginBtn.style.display = "none";
         }
       })
       .catch(() => {
         if (misPedidosLink) misPedidosLink.style.display = "none";
         if (misPedidosLinkMobile) misPedidosLinkMobile.style.display = "none";
       });
+  } else {
+    if (misPedidosLink) misPedidosLink.style.display = "none";
+    if (misPedidosLinkMobile) misPedidosLinkMobile.style.display = "none";
+    if (logoutBtn) logoutBtn.style.display = "none";
+    if (loginBtn) loginBtn.style.display = "inline-block";
   }
+
 
   const slides = document.querySelectorAll('.slide');
   const dots = document.querySelectorAll('.dot');
