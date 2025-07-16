@@ -59,11 +59,13 @@ $pedidos = $result->fetch_all(MYSQLI_ASSOC);
    <div class="container">
       <h2>My Orders</h2>
       <div id="pedidos-container"></div>
+   </div>
 
-      <!-- Modal para detalle -->
-      <div id="detalle-modal" style="display: none;">
-         <div id="detalle-pedido"></div>
-         <button class="close-btn">Close</button>
+   <!-- Modal para detalles del pedido -->
+   <div id="detalle-modal">
+      <div id="detalle-pedido">
+         <button class="close-btn">&times;</button>
+         <!-- Aquí JS inyecta los productos del pedido -->
       </div>
    </div>
 
@@ -73,7 +75,7 @@ $pedidos = $result->fetch_all(MYSQLI_ASSOC);
    <script src="js/cart.js?v=<?php echo time(); ?>"></script>
    <script src="js/hats.js?v=<?php echo time(); ?>"></script>
    <script src="js/product.js?v=<?php echo time(); ?>"></script>
-   <script src="js/myorders.js?v=<?php echo time() ?>"></script>
+   <script src="js/myorders.js?v=<?php echo time(); ?>"></script>
    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </body>
