@@ -1,5 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
-  
+  const jwt = localStorage.getItem('jwt');
+  if (!jwt) {
+    window.location.href = 'index.php';
+    return;
+  }
 
   fetch('php/order/get_orders.php', {
     headers: {
@@ -13,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     })
     .then(pedidos => {
       const container = document.getElementById('pedidos-container');
-      if (!pedidos || pedidos.length === 0) {
+      if (!pedidos.length) {
         container.innerHTML = "<p>No orders yet.</p>";
         return;
       }

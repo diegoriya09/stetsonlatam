@@ -58,19 +58,13 @@ $pedidos = $result->fetch_all(MYSQLI_ASSOC);
 
    <div class="container">
       <h2>My Orders</h2>
-      <?php if (empty($pedidos)): ?>
-         <p>No orders yet.</p>
-      <?php else: ?>
-         <?php foreach ($pedidos as $pedido): ?>
-            <div class="pedido-card">
-               <p><strong>Order #<?= $pedido['id'] ?></strong></p>
-               <p>Date: <?= $pedido['fecha'] ?></p>
-               <p>Total: $<?= number_format($pedido['total'], 2) ?></p>
-               <p>Status: <?= $pedido['estado'] ?></p>
-               <a href="detailorder.php?id=<?= $pedido['id'] ?>">View Details</a>
-            </div>
-         <?php endforeach; ?>
-      <?php endif; ?>
+      <div id="pedidos-container"></div>
+
+      <!-- Modal para detalle -->
+      <div id="detalle-modal" style="display: none;">
+         <div id="detalle-pedido"></div>
+         <button class="close-btn">Close</button>
+      </div>
    </div>
 
    <?php include 'footer.php'; ?>
@@ -81,7 +75,7 @@ $pedidos = $result->fetch_all(MYSQLI_ASSOC);
    <script src="js/product.js?v=<?php echo time(); ?>"></script>
    <script src="js/myorders.js?v=<?php echo time() ?>"></script>
    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-   
+
 </body>
 
 </html>
