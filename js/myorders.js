@@ -11,31 +11,40 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Si hay JWT, validar sesión
   fetch("php/check_session.php", {
-    method: "GET",
-    headers: {
-      "Authorization": "Bearer " + jwt
+  method: "GET",
+  headers: {
+    "Authorization": "Bearer " + jwt
+  }
+})
+  .then(res => {
+    if (!res.ok) throw new Error("Respuesta no OK desde el servidor");
+    return res.json();
+  })
+  .then(data => {
+    if (data && data.logged_in === true) {
+      loadOrders(jwt);
+    } else {
+      console.warn("JWT inválido o sesión expirada:", data);
+      // Mostrar mensaje, pero NO redireccionar de inmediato
+      document.getElementById("pedidos-container").innerHTML = `
+        <p>Your session has expired. <a href="login.php">Login again</a>.</p>
+      `;
     }
   })
-    .then(res => res.json())
-    .then(data => {
-      if (data.logged_in) {
-        loadOrders(jwt);
-      } else {
-        redirectToLogin();
-      }
-    })
-    .catch(err => {
-      console.error("Error checking session:", err);
-      redirectToLogin();
-    });
+  .catch(err => {
+    console.error("Error verificando sesión:", err);
+    document.getElementById("pedidos-container").innerHTML = `
+      <p>We couldn't verify your session. Please check your connection or try again later.</p>
+    `;
+  });
 
   // Cierre del modal
   document.addEventListener("click", e => {
     if (e.target.classList.contains("close-btn")) {
       document.getElementById("detalle-modal").style.display = "none";
     }
+    });
   });
-});
 
 
 function redirectToLogin() {
