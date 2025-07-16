@@ -94,9 +94,25 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  const logoutBtn = document.getElementById('logout-btn');
+
+  if (localStorage.getItem('jwt')) {
+    logoutBtn.style.display = 'inline-block';
+  }
+
+  logoutBtn.addEventListener('click', () => {
+    localStorage.removeItem('jwt');
+    Swal.fire({
+      title: 'Closed session',
+      icon: 'info',
+      confirmButtonText: 'OK'
+    }).then(() => {
+      location.reload();
+    });
+  });
+
   const jwt = localStorage.getItem('jwt');
   const misPedidosLink = document.getElementById('mis-pedidos-link');
-  const logoutBtn = document.getElementById('logout-btn');
 
   if (jwt && misPedidosLink) {
     fetch("php/check_session.php", {
@@ -108,16 +124,12 @@ document.addEventListener('DOMContentLoaded', () => {
       .then(res => res.json())
       .then(data => {
         if (data.logged_in) {
-          if (misPedidosLink) misPedidosLink.style.display = "inline-block";
-          document.getElementById('logout-btn').style.display = 'inline-block';
-          document.getElementById('open-user-modal').style.display = 'none';
-          setupLogout();
+          misPedidosLink.style.display = "inline-block";
         }
       })
       .catch(() => {
         // Error o token inválido, ocultar por seguridad
         misPedidosLink.style.display = "none";
-        logoutBtn.style.display = 'none';
       });
   }
 
@@ -171,22 +183,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
-
-function setupLogout() {
-  const logoutBtn = document.getElementById('logout-btn');
-  if (!logoutBtn) return;
-
-  logoutBtn.addEventListener('click', () => {
-    localStorage.removeItem('jwt');
-    Swal.fire({
-      title: 'Closed session',
-      icon: 'info',
-      confirmButtonText: 'OK'
-    }).then(() => {
-      location.reload();
-    });
-  });
-}
 
 // Abrir y cerrar carrito (sidebar)
 document.getElementById('btn-carrito').addEventListener('click', () => {
