@@ -1,15 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const jwt = localStorage.getItem('jwt');
-  if (!jwt) {
-    Swal.fire({
-      title: 'Please log in first',
-      icon: 'info',
-      confirmButtonText: 'OK'
-    }).then(() => {
-      location.href = 'index.php';
-    });
-    return;
-  }
+  
 
   fetch('php/order/get_orders.php', {
     headers: {
