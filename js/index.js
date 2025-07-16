@@ -108,19 +108,23 @@ document.addEventListener('DOMContentLoaded', () => {
       .then(res => res.json())
       .then(data => {
         if (data.logged_in) {
-          misPedidosLink.style.display = "inline-block";
-          document.getElementById('logout-btn').style.display = 'inline-block';
-          document.getElementById('open-user-modal').style.display = 'none';
-          logoutBtn.addEventListener('click', () => {
-            localStorage.removeItem('jwt');
-            Swal.fire({
-              title: 'Closed session',
-              icon: 'info',
-              confirmButtonText: 'OK'
-            }).then(() => {
-              location.reload();
+          if (misPedidosLink) misPedidosLink.style.display = "inline-block";
+          const logoutBtn = document.getElementById('logout-btn');
+          const loginBtn = document.getElementById('open-user-modal');
+
+          if (logoutBtn) logoutBtn.style.display = 'inline-block';
+          if (loginBtn) loginBtn.style.display = 'none';
+
+          if (logoutBtn) {
+            logoutBtn.addEventListener('click', () => {
+              localStorage.removeItem('jwt');
+              Swal.fire({
+                title: 'Closed session',
+                icon: 'info',
+                confirmButtonText: 'OK'
+              }).then(() => location.reload());
             });
-          });
+          }
         }
       })
       .catch(() => {
