@@ -113,6 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const jwt = localStorage.getItem('jwt');
   const misPedidosLink = document.getElementById('mis-pedidos-link');
+  const misPedidosLinkMobile = document.getElementById('mis-pedidos-link-mobile');
 
   if (jwt && misPedidosLink) {
     fetch("php/check_session.php", {
@@ -124,12 +125,15 @@ document.addEventListener('DOMContentLoaded', () => {
       .then(res => res.json())
       .then(data => {
         if (data.logged_in) {
-          misPedidosLink.style.display = "inline-block";
+          if (misPedidosLinkDesktop) misPedidosLinkDesktop.style.display = "inline-block";
+          if (misPedidosLinkMobile) misPedidosLinkMobile.style.display = "block";
+          document.getElementById('logout-btn').style.display = 'inline-block';
+          document.getElementById('open-user-modal').style.display = 'none';
         }
       })
       .catch(() => {
-        // Error o token inválido, ocultar por seguridad
-        misPedidosLink.style.display = "none";
+        if (misPedidosLinkDesktop) misPedidosLinkDesktop.style.display = "none";
+        if (misPedidosLinkMobile) misPedidosLinkMobile.style.display = "none";
       });
   }
 
