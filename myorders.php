@@ -9,15 +9,13 @@ use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
 // Obtener JWT desde localStorage a través de una cookie (si lo pasas por JS)
-$headers = apache_request_headers();
-$authHeader = isset($headers['Authorization']) ? $headers['Authorization'] : (isset($headers['authorization']) ? $headers['authorization'] : '');
+$jwt = isset($_COOKIE['jwt']) ? $_COOKIE['jwt'] : null;
 
-if (!$authHeader || !preg_match('/Bearer\s(\S+)/', $authHeader, $matches)) {
+if (!$jwt) {
    header("Location: index.php");
    exit;
 }
 
-$jwt = $matches[1];
 $secretKey = "StetsonLatam1977"; // Usa la misma clave que en login.php
 
 try {
