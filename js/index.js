@@ -125,14 +125,14 @@ document.addEventListener('DOMContentLoaded', () => {
       .then(res => res.json())
       .then(data => {
         if (data.logged_in) {
-          if (misPedidosLinkDesktop) misPedidosLinkDesktop.style.display = "inline-block";
+          if (misPedidosLink) misPedidosLink.style.display = "inline-block";
           if (misPedidosLinkMobile) misPedidosLinkMobile.style.display = "block";
           document.getElementById('logout-btn').style.display = 'inline-block';
           document.getElementById('open-user-modal').style.display = 'none';
         }
       })
       .catch(() => {
-        if (misPedidosLinkDesktop) misPedidosLinkDesktop.style.display = "none";
+        if (misPedidosLink) misPedidosLink.style.display = "none";
         if (misPedidosLinkMobile) misPedidosLinkMobile.style.display = "none";
       });
   }
