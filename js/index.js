@@ -94,25 +94,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  const logoutBtn = document.getElementById('logout-btn');
-
-  if (localStorage.getItem('jwt')) {
-    logoutBtn.style.display = 'inline-block';
-  }
-
-  logoutBtn.addEventListener('click', () => {
-    localStorage.removeItem('jwt');
-    Swal.fire({
-      title: 'Closed session',
-      icon: 'info',
-      confirmButtonText: 'OK'
-    }).then(() => {
-      location.reload();
-    });
-  });
-
   const jwt = localStorage.getItem('jwt');
   const misPedidosLink = document.getElementById('mis-pedidos-link');
+  const logoutBtn = document.getElementById('logout-btn');
 
   if (jwt && misPedidosLink) {
     fetch("php/check_session.php", {
@@ -121,18 +105,29 @@ document.addEventListener('DOMContentLoaded', () => {
         "Authorization": "Bearer " + jwt
       }
     })
-    .then(res => res.json())
-    .then(data => {
-      if (data.logged_in) {
-        misPedidosLink.style.display = "inline-block";
-        document.getElementById('logout-btn').style.display = 'inline-block';
-        document.getElementById('open-user-modal').style.display = 'none';
-      }
-    })
-    .catch(() => {
-      // Error o token inválido, ocultar por seguridad
-      misPedidosLink.style.display = "none";
-    });
+      .then(res => res.json())
+      .then(data => {
+        if (data.logged_in) {
+          misPedidosLink.style.display = "inline-block";
+          document.getElementById('logout-btn').style.display = 'inline-block';
+          document.getElementById('open-user-modal').style.display = 'none';
+          logoutBtn.addEventListener('click', () => {
+            localStorage.removeItem('jwt');
+            Swal.fire({
+              title: 'Closed session',
+              icon: 'info',
+              confirmButtonText: 'OK'
+            }).then(() => {
+              location.reload();
+            });
+          });
+        }
+      })
+      .catch(() => {
+        // Error o token inválido, ocultar por seguridad
+        misPedidosLink.style.display = "none";
+        logoutBtn.style.display = 'none';
+      });
   }
 
   const slides = document.querySelectorAll('.slide');
@@ -174,12 +169,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const hamburger = document.getElementById('hamburger');
   const mobileMenu = document.getElementById('mobile-menu');
 
-  hamburger.addEventListener('click', function() {
+  hamburger.addEventListener('click', function () {
     mobileMenu.classList.toggle('active');
   });
 
   // Opcional: cerrar menú al hacer click fuera
-  document.addEventListener('click', function(e) {
+  document.addEventListener('click', function (e) {
     if (!mobileMenu.contains(e.target) && !hamburger.contains(e.target)) {
       mobileMenu.classList.remove('active');
     }
@@ -198,22 +193,22 @@ document.getElementById('cerrar-carrito').addEventListener('click', () => {
   document.getElementById('carrito-sidebar').classList.remove('open');
 });
 
-document.querySelector('.pagar-btn').addEventListener('click', function() {
+document.querySelector('.pagar-btn').addEventListener('click', function () {
   document.getElementById('checkout-modal').style.display = 'flex';
 });
-document.getElementById('cerrar-checkout').addEventListener('click', function() {
+document.getElementById('cerrar-checkout').addEventListener('click', function () {
   document.getElementById('checkout-modal').style.display = 'none';
   document.getElementById('checkout-form').style.display = 'block';
   document.getElementById('checkout-confirm').style.display = 'none';
 });
 
-document.getElementById('pais-select').addEventListener('change', function() {
+document.getElementById('pais-select').addEventListener('change', function () {
   const selected = this.options[this.selectedIndex];
   const code = selected.getAttribute('data-code') || '';
   document.getElementById('codigo-pais').textContent = code;
 });
 
-document.querySelector('select[name="metodo"]').addEventListener('change', function() {
+document.querySelector('select[name="metodo"]').addEventListener('change', function () {
   const tarjetaFields = document.getElementById('tarjeta-fields');
   const pseFields = document.getElementById('pse-fields');
   if (this.value === 'tarjeta') {
@@ -228,7 +223,7 @@ document.querySelector('select[name="metodo"]').addEventListener('change', funct
   }
 });
 
-document.getElementById('checkout-form').addEventListener('submit', function(e) {
+document.getElementById('checkout-form').addEventListener('submit', function (e) {
   e.preventDefault();
 
   const metodo = this.metodo.value;
