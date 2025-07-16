@@ -109,22 +109,9 @@ document.addEventListener('DOMContentLoaded', () => {
       .then(data => {
         if (data.logged_in) {
           if (misPedidosLink) misPedidosLink.style.display = "inline-block";
-          const logoutBtn = document.getElementById('logout-btn');
-          const loginBtn = document.getElementById('open-user-modal');
-
-          if (logoutBtn) logoutBtn.style.display = 'inline-block';
-          if (loginBtn) loginBtn.style.display = 'none';
-
-          if (logoutBtn) {
-            logoutBtn.addEventListener('click', () => {
-              localStorage.removeItem('jwt');
-              Swal.fire({
-                title: 'Closed session',
-                icon: 'info',
-                confirmButtonText: 'OK'
-              }).then(() => location.reload());
-            });
-          }
+          document.getElementById('logout-btn').style.display = 'inline-block';
+          document.getElementById('open-user-modal').style.display = 'none';
+          setupLogout();
         }
       })
       .catch(() => {
@@ -184,6 +171,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+
+function setupLogout() {
+  const logoutBtn = document.getElementById('logout-btn');
+  if (!logoutBtn) return;
+
+  logoutBtn.addEventListener('click', () => {
+    localStorage.removeItem('jwt');
+    Swal.fire({
+      title: 'Closed session',
+      icon: 'info',
+      confirmButtonText: 'OK'
+    }).then(() => {
+      location.reload();
+    });
+  });
+}
 
 // Abrir y cerrar carrito (sidebar)
 document.getElementById('btn-carrito').addEventListener('click', () => {
