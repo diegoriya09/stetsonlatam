@@ -105,7 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
             text: 'You have successfully logged out',
             icon: 'success',
             showConfirmButton: false,
-            timer: 5000,
+            timer: 2000,
             timerProgressBar: true
         }).then(async () => {
             const jwt = localStorage.getItem('jwt');

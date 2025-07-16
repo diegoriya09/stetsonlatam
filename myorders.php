@@ -66,7 +66,7 @@ $pedidos = $result->fetch_all(MYSQLI_ASSOC);
                <p>Date: <?= $pedido['fecha'] ?></p>
                <p>Total: $<?= number_format($pedido['total'], 2) ?></p>
                <p>Status: <?= $pedido['estado'] ?></p>
-               <a href="detalle_pedido.php?id=<?= $pedido['id'] ?>">View Details</a>
+               <a href="detailorder.php?id=<?= $pedido['id'] ?>">View Details</a>
             </div>
          <?php endforeach; ?>
       <?php endif; ?>
