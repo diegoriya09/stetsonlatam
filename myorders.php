@@ -2,11 +2,30 @@
 require_once 'php/conexion.php';
 require_once '../vendor/autoload.php';
 
-if (!$user_id) {
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
+
+// Obtener JWT desde localStorage a través de una cookie (si lo pasas por JS)
+$headers = apache_request_headers();
+$authHeader = isset($headers['Authorization']) ? $headers['Authorization'] : (isset($headers['authorization']) ? $headers['authorization'] : '');
+
+if (!$authHeader || !preg_match('/Bearer\s(\S+)/', $authHeader, $matches)) {
    header("Location: index.php");
    exit;
 }
 
+$jwt = $matches[1];
+$secretKey = "StetsonLatam1977"; // Usa la misma clave que en login.php
+
+try {
+   $decoded = JWT::decode($jwt, new Key($secretKey, 'HS256'));
+   $user_id = $decoded->user_id;
+} catch (Exception $e) {
+   header("Location: index.php");
+   exit;
+}
+
+// Ahora puedes ejecutar la consulta
 $stmt = $conn->prepare("SELECT * FROM pedidos WHERE user_id = ? ORDER BY fecha DESC");
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
