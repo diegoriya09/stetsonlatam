@@ -1,7 +1,15 @@
 document.addEventListener("DOMContentLoaded", () => {
   const jwt = localStorage.getItem("jwt");
 
-  // Validar sesión
+  // Si no hay JWT, no muestres la sección de órdenes ni lances el fetch
+  if (!jwt) {
+    document.getElementById("pedidos-container").innerHTML = `
+      <p>Please log in to view your orders.</p>
+    `;
+    return;
+  }
+
+  // Si hay JWT, validar sesión
   fetch("php/check_session.php", {
     method: "GET",
     headers: {
@@ -21,13 +29,14 @@ document.addEventListener("DOMContentLoaded", () => {
       redirectToLogin();
     });
 
-  // Cerrar modal de detalles
+  // Cierre del modal
   document.addEventListener("click", e => {
     if (e.target.classList.contains("close-btn")) {
       document.getElementById("detalle-modal").style.display = "none";
     }
   });
 });
+
 
 function redirectToLogin() {
   Swal.fire({
