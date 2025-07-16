@@ -111,31 +111,31 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // const jwt = localStorage.getItem('jwt');
-  // const misPedidosLink = document.getElementById('mis-pedidos-link');
-  // const misPedidosLinkMobile = document.getElementById('mis-pedidos-link-mobile');
+  const jwt = localStorage.getItem('jwt');
+  const misPedidosLink = document.getElementById('mis-pedidos-link');
+  const misPedidosLinkMobile = document.getElementById('mis-pedidos-link-mobile');
 
-  // if (jwt && misPedidosLink) {
-  //   fetch("php/check_session.php", {
-  //     method: "GET",
-  //     headers: {
-  //       "Authorization": "Bearer " + jwt
-  //     }
-  //   })
-  //     .then(res => res.json())
-  //     .then(data => {
-  //       if (data.logged_in) {
-  //         if (misPedidosLink) misPedidosLink.style.display = "inline-block";
-  //         if (misPedidosLinkMobile) misPedidosLinkMobile.style.display = "block";
-  //         document.getElementById('logout-btn').style.display = 'inline-block';
-  //         document.getElementById('open-user-modal').style.display = 'none';
-  //       }
-  //     })
-  //     .catch(() => {
-  //       if (misPedidosLink) misPedidosLink.style.display = "none";
-  //       if (misPedidosLinkMobile) misPedidosLinkMobile.style.display = "none";
-  //     });
-  // }
+  if (jwt && misPedidosLink) {
+    fetch("php/check_session.php", {
+      method: "GET",
+      headers: {
+        "Authorization": "Bearer " + jwt
+      }
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.logged_in) {
+          if (misPedidosLink) misPedidosLink.style.display = "inline-block";
+          if (misPedidosLinkMobile) misPedidosLinkMobile.style.display = "block";
+          document.getElementById('logout-btn').style.display = 'inline-block';
+          document.getElementById('open-user-modal').style.display = 'none';
+        }
+      })
+      .catch(() => {
+        if (misPedidosLink) misPedidosLink.style.display = "none";
+        if (misPedidosLinkMobile) misPedidosLinkMobile.style.display = "none";
+      });
+  }
 
   const slides = document.querySelectorAll('.slide');
   const dots = document.querySelectorAll('.dot');
