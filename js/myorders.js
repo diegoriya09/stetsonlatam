@@ -18,9 +18,8 @@ document.addEventListener("DOMContentLoaded", () => {
     .then((response) => response.json())
     .then((data) => {
       if (data.logged_in) {
-        const userId = data.user_id;
         // ✅ Llama al backend para obtener las órdenes del usuario
-        fetch("php/order/get_orders.php", {
+        fetch("../php/order/get_orders.php", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
