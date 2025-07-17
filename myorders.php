@@ -12,7 +12,7 @@ $pedidos = $result->fetch_all(MYSQLI_ASSOC);
 ?>
 
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 
 <head>
    <meta charset="UTF-8">
