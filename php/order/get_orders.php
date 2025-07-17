@@ -1,54 +1,54 @@
 <?php
-require_once '../conexion.php';
-require_once '../../vendor/autoload.php';
+require_once 'conexion.php';
+require_once '../vendor/autoload.php';
 
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
 header('Content-Type: application/json');
 
-function getBearerToken() {
-    $headers = null;
-
+// Obtener token JWT desde el header
+function getAuthorizationHeader() {
     if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
-        $headers = trim($_SERVER["HTTP_AUTHORIZATION"]);
+        return trim($_SERVER["HTTP_AUTHORIZATION"]);
     } elseif (isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION'])) {
-        $headers = trim($_SERVER["REDIRECT_HTTP_AUTHORIZATION"]);
+        return trim($_SERVER["REDIRECT_HTTP_AUTHORIZATION"]);
     } elseif (function_exists('apache_request_headers')) {
         $requestHeaders = apache_request_headers();
         foreach ($requestHeaders as $key => $value) {
             if (strtolower($key) === 'authorization') {
-                return trim(str_replace('Bearer', '', $value));
+                return trim($value);
             }
         }
     }
-
     return null;
 }
 
-$jwt = getBearerToken();
-$secretKey = "StetsonLatam1977";
-
-if (!$jwt) {
-    http_response_code(401);
-    echo json_encode(['error' => 'Token not provided']);
+$authHeader = getAuthorizationHeader();
+if (!$authHeader || !str_starts_with($authHeader, 'Bearer ')) {
+    echo json_encode(['success' => false, 'message' => 'Token no proporcionado']);
     exit;
 }
 
+$jwt = trim(str_replace('Bearer', '', $authHeader));
+$jwt = ltrim($jwt);
+$secret_key = "StetsonLatam1977";
+
 try {
-    $decoded = JWT::decode($jwt, new Key($secretKey, 'HS256'));
+    $decoded = JWT::decode($jwt, new Key($secret_key, 'HS256'));
     $user_id = $decoded->data->id;
 
-    $stmt = $conn->prepare("SELECT id, fecha, total, estado,
-        (SELECT COUNT(*) FROM pedido_detalles WHERE pedido_id = pedidos.id) AS total_items
-        FROM pedidos WHERE user_id = ? ORDER BY fecha DESC");
+    $stmt = $conn->prepare("SELECT id, total, fecha FROM pedidos WHERE user_id = ?");
     $stmt->bind_param("i", $user_id);
     $stmt->execute();
     $result = $stmt->get_result();
-    $pedidos = $result->fetch_all(MYSQLI_ASSOC);
 
-    echo json_encode($pedidos);
+    $orders = [];
+    while ($row = $result->fetch_assoc()) {
+        $orders[] = $row;
+    }
+
+    echo json_encode(['success' => true, 'orders' => $orders]);
 } catch (Exception $e) {
-    http_response_code(401);
-    echo json_encode(['error' => 'Invalid token', 'message' => $e->getMessage()]);
+    echo json_encode(['success' => false, 'message' => 'Token inválido', 'error' => $e->getMessage()]);
 }

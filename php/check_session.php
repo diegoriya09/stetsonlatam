@@ -17,7 +17,6 @@ function getAuthorizationHeader() {
         $headers = trim($_SERVER["REDIRECT_HTTP_AUTHORIZATION"]);
     } elseif (function_exists('apache_request_headers')) {
         $requestHeaders = apache_request_headers();
-        // Este header puede estar en minúsculas o con mayúsculas
         foreach ($requestHeaders as $key => $value) {
             if (strtolower($key) === 'authorization') {
                 $headers = trim($value);
@@ -29,25 +28,31 @@ function getAuthorizationHeader() {
     return $headers;
 }
 
-// ✅ Extraer el token del header
+// ✅ Obtener header Authorization
 $authHeader = getAuthorizationHeader();
-if (!$authHeader || !str_starts_with($authHeader, 'Bearer ')) {
-    echo json_encode(['logged_in' => false, 'message' => 'No se envió el token']);
+if (!$authHeader || !preg_match('/Bearer\s(\S+)/', $authHeader, $matches)) {
+    http_response_code(401); // Unauthorized
+    echo json_encode([
+        'logged_in' => false,
+        'message' => 'No se envió un token válido'
+    ]);
     exit;
 }
 
-$jwt = trim(str_replace('Bearer', '', $authHeader));
-$jwt = ltrim($jwt);
+// ✅ Extraer el token limpio
+$jwt = $matches[1];
 
 $secret_key = "StetsonLatam1977";
 
 try {
     $decoded = JWT::decode($jwt, new Key($secret_key, 'HS256'));
+
     echo json_encode([
         'logged_in' => true,
         'user_id' => $decoded->data->id
     ]);
 } catch (Exception $e) {
+    http_response_code(401); // Unauthorized
     echo json_encode([
         'logged_in' => false,
         'message' => 'Token inválido',

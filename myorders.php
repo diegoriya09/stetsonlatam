@@ -33,17 +33,9 @@ $pedidos = $result->fetch_all(MYSQLI_ASSOC);
    <?php include 'cart.php'; ?>
    <?php include 'checkout.php'; ?>
 
-   <div class="container">
-      <h2>My Orders</h2>
-      <div id="pedidos-container"></div>
-   </div>
-
-   <!-- Modal para detalles del pedido -->
-   <div id="detalle-modal">
-      <div id="detalle-pedido">
-         <button class="close-btn">&times;</button>
-         <!-- Aquí JS inyecta los productos del pedido -->
-      </div>
+   <div id="orders-container">
+      <h1>Mis Órdenes</h1>
+      <div id="orders-list"></div>
    </div>
 
    <?php include 'footer.php'; ?>
