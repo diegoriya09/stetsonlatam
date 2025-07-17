@@ -769,6 +769,12 @@ nav.main-nav {
   align-content: center;
 }
 
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* altura completa de la ventana */
+}
+
 .footer-columns {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
