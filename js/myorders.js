@@ -2,41 +2,32 @@ document.addEventListener("DOMContentLoaded", () => {
   const jwt = localStorage.getItem("jwt");
 
   if (!jwt) {
-    document.getElementById("pedidos-container").innerHTML = `
-      <p>Please log in to view your orders.</p>
-    `;
+    document.getElementById("pedidos-container").innerHTML =
+      `<p>Please log in to view your orders.</p>`;
     return;
   }
 
-  // Validar sesión
+  // Validar sesión con JWT
   fetch("php/check_session.php", {
     method: "GET",
     headers: {
       "Authorization": "Bearer " + jwt
     }
   })
-    .then(res => {
-      if (!res.ok) throw new Error("Respuesta no OK desde el servidor");
-      return res.json();
-    })
+    .then(res => res.json())
     .then(data => {
-      if (data && data.logged_in === true) {
+      if (data.logged_in) {
         loadOrders(jwt);
       } else {
-        console.warn("JWT inválido o sesión expirada:", data);
-        document.getElementById("pedidos-container").innerHTML = `
-          <p>Your session has expired. <a href="login.php">Login again</a>.</p>
-        `;
+        redirectToLogin();
       }
     })
     .catch(err => {
-      console.error("Error verificando sesión:", err);
-      document.getElementById("pedidos-container").innerHTML = `
-        <p>We couldn't verify your session. Please check your connection or try again later.</p>
-      `;
+      console.error("Error checking session:", err);
+      redirectToLogin();
     });
 
-  // Cierre del modal
+  // Cerrar modal detalle
   document.addEventListener("click", e => {
     if (e.target.classList.contains("close-btn")) {
       document.getElementById("detalle-modal").style.display = "none";
@@ -59,8 +50,7 @@ function redirectToLogin() {
 function loadOrders(jwt) {
   fetch('php/order/get_orders.php', {
     headers: {
-      'Authorization': 'Bearer ' + jwt,
-      'Content-Type': 'application/json'
+      'Authorization': 'Bearer ' + jwt
     }
   })
     .then(res => {
@@ -105,8 +95,7 @@ function setupDetalleButtons(jwt) {
 
       fetch(`php/order/get_detail_order.php?pedido_id=${pedidoId}`, {
         headers: {
-          'Authorization': 'Bearer ' + jwt,
-          'Content-Type': 'application/json'
+          'Authorization': 'Bearer ' + jwt
         }
       })
         .then(res => {
@@ -123,7 +112,7 @@ function setupDetalleButtons(jwt) {
             detalleDiv.innerHTML = productos.map(p => `
               <div class="producto-detalle">
                 <p><strong>${p.nombre_producto}</strong></p>
-                <p>Quantity: ${p.cantidad} - $${p.precio}</p>
+                <p>Quantity: ${p.cantidad} - $${p.precio.toLocaleString()}</p>
                 <p>Color: ${p.color_nombre || '-'} / Size: ${p.size_nombre || '-'}</p>
               </div>
             `).join('');
