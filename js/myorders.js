@@ -21,11 +21,11 @@ document.addEventListener("DOMContentLoaded", () => {
         const userId = data.user_id;
         // ✅ Llama al backend para obtener las órdenes del usuario
         fetch("php/order/get_orders.php", {
-          method: "POST",
+          method: "GET",
           headers: {
             "Content-Type": "application/json",
+            Authorization: "Bearer " + jwt,
           },
-          body: JSON.stringify({ user_id: userId }),
         })
           .then((res) => res.json())
           .then((ordersData) => {

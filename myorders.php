@@ -36,7 +36,7 @@ $pedidos = $result->fetch_all(MYSQLI_ASSOC);
    <?php include 'checkout.php'; ?>
 
    <div id="orders-container">
-      <h1>Mis Órdenes</h1>
+      <h1>My orders</h1>
       <div id="orders-list"></div>
    </div>
 
