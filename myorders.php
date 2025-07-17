@@ -3,6 +3,8 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+
+require_once 'php/conexion.php';
 // Ahora puedes ejecutar la consulta
 $stmt = $conn->prepare("SELECT * FROM pedidos WHERE user_id = ? ORDER BY fecha DESC");
 $stmt->bind_param("i", $user_id);
