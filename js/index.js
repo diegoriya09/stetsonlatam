@@ -252,44 +252,38 @@ document.getElementById('checkout-form').addEventListener('submit', function (e)
   }
 
   // Enviar al backend (checkout.php)
-  const formData = new FormData(form);
+  const form = document.getElementById("checkout-form");
 
-  fetch("php/checkout.php", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${jwt}`,
-    },
-    body: JSON.stringify({ metodo_pago: metodoPago }),
-  })
-    .then(response => response.json())
-    .then(data => {
-      console.log("Respuesta del servidor:", data); // ← esto te ayudará a depurar
+  if (form) {
+    form.addEventListener("submit", function (e) {
+      e.preventDefault(); // 👈 Evita que se recargue la página
 
-      if (data.success) {
-        // ✅ Pago exitoso, cerrar modal de error si estaba abierto
-        const modal = document.querySelector(".modal-container");
-        if (modal) modal.classList.remove("show");
+      const formData = new FormData(form);
 
-        // ✅ Vaciar carrito del frontend
-        localStorage.removeItem("cart");
-
-        // ✅ Actualizar la vista del carrito
-        document.getElementById("cart-items").innerHTML = "";
-        document.getElementById("cart-count").textContent = "0";
-        document.getElementById("cart-total").textContent = "$0";
-
-        alert("Pago exitoso, pedido creado");
-
-        // También podrías redirigir o mostrar modal de éxito si quieres
-      } else {
-        // ⚠️ Mostrar el mensaje de error solo si falló
-        document.querySelector(".modal-container").classList.add("show");
-      }
-    })
-    .catch((error) => {
-      console.error("Error en la solicitud:", error);
-      document.querySelector(".modal-container").classList.add("show");
+      fetch("ruta_a_tu_php/checkout.php", {
+        method: "POST",
+        body: formData
+      })
+        .then(response => response.text()) // O .json() si devuelves JSON
+        .then(result => {
+          console.log(result);
+          // Puedes mostrar un mensaje o cerrar el modal aquí
+          if (result.includes("¡Pago procesado correctamente!")) {
+            alert("✅ Pago exitoso");
+            form.reset();
+            localStorage.removeItem("cart");
+            document.getElementById("cart-items").innerHTML = "";
+            document.getElementById("cart-total").textContent = "$0";
+            document.getElementById("cart-count").textContent = "0";
+          } else {
+            alert("❌ Error: " + result);
+          }
+        })
+        .catch(error => {
+          console.error("Error:", error);
+          alert("Hubo un error al procesar el pago.");
+        });
     });
+  }
 });
 
