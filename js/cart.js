@@ -267,47 +267,59 @@ function renderItem(product) {
   `;
 }
 
-document.querySelectorAll('.cantidad-input').forEach(input => {
-  input.addEventListener('change', (e) => {
-    const newQty = parseInt(e.target.value, 10);
-    const producto_id = parseInt(e.target.dataset.id);
-    const color_id = parseInt(e.target.dataset.colorId);
-    const size_id = parseInt(e.target.dataset.sizeId);
-    const jwt = localStorage.getItem("jwt");
+function updateQuantity(input) {
+  const newQty = parseInt(input.value, 10);
+  const producto_id = parseInt(input.dataset.id);
+  const color_id = parseInt(input.dataset.colorId);
+  const size_id = parseInt(input.dataset.sizeId);
+  const jwt = localStorage.getItem("jwt");
 
-    if (newQty < 1) return; // No permitir cantidad negativa o cero
+  if (newQty < 1) return; // Evita valores inválidos
 
-    if (jwt) {
-      // Usuario logueado: actualizar en BD
-      fetch('php/cart/update_quantity.php', {
-        method: 'POST',
-        headers: {
-          'Authorization': 'Bearer ' + jwt,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ producto_id, color_id, size_id, quantity: newQty })
-      })
-      .then(res => res.json())
-      .then(data => {
-        if (data.success) {
-          loadCart(true); // recarga carrito
-        } else {
-          console.error('Error updating quantity:', data.message);
-        }
-      });
-    } else {
-      // LocalStorage
-      let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-      const index = carrito.findIndex(p =>
-        p.id === producto_id &&
-        parseInt(p.color_id) === color_id &&
-        parseInt(p.size_id) === size_id
-      );
-      if (index !== -1) {
-        carrito[index].quantity = newQty;
-        localStorage.setItem('carrito', JSON.stringify(carrito));
-        loadCart(false);
+  if (jwt) {
+    // Usuario logueado
+    fetch('php/cart/update_quantity.php', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + jwt,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ producto_id, color_id, size_id, quantity: newQty })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        loadCart(true); // recarga carrito desde BD
+      } else {
+        console.error('Error updating quantity:', data.message);
       }
+    });
+  } else {
+    // Usuario no logueado
+    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    const index = carrito.findIndex(p =>
+      p.id === producto_id &&
+      parseInt(p.color_id) === color_id &&
+      parseInt(p.size_id) === size_id
+    );
+    if (index !== -1) {
+      carrito[index].quantity = newQty;
+      localStorage.setItem('carrito', JSON.stringify(carrito));
+      loadCart(false); // recarga carrito local
+    }
+  }
+}
+
+// Agrega eventos a todos los inputs de cantidad
+document.querySelectorAll('.cantidad-input').forEach(input => {
+  input.addEventListener('change', () => {
+    updateQuantity(input);
+  });
+
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault(); // evita que se envíe un formulario si lo hay
+      updateQuantity(input);
     }
   });
 });
