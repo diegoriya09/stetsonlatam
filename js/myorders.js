@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Cierra el modal
 
-  const ordermodal = document.getElementById("orderModal");
+  const ordermodal = document.querySelector(".ordermodal");
   const closeBtn = document.querySelector(".close-modal-order");
 
   closeBtn.addEventListener("click", () => {
