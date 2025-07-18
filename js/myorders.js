@@ -52,21 +52,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Cierra el modal
 
-  const modal = document.getElementById("orderModal");
+  const ordermodal = document.getElementById("orderModal");
   const closeBtn = document.querySelector(".close-modal-order");
 
   closeBtn.addEventListener("click", () => {
-    modal.classList.add("hidden");
+    ordermodal.classList.add("hidden");
   });
 
   // También cerrar si se hace click fuera del contenido
-  modal.addEventListener("click", (e) => {
-    if (e.target === modal) modal.classList.add("hidden");
+  ordermodal.addEventListener("click", (e) => {
+    if (e.target === ordermodal) ordermodal.classList.add("hidden");
   });
 });
 
 function openModalWithOrderDetails(orderId) {
-  const modal = document.getElementById("orderModal");
+  const ordermodal = document.getElementById("orderModal");
   const detailsContainer = document.getElementById("orderDetails");
 
   fetch(`php/order/get_detail_order.php?id=${orderId}`)
@@ -82,13 +82,14 @@ function openModalWithOrderDetails(orderId) {
         data.details.forEach((item) => {
           html += `
             <li>
-              ${item.nombre} - Quantity: ${item.cantidad} - Price: $${item.precio}
+              ${item.name} - Quantity: ${item.cantidad} - Price: $${item.price} - Size: ${item.size || "N/A"}
+              ${item.color ? `- Color: ${item.color}` : ""}
             </li>
           `;
         });
         html += "</ul>";
         detailsContainer.innerHTML = html;
-        modal.classList.remove("hidden");
+        ordermodal.classList.remove("hidden");
       } else {
         detailsContainer.innerHTML = "<p>Error loading details.</p>";
       }
