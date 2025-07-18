@@ -236,7 +236,7 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
                         </select>
                 </td>";
             echo "<td><button type='submit'>Update</button></form></td>";
-            echo "<td><button onclick='openModalWithOrderDetails({$row['id']})'>View</button></td>";
+            echo "<td><button onclick='showOrderDetails({$row['id']})'>View</button></td>";
             echo "</tr>";
         }
 
@@ -245,10 +245,10 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
     </tbody>
 </table>
 <!-- Modal Detalles -->
-<div id="admin-order-modal" class="ordermodal hidden">
+<div class="ordermodal hidden">
     <div class="modal-content-order">
         <span class="close-modal-order">&times;</span>
-        <h2>Productos del pedido</h2>
+        <h2>Order products</h2>
         <div id="admin-order-details"></div>
     </div>
 </div>
@@ -302,14 +302,18 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
             });
     }
 
-    // Close modal
-    document.querySelector(".close-modal-order").addEventListener("click", () => {
-        document.getElementById("admin-order-modal").classList.add("hidden");
+    // Cierra el modal de order
+    const ordermodal = document.querySelector(".ordermodal");
+    const closeBtn = document.querySelector(".close-modal-order");
+
+    closeBtn.addEventListener("click", () => {
+        ordermodal.classList.add("hidden");
     });
-    document.querySelector(".ordermodal").addEventListener("click", (e) => {
-        if (e.target.classList.contains("ordermodal")) {
-            e.target.classList.add("hidden");
+
+    // También cerrar si se hace click fuera del contenido
+    ordermodal.addEventListener("click", (e) => {
+        if (e.target === ordermodal) {
+            ordermodal.classList.add("hidden");
         }
     });
 </script>
-<script src="js/myorders.js?v=<?php echo time(); ?>"></script>
