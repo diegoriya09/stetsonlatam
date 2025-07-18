@@ -42,8 +42,8 @@ $pedidos = $result->fetch_all(MYSQLI_ASSOC);
 
    <!-- Modal para detalle del pedido -->
    <div id="orderModal" class="modal hidden">
-      <div class="modal-content">
-         <span class="close-modal">&times;</span>
+      <div class="modal-content-order">
+         <span class="close-modal-order">&times;</span>
          <h2>Order Details</h2>
          <div id="orderDetails"></div>
       </div>
