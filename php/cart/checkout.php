@@ -25,7 +25,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!$user_id) die("Usuario no autenticado");
 
     // Leer carrito desde DB si logueado (sino usar localStorage y enviarlo desde JS)
-    $stmt = $conn->prepare("SELECT c.*, p.nombre, p.imagen, p.precio FROM cart c JOIN productos p ON c.producto_id = p.id WHERE c.user_id = ?");
+    $stmt = $conn->prepare("
+    SELECT 
+        c.*, 
+        p.name AS nombre, 
+        p.image AS imagen, 
+        p.price AS precio,
+        col.name AS color_nombre,
+        s.name AS size_nombre
+    FROM cart c
+    JOIN productos p ON c.producto_id = p.id
+    LEFT JOIN colors col ON c.color_id = col.id
+    LEFT JOIN sizes s ON c.size_id = s.id
+    WHERE c.user_id = ?
+");
     $stmt->bind_param("i", $user_id);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -43,8 +56,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Guardar pedido en tabla 'pedidos'
-    $stmt = $conn->prepare("INSERT INTO pedidos (user_id, total, estado) VALUES (?, ?, 'Pendiente')");
-    $stmt->bind_param("id", $user_id, $total);
+    $stmt = $conn->prepare("
+    INSERT INTO pedidos 
+    (user_id, total, estado, nombre_cliente, email_cliente, pais, ciudad, direccion, telefono, metodo_pago)
+    VALUES (?, ?, 'Pendiente', ?, ?, ?, ?, ?, ?, ?)
+");
+    $stmt->bind_param("idsssssss", $user_id, $total, $nombre, $email, $pais, $ciudad, $direccion, $telefono, $metodo);
     if (!$stmt->execute()) die("Error al crear pedido");
 
     $pedido_id = $conn->insert_id;
@@ -65,7 +82,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $item['size_id'],
             $item['size_nombre']
         );
-        $stmt->execute();
+
+        if (!$stmt->execute()) {
+            die("Error insertando detalle del pedido: " . $stmt->error);
+        }
     }
 
     // Vaciar carrito
@@ -80,4 +100,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     ]);
     exit;
 }
-?>
