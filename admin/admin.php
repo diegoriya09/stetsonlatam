@@ -325,8 +325,17 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
                             <option value='Cancelado' " . ($row['estado'] == 'Cancelado' ? 'selected' : '') . ">Cancelado</option>
                         </select>
                 </td>";
-            echo "<td><button type='submit'>Update</button></form></td>";
-            echo "<td><button onclick='showOrderDetails({$row['id']})'>View</button></td>";
+            echo "<td>
+        <button type='submit' title='Update' style='background:none;border:none;cursor:pointer;'>
+          <i class='fas fa-save' style='color:#28a745;font-size:18px;'></i>
+        </button>
+      </form></td>";
+
+            echo "<td>
+        <button title='View details' onclick='showOrderDetails({$row['id']})' style='background:none;border:none;cursor:pointer;'>
+          <i class='fas fa-eye' style='color:#007bff;font-size:18px;'></i>
+        </button>
+      </td>";
             echo "</tr>";
         }
 
