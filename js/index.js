@@ -254,45 +254,42 @@ document.getElementById('checkout-form').addEventListener('submit', function (e)
   // Enviar al backend (checkout.php)
   const formData = new FormData(form);
 
-  fetch('php/cart/checkout.php', {
-    method: 'POST',
-    body: formData
+  fetch("php/checkout.php", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${jwt}`,
+    },
+    body: JSON.stringify({ metodo_pago: metodoPago }),
   })
-    .then(res => res.json())
+    .then(response => response.json())
     .then(data => {
-      const confirmDiv = document.getElementById('checkout-confirm');
-      form.style.display = 'none';
+      console.log("Respuesta del servidor:", data); // ← esto te ayudará a depurar
 
       if (data.success) {
-        // Mostrar mensaje de éxito
-        document.getElementById("checkout-message").innerHTML = `
-        <h2>✅ Pedido confirmado</h2>
-        <p>${data.message}</p>
-        <p><strong>Número de pedido:</strong> ${data.pedido_id}</p>
-  `;
-        // Llamar para actualizar visualmente el carrito
-        loadCart(true);
+        // ✅ Pago exitoso, cerrar modal de error si estaba abierto
+        const modal = document.querySelector(".modal-container");
+        if (modal) modal.classList.remove("show");
 
-        // Limpia también el localStorage en caso de estar en uso
-        localStorage.removeItem("carrito");
+        // ✅ Vaciar carrito del frontend
+        localStorage.removeItem("cart");
+
+        // ✅ Actualizar la vista del carrito
+        document.getElementById("cart-items").innerHTML = "";
+        document.getElementById("cart-count").textContent = "0";
+        document.getElementById("cart-total").textContent = "$0";
+
+        alert("Pago exitoso, pedido creado");
+
+        // También podrías redirigir o mostrar modal de éxito si quieres
       } else {
-        confirmDiv.innerHTML = `
-        <h3 style="color: red;">Payment failed</h3>
-        <p>${data.message || 'An error occurred. Please try again.'}</p>
-      `;
+        // ⚠️ Mostrar el mensaje de error solo si falló
+        document.querySelector(".modal-container").classList.add("show");
       }
-
-      confirmDiv.style.display = 'block';
     })
-    .catch(err => {
-      console.error("Checkout error:", err);
-      const confirmDiv = document.getElementById('checkout-confirm');
-      form.style.display = 'none';
-      confirmDiv.innerHTML = `
-      <h3 style="color: red;">Error</h3>
-      <p>There was a problem processing your payment. Try again later.</p>
-    `;
-      confirmDiv.style.display = 'block';
+    .catch((error) => {
+      console.error("Error en la solicitud:", error);
+      document.querySelector(".modal-container").classList.add("show");
     });
 });
 
