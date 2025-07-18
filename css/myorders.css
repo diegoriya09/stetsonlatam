@@ -87,6 +87,10 @@
   color: #000;
 }
 
+.hidden {
+  display: none;
+}
+
 /* Responsive */
 @media (max-width: 600px) {
   .order {

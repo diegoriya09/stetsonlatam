@@ -50,30 +50,34 @@ document.addEventListener("DOMContentLoaded", () => {
         "<p>Could not verify your session. Please try again later.</p>";
     });
 
-  // Cierra el modal
+  // Cierra el modal de order
 
   const ordermodal = document.querySelector(".ordermodal");
   const closeBtn = document.querySelector(".close-modal-order");
 
   closeBtn.addEventListener("click", () => {
     ordermodal.classList.add("hidden");
-  }); 
+  });
 
+  // También cerrar si se hace click fuera del contenido
   ordermodal.addEventListener("click", (e) => {
-    if (e.target === ordermodal) ordermodal.classList.add("hidden");
+    if (e.target === ordermodal) {
+      ordermodal.classList.add("hidden");
+    }
   });
 });
 
 function openModalWithOrderDetails(orderId) {
-  const ordermodal = document.getElementById("orderModal");
+  const ordermodal = document.querySelector(".ordermodal");
   const detailsContainer = document.getElementById("orderDetails");
-  
+
   fetch(`php/order/get_detail_order.php?id=${orderId}`)
     .then((res) => res.json())
     .then((data) => {
       if (data.success) {
         if (data.details.length === 0) {
           detailsContainer.innerHTML = "<p>No details found for this order.</p>";
+          ordermodal.classList.remove("hidden");
           return;
         }
 
@@ -91,11 +95,13 @@ function openModalWithOrderDetails(orderId) {
         ordermodal.classList.remove("hidden");
       } else {
         detailsContainer.innerHTML = "<p>Error loading details.</p>";
+        ordermodal.classList.remove("hidden");
       }
     })
     .catch((err) => {
       console.error(err);
       detailsContainer.innerHTML = "<p>Network error.</p>";
+      ordermodal.classList.remove("hidden");
     });
 }
 
