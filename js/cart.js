@@ -245,7 +245,16 @@ function renderItem(product) {
       <img src="${image}" alt="${name}" class="carrito-img" loading="lazy">
       <div class="carrito-info">
         <h4>${name}</h4>
-        <p>$${price.toLocaleString()} x ${quantity}</p>
+        <div class="cantidad-control">
+          <label>$${price.toLocaleString()} x </label>
+          <input type="number"
+                class="cantidad-input"
+                value="${quantity}"
+                min="1"
+                data-id="${id}"
+                data-color-id="${color_id}"
+                data-size-id="${size_id}" />
+        </div>
         ${color_name ? `<p><strong>Color:</strong> ${color_name} <span style="display:inline-block;width:16px;height:16px;border-radius:50%;background:${hex};border:1px solid #000;margin-left:5px;vertical-align:middle;"></span></p>` : ''}
         ${size_name ? `<p><strong>Size:</strong> ${size_name}</p>` : ''}
         <a class="remove-btn"
@@ -257,3 +266,48 @@ function renderItem(product) {
     </div>
   `;
 }
+
+document.querySelectorAll('.cantidad-input').forEach(input => {
+  input.addEventListener('change', (e) => {
+    const newQty = parseInt(e.target.value, 10);
+    const producto_id = parseInt(e.target.dataset.id);
+    const color_id = parseInt(e.target.dataset.colorId);
+    const size_id = parseInt(e.target.dataset.sizeId);
+    const jwt = localStorage.getItem("jwt");
+
+    if (newQty < 1) return; // No permitir cantidad negativa o cero
+
+    if (jwt) {
+      // Usuario logueado: actualizar en BD
+      fetch('php/cart/update_quantity.php', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + jwt,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ producto_id, color_id, size_id, quantity: newQty })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          loadCart(true); // recarga carrito
+        } else {
+          console.error('Error updating quantity:', data.message);
+        }
+      });
+    } else {
+      // LocalStorage
+      let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+      const index = carrito.findIndex(p =>
+        p.id === producto_id &&
+        parseInt(p.color_id) === color_id &&
+        parseInt(p.size_id) === size_id
+      );
+      if (index !== -1) {
+        carrito[index].quantity = newQty;
+        localStorage.setItem('carrito', JSON.stringify(carrito));
+        loadCart(false);
+      }
+    }
+  });
+});
