@@ -101,11 +101,101 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
     th.description-header {
         max-width: 320px;
     }
+
+    /* Cada orden */
+    .ordermodal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        /* fondo oscuro */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+    }
+
+    .order {
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.06);
+        transition: transform 0.2s ease;
+    }
+
+    .order:hover {
+        transform: translateY(-3px);
+    }
+
+    /* Botón Ver Detalle */
+    .btn-detalle {
+        background-color: #004aad;
+        color: #fff;
+        border: none;
+        padding: 10px 18px;
+        border-radius: 6px;
+        cursor: pointer;
+        margin-top: 10px;
+        transition: background-color 0.3s;
+    }
+
+    .btn-detalle:hover {
+        background-color: #003a8c;
+    }
+
+    /* Modal para detalles */
+    .modal.hidden {
+        display: none;
+    }
+
+    .modal-content-order {
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 12px;
+        max-width: 600px;
+        width: 90%;
+        max-height: 80vh;
+        overflow-y: auto;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        position: relative;
+    }
+
+    .close-modal-order {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        font-size: 24px;
+        font-weight: bold;
+        cursor: pointer;
+        color: #666;
+    }
+
+    .close-modal-order:hover {
+        color: #000;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+        .order {
+            padding: 15px;
+        }
+
+        .modal-content {
+            padding: 20px;
+        }
+    }
 </style>
 
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="stylesheet" href="css/myorders.css?v=<?php echo time(); ?>">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
