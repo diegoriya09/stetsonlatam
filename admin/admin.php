@@ -105,6 +105,7 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
 
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="css/myorders.css?v=<?php echo time(); ?>">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
@@ -191,6 +192,66 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
         ?>
     </tbody>
 </table>
+<hr style="margin: 40px 0;">
+
+<h2 style="text-align:center; color:#3c3737;">Order Management</h2>
+
+<table border="1" cellpadding="8" style="margin: 30px auto; width: 95%; background:#fff;">
+    <thead>
+        <tr>
+            <th>Order ID</th>
+            <th>Client</th>
+            <th>Email</th>
+            <th>Total</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Update</th>
+            <th>Details</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+        require '../php/conexion.php';
+
+        $sql = "SELECT p.id, p.total, p.fecha, p.estado, u.name, u.email
+                FROM pedidos p
+                JOIN users u ON p.user_id = u.id
+                ORDER BY p.fecha DESC";
+        $result = $conn->query($sql);
+
+        while ($row = $result->fetch_assoc()) {
+            echo "<tr>";
+            echo "<td>{$row['id']}</td>";
+            echo "<td>" . htmlspecialchars($row['name']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['email']) . "</td>";
+            echo "<td>$" . number_format($row['total'], 2) . "</td>";
+            echo "<td>{$row['fecha']}</td>";
+            echo "<td>
+                    <form method='POST' action='update_order_status.php'>
+                        <input type='hidden' name='order_id' value='{$row['id']}'>
+                        <select name='estado'>
+                            <option value='Pendiente' " . ($row['estado'] == 'Pendiente' ? 'selected' : '') . ">Pendiente</option>
+                            <option value='Enviado' " . ($row['estado'] == 'Enviado' ? 'selected' : '') . ">Enviado</option>
+                            <option value='Cancelado' " . ($row['estado'] == 'Cancelado' ? 'selected' : '') . ">Cancelado</option>
+                        </select>
+                </td>";
+            echo "<td><button type='submit'>Update</button></form></td>";
+            echo "<td><button onclick='showOrderDetails({$row['id']})'>View</button></td>";
+            echo "</tr>";
+        }
+
+        $conn->close();
+        ?>
+    </tbody>
+</table>
+<!-- Modal Detalles -->
+<div id="admin-order-modal" class="ordermodal hidden">
+    <div class="modal-content-order">
+        <span class="close-modal-order">&times;</span>
+        <h2>Productos del pedido</h2>
+        <div id="admin-order-details"></div>
+    </div>
+</div>
 <script>
     const logoutBtn = document.getElementById('logout-btn');
 
@@ -210,4 +271,44 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
             });
         });
     }
+</script>
+<script>
+    function showOrderDetails(orderId) {
+        const modal = document.getElementById('admin-order-modal');
+        const detailsDiv = document.getElementById('admin-order-details');
+
+        fetch(`../php/order/get_detail_order.php?id=${orderId}`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.success && data.details.length > 0) {
+                    let html = "<ul>";
+                    data.details.forEach(item => {
+                        html += `<li>
+                        ${item.name} - Quantity: ${item.cantidad} - Price: $${item.price} - Size: ${item.size || "N/A"}
+                        ${item.color ? `- Color: ${item.color}` : ""}
+                    </li>`;
+                    });
+                    html += "</ul>";
+                    detailsDiv.innerHTML = html;
+                } else {
+                    detailsDiv.innerHTML = "<p>No products found for this order.</p>";
+                }
+
+                modal.classList.remove("hidden");
+            })
+            .catch(() => {
+                detailsDiv.innerHTML = "<p>Error loading details.</p>";
+                modal.classList.remove("hidden");
+            });
+    }
+
+    // Close modal
+    document.querySelector(".close-modal-order").addEventListener("click", () => {
+        document.getElementById("admin-order-modal").classList.add("hidden");
+    });
+    document.querySelector(".ordermodal").addEventListener("click", (e) => {
+        if (e.target.classList.contains("ordermodal")) {
+            e.target.classList.add("hidden");
+        }
+    });
 </script>
