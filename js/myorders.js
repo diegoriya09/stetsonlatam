@@ -51,18 +51,17 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
   // Cierra el modal
-  document.addEventListener("DOMContentLoaded", () => {
-    const modal = document.getElementById("orderModal");
-    const closeBtn = document.querySelector(".close-modal");
 
-    closeBtn.addEventListener("click", () => {
-      modal.classList.add("hidden");
-    });
+  const modal = document.getElementById("orderModal");
+  const closeBtn = document.querySelector(".close-modal-order");
 
-    // También cerrar si se hace click fuera del contenido
-    modal.addEventListener("click", (e) => {
-      if (e.target === modal) modal.classList.add("hidden");
-    });
+  closeBtn.addEventListener("click", () => {
+    modal.classList.add("hidden");
+  });
+
+  // También cerrar si se hace click fuera del contenido
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) modal.classList.add("hidden");
   });
 });
 
