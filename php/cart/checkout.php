@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     JOIN productos p ON c.producto_id = p.id
     LEFT JOIN colors col ON c.color_id = col.id
     LEFT JOIN sizes s ON c.size_id = s.id
-    WHERE c.userS_id = ?
+    WHERE c.users_id = ?
 ");
     $stmt->bind_param("i", $user_id);
     $stmt->execute();
@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     while ($row = $result->fetch_assoc()) {
         $items[] = $row;
-        $total += $row['precio'] * $row['cantidad'];
+        $total += $row['precio'] * $row['quantity'];
     }
 
     if (count($items) === 0) {
@@ -113,7 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Vaciar carrito
-    $stmt = $conn->prepare("DELETE FROM cart WHERE user_id = ?");
+    $stmt = $conn->prepare("DELETE FROM cart WHERE users_id = ?");
     $stmt->bind_param("i", $user_id);
     $stmt->execute();
 
