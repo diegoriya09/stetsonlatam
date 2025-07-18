@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     JOIN productos p ON c.producto_id = p.id
     LEFT JOIN colors col ON c.color_id = col.id
     LEFT JOIN sizes s ON c.size_id = s.id
-    WHERE c.user_id = ?
+    WHERE c.userS_id = ?
 ");
     $stmt->bind_param("i", $user_id);
     $stmt->execute();
