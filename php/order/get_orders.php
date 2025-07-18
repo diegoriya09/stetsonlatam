@@ -38,7 +38,7 @@ try {
     $decoded = JWT::decode($jwt, new Key($secret_key, 'HS256'));
     $user_id = $decoded->data->id;
 
-    $stmt = $conn->prepare("SELECT id, total, fecha FROM pedidos WHERE user_id = ?");
+    $stmt = $conn->prepare("SELECT id, total, fecha, estado FROM pedidos WHERE user_id = ?");
     $stmt->bind_param("i", $user_id);
     $stmt->execute();
     $result = $stmt->get_result();

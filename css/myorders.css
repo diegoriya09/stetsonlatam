@@ -1,70 +1,99 @@
-/* ======= My Orders - Estilo general ======= */
-.container {
-  max-width: 1000px;
+/* Contenedor principal de las órdenes */
+#orders-section {
+  max-width: 800px;
   margin: 40px auto;
+  padding: 0 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#orders-section h1, #orders-section h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #222;
+}
+
+/* Cada orden */
+.order {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
   padding: 20px;
-  background-color: #fff;
-  border-radius: 16px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  font-family: 'Lora', serif;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.06);
+  transition: transform 0.2s ease;
 }
 
-/* ======= Pedido individual ======= */
-.pedido-item {
-  border-bottom: 1px solid #ddd;
-  padding: 20px 0;
+.order:hover {
+  transform: translateY(-3px);
 }
 
-.pedido-item h3 {
-  margin: 0 0 10px;
-  color: #333;
-  font-size: 22px;
-}
-
-.pedido-item p {
-  margin: 4px 0;
-  color: #555;
-  font-size: 16px;
-}
-
-.pedido-item button.ver-detalle {
-  margin-top: 10px;
-  background-color: #3a3a3a;
-  color: white;
+/* Botón Ver Detalle */
+.btn-detalle {
+  background-color: #004aad;
+  color: #fff;
   border: none;
   padding: 10px 18px;
-  border-radius: 8px;
+  border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  margin-top: 10px;
+  transition: background-color 0.3s;
 }
 
-.pedido-item button.ver-detalle:hover {
-  background-color: #222;
+.btn-detalle:hover {
+  background-color: #003a8c;
 }
 
-/* ======= Modal de detalle ======= */
-#detalle-modal {
+/* Modal para detalles */
+.modal {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
-  display: none;
-  justify-content: center;
+  background-color: rgba(0,0,0,0.6);
+  display: flex;
   align-items: center;
-  z-index: 1000;
+  justify-content: center;
+  z-index: 999;
 }
 
-#detalle-pedido {
+.modal.hidden {
+  display: none;
+}
+
+.modal-content {
   background-color: #fff;
   padding: 30px;
+  border-radius: 12px;
   max-width: 600px;
   width: 90%;
-  border-radius: 16px;
-  position: relative;
-  overflow-y: auto;
   max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  position: relative;
 }
 
-/* Botón cerrar*
+.close-modal {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #666;
+}
+
+.close-modal:hover {
+  color: #000;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .order {
+    padding: 15px;
+  }
+
+  .modal-content {
+    padding: 20px;
+  }
+}

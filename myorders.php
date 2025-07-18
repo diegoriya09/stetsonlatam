@@ -36,9 +36,17 @@ $pedidos = $result->fetch_all(MYSQLI_ASSOC);
    <?php include 'cart.php'; ?>
    <?php include 'checkout.php'; ?>
 
-   <div id="orders-container">
+   <div id="orders-section">
       <h1>My orders</h1>
-      <div id="orders-list"></div>
+   </div>
+
+   <!-- Modal para detalle del pedido -->
+   <div id="orderModal" class="modal hidden">
+      <div class="modal-content">
+         <span class="close-modal">&times;</span>
+         <h2>Order Details</h2>
+         <div id="orderDetails"></div>
+      </div>
    </div>
 
    <?php include 'footer.php'; ?>

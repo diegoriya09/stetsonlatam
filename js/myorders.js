@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Oculta la sección de órdenes si no hay JWT
   const ordersSection = document.getElementById("orders-section");
   if (!jwt) {
-    ordersSection.innerHTML = "<p>Inicia sesión para ver tus órdenes.</p>";
+    ordersSection.innerHTML = "<p>Log in to view your orders.</p>";
     return;
   }
 
@@ -32,29 +32,78 @@ document.addEventListener("DOMContentLoaded", () => {
               renderOrders(ordersData.orders);
             } else {
               ordersSection.innerHTML =
-                "<p>No se encontraron órdenes para este usuario.</p>";
+                "<p>No orders found for this user.</p>";
             }
           })
           .catch((error) => {
-            console.error("Error obteniendo órdenes:", error);
+            console.error("Error getting orders:", error);
             ordersSection.innerHTML =
-              "<p>Error al obtener tus órdenes. Intenta más tarde.</p>";
+              "<p>Error getting your orders. Please try again later.</p>";
           });
       } else {
         ordersSection.innerHTML = `<p>${data.message}</p>`;
       }
     })
     .catch((err) => {
-      console.error("Error verificando sesión:", err);
+      console.error("Error verifying session:", err);
       ordersSection.innerHTML =
-        "<p>No se pudo verificar tu sesión. Intenta más tarde.</p>";
+        "<p>Could not verify your session. Please try again later.</p>";
     });
+
+  // Cierra el modal
+  document.addEventListener("DOMContentLoaded", () => {
+    const modal = document.getElementById("orderModal");
+    const closeBtn = document.querySelector(".close-modal");
+
+    closeBtn.addEventListener("click", () => {
+      modal.classList.add("hidden");
+    });
+
+    // También cerrar si se hace click fuera del contenido
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) modal.classList.add("hidden");
+    });
+  });
 });
+
+function openModalWithOrderDetails(orderId) {
+  const modal = document.getElementById("orderModal");
+  const detailsContainer = document.getElementById("orderDetails");
+
+  fetch(`php/order/get_detail_order.php?id=${orderId}`)
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.success) {
+        if (data.details.length === 0) {
+          detailsContainer.innerHTML = "<p>No details found for this order.</p>";
+          return;
+        }
+
+        let html = "<ul>";
+        data.details.forEach((item) => {
+          html += `
+            <li>
+              ${item.nombre} - Quantity: ${item.cantidad} - Price: $${item.precio}
+            </li>
+          `;
+        });
+        html += "</ul>";
+        detailsContainer.innerHTML = html;
+        modal.classList.remove("hidden");
+      } else {
+        detailsContainer.innerHTML = "<p>Error loading details.</p>";
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      detailsContainer.innerHTML = "<p>Network error.</p>";
+    });
+}
 
 // Función para mostrar las órdenes
 function renderOrders(orders) {
   const container = document.getElementById("orders-section");
-  container.innerHTML = "<h2>Mis Órdenes</h2>";
+  container.innerHTML = "<h2>My Orders</h2>";
 
   orders.forEach((order) => {
     const orderDiv = document.createElement("div");
@@ -62,11 +111,20 @@ function renderOrders(orders) {
 
     orderDiv.innerHTML = `
       <h3>Orden #${order.id}</h3>
-      <p><strong>Fecha:</strong> ${order.fecha}</p>
+      <p><strong>Date:</strong> ${order.fecha}</p>
       <p><strong>Total:</strong> $${order.total}</p>
-      <p><strong>Estado:</strong> ${order.estado}</p>
+      <p><strong>Status:</strong> ${order.estado || "Pendiente"}</p>
+      <button class="btn-detalle" data-id="${order.id}">View Details</button>
     `;
 
     container.appendChild(orderDiv);
+  });
+
+  // Agrega evento a cada botón
+  document.querySelectorAll(".btn-detalle").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const orderId = btn.getAttribute("data-id");
+      openModalWithOrderDetails(orderId);
+    });
   });
 }
