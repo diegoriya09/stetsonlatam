@@ -312,3 +312,4 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
         }
     });
 </script>
+<script src="js/myorders.js?v=<?php echo time(); ?>"></script>
