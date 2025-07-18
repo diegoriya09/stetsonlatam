@@ -12,6 +12,9 @@ if (empty($_SESSION['csrf_token'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    
+    header('Content-Type: application/json');
+    
     if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
         echo json_encode(["success" => false, "message" => "Token CSRF inválido"]);
         exit;
@@ -32,11 +35,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $tipo_cuenta_pse = $_POST['tipo_cuenta_pse'] ?? '';
     $documento_pse = $_POST['documento_pse'] ?? '';
     $csrf_token = $_POST['csrf_token'] ?? '';
-
-    // Para debug
-    echo "Nombre: $nombre<br>";
-    echo "Email: $email<br>";
-    echo "Método de pago: $metodo<br>";
 
     $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
     if (!$user_id) {
