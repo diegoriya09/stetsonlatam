@@ -182,18 +182,15 @@ document.addEventListener('DOMContentLoaded', () => {
 // Abrir y cerrar carrito (sidebar)
 document.getElementById('btn-carrito').addEventListener('click', () => {
   document.getElementById('carrito-sidebar').classList.add('open');
-  //const jwt = localStorage.getItem("jwt");
-  //const isLoggedIn = !!jwt;
-  //loadCart(isLoggedIn); // actualiza contenido
 });
 
 document.getElementById('cerrar-carrito').addEventListener('click', () => {
   document.getElementById('carrito-sidebar').classList.remove('open');
 });
-
 document.querySelector('.pagar-btn').addEventListener('click', function () {
   document.getElementById('checkout-modal').style.display = 'flex';
 });
+
 document.getElementById('cerrar-checkout').addEventListener('click', function () {
   document.getElementById('checkout-modal').style.display = 'none';
   document.getElementById('checkout-form').style.display = 'block';
@@ -224,43 +221,74 @@ document.querySelector('select[name="metodo"]').addEventListener('change', funct
 document.getElementById('checkout-form').addEventListener('submit', function (e) {
   e.preventDefault();
 
-  const metodo = this.metodo.value;
+  const form = this;
+  const metodo = form.metodo.value;
+
   // Concatenar código de país y teléfono
   const codigoPais = document.getElementById('codigo-pais').textContent;
-  const telefono = this.telefono.value;
+  const telefono = form.telefono.value;
   const telefonoCompleto = codigoPais + telefono;
 
+  // Validaciones frontend
   if (metodo === 'tarjeta') {
-    const numero = this.numero_tarjeta.value.trim();
-    const nombre = this.nombre_tarjeta.value.trim();
-    const expiracion = this.expiracion.value.trim();
-    const cvv = this.cvv.value.trim();
-
+    const numero = form.numero_tarjeta.value.trim();
+    const nombre = form.nombre_tarjeta.value.trim();
+    const expiracion = form.expiracion.value.trim();
+    const cvv = form.cvv.value.trim();
     if (!numero || !nombre || !expiracion || !cvv) {
       alert('Please complete all card information.');
       return;
     }
-    // Puedes agregar validaciones adicionales aquí (longitud, formato, etc.)
   }
 
   if (metodo === 'pse') {
-    const banco = this.banco_pse.value;
-    const tipoCuenta = this.tipo_cuenta_pse.value;
-    const documento = this.documento_pse.value.trim();
+    const banco = form.banco_pse.value;
+    const tipoCuenta = form.tipo_cuenta_pse.value;
+    const documento = form.documento_pse.value.trim();
     if (!banco || !tipoCuenta || !documento) {
       alert('Please complete all PSE data.');
       return;
     }
-    // Aquí puedes simular el pago o enviar los datos a tu backend
   }
 
-  // Simulación de pago exitoso
-  document.getElementById('checkout-form').style.display = 'none';
-  document.getElementById('checkout-confirm').style.display = 'block';
-  document.getElementById('checkout-confirm').innerHTML = `
-    <h3>Successful payment!</h3>
-    <p>Thank you for your purchase. We have sent you a message with the summary.</p>
-    <p><strong>Phone:</strong> ${telefonoCompleto}</p>
-  `;
+  // Enviar al backend (checkout.php)
+  const formData = new FormData(form);
+
+  fetch('php/cart/checkout.php', {
+    method: 'POST',
+    body: formData
+  })
+  .then(res => res.json())
+  .then(data => {
+    const confirmDiv = document.getElementById('checkout-confirm');
+    form.style.display = 'none';
+
+    if (data.success) {
+      confirmDiv.innerHTML = `
+        <h3>Successful payment!</h3>
+        <p>Thank you for your purchase.</p>
+        <p><strong>Order ID:</strong> #${data.pedido_id}</p>
+        <p><strong>Phone:</strong> ${telefonoCompleto}</p>
+        <p><a href="/myorders.php">Go to My Orders</a></p>
+      `;
+    } else {
+      confirmDiv.innerHTML = `
+        <h3 style="color: red;">Payment failed</h3>
+        <p>${data.message || 'An error occurred. Please try again.'}</p>
+      `;
+    }
+
+    confirmDiv.style.display = 'block';
+  })
+  .catch(err => {
+    console.error("Checkout error:", err);
+    const confirmDiv = document.getElementById('checkout-confirm');
+    form.style.display = 'none';
+    confirmDiv.innerHTML = `
+      <h3 style="color: red;">Error</h3>
+      <p>There was a problem processing your payment. Try again later.</p>
+    `;
+    confirmDiv.style.display = 'block';
+  });
 });
 

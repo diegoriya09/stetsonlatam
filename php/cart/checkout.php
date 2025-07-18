@@ -1,6 +1,6 @@
 <?php
 require_once 'php/conexion.php';
-require_once 'php/auth/validate_token_session.php'; // <- archivo que recupera user_id si está logueado con JWT
+require_once '../../vendor/autoload.php';
 
 if (session_status() !== PHP_SESSION_ACTIVE) session_start();
 if (empty($_SESSION['csrf_token'])) {

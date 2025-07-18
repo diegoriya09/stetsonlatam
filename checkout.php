@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="modal-content-checkout">
         <span class="close-modal" id="cerrar-checkout">&times;</span>
         <h2>Checkout</h2>
-        <form id="checkout-form" action="php/cart/checkout.php" method="POST">
+        <form id="checkout-form" method="POST">
             <label>Full Name:<br>
                 <input type="text" name="nombre" required>
             </label><br>
