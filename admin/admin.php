@@ -364,7 +364,7 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
 </script>
 <script>
     function showOrderDetails(orderId) {
-        const modal = document.getElementById('admin-order-modal');
+        const modal = document.querySelector('.ordermodal');
         const detailsDiv = document.getElementById('admin-order-details');
 
         fetch(`../php/order/get_detail_order.php?id=${orderId}`)
