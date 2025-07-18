@@ -236,7 +236,7 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
                         </select>
                 </td>";
             echo "<td><button type='submit'>Update</button></form></td>";
-            echo "<td><button onclick='showOrderDetails({$row['id']})'>View</button></td>";
+            echo "<td><button onclick='openModalWithOrderDetails({$row['id']})'>View</button></td>";
             echo "</tr>";
         }
 
