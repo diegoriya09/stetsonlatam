@@ -1,4 +1,8 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 require_once 'php/conexion.php';
 require_once '../../vendor/autoload.php';
 
@@ -9,20 +13,36 @@ if (empty($_SESSION['csrf_token'])) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
-        die("Token CSRF inválido.");
+        echo json_encode(["success" => false, "message" => "Token CSRF inválido"]);
+        exit;
     }
 
-    // Simulación de pago:
-    $nombre     = trim(strip_tags($_POST['nombre']));
-    $email      = trim(filter_var($_POST['email'], FILTER_SANITIZE_EMAIL));
-    $pais       = $_POST['pais'];
-    $ciudad     = trim(strip_tags($_POST['ciudad']));
-    $direccion  = trim(strip_tags($_POST['direccion']));
-    $telefono   = trim(strip_tags($_POST['telefono']));
-    $metodo     = $_POST['metodo'];
+    $nombre = $_POST['nombre'] ?? '';
+    $email = $_POST['email'] ?? '';
+    $pais = $_POST['pais'] ?? '';
+    $ciudad = $_POST['ciudad'] ?? '';
+    $direccion = $_POST['direccion'] ?? '';
+    $telefono = $_POST['telefono'] ?? '';
+    $metodo = $_POST['metodo'] ?? '';
+    $numero_tarjeta = $_POST['numero_tarjeta'] ?? '';
+    $nombre_tarjeta = $_POST['nombre_tarjeta'] ?? '';
+    $expiracion = $_POST['expiracion'] ?? '';
+    $cvv = $_POST['cvv'] ?? '';
+    $banco_pse = $_POST['banco_pse'] ?? '';
+    $tipo_cuenta_pse = $_POST['tipo_cuenta_pse'] ?? '';
+    $documento_pse = $_POST['documento_pse'] ?? '';
+    $csrf_token = $_POST['csrf_token'] ?? '';
+
+    // Para debug
+    echo "Nombre: $nombre<br>";
+    echo "Email: $email<br>";
+    echo "Método de pago: $metodo<br>";
 
     $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
-    if (!$user_id) die("Usuario no autenticado");
+    if (!$user_id) {
+        echo json_encode(["success" => false, "message" => "Usuario no autenticado"]);
+        exit;
+    }
 
     // Leer carrito desde DB si logueado (sino usar localStorage y enviarlo desde JS)
     $stmt = $conn->prepare("
@@ -52,7 +72,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (count($items) === 0) {
-        die("No hay productos en el carrito");
+        echo json_encode(["success" => false, "message" => "No hay productos en el carrito"]);
+        exit;
     }
 
     // Guardar pedido en tabla 'pedidos'
@@ -62,7 +83,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     VALUES (?, ?, 'Pendiente', ?, ?, ?, ?, ?, ?, ?)
 ");
     $stmt->bind_param("idsssssss", $user_id, $total, $nombre, $email, $pais, $ciudad, $direccion, $telefono, $metodo);
-    if (!$stmt->execute()) die("Error al crear pedido");
+    if (!$stmt->execute()) {
+        echo json_encode(["success" => false, "message" => "Error al crear pedido"]);
+        exit;
+    }
 
     $pedido_id = $conn->insert_id;
 
