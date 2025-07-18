@@ -57,9 +57,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   closeBtn.addEventListener("click", () => {
     ordermodal.classList.add("hidden");
-  });
+  }); 
 
-  // También cerrar si se hace click fuera del contenido
   ordermodal.addEventListener("click", (e) => {
     if (e.target === ordermodal) ordermodal.classList.add("hidden");
   });
@@ -68,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
 function openModalWithOrderDetails(orderId) {
   const ordermodal = document.getElementById("orderModal");
   const detailsContainer = document.getElementById("orderDetails");
-
+  
   fetch(`php/order/get_detail_order.php?id=${orderId}`)
     .then((res) => res.json())
     .then((data) => {
