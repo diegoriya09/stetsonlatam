@@ -12,7 +12,7 @@ $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 $id = $conn->real_escape_string($id);
 
 // Ejecutar la consulta directamente
-$sql = "SELECT id, name, price, image, description, images, cantidad_disponible, category FROM productos WHERE id = $id";
+$sql = "SELECT id, name, price, image, description, images, category FROM productos WHERE id = $id";
 
 $result = $conn->query($sql);
 

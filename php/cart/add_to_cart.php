@@ -74,8 +74,8 @@ if ($result->num_rows === 0) {
 $stmt->close();
 
 // Obtener stock disponible
-$stmt = $conn->prepare("SELECT cantidad_disponible FROM productos WHERE id = ?");
-$stmt->bind_param("i", $producto_id);
+$stmt = $conn->prepare("SELECT cantidad_disponible FROM inventario WHERE producto_id = ? AND color_id = ? AND size_id = ?");
+$stmt->bind_param("iii", $producto_id, $color_id, $size_id);
 $stmt->execute();
 $result = $stmt->get_result();
 if ($result->num_rows === 0) {
