@@ -51,24 +51,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   setupAddToCartButtons();
 
-
-  const input = btn.parentElement.querySelector(".cantidad-input");
-  let qty = parseInt(input.value);
-  const maxStock = parseInt(input.dataset.cantidadDisponible);
-
-  if (btn.classList.contains("plus")) {
-    if (qty < maxStock) {
-      qty++;
-      input.value = qty;
-      updateQuantity({ id, color_id: colorId, size_id: sizeId, quantity: qty });
-    } else {
-      Swal.fire({
-        icon: 'warning',
-        title: 'Not enough stock',
-        text: `There are only ${maxStock} units available.`
-      });
-    }
-  }
 });
 
 function setupAddToCartButtons() {
