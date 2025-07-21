@@ -12,9 +12,9 @@ if (empty($_SESSION['csrf_token'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    
+
     header('Content-Type: application/json');
-    
+
     if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
         echo json_encode(["success" => false, "message" => "Token CSRF inválido"]);
         exit;
@@ -74,6 +74,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
+    // Validar stock antes de proceder
+    foreach ($items as $item) {
+        $stmtStock = $conn->prepare("SELECT cantidad_disponible FROM productos WHERE id = ?");
+        $stmtStock->bind_param("i", $item['producto_id']);
+        $stmtStock->execute();
+        $stockRes = $stmtStock->get_result();
+        $stock = $stockRes->fetch_assoc();
+
+        if (!$stock || $stock['cantidad_disponible'] < $item['quantity']) {
+            echo json_encode([
+                "success" => false,
+                "message" => "Stock insuficiente para el producto: " . $item['nombre']
+            ]);
+            exit;
+        }
+    }
+
     // Guardar pedido en tabla 'pedidos'
     $stmt = $conn->prepare("
     INSERT INTO pedidos 
@@ -108,6 +125,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!$stmt->execute()) {
             die("Error insertando detalle del pedido: " . $stmt->error);
         }
+
+        // Descontar del inventario
+        $stmtStockUpdate = $conn->prepare("UPDATE productos SET cantidad_disponible = cantidad_disponible - ? WHERE id = ?");
+        $stmtStockUpdate->bind_param("ii", $item['quantity'], $item['producto_id']);
+        $stmtStockUpdate->execute();
     }
 
     // Vaciar carrito

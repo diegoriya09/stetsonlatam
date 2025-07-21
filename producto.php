@@ -12,7 +12,8 @@ $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 $id = $conn->real_escape_string($id);
 
 // Ejecutar la consulta directamente
-$sql = "SELECT * FROM productos WHERE id = $id";
+$sql = "SELECT id, name, price, image, description, images, cantidad_disponible, category FROM productos WHERE id = $id";
+
 $result = $conn->query($sql);
 
 if ($result && $result->num_rows > 0) {
@@ -113,6 +114,13 @@ $conn->close();
       <h1><?= htmlspecialchars($producto['name']) ?></h1>
       <p class="precio">$<?= number_format($producto['price'], 2) ?></p>
 
+      <p class="stock-disponible">
+        <?php if ($producto['cantidad_disponible'] > 0): ?>
+          <strong>Stock:</strong> <?= $producto['cantidad_disponible'] ?> available
+        <?php else: ?>
+          <span class="agotado">Out of stock</span>
+        <?php endif; ?>
+      </p>
       <?php if (!empty($colores)): ?>
         <div class="colores">
           <strong>Color:</strong>
@@ -134,11 +142,12 @@ $conn->close();
       <div class="cantidad">
         <strong>Quantity:</strong>
         <button class="menos">-</button>
-        <input type="number" id="cantidad" value="1" min="1">
+        <input type="number" id="cantidad" value="1" min="1" max="<?= $producto['cantidad_disponible'] ?>">
         <button class="mas">+</button>
       </div>
 
       <button class="add-to-cart-btn"
+        <?= $producto['cantidad_disponible'] <= 0 ? 'disabled' : '' ?>
         data-id="<?= $producto['id'] ?>"
         data-name="<?= htmlspecialchars($producto['name']) ?>"
         data-price="<?= $producto['price'] ?>"

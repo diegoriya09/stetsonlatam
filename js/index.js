@@ -177,6 +177,18 @@ document.addEventListener('DOMContentLoaded', () => {
       mobileMenu.classList.remove('active');
     }
   });
+
+  document.getElementById('cantidad').addEventListener('input', function () {
+  const max = parseInt(this.max);
+  if (parseInt(this.value) > max) {
+    this.value = max;
+    Swal.fire({
+      icon: 'warning',
+      text: `Solo hay ${max} unidades disponibles.`
+    });
+  }
+});
+
 });
 
 // Abrir y cerrar carrito (sidebar)

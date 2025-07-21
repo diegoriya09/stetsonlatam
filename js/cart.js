@@ -266,7 +266,7 @@ function renderItem(product) {
           <div class="qty-wrapper">
             <button class="qty-btn minus" data-id="${id}" data-color-id="${color_id}" data-size-id="${size_id}">−</button>
             <input type="text" class="cantidad-input" value="${quantity}" readonly
-                   data-id="${id}" data-color-id="${color_id}" data-size-id="${size_id}" />
+                   data-id="${id}" data-color-id="${color_id}" data-size-id="${size_id}" data-stock="${cantidad_disponible}" />
             <button class="qty-btn plus" data-id="${id}" data-color-id="${color_id}" data-size-id="${size_id}">+</button>
           </div>
         </div>
@@ -280,6 +280,24 @@ function renderItem(product) {
       </div>
     </div>
   `;
+}
+
+const input = btn.parentElement.querySelector(".cantidad-input");
+let qty = parseInt(input.value);
+const maxStock = parseInt(input.dataset.cantidad_disponible);
+
+if (btn.classList.contains("plus")) {
+  if (qty < maxStock) {
+    qty++;
+    input.value = qty;
+    updateQuantity({ id, color_id: colorId, size_id: sizeId, quantity: qty });
+  } else {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Not enough stock',
+      text: `There are only ${maxStock} units available.`
+    });
+  }
 }
 
 function updateQuantity({ id, color_id, size_id, quantity }) {
@@ -301,14 +319,14 @@ function updateQuantity({ id, color_id, size_id, quantity }) {
         quantity: parseInt(quantity)
       })
     })
-    .then(res => res.json())
-    .then(data => {
-      if (data.success) {
-        loadCart(true);
-      } else {
-        console.error("Error en servidor:", data.message);
-      }
-    });
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          loadCart(true);
+        } else {
+          console.error("Error en servidor:", data.message);
+        }
+      });
   } else {
     let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
     const index = carrito.findIndex(p =>
