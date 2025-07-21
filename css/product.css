@@ -336,3 +336,15 @@ html {
   border: 2px solid #bfa76a;
   box-shadow: 0 0 0 2px #bfa76a33;
 }
+
+.agotado {
+  color: red;
+  font-weight: bold;
+  font-size: 0.9em;
+}
+
+.stock-info {
+  color: #333;
+  font-size: 0.85em;
+  margin-left: 5px;
+}

@@ -230,12 +230,16 @@ document.addEventListener('click', function (e) {
     const btn = e.target;
     const input = btn.parentElement.querySelector(".cantidad-input");
     let qty = parseInt(input.value);
+    const stock = parseInt(input.dataset.stock || "0");
     const id = btn.dataset.id;
     const colorId = btn.dataset.colorId;
     const sizeId = btn.dataset.sizeId;
 
-    if (btn.classList.contains("plus")) qty++;
-    else if (btn.classList.contains("minus") && qty > 1) qty--;
+    if (btn.classList.contains("plus") && qty < stock) {
+      qty++;
+    } else if (btn.classList.contains("minus") && qty > 1) {
+      qty--;
+    }
 
     input.value = qty;
 
@@ -254,8 +258,15 @@ function renderItem(product) {
     color_id,
     hex,
     size_name,
-    size_id
+    size_id,
+    stock: cantidad_disponible
   } = product;
+
+  const stockMsg = cantidad_disponible <= 0
+    ? `<span class="agotado">Out of stock</span>`
+    : `<span class="stock-info">(${cantidad_disponible} available units)</span>`;
+
+  const disablePlus = cantidad_disponible <= quantity ? 'disabled' : '';
 
   return `
     <div class="carrito-item">
@@ -267,9 +278,10 @@ function renderItem(product) {
           <div class="qty-wrapper">
             <button class="qty-btn minus" data-id="${id}" data-color-id="${color_id}" data-size-id="${size_id}">−</button>
             <input type="text" class="cantidad-input" value="${quantity}" readonly
-                   data-id="${id}" data-color-id="${color_id}" data-size-id="${size_id}" data-stock="${cantidad_disponible}" />
-            <button class="qty-btn plus" data-id="${id}" data-color-id="${color_id}" data-size-id="${size_id}">+</button>
+              data-id="${id}" data-color-id="${color_id}" data-size-id="${size_id}" data-stock="${cantidad_disponible}" />
+            <button class="qty-btn plus" data-id="${id}" data-color-id="${color_id}" data-size-id="${size_id}" ${disablePlus}>+</button>
           </div>
+          ${stockMsg}
         </div>
         ${color_name ? `<p><strong>Color:</strong> ${color_name} <span style="display:inline-block;width:16px;height:16px;border-radius:50%;background:${hex};border:1px solid #000;margin-left:5px;vertical-align:middle;"></span></p>` : ''}
         ${size_name ? `<p><strong>Size:</strong> ${size_name}</p>` : ''}

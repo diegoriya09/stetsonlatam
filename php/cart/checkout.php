@@ -127,8 +127,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         // Descontar del inventario
-        $stmtStockUpdate = $conn->prepare("UPDATE productos SET cantidad_disponible = cantidad_disponible - ? WHERE id = ?");
-        $stmtStockUpdate->bind_param("ii", $item['quantity'], $item['producto_id']);
+        $stmtStockUpdate = $conn->prepare("UPDATE product_variants SET stock = stock - ? WHERE producto_id = ? AND color_id = ? AND size_id = ?");
+        $stmtStockUpdate->bind_param("iiii", $item['quantity'], $item['producto_id'], $item['color_id'], $item['size_id']);
         $stmtStockUpdate->execute();
     }
 

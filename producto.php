@@ -115,12 +115,9 @@ $conn->close();
       <p class="precio">$<?= number_format($producto['price'], 2) ?></p>
 
       <p class="stock-disponible">
-        <?php if ($producto['cantidad_disponible'] > 0): ?>
-          <strong>Stock:</strong> <?= $producto['cantidad_disponible'] ?> available
-        <?php else: ?>
-          <span class="agotado">Out of stock</span>
-        <?php endif; ?>
+        <strong>Select color and size to see stock</strong>
       </p>
+
       <?php if (!empty($colores)): ?>
         <div class="colores">
           <strong>Color:</strong>
@@ -142,12 +139,12 @@ $conn->close();
       <div class="cantidad">
         <strong>Quantity:</strong>
         <button class="menos">-</button>
-        <input type="number" id="cantidad" value="1" min="1" max="<?= $producto['cantidad_disponible'] ?>">
+        <input type="number" id="cantidad" value="1" min="1" max="<?= $producto['stock'] ?>">
         <button class="mas">+</button>
       </div>
 
       <button class="add-to-cart-btn"
-        <?= $producto['cantidad_disponible'] <= 0 ? 'disabled' : '' ?>
+        <?= $producto['stock'] <= 0 ? 'disabled' : '' ?>
         data-id="<?= $producto['id'] ?>"
         data-name="<?= htmlspecialchars($producto['name']) ?>"
         data-price="<?= $producto['price'] ?>"
@@ -180,6 +177,10 @@ $conn->close();
                 addToCartBtn.dataset.colorName = selectedColorName;
                 addToCartBtn.dataset.hex = selectedHex;
               }
+              if (selectedColor) {
+                actualizarStock(<?= $producto['id'] ?>, selectedColor, selectedSize);
+              }
+
             });
           });
 
@@ -195,6 +196,10 @@ $conn->close();
                 addToCartBtn.dataset.sizeId = selectedSize;
                 addToCartBtn.dataset.sizeName = selectedSizeName;
               }
+              if (selectedSize) {
+                actualizarStock(<?= $producto['id'] ?>, selectedColor, selectedSize);
+              }
+
             });
           });
 
@@ -218,6 +223,30 @@ $conn->close();
                 return;
               }
             });
+          }
+
+          function actualizarStock(productId, colorId, sizeId) {
+            fetch(`get_stock.php?product_id=${productId}&color_id=${colorId}&size_id=${sizeId}`)
+              .then(res => res.json())
+              .then(data => {
+                const stockDisponible = data.stock;
+                const stockLabel = document.querySelector('.stock-disponible');
+                const inputCantidad = document.getElementById('cantidad');
+                const addBtn = document.querySelector('.add-to-cart-btn');
+
+                if (stockDisponible > 0) {
+                  stockLabel.innerHTML = `<strong>Stock:</strong> ${stockDisponible} available`;
+                  inputCantidad.max = stockDisponible;
+                  inputCantidad.value = 1;
+                  addBtn.disabled = false;
+                } else {
+                  stockLabel.innerHTML = `<span class="agotado">Out of stock</span>`;
+                  inputCantidad.value = 0;
+                  addBtn.disabled = true;
+                }
+
+                addBtn.dataset.stock = stockDisponible;
+              });
           }
         });
       </script>

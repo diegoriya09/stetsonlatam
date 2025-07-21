@@ -44,6 +44,23 @@ if (!$producto_id || !$color_id || !$size_id || $quantity < 1) {
     exit;
 }
 
+// Validar stock en product_variants
+$stmt = $conn->prepare("SELECT stock FROM product_variants WHERE product_id = ? AND color_id = ? AND size_id = ?");
+$stmt->bind_param("iii", $producto_id, $color_id, $size_id);
+$stmt->execute();
+$result = $stmt->get_result();
+if ($result->num_rows === 0) {
+    echo json_encode(['success' => false, 'message' => 'Variante de producto no encontrada']);
+    exit;
+}
+$row = $result->fetch_assoc();
+$stock_disponible = $row['stock'] ?? 0;
+
+if ($quantity > $stock_disponible) {
+    echo json_encode(['success' => false, 'message' => 'No hay suficiente stock disponible']);
+    exit;
+}
+
 $stmt = $conn->prepare("UPDATE cart SET quantity = ? WHERE users_id = ? AND producto_id = ? AND color_id = ? AND size_id = ?");
 $stmt->bind_param("iiiii", $quantity, $user_id, $producto_id, $color_id, $size_id);
 if ($stmt->execute()) {
