@@ -14,11 +14,10 @@ $stmt->bind_param("iii", $product_id, $color_id, $size_id);
 $stmt->execute();
 $result = $stmt->get_result();
 
-if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-    echo json_encode(['stock' => intval($row['stock'])]);
+if ($row = $result->fetch_assoc()) {
+  echo json_encode(['stock' => (int)$row['stock']]);
 } else {
-    echo json_encode(['stock' => 0]);
+  echo json_encode(['stock' => 0]);
 }
 
 $stmt->close();

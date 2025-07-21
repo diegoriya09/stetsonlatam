@@ -114,10 +114,6 @@ $conn->close();
       <h1><?= htmlspecialchars($producto['name']) ?></h1>
       <p class="precio">$<?= number_format($producto['price'], 2) ?></p>
 
-      <p class="stock-disponible">
-        <strong>Select color and size to see stock</strong>
-      </p>
-
       <?php if (!empty($colores)): ?>
         <div class="colores">
           <strong>Color:</strong>
@@ -135,6 +131,9 @@ $conn->close();
           <?php endforeach; ?>
         </div>
       <?php endif; ?>
+      <p class="stock-disponible">
+        <strong>Select color and size to see stock</strong>
+      </p>
 
       <div class="cantidad">
         <strong>Quantity:</strong>
@@ -159,8 +158,11 @@ $conn->close();
           let selectedHex = null;
           let selectedSize = null;
           let selectedSizeName = null;
-
+          const stockMessage = document.getElementById('stock-message');
           const addToCartBtn = document.querySelector('.add-to-cart-btn');
+          const cantidadInput = document.querySelector('#cantidad');
+          let selectedColorId = null;
+          let selectedSizeId = null;
 
           // Selección de color
           document.querySelectorAll('.color-btn').forEach(btn => {
@@ -180,6 +182,8 @@ $conn->close();
               if (selectedColor) {
                 actualizarStock(<?= $producto['id'] ?>, selectedColor, selectedSize);
               }
+              selectedColorId = btn.dataset.colorId;
+              checkStock();
 
             });
           });
@@ -199,7 +203,8 @@ $conn->close();
               if (selectedSize) {
                 actualizarStock(<?= $producto['id'] ?>, selectedColor, selectedSize);
               }
-
+              selectedSizeId = btn.dataset.sizeId;
+              checkStock();
             });
           });
 
@@ -224,31 +229,46 @@ $conn->close();
               }
             });
           }
-
-          function actualizarStock(productId, colorId, sizeId) {
-            fetch(`get_stock.php?product_id=${productId}&color_id=${colorId}&size_id=${sizeId}`)
-              .then(res => res.json())
-              .then(data => {
-                const stockDisponible = data.stock;
-                const stockLabel = document.querySelector('.stock-disponible');
-                const inputCantidad = document.getElementById('cantidad');
-                const addBtn = document.querySelector('.add-to-cart-btn');
-
-                if (stockDisponible > 0) {
-                  stockLabel.innerHTML = `<strong>Stock:</strong> ${stockDisponible} available`;
-                  inputCantidad.max = stockDisponible;
-                  inputCantidad.value = 1;
-                  addBtn.disabled = false;
-                } else {
-                  stockLabel.innerHTML = `<span class="agotado">Out of stock</span>`;
-                  inputCantidad.value = 0;
-                  addBtn.disabled = true;
-                }
-
-                addBtn.dataset.stock = stockDisponible;
-              });
-          }
         });
+
+        function checkStock() {
+          if (!selectedColorId || !selectedSizeId) {
+            stockMessage.textContent = "Select color and size to see stock";
+            cantidadInput.value = 1;
+            cantidadInput.max = 1;
+            addToCartBtn.disabled = true;
+            return;
+          }
+
+          const productId = addToCartBtn.dataset.id;
+
+          fetch(`php/get_stock.php?product_id=${productId}&color_id=${selectedColorId}&size_id=${selectedSizeId}`)
+            .then(res => res.json())
+            .then(data => {
+              const stock = parseInt(data.stock);
+
+              if (stock > 0) {
+                stockMessage.textContent = `Stock: ${stock} available`;
+                cantidadInput.max = stock;
+                cantidadInput.value = 1;
+                addToCartBtn.disabled = false;
+
+                // Actualiza también los data-attrs del botón
+                addToCartBtn.dataset.colorId = selectedColorId;
+                addToCartBtn.dataset.sizeId = selectedSizeId;
+              } else {
+                stockMessage.textContent = "Out of stock";
+                cantidadInput.value = 1;
+                cantidadInput.max = 1;
+                addToCartBtn.disabled = true;
+              }
+            })
+            .catch(err => {
+              console.error("Error fetching stock:", err);
+              stockMessage.textContent = "Error fetching stock";
+              addToCartBtn.disabled = true;
+            });
+        }
       </script>
       <div class="descripcion">
         <p><?= nl2br(htmlspecialchars($producto['description'])) ?></p>
