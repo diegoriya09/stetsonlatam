@@ -224,6 +224,22 @@ document.addEventListener('click', function (e) {
       loadCart(false);
     }
   }
+
+  if (e.target.classList.contains("qty-btn")) {
+    const btn = e.target;
+    const input = btn.parentElement.querySelector(".cantidad-input");
+    let qty = parseInt(input.value);
+    const id = btn.dataset.id;
+    const colorId = btn.dataset.colorId;
+    const sizeId = btn.dataset.sizeId;
+
+    if (btn.classList.contains("plus")) qty++;
+    else if (btn.classList.contains("minus") && qty > 1) qty--;
+
+    input.value = qty;
+
+    updateQuantity({ id, color_id: colorId, size_id: sizeId, quantity: qty });
+  }
 });
 
 function renderItem(product) {
@@ -247,13 +263,12 @@ function renderItem(product) {
         <h4>${name}</h4>
         <div class="cantidad-control">
           <label>$${price.toLocaleString()} x </label>
-          <input type="number"
-                class="cantidad-input"
-                value="${quantity}"
-                min="1"
-                data-id="${id}"
-                data-color-id="${color_id}"
-                data-size-id="${size_id}" />
+          <div class="qty-wrapper">
+            <button class="qty-btn minus" data-id="${id}" data-color-id="${color_id}" data-size-id="${size_id}">−</button>
+            <input type="text" class="cantidad-input" value="${quantity}" readonly
+                   data-id="${id}" data-color-id="${color_id}" data-size-id="${size_id}" />
+            <button class="qty-btn plus" data-id="${id}" data-color-id="${color_id}" data-size-id="${size_id}">+</button>
+          </div>
         </div>
         ${color_name ? `<p><strong>Color:</strong> ${color_name} <span style="display:inline-block;width:16px;height:16px;border-radius:50%;background:${hex};border:1px solid #000;margin-left:5px;vertical-align:middle;"></span></p>` : ''}
         ${size_name ? `<p><strong>Size:</strong> ${size_name}</p>` : ''}
@@ -267,59 +282,42 @@ function renderItem(product) {
   `;
 }
 
-function updateQuantity(input) {
-  const newQty = parseInt(input.value, 10);
-  const producto_id = parseInt(input.dataset.id);
-  const color_id = parseInt(input.dataset.colorId);
-  const size_id = parseInt(input.dataset.sizeId);
+function updateQuantity({ id, color_id, size_id, quantity }) {
   const jwt = localStorage.getItem("jwt");
 
-  if (newQty < 1) return; // Evita valores inválidos
+  if (quantity < 1) return;
 
   if (jwt) {
-    // Usuario logueado
-    fetch('php/cart/update_quantity.php', {
-      method: 'POST',
+    fetch("php/cart/update_quantity.php", {
+      method: "POST",
       headers: {
-        'Authorization': 'Bearer ' + jwt,
-        'Content-Type': 'application/json'
+        "Authorization": "Bearer " + jwt,
+        "Content-Type": "application/json"
       },
-      body: JSON.stringify({ producto_id, color_id, size_id, quantity: newQty })
+      body: JSON.stringify({
+        producto_id: parseInt(id),
+        color_id: parseInt(color_id),
+        size_id: parseInt(size_id),
+        quantity: parseInt(quantity)
+      })
     })
     .then(res => res.json())
     .then(data => {
       if (data.success) {
-        loadCart(true); // recarga carrito desde BD
+        loadCart(true);
       } else {
-        console.error('Error updating quantity:', data.message);
+        console.error("Error en servidor:", data.message);
       }
     });
   } else {
-    // Usuario no logueado
-    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
     const index = carrito.findIndex(p =>
-      p.id === producto_id &&
-      parseInt(p.color_id) === color_id &&
-      parseInt(p.size_id) === size_id
+      p.id == id && p.color_id == color_id && p.size_id == size_id
     );
     if (index !== -1) {
-      carrito[index].quantity = newQty;
-      localStorage.setItem('carrito', JSON.stringify(carrito));
-      loadCart(false); // recarga carrito local
+      carrito[index].quantity = parseInt(quantity);
+      localStorage.setItem("carrito", JSON.stringify(carrito));
+      loadCart(false);
     }
   }
 }
-
-// Agrega eventos a todos los inputs de cantidad
-document.querySelectorAll('.cantidad-input').forEach(input => {
-  input.addEventListener('change', () => {
-    updateQuantity(input);
-  });
-
-  input.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
-      e.preventDefault(); // evita que se envíe un formulario si lo hay
-      updateQuantity(input);
-    }
-  });
-});
