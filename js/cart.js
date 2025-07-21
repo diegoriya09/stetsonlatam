@@ -27,7 +27,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 producto_id: item.id,
                 quantity: item.quantity,
                 color_id: item.color_id,
-                size_id: item.size_id
+                size_id: item.size_id,
+                stock: item.stock || 0 // Enviamos stock si está disponible
               })
             });
           });
