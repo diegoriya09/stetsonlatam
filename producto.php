@@ -12,7 +12,7 @@ $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 $id = $conn->real_escape_string($id);
 
 // Ejecutar la consulta directamente
-$sql = "SELECT id, name, price, image, description, images, category, stock FROM productos LEFT JOIN product_variants pv ON productos.id = pv.product_id WHERE id = $id";
+$sql = "SELECT id, name, price, image, description, images, category, stock FROM productos LEFT JOIN product_variants pv ON productos.id = pv.product_id WHERE productos.id = $id";
 
 $result = $conn->query($sql);
 
