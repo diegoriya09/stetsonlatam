@@ -33,11 +33,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     const jwt = result.token;
 
                     // 🔁 1. Obtener carrito del backend
-                    //const serverCart = await fetch('php/cart/get_cart.php', {
-                       // headers: {
-                     //       'Authorization': 'Bearer ' + jwt
-                   //     }
-                   // }).then(r => r.json());
+                    const serverCart = await fetch('php/cart/get_cart.php', {
+                        headers: {
+                            'Authorization': 'Bearer ' + jwt
+                        }
+                    }).then(r => r.json());
 
                     const serverIds = serverCart.map(p => p.id);
 
