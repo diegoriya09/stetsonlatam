@@ -11,17 +11,24 @@ $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 // Seguridad: sanitizar el ID
 $id = $conn->real_escape_string($id);
 
-// Ejecutar la consulta directamente
-$sql = "SELECT p.id, p.name, p.price, p.image, p.description, p.images, p.category, pv.stock FROM productos p LEFT JOIN product_variants pv ON p.id = pv.product_id WHERE p.id = $id";
+// Consultar datos del producto y su variante
+$sql = "SELECT p.*, pv.stock 
+        FROM productos p
+        INNER JOIN product_variants pv ON p.id = pv.product_id 
+        WHERE p.id = $id 
+        LIMIT 1";
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+$result = $stmt->get_result();
 
-$result = $conn->query($sql);
-
-if ($result && $result->num_rows > 0) {
-  $producto = $result->fetch_assoc();
-} else {
+if ($result->num_rows === 0) {
   echo "Producto no encontrado.";
   exit;
 }
+
+$producto = $result->fetch_assoc();
+
+
 
 $imagenes = [];
 if (!empty($producto['images'])) {
