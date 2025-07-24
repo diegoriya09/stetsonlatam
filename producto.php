@@ -12,18 +12,16 @@ $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 $id = $conn->real_escape_string($id);
 
 // Ejecutar la consulta directamente
-$sql = "SELECT p.id, p.name, p.price, p.image, p.description, p.images, p.category, pv.stock FROM productos p LEFT JOIN product_variants pv ON p.id = pv.product_id WHERE p.id = $id";
+$sql = "SELECT * FROM productos WHERE id = $id";
 
 $result = $conn->query($sql);
 
 if ($result && $result->num_rows > 0) {
   $producto = $result->fetch_assoc();
 } else {
-  echo "Producto no encontrado.";
+  echo "Product not found.";
   exit;
 }
-
-
 
 $imagenes = [];
 if (!empty($producto['images'])) {
@@ -156,10 +154,10 @@ $conn->close();
           let selectedHex = null;
           let selectedSize = null;
           let selectedSizeName = null;
-          const addToCartBtn = document.querySelector('.add-to-cart-btn');
-          const cantidadInput = document.querySelector('#cantidad');
           let selectedColorId = null;
           let selectedSizeId = null;
+
+          const addToCartBtn = document.querySelector('.add-to-cart-btn');
 
           // Selección de color
           document.querySelectorAll('.color-btn').forEach(btn => {

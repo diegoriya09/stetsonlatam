@@ -73,7 +73,7 @@ try {
         $carrito[] = $row;
     }
 
-    echo json_encode(['success' => true, 'cart' => $carrito]);
+    echo json_encode($carrito);
 
     $stmt->close();
     $conn->close();

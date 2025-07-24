@@ -73,6 +73,19 @@ if ($result->num_rows === 0) {
 }
 $stmt->close();
 
+// Obtener stock disponible
+$stmt = $conn->prepare("SELECT cantidad_disponible FROM productos WHERE id = ?");
+$stmt->bind_param("i", $producto_id);
+$stmt->execute();
+$result = $stmt->get_result();
+if ($result->num_rows === 0) {
+    echo json_encode(['success' => false, 'message' => 'Producto no encontrado']);
+    exit;
+}
+$producto = $result->fetch_assoc();
+$stock_disponible = $producto['cantidad_disponible'];
+$stmt->close();
+
 // Verificar si el producto ya está en el carrito considerando color y talla
 $sql_check = "SELECT quantity FROM cart WHERE users_id = ? AND producto_id = ? AND color_id = ? AND size_id = ?";
 $stmt_check = $conn->prepare($sql_check);
