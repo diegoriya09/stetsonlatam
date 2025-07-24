@@ -224,16 +224,12 @@ document.addEventListener('click', function (e) {
     const btn = e.target;
     const input = btn.parentElement.querySelector(".cantidad-input");
     let qty = parseInt(input.value);
-    const stock = parseInt(input.dataset.stock || "0");
     const id = btn.dataset.id;
     const colorId = btn.dataset.colorId;
     const sizeId = btn.dataset.sizeId;
 
-    if (btn.classList.contains("plus") && qty < stock) {
-      qty++;
-    } else if (btn.classList.contains("minus") && qty > 1) {
-      qty--;
-    }
+    if (btn.classList.contains("plus")) qty++;
+    else if (btn.classList.contains("minus") && qty > 1) qty--;
 
     input.value = qty;
 
