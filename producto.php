@@ -12,23 +12,16 @@ $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 $id = $conn->real_escape_string($id);
 
 // Ejecutar la consulta directamente
-$sql = "SELECT p.*, pv.stock 
-        FROM productos p
-        INNER JOIN product_variants pv ON p.id = pv.product_id 
-        WHERE p.id = ? 
-        LIMIT 1";
+$sql = "SELECT p.id, p.name, p.price, p.image, p.description, p.images, p.category, pv.stock FROM productos p LEFT JOIN product_variants pv ON p.id = pv.product_id WHERE p.id = $id";
 
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $id);
-$stmt->execute();
-$result = $stmt->get_result();
+$result = $conn->query($sql);
 
-if ($result->num_rows === 0) {
-  echo "Product not found.";
+if ($result && $result->num_rows > 0) {
+  $producto = $result->fetch_assoc();
+} else {
+  echo "Producto no encontrado.";
   exit;
 }
-
-$producto = $result->fetch_assoc();
 
 $imagenes = [];
 if (!empty($producto['images'])) {
@@ -145,7 +138,7 @@ $conn->close();
       <div class="cantidad">
         <strong>Quantity:</strong>
         <button class="menos">-</button>
-        <input type="number" id="cantidad" value="1" min="1" max="<?= $producto['stock'] ?>" <?= $producto['stock'] <= 0 ? 'disabled' : '' ?>>
+        <input type="number" id="cantidad" value="1" min="1" max="<?= $producto['stock'] ?>">
         <button class="mas">+</button>
       </div>
 
@@ -154,8 +147,7 @@ $conn->close();
         data-id="<?= $producto['id'] ?>"
         data-name="<?= htmlspecialchars($producto['name']) ?>"
         data-price="<?= $producto['price'] ?>"
-        data-image="<?= htmlspecialchars($producto['image']) ?>"
-        data-stock="<?= $producto['stock'] ?>">
+        data-image="<?= htmlspecialchars($producto['image']) ?>">
         <i class="fas fa-cart-plus"></i> Add to Cart
       </button>
 
@@ -239,18 +231,44 @@ $conn->close();
           }
         });
 
-        const input = document.getElementById('cantidad');
-        const btnMas = document.querySelector('.mas');
-        const btnMenos = document.querySelector('.menos');
-        const stock = parseInt(input.max);
+        function checkStock() {
+          if (!selectedColorId || !selectedSizeId) {
+            stockMessage.textContent = "Select color and size to see stock";
+            cantidadInput.value = 1;
+            cantidadInput.max = 1;
+            addToCartBtn.disabled = true;
+            return;
+          }
 
-        btnMas.addEventListener('click', () => {
-          if (parseInt(input.value) < stock) input.value = parseInt(input.value) + 1;
-        });
+          const productId = addToCartBtn.dataset.id;
 
-        btnMenos.addEventListener('click', () => {
-          if (parseInt(input.value) > 1) input.value = parseInt(input.value) - 1;
-        });
+          fetch(`php/get_stock.php?product_id=${productId}&color_id=${selectedColorId}&size_id=${selectedSizeId}`)
+            .then(res => res.json())
+            .then(data => {
+              const stock = parseInt(data.stock);
+
+              if (stock > 0) {
+                stockMessage.textContent = `Stock: ${stock} available`;
+                cantidadInput.max = stock;
+                cantidadInput.value = 1;
+                addToCartBtn.disabled = false;
+
+                // Actualiza también los data-attrs del botón
+                addToCartBtn.dataset.colorId = selectedColorId;
+                addToCartBtn.dataset.sizeId = selectedSizeId;
+              } else {
+                stockMessage.textContent = "Out of stock";
+                cantidadInput.value = 1;
+                cantidadInput.max = 1;
+                addToCartBtn.disabled = true;
+              }
+            })
+            .catch(err => {
+              console.error("Error fetching stock:", err);
+              stockMessage.textContent = "Error fetching stock";
+              addToCartBtn.disabled = true;
+            });
+        }
       </script>
       <div class="descripcion">
         <p><?= nl2br(htmlspecialchars($producto['description'])) ?></p>
