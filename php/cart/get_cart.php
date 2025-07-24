@@ -56,7 +56,6 @@ try {
             JOIN productos p ON c.producto_id = p.id
             LEFT JOIN colors co ON co.id = c.color_id
             LEFT JOIN sizes s ON s.id = c.size_id
-            AND pv.color_id = c.color_id AND pv.size_id = c.size_id
             WHERE c.users_id = ?";
 
 

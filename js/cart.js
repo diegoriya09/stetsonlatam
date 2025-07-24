@@ -195,12 +195,6 @@ document.addEventListener('click', function (e) {
     const size_id = removeBtn.dataset.sizeId ? parseInt(removeBtn.dataset.sizeId) : null;
     const jwt = localStorage.getItem("jwt");
 
-    console.log("Eliminar =>", {
-      producto_id,
-      color_id,
-      size_id
-    });
-
     if (jwt) {
       fetch('php/cart/remove_from_cart.php', {
         method: 'POST',
