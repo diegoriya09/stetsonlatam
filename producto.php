@@ -133,24 +133,19 @@ $conn->close();
           <?php endforeach; ?>
         </div>
       <?php endif; ?>
-      <p class="stock-disponible">
-        <strong>Select color and size to see stock</strong>
-      </p>
 
       <div class="cantidad">
         <strong>Quantity:</strong>
         <button class="menos">-</button>
-        <input type="number" id="cantidad" value="1" min="1" max="<?= $producto['stock'] ?>" <?= $producto['stock'] <= 0 ? 'disabled' : '' ?>>
+        <input type="number" id="cantidad" value="1" min="1">
         <button class="mas">+</button>
       </div>
 
       <button class="add-to-cart-btn"
-        <?= $producto['stock'] <= 0 ? 'disabled' : '' ?>
         data-id="<?= $producto['id'] ?>"
         data-name="<?= htmlspecialchars($producto['name']) ?>"
         data-price="<?= $producto['price'] ?>"
-        data-image="<?= htmlspecialchars($producto['image']) ?>"
-        data-stock="<?= $producto['stock'] ?>">
+        data-image="<?= htmlspecialchars($producto['image']) ?>">
         <i class="fas fa-cart-plus"></i> Add to Cart
       </button>
 
@@ -161,7 +156,6 @@ $conn->close();
           let selectedHex = null;
           let selectedSize = null;
           let selectedSizeName = null;
-          const stockMessage = document.getElementById('stock-message');
           const addToCartBtn = document.querySelector('.add-to-cart-btn');
           const cantidadInput = document.querySelector('#cantidad');
           let selectedColorId = null;
@@ -182,12 +176,6 @@ $conn->close();
                 addToCartBtn.dataset.colorName = selectedColorName;
                 addToCartBtn.dataset.hex = selectedHex;
               }
-              if (selectedColor) {
-                actualizarStock(<?= $producto['id'] ?>, selectedColor, selectedSize);
-              }
-              selectedColorId = btn.dataset.colorId;
-              checkStock();
-
             });
           });
 
@@ -203,11 +191,6 @@ $conn->close();
                 addToCartBtn.dataset.sizeId = selectedSize;
                 addToCartBtn.dataset.sizeName = selectedSizeName;
               }
-              if (selectedSize) {
-                actualizarStock(<?= $producto['id'] ?>, selectedColor, selectedSize);
-              }
-              selectedSizeId = btn.dataset.sizeId;
-              checkStock();
             });
           });
 
@@ -232,19 +215,6 @@ $conn->close();
               }
             });
           }
-        });
-
-        const input = document.getElementById('cantidad');
-        const btnMas = document.querySelector('.mas');
-        const btnMenos = document.querySelector('.menos');
-        const stock = parseInt(input.max);
-
-        btnMas.addEventListener('click', () => {
-          if (parseInt(input.value) < stock) input.value = parseInt(input.value) + 1;
-        });
-
-        btnMenos.addEventListener('click', () => {
-          if (parseInt(input.value) > 1) input.value = parseInt(input.value) - 1;
         });
       </script>
       <div class="descripcion">

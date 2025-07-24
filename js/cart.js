@@ -28,7 +28,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 quantity: item.quantity,
                 color_id: item.color_id,
                 size_id: item.size_id,
-                stock: item.stock || 0 // Enviamos stock si está disponible
               })
             });
           });
@@ -260,14 +259,7 @@ function renderItem(product) {
     hex,
     size_name,
     size_id,
-    stock: cantidad_disponible
   } = product;
-
-  const stockMsg = cantidad_disponible <= 0
-    ? `<span class="agotado">Out of stock</span>`
-    : `<span class="stock-info">(${cantidad_disponible} available units)</span>`;
-
-  const disablePlus = cantidad_disponible <= quantity ? 'disabled' : '';
 
   return `
     <div class="carrito-item">
@@ -282,7 +274,6 @@ function renderItem(product) {
               data-id="${id}" data-color-id="${color_id}" data-size-id="${size_id}" data-stock="${cantidad_disponible}" />
             <button class="qty-btn plus" data-id="${id}" data-color-id="${color_id}" data-size-id="${size_id}" ${disablePlus}>+</button>
           </div>
-          ${stockMsg}
         </div>
         ${color_name ? `<p><strong>Color:</strong> ${color_name} <span style="display:inline-block;width:16px;height:16px;border-radius:50%;background:${hex};border:1px solid #000;margin-left:5px;vertical-align:middle;"></span></p>` : ''}
         ${size_name ? `<p><strong>Size:</strong> ${size_name}</p>` : ''}

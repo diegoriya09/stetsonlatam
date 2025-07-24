@@ -52,12 +52,11 @@ try {
                 co.hex, 
                 c.size_id, 
                 s.name AS size_name,
-                pv.stock
             FROM cart c
             JOIN productos p ON c.producto_id = p.id
             LEFT JOIN colors co ON co.id = c.color_id
             LEFT JOIN sizes s ON s.id = c.size_id
-            LEFT JOIN product_variants pv ON pv.product_id = c.producto_id AND pv.color_id = c.color_id AND pv.size_id = c.size_id
+            AND pv.color_id = c.color_id AND pv.size_id = c.size_id
             WHERE c.users_id = ?";
 
 
@@ -72,14 +71,6 @@ try {
 
     $carrito = [];
     while ($row = $result->fetch_assoc()) {
-        // Agregar estado de disponibilidad
-        if ($row['stock'] <= 0) {
-            $row['stock_status'] = 'Out of stock';
-            $row['can_purchase'] = false;
-        } else {
-            $row['stock_status'] = $row['stock'] . ' units available';
-            $row['can_purchase'] = true;
-        }
         $carrito[] = $row;
     }
 
