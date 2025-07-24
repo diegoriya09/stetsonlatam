@@ -266,7 +266,7 @@ function renderItem(product) {
             <button class="qty-btn minus" data-id="${id}" data-color-id="${color_id}" data-size-id="${size_id}">−</button>
             <input type="text" class="cantidad-input" value="${quantity}" readonly
               data-id="${id}" data-color-id="${color_id}" data-size-id="${size_id}" />
-            <button class="qty-btn plus" data-id="${id}" data-color-id="${color_id}" data-size-id="${size_id}" ${disablePlus}>+</button>
+            <button class="qty-btn plus" data-id="${id}" data-color-id="${color_id}" data-size-id="${size_id}">+</button>
           </div>
         </div>
         ${color_name ? `<p><strong>Color:</strong> ${color_name} <span style="display:inline-block;width:16px;height:16px;border-radius:50%;background:${hex};border:1px solid #000;margin-left:5px;vertical-align:middle;"></span></p>` : ''}
