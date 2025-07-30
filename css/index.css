@@ -777,7 +777,7 @@ nav.main-nav {
 .footer-columns {
   display: flex;
   justify-content: space-between;
-  flex-wrap: wrap;
+  flex-wrap: nowrap; /* ❗ Esto fuerza que todo esté en una sola línea */
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem 1rem;
@@ -785,7 +785,7 @@ nav.main-nav {
 }
 
 .footer-column {
-  flex: 1 1 200px; /* crece, encoge, ancho base */
+  flex: 1;
   min-width: 150px;
 }
 
