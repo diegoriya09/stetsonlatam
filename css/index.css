@@ -1022,7 +1022,7 @@ nav.main-nav {
 
 /* Contact Section */
 .contacto {
-  background: #faf9f6;
+  background: #f1eeea;
   padding: 40px 0 60px 0;
   text-align: center;
   border-radius: 12px;
@@ -1034,18 +1034,18 @@ nav.main-nav {
 .contacto h1 {
   font-size: 2.2rem;
   margin-bottom: 18px;
-  color: #222;
+  color: #3c3737;
   letter-spacing: 1px;
 }
 
 .contacto p {
-  color: #444;
+  color: #3c3737;
   margin: 6px 0 12px 0;
   font-size: 1.05rem;
 }
 
 #contact-form {
-  background: #fff;
+  background: #f1eeea;
   padding: 28px 24px 18px 24px;
   border-radius: 10px;
   box-shadow: 0 1px 8px rgba(0,0,0,0.06);
@@ -1060,7 +1060,7 @@ nav.main-nav {
   flex-direction: column;
   align-items: flex-start;
   font-weight: 500;
-  color: #333;
+  color: #3c3737;
   margin-bottom: 4px;
   font-size: 1rem;
 }
@@ -1070,24 +1070,24 @@ nav.main-nav {
   width: 100%;
   padding: 10px 12px;
   margin-top: 4px;
-  border: 1px solid #ccc;
+  border: 1px solid #f1eeea;
   border-radius: 6px;
   font-size: 1rem;
-  background: #f8f8f8;
+  background: #f1eeea;
   transition: border-color 0.2s;
   resize: none;
 }
 
 #contact-form input:focus,
 #contact-form textarea:focus {
-  border-color: #b8860b;
+  border-color: #3F1E1F;
   outline: none;
-  background: #fffbe6;
+  background: #f1eeea;
 }
 
 #contact-form button {
-  background: #b8860b;
-  color: #fff;
+  background: #3F1E1F;
+  color: #f1eeea;
   border: none;
   border-radius: 6px;
   padding: 12px 0;
