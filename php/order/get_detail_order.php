@@ -16,7 +16,8 @@ if (!$order_id) {
 }
 
 $stmt = $conn->prepare("
-    SELECT p.name, p.price, d.cantidad
+    SELECT p.name, p.price, d.cantidad,
+           d.color_nombre, d.size_nombre
     FROM pedido_detalle d
     JOIN productos p ON d.producto_id = p.id
     WHERE d.pedido_id = ?

@@ -98,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $item['producto_id'],
             $item['nombre'],
             $item['precio'],
-            $item['cantidad'],
+            $item['quantity'],
             $item['color_id'],
             $item['color_nombre'],
             $item['size_id'],

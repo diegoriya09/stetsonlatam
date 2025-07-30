@@ -85,8 +85,8 @@ function openModalWithOrderDetails(orderId) {
         data.details.forEach((item) => {
           html += `
             <li>
-              ${item.name} - Quantity: ${item.cantidad} - Price: $${item.price} - Size: ${item.size || "N/A"}
-              ${item.color ? `- Color: ${item.color}` : ""}
+              ${item.name} - Quantity: ${item.cantidad} - Price: $${item.price} - Size: ${item.size_name || "N/A"}
+              ${item.color_nombre ? `- Color: ${item.color_nombre}` : ""}
             </li>
           `;
         });
