@@ -179,7 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   const orderStatusLink = document.getElementById('order-status-link');
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem('jwt');
 
   orderStatusLink.addEventListener('click', function (e) {
     e.preventDefault();
