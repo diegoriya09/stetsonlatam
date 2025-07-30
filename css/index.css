@@ -779,7 +779,7 @@ nav.main-nav {
   justify-content: space-between;
   flex-wrap: nowrap; /* ❗ Esto fuerza que todo esté en una sola línea */
   max-width: 1200px;
-  margin: 0 100px 100px auto;
+  margin: 0 50px auto;
   padding: 2rem 1rem;
   gap: 2rem;
 }
