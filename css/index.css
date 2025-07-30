@@ -1045,7 +1045,7 @@ nav.main-nav {
 }
 
 #contact-form {
-  background: #fff;
+  background: #f1eeea;
   padding: 28px 24px 18px 24px;
   border-radius: 10px;
   box-shadow: 0 1px 8px rgba(0,0,0,0.06);
@@ -1073,7 +1073,7 @@ nav.main-nav {
   border: 1px solid #f1eeea;
   border-radius: 6px;
   font-size: 1rem;
-  background: #f1eeea;
+  background: #fff;
   transition: border-color 0.2s;
   resize: none;
 }
