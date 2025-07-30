@@ -68,6 +68,56 @@ function handleAddToCart(e) {
   const inputCantidad = button.closest('.info-producto').querySelector('#cantidad');
   const quantity = inputCantidad ? parseInt(inputCantidad.value, 10) : 1;
 
+  const category = button.dataset.category || null;
+
+  if (category === "cachucha") {
+    const productoCachucha = {
+      id: parseInt(button.dataset.id),
+      name: button.dataset.name,
+      price: parseFloat(button.dataset.price),
+      image: button.dataset.image,
+      quantity: quantity
+    };
+
+    if (jwt) {
+      // Enviar cachucha al backend
+      fetch('php/cart/add_to_cart.php', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + jwt,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          producto_id: productoCachucha.id,
+          quantity: productoCachucha.quantity
+        })
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            loadCart(true);
+          } else {
+            console.error("Error adding cachucha:", data.message);
+          }
+        });
+    } else {
+      let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+
+      // Buscar cachucha por id
+      const index = carrito.findIndex(p => p.id === productoCachucha.id);
+
+      if (index !== -1) {
+        carrito[index].quantity += productoCachucha.quantity;
+      } else {
+        carrito.push(productoCachucha);
+      }
+
+      localStorage.setItem('carrito', JSON.stringify(carrito));
+      loadCart(false);
+    }
+  }
+
+
   // Obtener color y talla seleccionados de los data attributes del botón
   const color_id = button.dataset.colorId || null;
   const color_name = button.dataset.colorName || null;
@@ -251,7 +301,36 @@ function renderItem(product) {
     size_id,
   } = product;
 
-  return `
+  const {
+    id: productCachuchaId,
+    name: productCachuchaName,
+    price: productCachuchaPrice,
+    image: productCachuchaImage,
+    quantity: productCachuchaQuantity,
+  } = productCachucha;
+
+  if (productCachuchaId) {
+    return `
+      <div class="carrito-item">
+        <img src="${productCachuchaImage}" alt="${productCachuchaName}" class="carrito-img" loading="lazy">
+        <div class="carrito-info">
+          <h4>${productCachuchaName}</h4>
+          <div class="cantidad-control">
+            <label>$${productCachuchaPrice.toLocaleString()} x </label>
+            <div class="qty-wrapper">
+              <button class="qty-btn minus" data-id="${productCachuchaId}">−</button>
+              <input type="text" class="cantidad-input" value="${productCachuchaQuantity}" readonly data-id="${productCachuchaId}" />
+              <button class="qty-btn plus" data-id="${productCachuchaId}">+</button>
+            </div>
+          </div>
+          <a class="remove-btn"
+             data-id="${productCachuchaId}">
+             <i class="fas fa-trash-alt"></i></a>
+        </div>
+      </div>
+    `;
+  } else {
+    return `
     <div class="carrito-item">
       <img src="${image}" alt="${name}" class="carrito-img" loading="lazy">
       <div class="carrito-info">
@@ -275,44 +354,45 @@ function renderItem(product) {
       </div>
     </div>
   `;
-}
+  }
 
-function updateQuantity({ id, color_id, size_id, quantity }) {
-  const jwt = localStorage.getItem("jwt");
+  function updateQuantity({ id, color_id, size_id, quantity }) {
+    const jwt = localStorage.getItem("jwt");
 
-  if (quantity < 1) return;
+    if (quantity < 1) return;
 
-  if (jwt) {
-    fetch("php/cart/update_quantity.php", {
-      method: "POST",
-      headers: {
-        "Authorization": "Bearer " + jwt,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        producto_id: parseInt(id),
-        color_id: parseInt(color_id),
-        size_id: parseInt(size_id),
-        quantity: parseInt(quantity)
+    if (jwt) {
+      fetch("php/cart/update_quantity.php", {
+        method: "POST",
+        headers: {
+          "Authorization": "Bearer " + jwt,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          producto_id: parseInt(id),
+          color_id: parseInt(color_id),
+          size_id: parseInt(size_id),
+          quantity: parseInt(quantity)
+        })
       })
-    })
-      .then(res => res.json())
-      .then(data => {
-        if (data.success) {
-          loadCart(true);
-        } else {
-          console.error("Error en servidor:", data.message);
-        }
-      });
-  } else {
-    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-    const index = carrito.findIndex(p =>
-      p.id == id && p.color_id == color_id && p.size_id == size_id
-    );
-    if (index !== -1) {
-      carrito[index].quantity = parseInt(quantity);
-      localStorage.setItem("carrito", JSON.stringify(carrito));
-      loadCart(false);
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            loadCart(true);
+          } else {
+            console.error("Error en servidor:", data.message);
+          }
+        });
+    } else {
+      let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+      const index = carrito.findIndex(p =>
+        p.id == id && p.color_id == color_id && p.size_id == size_id
+      );
+      if (index !== -1) {
+        carrito[index].quantity = parseInt(quantity);
+        localStorage.setItem("carrito", JSON.stringify(carrito));
+        loadCart(false);
+      }
     }
   }
 }
