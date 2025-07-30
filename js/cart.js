@@ -70,7 +70,7 @@ function handleAddToCart(e) {
 
   const category = button.dataset.category || null;
 
-  if (category === "cachucha") {
+  if (category === "caps") {
     const productoCachucha = {
       id: parseInt(button.dataset.id),
       name: button.dataset.name,
