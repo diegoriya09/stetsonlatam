@@ -777,8 +777,7 @@ nav.main-nav {
 .footer-columns {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
-  gap: 0.5rem;
-  margin-bottom: 2rem;
+  margin-bottom: 0.5rem;
 }
 
 .footer-column h4 {
