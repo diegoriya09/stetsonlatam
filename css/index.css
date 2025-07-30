@@ -775,12 +775,18 @@ nav.main-nav {
 }
 
 .footer-columns {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  max-width: 1200px;
   margin: 0 auto;
-  gap: 1rem;
-  max-width: 100px;
   padding: 2rem 1rem;
+  gap: 2rem;
+}
+
+.footer-column {
+  flex: 1 1 200px; /* crece, encoge, ancho base */
+  min-width: 150px;
 }
 
 .footer-column h4 {
