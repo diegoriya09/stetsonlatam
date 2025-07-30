@@ -7,7 +7,7 @@
                     <li><a href="contacto.php">Contact Us</a></li>
                     <li><a href="#">Shipping</a></li>
                     <li><a href="#">Returns & Exchanges</a></li>
-                    <li><a href="#" id="open-user-modal">Order Status</a></li>
+                    <li><a href="#" id="order-status-link">Order Status</a></li>
                     <li><a href="#">Fit Guide</a></li>
                     <li><a href="#">FAQ</a></li>
                 </ul>

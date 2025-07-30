@@ -178,6 +178,24 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  const orderStatusLink = document.getElementById('order-status-link');
+  const token = localStorage.getItem('token');
+
+  orderStatusLink.addEventListener('click', function (e) {
+    e.preventDefault();
+
+    if (token) {
+      // Usuario logueado: redirige a la pestaña de pedidos
+      window.location.href = 'myorders.php';
+    } else {
+      // Usuario no logueado: abre el modal
+      const modal = document.getElementById('user-modal');
+      if (modal) {
+        modal.style.display = 'block';
+      }
+    }
+  });
+
 });
 
 // Abrir y cerrar carrito (sidebar)
@@ -256,45 +274,45 @@ document.getElementById('checkout-form').addEventListener('submit', function (e)
   const formData = new FormData(form);
 
   fetch('php/cart/checkout.php', {
-  method: 'POST',
-  body: formData
-})
-  .then(async res => {
-    const data = await res.json();
+    method: 'POST',
+    body: formData
+  })
+    .then(async res => {
+      const data = await res.json();
 
-    if (!res.ok) {
-      throw new Error(data.message || 'Server error');
-    }
+      if (!res.ok) {
+        throw new Error(data.message || 'Server error');
+      }
 
-    const confirmDiv = document.getElementById('checkout-confirm');
-    form.style.display = 'none';
+      const confirmDiv = document.getElementById('checkout-confirm');
+      form.style.display = 'none';
 
-    if (data.success) {
-      document.getElementById("checkout-confirm").innerHTML = `
+      if (data.success) {
+        document.getElementById("checkout-confirm").innerHTML = `
         <h2>✅ Pedido confirmado</h2>
         <p>${data.message}</p>
         <p><strong>Número de pedido:</strong> ${data.pedido_id}</p>
       `;
-      loadCart(true);
-      localStorage.removeItem("carrito");
-    } else {
-      confirmDiv.innerHTML = `
+        loadCart(true);
+        localStorage.removeItem("carrito");
+      } else {
+        confirmDiv.innerHTML = `
         <h3 style="color: red;">Payment failed</h3>
         <p>${data.message || 'An error occurred. Please try again.'}</p>
       `;
-    }
+      }
 
-    confirmDiv.style.display = 'block';
-  })
-  .catch(err => {
-    console.error("Checkout error:", err);
-    const confirmDiv = document.getElementById('checkout-confirm');
-    form.style.display = 'none';
-    confirmDiv.innerHTML = `
+      confirmDiv.style.display = 'block';
+    })
+    .catch(err => {
+      console.error("Checkout error:", err);
+      const confirmDiv = document.getElementById('checkout-confirm');
+      form.style.display = 'none';
+      confirmDiv.innerHTML = `
       <h3 style="color: red;">Error</h3>
       <p>${err.message || 'There was a problem processing your payment. Try again later.'}</p>
     `;
-    confirmDiv.style.display = 'block';
-  });
+      confirmDiv.style.display = 'block';
+    });
 });
 
