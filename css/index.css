@@ -776,7 +776,7 @@ nav.main-nav {
 
 .footer-columns {
   display: flex;
-  flex-wrap: wrap;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
   gap: 0.5rem;
   margin-bottom: 2rem;
 }
