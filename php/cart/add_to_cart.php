@@ -75,7 +75,7 @@ $stmt->close();
 
 // Verificar si el producto ya está en el carrito considerando color y talla si es hat y si es caps sin talla ni color
 if ($category = $data['category'] ?? "caps") {
-    $sql_check = "SELECT quantity FROM cart WHERE users_id = ? AND producto_id = ? AND category = ?";
+    $sql_check = "SELECT quantity FROM cart WHERE users_id = ? AND producto_id = ?";
     $stmt_check = $conn->prepare($sql_check);
     $stmt_check->bind_param("iii", $user_id, $producto_id, $category);
 } else {
