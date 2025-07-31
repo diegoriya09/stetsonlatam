@@ -82,16 +82,16 @@ function handleAddToCart(e) {
         title: 'Choose color and size',
         text: 'You must select both before adding to the cart.'
       });
-    } else if(!color_id) {
-      if( window.Swal) {
+    } else if (!color_id) {
+      if (window.Swal) {
         Swal.fire({
           icon: 'warning',
           title: 'Choose a color',
           text: 'You must select a color before adding to the cart.'
         });
       }
-    } else if(!size_id) {
-      if( window.Swal) {
+    } else if (!size_id) {
+      if (window.Swal) {
         Swal.fire({
           icon: 'warning',
           title: 'Choose a size',
@@ -99,8 +99,12 @@ function handleAddToCart(e) {
         });
       }
     }
+    else {
+      alert('You must choose color and size before adding to the cart.');
+    }
     return;
   }
+
 
   // Obtener el botón de color seleccionado para extraer el HEX
   const colorBtn = document.querySelector('.color-btn.selected');
