@@ -73,13 +73,9 @@ function handleAddToCart(e) {
   const color_name = button.dataset.colorName || null;
   const size_id = button.dataset.sizeId || null;
   const size_name = button.dataset.sizeName || null;
-  const category = button.dataset.category || null;
 
   // Validar selección antes de agregar
   if (!color_id || !size_id) {
-    if (category === 'caps') {
-      return; // No requiere color ni talla
-    }
     if (window.Swal) {
       Swal.fire({
         icon: 'warning',
@@ -102,39 +98,14 @@ function handleAddToCart(e) {
     price: parseFloat(button.dataset.price),
     image: button.dataset.image,
     quantity: quantity,
-    color_id: color_id || null,
-    color_name: color_name || null,
-    hex: hex || null,
-    size_id: size_id || null,
-    size_name: size_name || null,
-    category: category
+    color_id,
+    color_name,
+    hex,
+    size_id,
+    size_name
   };
 
-  if (jwt && category === 'caps') {
-    // Enviar color y talla
-    const body = {
-      producto_id: producto.id,
-      quantity: quantity,
-      color_id: null,
-      size_id: null
-    };
-    fetch('php/cart/add_to_cart.php', {
-      method: 'POST',
-      headers: {
-        'Authorization': 'Bearer ' + jwt,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(body)
-    })
-      .then(res => res.json())
-      .then(data => {
-        if (data.success) {
-          loadCart(true);
-        } else {
-          console.error("Error adding:", data.message);
-        }
-      });
-  } else if (jwt) {
+  if (jwt) {
     // Enviar color y talla
     const body = {
       producto_id: producto.id,
@@ -158,22 +129,6 @@ function handleAddToCart(e) {
           console.error("Error adding:", data.message);
         }
       });
-  } else if (category === 'caps') {
-    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-
-    // Buscar producto por id
-    const index = carrito.findIndex(p =>
-      p.id === producto.id
-    );
-
-    if (index !== -1) {
-      carrito[index].quantity += quantity;
-    } else {
-      carrito.push(producto);
-    }
-
-    localStorage.setItem('carrito', JSON.stringify(carrito));
-    loadCart(false);
   } else {
     let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
@@ -238,10 +193,9 @@ document.addEventListener('click', function (e) {
     const producto_id = parseInt(removeBtn.dataset.id);
     const color_id = removeBtn.dataset.colorId ? parseInt(removeBtn.dataset.colorId) : null;
     const size_id = removeBtn.dataset.sizeId ? parseInt(removeBtn.dataset.sizeId) : null;
-    const category = removeBtn.closest('.carrito-item').querySelector('.carrito-info input[type="hidden"]').value || 'caps'; // Asume 'caps' si no se encuentra
     const jwt = localStorage.getItem("jwt");
 
-    if (jwt && category === 'caps') {
+    if (jwt) {
       fetch('php/cart/remove_from_cart.php', {
         method: 'POST',
         headers: {
@@ -258,31 +212,7 @@ document.addEventListener('click', function (e) {
             console.error('Error al eliminar:', data.message);
           }
         });
-    } else if (jwt && category === 'hats') {
-      fetch('php/cart/remove_from_cart.php', {
-        method: 'POST',
-        headers: {
-          'Authorization': 'Bearer ' + jwt,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ producto_id, color_id, size_id })
-      })
-        .then(res => res.json())
-        .then(data => {
-          if (data.success) {
-            loadCart(true);
-          } else {
-            console.error('Error al eliminar:', data.message);
-          }
-        });
-
-    } else if (category === 'caps') {
-      let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-      carrito = carrito.filter(p => !(p.id === producto_id));
-      localStorage.setItem('carrito', JSON.stringify(carrito));
-      loadCart(false);
-    }
-    else {
+    } else {
       let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
       carrito = carrito.filter(p => !(p.id === producto_id && p.color_id == color_id && p.size_id == size_id));
       localStorage.setItem('carrito', JSON.stringify(carrito));
@@ -319,39 +249,13 @@ function renderItem(product) {
     hex,
     size_name,
     size_id,
-    category
   } = product;
 
-  if (category === 'caps') {
-    return `
+  return `
     <div class="carrito-item">
       <img src="${image}" alt="${name}" class="carrito-img" loading="lazy">
       <div class="carrito-info">
         <h4>${name}</h4>
-        <input type="hidden" value="${category}" data-category="${category}">
-        <div class="cantidad-control">
-          <label>$${price.toLocaleString()} x </label>
-          <div class="qty-wrapper">
-            <button class="qty-btn minus" data-id="${id}">−</button>
-            <input type="text" class="cantidad-input" value="${quantity}" readonly
-              data-id="${id}" />
-            <button class="qty-btn plus" data-id="${id}">+</button>
-          </div>
-        </div>
-        <a class="remove-btn"
-           data-id="${id}"
-           data-category="${category}">
-           <i class="fas fa-trash-alt"></i></a>
-      </div>
-    </div>
-  `;
-  } else if (category === 'hats') {
-    return `
-    <div class="carrito-item">
-      <img src="${image}" alt="${name}" class="carrito-img" loading="lazy">
-      <div class="carrito-info">
-        <h4>${name}</h4>
-        <input type="hidden" value="${category}" data-category="${category}">
         <div class="cantidad-control">
           <label>$${price.toLocaleString()} x </label>
           <div class="qty-wrapper">
@@ -366,13 +270,11 @@ function renderItem(product) {
         <a class="remove-btn"
            data-id="${id}"
            data-color-id="${color_id}"
-           data-size-id="${size_id}"
-           data-category="${category}">
+           data-size-id="${size_id}">
            <i class="fas fa-trash-alt"></i></a>
       </div>
     </div>
   `;
-  }
 }
 
 function updateQuantity({ id, color_id, size_id, quantity }) {
