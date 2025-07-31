@@ -237,6 +237,7 @@ document.addEventListener('click', function (e) {
     const producto_id = parseInt(removeBtn.dataset.id);
     const color_id = removeBtn.dataset.colorId ? parseInt(removeBtn.dataset.colorId) : null;
     const size_id = removeBtn.dataset.sizeId ? parseInt(removeBtn.dataset.sizeId) : null;
+    const category = removeBtn.closest('.carrito-item').querySelector('.carrito-info input[type="hidden"]').value || 'caps'; // Asume 'caps' si no se encuentra
     const jwt = localStorage.getItem("jwt");
 
     if (jwt && category === 'caps') {
@@ -317,6 +318,7 @@ function renderItem(product) {
     hex,
     size_name,
     size_id,
+    category,
   } = product;
 
   return `
@@ -324,6 +326,7 @@ function renderItem(product) {
       <img src="${image}" alt="${name}" class="carrito-img" loading="lazy">
       <div class="carrito-info">
         <h4>${name}</h4>
+        <input type="hidden" value="${category}" data-category="${category}">
         <div class="cantidad-control">
           <label>$${price.toLocaleString()} x </label>
           <div class="qty-wrapper">
@@ -338,7 +341,9 @@ function renderItem(product) {
         <a class="remove-btn"
            data-id="${id}"
            data-color-id="${color_id}"
-           data-size-id="${size_id}">
+           data-size-id="${size_id}"
+           data-category="${category}"
+           >
            <i class="fas fa-trash-alt"></i></a>
       </div>
     </div>
