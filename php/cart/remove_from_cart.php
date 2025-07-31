@@ -44,7 +44,7 @@ if ($category === 'caps') {
     $sql = "DELETE FROM cart WHERE users_id = ? AND producto_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ii", $user_id, $producto_id);
-} elseif ($category === 'hats') {
+} else if ($category === 'hats') {
     // Eliminar del carrito de hats
     $sql = "DELETE FROM cart WHERE users_id = ? AND producto_id = ? AND color_id = ? AND size_id = ?";
     $stmt = $conn->prepare($sql);

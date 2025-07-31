@@ -46,6 +46,7 @@ try {
             p.name, 
             p.price, 
             p.image, 
+            p.category,
             c.quantity, 
             c.color_id, 
             co.name AS color_name, 
