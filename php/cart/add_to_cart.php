@@ -94,8 +94,8 @@ if ($result->num_rows > 0) {
 
 
     if ($category = $data['category'] ?? "caps") {
-        $stmt_update = $conn->prepare("UPDATE cart SET quantity = ? WHERE users_id = ? AND producto_id = ? AND category = ?");
-        $stmt_update->bind_param("iiis", $new_quantity, $user_id, $producto_id, $category);
+        $stmt_update = $conn->prepare("UPDATE cart SET quantity = ? WHERE users_id = ? AND producto_id = ?");
+        $stmt_update->bind_param("iii", $new_quantity, $user_id, $producto_id);
     } else {
         // No se actualiza la categoría si no se proporciona
         $sql_update = "UPDATE cart SET quantity = ? WHERE users_id = ? AND producto_id = ? AND color_id = ? AND size_id = ?";
@@ -111,9 +111,9 @@ if ($result->num_rows > 0) {
 
     // No existe, insertar
     if ($category = $data['category'] ?? "caps") {
-        $sql_insert = "INSERT INTO cart (users_id, producto_id, quantity, color_id, size_id, category) VALUES (?, ?, ?, 'N/A', 'N/A', ?)";
+        $sql_insert = "INSERT INTO cart (users_id, producto_id, quantity, color_id, size_id) VALUES (?, ?, ?, 'N/A', 'N/A')";
         $stmt_insert = $conn->prepare($sql_insert);
-        $stmt_insert->bind_param("iiiii", $user_id, $producto_id, $quantity, $color_id, $size_id, $category);
+        $stmt_insert->bind_param("iiii", $user_id, $producto_id, $quantity, $color_id, $size_id);
     } else {
         $sql_insert = "INSERT INTO cart (users_id, producto_id, quantity, color_id, size_id) VALUES (?, ?, ?, ?, ?)";
         $stmt_insert = $conn->prepare($sql_insert);
