@@ -113,7 +113,7 @@ $conn->close();
     <div class="info-producto">
       <h1><?= htmlspecialchars($producto['name']) ?></h1>
       <p class="precio">$<?= number_format($producto['price'], 2) ?></p>
-      <input type="hidden" data-category="<?= htmlspecialchars($producto['category']) ?>" value="<?= htmlspecialchars($producto['category']) ?>">
+      <input type="text" data-category="<?= htmlspecialchars($producto['category']) ?>" value="<?= htmlspecialchars($producto['category']) ?>">
 
       <?php if (!empty($colores)): ?>
         <div class="colores">
