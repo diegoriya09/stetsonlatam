@@ -111,7 +111,7 @@ if ($result->num_rows > 0) {
 
     // No existe, insertar
     if ($category = $data['category'] ?? "caps") {
-        $sql_insert = "INSERT INTO cart (users_id, producto_id, quantity, color_id, size_id) VALUES (?, ?, ?, 'N/A', 'N/A')";
+        $sql_insert = "INSERT INTO cart (users_id, producto_id, quantity, color_id, size_id) VALUES (?, ?, ?, ?, ?)";
         $stmt_insert = $conn->prepare($sql_insert);
         $stmt_insert->bind_param("iiiii", $user_id, $producto_id, $quantity, $color_id, $size_id);
     } else {
