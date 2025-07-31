@@ -56,6 +56,7 @@ $conn->close();
       window.location.href = `wishlist.php?ids=${wishlist.join(',')}`;
     }
   </script>
+  <script src="js/index.js?v=<?php echo time(); ?>"></script>
   <script src="js/auth.js?v=<?php echo time(); ?>"></script>
   <script src="js/hats.js?v=<?php echo time(); ?>"></script>
   <script src="js/cart.js?v=<?php echo time(); ?>"></script>
