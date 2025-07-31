@@ -144,6 +144,7 @@ $conn->close();
         data-name="<?= htmlspecialchars($producto['name']) ?>"
         data-price="<?= $producto['price'] ?>"
         data-image="<?= htmlspecialchars($producto['image']) ?>"
+        data-category="<?= htmlspecialchars($producto['category']) ?>">
         <i class="fas fa-cart-plus"></i> Add to Cart
       </button>
 

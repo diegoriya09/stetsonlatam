@@ -73,9 +73,13 @@ function handleAddToCart(e) {
   const color_name = button.dataset.colorName || null;
   const size_id = button.dataset.sizeId || null;
   const size_name = button.dataset.sizeName || null;
+  const category = button.dataset.category || null;
 
   // Validar selección antes de agregar
   if (!color_id || !size_id) {
+    if (category === 'caps') {
+      return; // No requiere color ni talla
+    }
     if (window.Swal) {
       Swal.fire({
         icon: 'warning',
