@@ -44,6 +44,7 @@ $producto_id = $data['producto_id'] ?? null;
 $quantity = $data['quantity'] ?? 1;
 $color_id = isset($data['color_id']) ? intval($data['color_id']) : null;
 $size_id = isset($data['size_id']) ? intval($data['size_id']) : null;
+$category = $data['category'];
 
 if (!$producto_id || $quantity < 1 || !$color_id || !$size_id) {
     http_response_code(400);
@@ -74,7 +75,7 @@ if ($result->num_rows === 0) {
 $stmt->close();
 
 // Verificar si el producto ya está en el carrito considerando color y talla si es hat y si es caps sin talla ni color
-if ($category = $data['category'] ?? "caps") {
+if ($category === "caps") {
     $sql_check = "SELECT quantity FROM cart WHERE users_id = ? AND producto_id = ?";
     $stmt_check = $conn->prepare($sql_check);
     $stmt_check->bind_param("ii", $user_id, $producto_id);
@@ -93,7 +94,7 @@ if ($result->num_rows > 0) {
     $new_quantity = $row['quantity'] + $quantity;
 
 
-    if ($category = $data['category'] ?? "caps") {
+    if ($category === "caps") {
         $stmt_update = $conn->prepare("UPDATE cart SET quantity = ? WHERE users_id = ? AND producto_id = ?");
         $stmt_update->bind_param("iii", $new_quantity, $user_id, $producto_id);
     } else {
@@ -110,8 +111,8 @@ if ($result->num_rows > 0) {
 } else {
 
     // No existe, insertar
-    if ($category = $data['category'] ?? "caps") {
-        $sql_insert = "INSERT INTO cart (users_id, producto_id, quantity, color_id, size_id) VALUES (?, ?, ?, ?, ?)";
+    if ($category === "caps") {
+        $sql_insert = "INSERT INTO cart (users_id, producto_id, quantity, color_id, size_id) VALUES (?, ?, ?, null, null)";
         $stmt_insert = $conn->prepare($sql_insert);
         $stmt_insert->bind_param("iiiii", $user_id, $producto_id, $quantity, $color_id, $size_id);
     } else {
