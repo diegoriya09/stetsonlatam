@@ -103,10 +103,10 @@ function handleAddToCart(e) {
     image: button.dataset.image,
     quantity: quantity,
     color_id: color_id || null,
-    color_name,
-    hex,
+    color_name: color_name || null,
+    hex: hex || null,
     size_id: size_id || null,
-    size_name
+    size_name: size_name || null
   };
 
   if (jwt && category === 'caps') {
@@ -114,8 +114,8 @@ function handleAddToCart(e) {
     const body = {
       producto_id: producto.id,
       quantity: quantity,
-      color_id: color_id || null,
-      size_id: size_id || null
+      color_id: null,
+      size_id: null
     };
     fetch('php/cart/add_to_cart.php', {
       method: 'POST',
@@ -133,13 +133,13 @@ function handleAddToCart(e) {
           console.error("Error adding:", data.message);
         }
       });
-  } else if (jwt && category === 'hats') {
+  } else if (jwt) {
     // Enviar color y talla
     const body = {
       producto_id: producto.id,
       quantity: quantity,
-      color_id: color_id || null,
-      size_id: size_id || null
+      color_id: color_id,
+      size_id: size_id
     };
     fetch('php/cart/add_to_cart.php', {
       method: 'POST',
@@ -162,7 +162,9 @@ function handleAddToCart(e) {
 
     // Buscar producto por id
     const index = carrito.findIndex(p =>
-      p.id === producto.id
+      p.id === producto.id &&
+      p.color_id === null &&
+      p.size_id === null
     );
 
     if (index !== -1) {
