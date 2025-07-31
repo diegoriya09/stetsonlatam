@@ -107,7 +107,6 @@ function handleAddToCart(e) {
         alert('You must choose color and size before adding to the cart.');
       }
     }
-    return;
   }
 
   // Obtener el botón de color seleccionado para extraer el HEX
