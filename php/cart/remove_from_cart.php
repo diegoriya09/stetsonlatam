@@ -32,15 +32,24 @@ $data = json_decode(file_get_contents('php://input'), true);
 $producto_id = isset($data['producto_id']) ? (int)$data['producto_id'] : null;
 $color_id = isset($data['color_id']) ? (int)$data['color_id'] : null;
 $size_id = isset($data['size_id']) ? (int)$data['size_id'] : null;
+$category = isset($data['category']) ? $data['category'] : null;
 
 if (!$producto_id || !$color_id || !$size_id) {
     echo json_encode(['success' => false, 'message' => 'Datos faltantes']);
     exit;
 }
 
-$sql = "DELETE FROM cart WHERE users_id = ? AND producto_id = ? AND color_id = ? AND size_id = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("iiii", $user_id, $producto_id, $color_id, $size_id);
+if ($category === 'caps') {
+    // Eliminar del carrito de caps
+    $sql = "DELETE FROM cart WHERE users_id = ? AND producto_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ii", $user_id, $producto_id);
+} elseif ($category === 'hats') {
+    // Eliminar del carrito de hats
+    $sql = "DELETE FROM cart WHERE users_id = ? AND producto_id = ? AND color_id = ? AND size_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("iiii", $user_id, $producto_id, $color_id, $size_id);
+}
 
 if ($stmt->execute()) {
     echo json_encode(['success' => true]);

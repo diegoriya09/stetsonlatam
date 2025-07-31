@@ -102,14 +102,14 @@ function handleAddToCart(e) {
     price: parseFloat(button.dataset.price),
     image: button.dataset.image,
     quantity: quantity,
-    color_id,
+    color_id: color_id || null,
     color_name,
     hex,
-    size_id,
+    size_id: size_id || null,
     size_name
   };
 
-  if (jwt) {
+  if (jwt && category === 'caps') {
     // Enviar color y talla
     const body = {
       producto_id: producto.id,
@@ -133,7 +133,47 @@ function handleAddToCart(e) {
           console.error("Error adding:", data.message);
         }
       });
-  } else {
+  } else if (jwt && category === 'hats') {
+    // Enviar color y talla
+    const body = {
+      producto_id: producto.id,
+      quantity: quantity,
+      color_id: color_id || null,
+      size_id: size_id || null
+    };
+    fetch('php/cart/add_to_cart.php', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + jwt,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          loadCart(true);
+        } else {
+          console.error("Error adding:", data.message);
+        }
+      });
+  } else if (category === 'caps') {
+    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+
+    // Buscar producto por id
+    const index = carrito.findIndex(p =>
+      p.id === producto.id
+    );
+
+    if (index !== -1) {
+      carrito[index].quantity += quantity;
+    } else {
+      carrito.push(producto);
+    }
+
+    localStorage.setItem('carrito', JSON.stringify(carrito));
+    loadCart(false);
+  } else if (category === 'hats') {
     let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
     // Convertimos a número para comparar correctamente
@@ -199,7 +239,7 @@ document.addEventListener('click', function (e) {
     const size_id = removeBtn.dataset.sizeId ? parseInt(removeBtn.dataset.sizeId) : null;
     const jwt = localStorage.getItem("jwt");
 
-    if (jwt) {
+    if (jwt && category === 'caps') {
       fetch('php/cart/remove_from_cart.php', {
         method: 'POST',
         headers: {
@@ -216,7 +256,31 @@ document.addEventListener('click', function (e) {
             console.error('Error al eliminar:', data.message);
           }
         });
-    } else {
+    } else if (jwt && category === 'hats') {
+      fetch('php/cart/remove_from_cart.php', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + jwt,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ producto_id, color_id, size_id })
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            loadCart(true);
+          } else {
+            console.error('Error al eliminar:', data.message);
+          }
+        });
+
+    } else if (category === 'caps') {
+      let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+      carrito = carrito.filter(p => !(p.id === producto_id));
+      localStorage.setItem('carrito', JSON.stringify(carrito));
+      loadCart(false);
+    }
+    else if (category === 'hats') {
       let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
       carrito = carrito.filter(p => !(p.id === producto_id && p.color_id == color_id && p.size_id == size_id));
       localStorage.setItem('carrito', JSON.stringify(carrito));
