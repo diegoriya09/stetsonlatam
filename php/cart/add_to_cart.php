@@ -77,7 +77,7 @@ $stmt->close();
 if ($category = $data['category'] ?? "caps") {
     $sql_check = "SELECT quantity FROM cart WHERE users_id = ? AND producto_id = ?";
     $stmt_check = $conn->prepare($sql_check);
-    $stmt_check->bind_param("iii", $user_id, $producto_id, $category);
+    $stmt_check->bind_param("ii", $user_id, $producto_id);
 } else {
     $sql_check = "SELECT quantity FROM cart WHERE users_id = ? AND producto_id = ? AND color_id = ? AND size_id = ?";
     $stmt_check = $conn->prepare($sql_check);
