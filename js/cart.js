@@ -75,15 +75,29 @@ function handleAddToCart(e) {
   const size_name = button.dataset.sizeName || null;
 
   // Validar selección antes de agregar
-  if (!color_id || !size_id) {
+  if (!color_id && !size_id) {
     if (window.Swal) {
       Swal.fire({
         icon: 'warning',
         title: 'Choose color and size',
         text: 'You must select both before adding to the cart.'
       });
-    } else {
-      alert('You must choose color and size before adding to the cart.');
+    } else if(!color_id) {
+      if( window.Swal) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Choose a color',
+          text: 'You must select a color before adding to the cart.'
+        });
+      }
+    } else if(!size_id) {
+      if( window.Swal) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Choose a size',
+          text: 'You must select a size before adding to the cart.'
+        });
+      }
     }
     return;
   }
