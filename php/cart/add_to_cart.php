@@ -114,7 +114,7 @@ if ($result->num_rows > 0) {
     if ($category === "caps") {
         $sql_insert = "INSERT INTO cart (users_id, producto_id, quantity, color_id, size_id) VALUES (?, ?, ?, null, null)";
         $stmt_insert = $conn->prepare($sql_insert);
-        $stmt_insert->bind_param("iiiii", $user_id, $producto_id, $quantity, $color_id, $size_id);
+        $stmt_insert->bind_param("iii", $user_id, $producto_id, $quantity);
     } else {
         $sql_insert = "INSERT INTO cart (users_id, producto_id, quantity, color_id, size_id) VALUES (?, ?, ?, ?, ?)";
         $stmt_insert = $conn->prepare($sql_insert);

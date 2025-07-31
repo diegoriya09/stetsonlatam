@@ -106,7 +106,8 @@ function handleAddToCart(e) {
     color_name: color_name || null,
     hex: hex || null,
     size_id: size_id || null,
-    size_name: size_name || null
+    size_name: size_name || null,
+    category: category
   };
 
   if (jwt && category === 'caps') {
@@ -162,9 +163,7 @@ function handleAddToCart(e) {
 
     // Buscar producto por id
     const index = carrito.findIndex(p =>
-      p.id === producto.id &&
-      p.color_id === null &&
-      p.size_id === null
+      p.id === producto.id
     );
 
     if (index !== -1) {
@@ -283,7 +282,7 @@ document.addEventListener('click', function (e) {
       localStorage.setItem('carrito', JSON.stringify(carrito));
       loadCart(false);
     }
-    else if (category === 'hats') {
+    else {
       let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
       carrito = carrito.filter(p => !(p.id === producto_id && p.color_id == color_id && p.size_id == size_id));
       localStorage.setItem('carrito', JSON.stringify(carrito));
