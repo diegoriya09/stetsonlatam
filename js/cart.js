@@ -114,8 +114,8 @@ function handleAddToCart(e) {
     const body = {
       producto_id: producto.id,
       quantity: quantity,
-      color_id: color_id,
-      size_id: size_id
+      color_id: color_id || null,
+      size_id: size_id || null
     };
     fetch('php/cart/add_to_cart.php', {
       method: 'POST',
