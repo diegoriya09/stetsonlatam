@@ -73,10 +73,16 @@ if ($result->num_rows === 0) {
 }
 $stmt->close();
 
-// Verificar si el producto ya está en el carrito considerando color y talla
-$sql_check = "SELECT quantity FROM cart WHERE users_id = ? AND producto_id = ? AND color_id = ? AND size_id = ?";
-$stmt_check = $conn->prepare($sql_check);
-$stmt_check->bind_param("iiii", $user_id, $producto_id, $color_id, $size_id);
+// Verificar si el producto ya está en el carrito considerando color y talla si es hat y si es caps sin talla ni color
+if ($category = $data['category'] ?? "caps") {
+    $sql_check = "SELECT quantity FROM cart WHERE users_id = ? AND producto_id = ? AND category = ?";
+    $stmt_check = $conn->prepare($sql_check);
+    $stmt_check->bind_param("iii", $user_id, $producto_id, $category);
+} else {
+    $sql_check = "SELECT quantity FROM cart WHERE users_id = ? AND producto_id = ? AND color_id = ? AND size_id = ?";
+    $stmt_check = $conn->prepare($sql_check);
+    $stmt_check->bind_param("iiii", $user_id, $producto_id, $color_id, $size_id);
+}
 $stmt_check->execute();
 $result = $stmt_check->get_result();
 
@@ -88,8 +94,8 @@ if ($result->num_rows > 0) {
 
 
     if ($category = $data['category'] ?? "caps") {
-        $stmt_update = $conn->prepare("UPDATE cart SET quantity = ?, category = ? WHERE users_id = ? AND producto_id = ?");
-        $stmt_update->bind_param("isiii", $new_quantity, $category, $user_id, $producto_id);
+        $stmt_update = $conn->prepare("UPDATE cart SET quantity = ? WHERE users_id = ? AND producto_id = ? AND category = ?");
+        $stmt_update->bind_param("iiis", $new_quantity, $user_id, $producto_id, $category);
     } else {
         // No se actualiza la categoría si no se proporciona
         $sql_update = "UPDATE cart SET quantity = ? WHERE users_id = ? AND producto_id = ? AND color_id = ? AND size_id = ?";
