@@ -173,7 +173,7 @@ function handleAddToCart(e) {
 
     localStorage.setItem('carrito', JSON.stringify(carrito));
     loadCart(false);
-  } else if (category === 'hats') {
+  } else {
     let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
     // Convertimos a número para comparar correctamente
