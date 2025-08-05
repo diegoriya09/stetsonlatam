@@ -123,7 +123,7 @@ $conn->close();
           <div style="margin-top:10px;">
             <button type="submit" class="apply-btn">Apply Filter</button>
             <?php if (!empty($color_ids)): ?>
-              <a href="hats.php" class="clear-filter">Clear</a>
+              <a href="caps.php" class="clear-filter">Clear</a>
             <?php endif; ?>
           </div>
         </div>
@@ -152,7 +152,7 @@ $conn->close();
           <div style="margin-top:10px;">
             <button type="submit" class="apply-btn">Apply Filter</button>
             <?php if (!empty($talla_ids)): ?>
-              <a href="hats.php" class="clear-filter">Clear</a>
+              <a href="caps.php" class="clear-filter">Clear</a>
             <?php endif; ?>
           </div>
         </div>
