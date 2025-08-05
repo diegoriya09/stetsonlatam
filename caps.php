@@ -40,6 +40,65 @@ $conn->close();
         <option value="price-desc">Price High to Low</option>
       </select>
     </div>
+    <div class="multi-color-dropdown">
+      <form method="GET" id="color-filter-form">
+        <button type="button" class="dropdown-toggle">
+          Filter by colors <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="dropdown-menu">
+          <?php foreach ($colores as $color):
+            $selected = in_array($color['id'], $color_ids);
+          ?>
+            <label class="dropdown-item<?= $selected ? ' selected' : '' ?>">
+              <input type="checkbox"
+                name="colors[]"
+                value="<?= $color['id'] ?>"
+                <?= $selected ? 'checked' : '' ?> >
+              <span class="color-circle" style="background: <?= $color['hex'] ?>;"></span>
+              <?= htmlspecialchars($color['name']) ?>
+            </label>
+          <?php endforeach; ?>
+          <?php foreach ($talla_ids as $tid): ?>
+            <input type="hidden" name="sizes[]" value="<?= htmlspecialchars($tid) ?>">
+          <?php endforeach; ?>
+          <div style="margin-top:10px;">
+            <button type="submit" class="apply-btn">Apply Filter</button>
+            <?php if (!empty($color_ids)): ?>
+              <a href="hats.php" class="clear-filter">Clear</a>
+            <?php endif; ?>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="multi-size-dropdown">
+      <form method="GET" id="size-filter-form">
+        <button type="button" class="dropdown-toggle">
+          Filter by sizes <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="dropdown-menu">
+          <?php foreach ($tallas as $talla):
+            $selected = in_array($talla['id'], $talla_ids);
+          ?>
+            <label class="dropdown-item<?= $selected ? ' selected' : '' ?>">
+              <input type="checkbox"
+                name="sizes[]"
+                value="<?= $talla['id'] ?>"
+                <?= $selected ? 'checked' : '' ?> >
+              <?= htmlspecialchars($talla['name']) ?>
+            </label>
+          <?php endforeach; ?>
+          <?php foreach ($color_ids as $cid): ?>
+            <input type="hidden" name="colors[]" value="<?= htmlspecialchars($cid) ?>">
+          <?php endforeach; ?>
+          <div style="margin-top:10px;">
+            <button type="submit" class="apply-btn">Apply Filter</button>
+            <?php if (!empty($talla_ids)): ?>
+              <a href="hats.php" class="clear-filter">Clear</a>
+            <?php endif; ?>
+          </div>
+        </div>
+      </form>
+    </div>
     <div class="card-grid">
       <?php if (count($productos) > 0): ?>
         <?php foreach ($productos as $producto): ?>
