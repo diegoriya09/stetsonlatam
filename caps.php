@@ -1,14 +1,73 @@
 <?php
 require_once 'php/conexion.php';
 
-$sql = "SELECT * FROM productos WHERE category = 'caps'";
-$result = $conn->query($sql);
+// Obtener colores disponibles para sombreros
+$sql_colores = "SELECT DISTINCT c.id, c.name, c.hex 
+                FROM colors c 
+                INNER JOIN product_colors pc ON c.id = pc.color_id 
+                INNER JOIN productos p ON pc.product_id = p.id 
+                WHERE p.category = 'caps'";
+$result_colores = $conn->query($sql_colores);
+$colores = [];
+while ($row = $result_colores->fetch_assoc()) {
+  $colores[] = $row;
+}
 
+// Obtener tallas disponibles para sombreros
+$sql_tallas = "SELECT DISTINCT s.id, s.name 
+               FROM sizes s
+               INNER JOIN product_sizes ps ON s.id = ps.size_id
+               INNER JOIN productos p ON ps.product_id = p.id
+               WHERE p.category = 'caps'";
+$result_tallas = $conn->query($sql_tallas);
+$tallas = [];
+while ($row = $result_tallas->fetch_assoc()) {
+  $tallas[] = $row;
+}
+
+// Obtener filtros del GET
+$color_ids = $_GET['colors'] ?? [];
+$talla_ids = $_GET['sizes'] ?? [];
+
+// Construir consulta con filtros
+$sql = "SELECT DISTINCT p.* FROM productos p";
+$joins = [];
+$where = ["p.category = 'caps'"];
+$params = [];
+$types = '';
+
+if (!empty($color_ids)) {
+  $joins[] = "INNER JOIN product_colors pc ON p.id = pc.product_id";
+  $placeholders = implode(',', array_fill(0, count($color_ids), '?'));
+  $where[] = "pc.color_id IN ($placeholders)";
+  $types .= str_repeat('i', count($color_ids));
+  $params = array_merge($params, $color_ids);
+}
+
+if (!empty($talla_ids)) {
+  $joins[] = "INNER JOIN product_sizes ps ON p.id = ps.product_id";
+  $placeholders = implode(',', array_fill(0, count($talla_ids), '?'));
+  $where[] = "ps.size_id IN ($placeholders)";
+  $types .= str_repeat('i', count($talla_ids));
+  $params = array_merge($params, $talla_ids);
+}
+
+if (!empty($joins)) {
+  $sql .= ' ' . implode(' ', $joins);
+}
+if (!empty($where)) {
+  $sql .= ' WHERE ' . implode(' AND ', $where);
+}
+
+$stmt = $conn->prepare($sql);
+if (!empty($params)) {
+  $stmt->bind_param($types, ...$params);
+}
+$stmt->execute();
+$result = $stmt->get_result();
 $productos = [];
-if ($result && $result->num_rows > 0) {
-  while ($row = $result->fetch_assoc()) {
-    $productos[] = $row;
-  }
+while ($row = $result->fetch_assoc()) {
+  $productos[] = $row;
 }
 $conn->close();
 ?>
