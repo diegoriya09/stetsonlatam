@@ -53,7 +53,7 @@ $conn->close();
               <input type="checkbox"
                 name="colors[]"
                 value="<?= $color['id'] ?>"
-                <?= $selected ? 'checked' : '' ?> >
+                <?= $selected ? 'checked' : '' ?>>
               <span class="color-circle" style="background: <?= $color['hex'] ?>;"></span>
               <?= htmlspecialchars($color['name']) ?>
             </label>
@@ -83,7 +83,7 @@ $conn->close();
               <input type="checkbox"
                 name="sizes[]"
                 value="<?= $talla['id'] ?>"
-                <?= $selected ? 'checked' : '' ?> >
+                <?= $selected ? 'checked' : '' ?>>
               <?= htmlspecialchars($talla['name']) ?>
             </label>
           <?php endforeach; ?>
@@ -137,6 +137,31 @@ $conn->close();
   <script src="js/wishlist.js?v=<?php echo time(); ?>"></script>
   <script src="js/hats.js?v=<?php echo time(); ?>"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const dropdowns = document.querySelectorAll('.multi-color-dropdown, .multi-size-dropdown');
+
+      dropdowns.forEach(dropdown => {
+        const toggle = dropdown.querySelector('.dropdown-toggle');
+        if (!toggle) return;
+        toggle.addEventListener('click', (e) => {
+          e.stopPropagation();
+          // Cierra otros dropdowns
+          dropdowns.forEach(d => d !== dropdown && d.classList.remove('open'));
+          dropdown.classList.toggle('open');
+        });
+      });
+
+      // Cerrar todos los dropdowns si se hace clic fuera
+      document.addEventListener('click', (e) => {
+        dropdowns.forEach(dropdown => {
+          if (!dropdown.contains(e.target)) {
+            dropdown.classList.remove('open');
+          }
+        });
+      });
+    });
+  </script>
 </body>
 
 </html>
