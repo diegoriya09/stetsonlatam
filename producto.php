@@ -68,7 +68,7 @@ $conn->close();
 
 <head>
   <meta charset="UTF-8">
-  <title><?= htmlspecialchars($producto['name']) ?></title>
+  <title><?= htmlspecialchars($producto['name']) ?> | Stetson LATAM</title>
   <meta name="description" content="Stetson LATAM - Legendary Hats for Latin America and Central America">
   <link rel="icon" href="img/logo.webp" type="image/x-icon" loading="lazy">
   <link rel="stylesheet" href="css/index.css?v=<?php echo time(); ?>">
