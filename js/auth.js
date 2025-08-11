@@ -25,6 +25,9 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // Referencia global al botón de logout
+    const logoutBtn = document.getElementById('logout-btn');
+
     // LOGIN
     const loginForm = document.getElementById('login-form-inner');
     if (loginForm) {
@@ -79,7 +82,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     localStorage.removeItem('carrito');
 
                     // ✅ 6. Mostrar logout, cerrar modal y redirigir con alerta
-                    const logoutBtn = document.getElementById('logout-btn');
                     if (logoutBtn) logoutBtn.style.display = 'inline-block';
                     const userModal = document.getElementById('user-modal');
                     if (userModal) userModal.style.display = 'none';
@@ -119,7 +121,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 if (result.status === 'success' && result.token) {
                     localStorage.setItem('jwt', result.token);
-                    const logoutBtn = document.getElementById('logout-btn');
                     if (logoutBtn) logoutBtn.style.display = 'inline-block';
                     const userModal = document.getElementById('user-modal');
                     if (userModal) userModal.style.display = 'none';
@@ -153,7 +154,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // MOSTRAR/OCULTAR elementos según sesión activa
     const token = localStorage.getItem('jwt');
-    const logoutBtn = document.getElementById('logout-btn');
     if (logoutBtn) {
         if (token) {
             logoutBtn.style.display = 'inline-block';
