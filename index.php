@@ -10,7 +10,6 @@
 
     <title>Stetson LATAM - Original Stetson Hats for All Latin America</title>
     <meta name="description" content="In Stetson LATAM, in alliance with DINALSOM, find legendary hats with shipments to all Latin America. Shop online with confidence." />
-    <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
     <link rel="icon" href="img/logo.webp" type="image/x-icon" loading="lazy">
 
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -57,6 +56,7 @@
             </label>
             <div class="flex gap-2">
               <button
+                id="user-btn"
                 class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-[#f4f2f0] text-[#181411] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5"
               >
                 <div class="text-[#181411]" data-icon="User" data-size="20px" data-weight="regular">
@@ -68,6 +68,7 @@
                 </div>
               </button>
               <button
+                id="cart-btn"
                 class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-[#f4f2f0] text-[#181411] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5"
               >
                 <div class="text-[#181411]" data-icon="ShoppingBag" data-size="20px" data-weight="regular">
