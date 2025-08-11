@@ -23,7 +23,7 @@ if (empty($_SESSION['csrf_token'])) {
 
 <div id="user-modal" style="display:none; position:fixed; z-index:9999; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.3);">
     <div class="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden" style="font-family: 'Work Sans', 'Noto Sans', sans-serif; max-width: 520px; margin: 40px auto; border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.15);">
-        <button class="close" style="position:absolute;top:10px;right:10px;font-size:2rem;line-height:1;background:none;border:none;cursor:pointer;">&times;</button>
+    <button type="button" class="close" style="position:absolute;top:10px;right:10px;font-size:2rem;line-height:1;background:none;border:none;cursor:pointer;z-index:10001;">&times;</button>
         <div class="layout-container flex h-full grow flex-col">
             <div class="px-10 flex flex-1 justify-center py-5">
                 <div class="layout-content-container flex flex-col w-[512px] max-w-[512px] py-5 max-w-[960px] flex-1">

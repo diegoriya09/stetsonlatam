@@ -78,9 +78,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     // ✅ 5. Limpiar el carrito local para evitar futuros duplicados
                     localStorage.removeItem('carrito');
 
-                    // ✅ 6. Mostrar logout y redirigir con alerta
+                    // ✅ 6. Mostrar logout, cerrar modal y redirigir con alerta
                     const logoutBtn = document.getElementById('logout-btn');
                     if (logoutBtn) logoutBtn.style.display = 'inline-block';
+                    const userModal = document.getElementById('user-modal');
+                    if (userModal) userModal.style.display = 'none';
                     Swal.fire({
                         title: 'Welcome back!',
                         text: 'Successful login',
@@ -119,6 +121,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     localStorage.setItem('jwt', result.token);
                     const logoutBtn = document.getElementById('logout-btn');
                     if (logoutBtn) logoutBtn.style.display = 'inline-block';
+                    const userModal = document.getElementById('user-modal');
+                    if (userModal) userModal.style.display = 'none';
                     Swal.fire({
                         title: 'Registration successful!',
                         text: 'You are now logged in.',
@@ -127,6 +131,14 @@ document.addEventListener("DOMContentLoaded", () => {
                     }).then(() => {
                         window.location.href = 'index.php';
                     });
+    // Cerrar modal con la X
+    const closeModalBtn = document.querySelector('#user-modal .close');
+    if (closeModalBtn) {
+        closeModalBtn.addEventListener('click', () => {
+            const userModal = document.getElementById('user-modal');
+            if (userModal) userModal.style.display = 'none';
+        });
+    }
                 } else {
                     Swal.fire("Error", result.message || "Could not register", "error");
                 }
