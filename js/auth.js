@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // LOGIN
-    const loginForm = document.querySelector('#login-form form');
+    const loginForm = document.getElementById('login-form-inner');
     if (loginForm) {
         loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // REGISTRO
-    const registerForm = document.querySelector('#register-form form');
+    const registerForm = document.getElementById('register-form-inner');
     if (registerForm) {
         registerForm.addEventListener('submit', async (e) => {
             e.preventDefault();

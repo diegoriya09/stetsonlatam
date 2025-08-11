@@ -35,8 +35,8 @@ if (empty($_SESSION['csrf_token'])) {
                         </div>
                     </div>
                     <!-- Login Form -->
-                    <div id="login-form" style="display:block;">
-                        <form autocomplete="on">
+                                <div id="login-form" style="display:block;">
+                                    <form id="login-form-inner" autocomplete="on">
                             <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
                                 <label class="flex flex-col min-w-40 flex-1">
                                     <input name="email" type="email" placeholder="Email" required class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#151514] focus:outline-0 focus:ring-0 border border-[#e2e1df] bg-white focus:border-[#e2e1df] h-14 placeholder:text-[#7a7671] p-[15px] text-base font-normal leading-normal" />
@@ -55,8 +55,8 @@ if (empty($_SESSION['csrf_token'])) {
                         </form>
                     </div>
                     <!-- Register Form -->
-                    <div id="register-form" style="display:none;">
-                        <form autocomplete="on">
+                                <div id="register-form" style="display:none;">
+                                    <form id="register-form-inner" autocomplete="on">
                             <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
                                 <label class="flex flex-col min-w-40 flex-1">
                                     <input name="name" type="text" placeholder="Name" required class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#151514] focus:outline-0 focus:ring-0 border border-[#e2e1df] bg-white focus:border-[#e2e1df] h-14 placeholder:text-[#7a7671] p-[15px] text-base font-normal leading-normal" />
