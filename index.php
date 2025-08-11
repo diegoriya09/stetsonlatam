@@ -81,7 +81,7 @@
             </div>
             <div
               class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
-              style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA3cby2HrhzvCAyIjDtOQ-mpm5tsCounNrXrQwtcm2V0jWlh9NmQxXNYRATAh08fAE9Ax-CCw8S-BvC7A13Qz0tUdZ0EbYnuyTu6pH5Sue8_F7v0Q1n8CLLx28XkgIAEGVnHzyCWTw5Y40iySINGA_ayYGvfXl9_pU3TFOrAqV_c3HPGomi0fTkGcHxtMr1DXWb7elPY400wY5od5DnQLbv48CMoNlVWVXlKh5BfAiH9W5uoXJMhNYuvPi_Lgd4uG-3HVmeWO_j7kVF");'
+              style='background-image: url("img/logo.webp");'
             ></div>
           </div>
         </header>
