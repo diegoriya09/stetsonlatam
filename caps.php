@@ -82,8 +82,9 @@ $conn->close();
     onload="this.rel='stylesheet'"
     href="https://fonts.googleapis.com/css2?display=swap&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900&amp;family=Work+Sans%3Awght%40400%3B500%3B700%3B900" />
 
-  <title>Stitch Design</title>
+  <title>Caps | Stetson Latam</title>
   <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+  <link rel="icon" href="img/logo.webp" type="image/x-icon" loading="lazy">
 
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 </head>

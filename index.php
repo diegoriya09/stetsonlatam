@@ -11,6 +11,7 @@
     <title>Stetson LATAM - Original Stetson Hats for All Latin America</title>
     <meta name="description" content="In Stetson LATAM, in alliance with DINALSOM, find legendary hats with shipments to all Latin America. Shop online with confidence." />
     <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+    <link rel="icon" href="img/logo.webp" type="image/x-icon" loading="lazy">
 
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   </head>
@@ -25,7 +26,7 @@
                   <path fill-rule="evenodd" clip-rule="evenodd" d="M24 4H42V17.3333V30.6667H24V44H6V30.6667V17.3333H24V4Z" fill="currentColor"></path>
                 </svg>
               </div>
-              <h2 class="text-[#181411] text-lg font-bold leading-tight tracking-[-0.015em]">Stetson Latin America</h2>
+              <h2 class="text-[#181411] text-lg font-bold leading-tight tracking-[-0.015em]">Stetson Latam</h2>
             </div>
             <div class="flex items-center gap-9">
               <a class="text-[#181411] text-sm font-medium leading-normal" href="hats.php">Hats</a>
