@@ -1,19 +1,32 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const loginForm = document.querySelector('#login-form form');
-    const userIcon = document.getElementById('open-user-modal');
-    const logoutBtn = document.getElementById('logout-btn');
 
-    // Agregar aquí para actualizar el token CSRF al abrir el modal
-    if (userIcon) {
-        userIcon.addEventListener('click', async () => {
-            const res = await fetch('php/csrf_token.php', { credentials: 'same-origin' });
-            const data = await res.json();
-            const csrfInput = document.querySelector('#login-form input[name="csrf_token"]');
-            if (csrfInput) csrfInput.value = data.csrf_token;
+    // Alternar entre login y registro
+    const loginFormSection = document.getElementById('login-form');
+    const registerFormSection = document.getElementById('register-form');
+    const switchToRegister = document.getElementById('switch-to-register');
+    const switchToLogin = document.getElementById('switch-to-login');
+
+    if (switchToRegister && loginFormSection && registerFormSection) {
+        switchToRegister.addEventListener('click', (e) => {
+            e.preventDefault();
+            loginFormSection.style.display = 'none';
+            registerFormSection.style.display = 'block';
+            switchToRegister.classList.add('border-b-[#151514]', 'text-[#151514]');
+            switchToLogin.classList.remove('border-b-[#151514]', 'text-[#151514]');
+        });
+    }
+    if (switchToLogin && loginFormSection && registerFormSection) {
+        switchToLogin.addEventListener('click', (e) => {
+            e.preventDefault();
+            registerFormSection.style.display = 'none';
+            loginFormSection.style.display = 'block';
+            switchToLogin.classList.add('border-b-[#151514]', 'text-[#151514]');
+            switchToRegister.classList.remove('border-b-[#151514]', 'text-[#151514]');
         });
     }
 
     // LOGIN
+    const loginForm = document.querySelector('#login-form form');
     if (loginForm) {
         loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -85,7 +98,41 @@ document.addEventListener("DOMContentLoaded", () => {
                 Swal.fire("Error", "Server connection error", "error");
             }
         });
+    }
 
+    // REGISTRO
+    const registerForm = document.querySelector('#register-form form');
+    if (registerForm) {
+        registerForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(registerForm);
+
+            try {
+                const response = await fetch('php/register.php', {
+                    method: 'POST',
+                    body: formData,
+                    credentials: 'same-origin'
+                });
+
+                const result = await response.json();
+
+                if (result.status === 'success' && result.token) {
+                    localStorage.setItem('jwt', result.token);
+                    Swal.fire({
+                        title: 'Registration successful!',
+                        text: 'You are now logged in.',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        window.location.reload();
+                    });
+                } else {
+                    Swal.fire("Error", result.message || "Could not register", "error");
+                }
+            } catch (error) {
+                Swal.fire("Error", "Server connection error", "error");
+            }
+        });
     }
 
     // MOSTRAR/OCULTAR elementos según sesión activa
