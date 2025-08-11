@@ -131,14 +131,17 @@ document.addEventListener("DOMContentLoaded", () => {
                     }).then(() => {
                         window.location.href = 'index.php';
                     });
-    // Cerrar modal con la X
-    const closeModalBtn = document.querySelector('#user-modal .close');
-    if (closeModalBtn) {
-        closeModalBtn.addEventListener('click', () => {
-            const userModal = document.getElementById('user-modal');
-            if (userModal) userModal.style.display = 'none';
-        });
+    // Cerrar modal con la X (siempre funciona)
+    function setupCloseModal() {
+        const closeModalBtn = document.querySelector('#user-modal .close');
+        if (closeModalBtn) {
+            closeModalBtn.onclick = function() {
+                const userModal = document.getElementById('user-modal');
+                if (userModal) userModal.style.display = 'none';
+            };
+        }
     }
+    setupCloseModal();
                 } else {
                     Swal.fire("Error", result.message || "Could not register", "error");
                 }
@@ -150,37 +153,38 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // MOSTRAR/OCULTAR elementos según sesión activa
     const token = localStorage.getItem('jwt');
-
-    if (token) {
-        if (userIcon) userIcon.style.display = 'none';
-        if (logoutBtn) logoutBtn.style.display = 'inline-block';
-    } else {
-        if (logoutBtn) logoutBtn.style.display = 'none';
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) {
+        if (token) {
+            logoutBtn.style.display = 'inline-block';
+        } else {
+            logoutBtn.style.display = 'none';
+        }
     }
 
     // LOGOUT
-    logoutBtn.addEventListener('click', () => {
-        Swal.fire({
-            title: 'Closed session',
-            text: 'You have successfully logged out',
-            icon: 'success',
-            showConfirmButton: false,
-            timer: 1000,
-            timerProgressBar: true
-        }).then(async () => {
-            const jwt = localStorage.getItem('jwt');
-            if (jwt) {
-                // Guarda el carrito actual en localStorage antes de cerrar sesión
-                const carrito = await fetch('php/cart/get_cart.php', {
-                    headers: { 'Authorization': 'Bearer ' + jwt }
-                }).then(r => r.json());
-
-                localStorage.setItem('carrito', JSON.stringify(carrito));
-            }
-
-            localStorage.removeItem('jwt');
-            location.reload();
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', () => {
+            Swal.fire({
+                title: 'Closed session',
+                text: 'You have successfully logged out',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 1000,
+                timerProgressBar: true
+            }).then(async () => {
+                const jwt = localStorage.getItem('jwt');
+                if (jwt) {
+                    // Guarda el carrito actual en localStorage antes de cerrar sesión
+                    const carrito = await fetch('php/cart/get_cart.php', {
+                        headers: { 'Authorization': 'Bearer ' + jwt }
+                    }).then(r => r.json());
+                    localStorage.setItem('carrito', JSON.stringify(carrito));
+                }
+                localStorage.removeItem('jwt');
+                location.reload();
+            });
         });
-    });
+    }
 
 });

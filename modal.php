@@ -27,7 +27,7 @@ if (empty($_SESSION['csrf_token'])) {
         <div class="layout-container flex h-full grow flex-col">
             <div class="px-10 flex flex-1 justify-center py-5">
                 <div class="layout-content-container flex flex-col w-[512px] max-w-[512px] py-5 max-w-[960px] flex-1">
-                    <h1 class="text-[#151514] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 text-center pb-3 pt-5">Welcome to Stetson</h1>
+                    <h1 class="text-[#151514] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 text-center pb-3 pt-5">Welcome to Stetson Latam</h1>
                     <div class="pb-3">
                         <div class="flex border-b border-[#e2e1df] px-4 gap-8">
                             <button id="switch-to-login" class="flex flex-col items-center justify-center border-b-[3px] border-b-[#151514] text-[#151514] pb-[13px] pt-4 font-bold bg-transparent">Login</button>
