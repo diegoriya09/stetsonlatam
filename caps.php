@@ -150,7 +150,7 @@ $conn->close();
       <div class="px-40 flex flex-1 justify-center py-5">
         <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
           <div class="flex flex-wrap gap-2 p-4">
-            <a class="text-[#7a7671] text-base font-medium leading-normal" href="#">Home</a>
+            <a class="text-[#7a7671] text-base font-medium leading-normal" href="index.php">Home</a>
             <span class="text-[#7a7671] text-base font-medium leading-normal">/</span>
             <span class="text-[#151514] text-base font-medium leading-normal">Hats</span>
           </div>
