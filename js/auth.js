@@ -41,6 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 const result = await response.json();
 
+
                 if (result.token) {
                     localStorage.setItem('jwt', result.token);
                     const jwt = result.token;
@@ -77,18 +78,16 @@ document.addEventListener("DOMContentLoaded", () => {
                     // ✅ 5. Limpiar el carrito local para evitar futuros duplicados
                     localStorage.removeItem('carrito');
 
-                    // ✅ 6. Redirigir con alerta
+                    // ✅ 6. Mostrar logout y redirigir con alerta
+                    const logoutBtn = document.getElementById('logout-btn');
+                    if (logoutBtn) logoutBtn.style.display = 'inline-block';
                     Swal.fire({
                         title: 'Welcome back!',
                         text: 'Successful login',
                         icon: 'success',
                         confirmButtonText: 'OK'
                     }).then(() => {
-                        if (result.role === 'admin') {
-                            window.location.href = '/admin/admin.php';
-                        } else {
-                            window.location.reload();
-                        }
+                        window.location.href = 'index.php';
                     });
                 } else {
                     Swal.fire("Error", result.error || "Could not log in", "error");
@@ -118,13 +117,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 if (result.status === 'success' && result.token) {
                     localStorage.setItem('jwt', result.token);
+                    const logoutBtn = document.getElementById('logout-btn');
+                    if (logoutBtn) logoutBtn.style.display = 'inline-block';
                     Swal.fire({
                         title: 'Registration successful!',
                         text: 'You are now logged in.',
                         icon: 'success',
                         confirmButtonText: 'OK'
                     }).then(() => {
-                        window.location.reload();
+                        window.location.href = 'index.php';
                     });
                 } else {
                     Swal.fire("Error", result.message || "Could not register", "error");
