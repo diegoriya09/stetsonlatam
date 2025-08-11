@@ -20,9 +20,8 @@
         <div class="px-40 flex flex-1 justify-center py-5">
           <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
             <div class="flex flex-wrap gap-2 p-4">
-              <a class="text-[#887563] text-base font-medium leading-normal" href="#">Men</a>
               <span class="text-[#887563] text-base font-medium leading-normal">/</span>
-              <a class="text-[#887563] text-base font-medium leading-normal" href="#">Hats</a>
+              <a class="text-[#887563] text-base font-medium leading-normal" href="hats.php">Hats</a>
               <span class="text-[#887563] text-base font-medium leading-normal">/</span>
               <span class="text-[#181411] text-base font-medium leading-normal">The Marshall</span>
             </div>
