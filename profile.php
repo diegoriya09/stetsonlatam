@@ -174,7 +174,34 @@
                   class="bg-center bg-no-repeat aspect-square bg-cover rounded-full min-h-32 w-32"
                   style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBob1EGrJstHfosfZDim_LplEbLnOey2nN6bQd-RljtyfmwtpW8DezCD8j49vxdoNIPvVTjy6cIglBAJi-i4mZFA96cdwEROSGNMdnUvcIdbXxFntgFyDjdIEVs8KtDT6ElykLt9kUsF10DuGP51R4p7BF-xMJvICLAHwaTQTa1Dsl_RP5IRPlmTDYqCZzFy2OrnQu-OaMWTs9lEatZ10IinFaIzL2eLNmmr8QsZLiHHa1C8yBw1k5n8Ci9T0zCwrKuqwWNg_TJNmue");'></div>
                 <div class="flex flex-col justify-center">
-                  <h1 id="profile-name" class="text-[#181411] text-base font-medium leading-normal">&nbsp;</h1>
+                  <?php
+                  require_once __DIR__ . '/php/conexion.php';
+                  require_once __DIR__ . '/php/csrf_token.php';
+                  require_once __DIR__ . '/vendor/autoload.php';
+
+                  use Firebase\JWT\JWT;
+                  use Firebase\JWT\Key;
+
+                  $userName = '';
+                  if (isset($_COOKIE['jwt'])) {
+                    $jwt = $_COOKIE['jwt'];
+                    $key = 'Dinalsom1977'; // Cambia por tu clave real
+                    try {
+                      $decoded = JWT::decode($jwt, new Key($key, 'HS256'));
+                      $user_id = $decoded->user_id;
+                      $stmt = $conn->prepare('SELECT name FROM users WHERE id = ?');
+                      $stmt->bind_param('i', $user_id);
+                      $stmt->execute();
+                      $result = $stmt->get_result();
+                      if ($row = $result->fetch_assoc()) {
+                        $userName = htmlspecialchars($row['name']);
+                      }
+                    } catch (Exception $e) {
+                      $userName = '';
+                    }
+                  }
+                  ?>
+                  <h1 id="profile-name" class="text-[#181411] text-base font-medium leading-normal"><?php echo $userName ? $userName : '&nbsp;'; ?></h1>
                   <p class="text-[#887563] text-base font-normal leading-normal">Member since 2021</p>
                 </div>
               </div>
