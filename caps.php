@@ -368,7 +368,7 @@ $conn->close();
       </footer>
     </div>
   </div>
-  <? include "modal.php" ?>
+  <?php include "modal.php" ?>
   <script src="js/auth.js?v=<? echo time(); ?>"></script>
   <script src="js/index.js?v=<? echo time(); ?>"></script>
 </body>
