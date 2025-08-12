@@ -32,5 +32,36 @@ document.addEventListener('DOMContentLoaded', () => {
       window.location.href = 'cart.php';
     });
   }
+
+  // Botón Sign Up (Join Stetson Community)
+  const signUpBtn = document.getElementById('open-user-modal');
+  if (signUpBtn) {
+    signUpBtn.addEventListener('click', () => {
+      const modal = document.getElementById('user-modal');
+      if (modal) {
+        modal.style.display = 'block';
+        // Mostrar pestaña de registro
+        const loginTab = document.getElementById('switch-to-login');
+        const registerTab = document.getElementById('switch-to-register');
+        const loginFormSection = document.getElementById('login-form');
+        const registerFormSection = document.getElementById('register-form');
+        if (loginTab && registerTab && loginFormSection && registerFormSection) {
+          registerTab.classList.add('border-[#181411]', 'text-[#181411]');
+          registerTab.classList.remove('border-transparent', 'text-[#7a7671]');
+          loginTab.classList.remove('border-[#181411]', 'text-[#181411]');
+          loginTab.classList.add('border-transparent', 'text-[#7a7671]');
+          loginFormSection.style.display = 'none';
+          registerFormSection.style.display = 'block';
+        }
+        // Asignar evento a la X para cerrar el modal
+        const closeBtn = modal.querySelector('.close');
+        if (closeBtn) {
+          closeBtn.onclick = function() {
+            modal.style.display = 'none';
+          };
+        }
+      }
+    });
+  }
 });
 
