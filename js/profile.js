@@ -6,12 +6,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       return;
    }
 
-   if (jwt) {
-      window.location.href = "myorders.php";
-   } else {
-      alert("You need to log in to view all orders.");
-   }
-
    // Obtener datos del usuario
    const userRes = await fetch('php/user/get_user.php', {
       headers: { 'Authorization': 'Bearer ' + jwt }
@@ -53,4 +47,13 @@ document.addEventListener('DOMContentLoaded', async () => {
       tr.innerHTML = `<td colspan=\"4\" class=\"px-4 py-2 text-center text-[#887563]\">No orders found</td>`;
       ordersList.appendChild(tr);
    }
+});
+
+document.getElementById("view-all-orders-btn").addEventListener("click", () => {
+  const jwt = localStorage.getItem("jwt");
+  if (jwt) {
+    window.location.href = "myorders.php";
+  } else {
+    alert("You need to log in to view all orders.");
+  }
 });
