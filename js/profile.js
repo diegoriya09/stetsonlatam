@@ -55,3 +55,12 @@ document.getElementById("view-all-orders-btn").addEventListener("click", () => {
     alert("You need to log in to view all orders.");
   }
 });
+
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+    document.querySelector(this.getAttribute('href')).scrollIntoView({
+      behavior: 'smooth'
+    });
+  });
+});
