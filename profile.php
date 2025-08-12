@@ -45,7 +45,7 @@
                         d="M247.42,117l-14-35A15.93,15.93,0,0,0,218.58,72H184V64a8,8,0,0,0-8-8H24A16,16,0,0,0,8,72V184a16,16,0,0,0,16,16H41a32,32,0,0,0,62,0h50a32,32,0,0,0,62,0h17a16,16,0,0,0,16-16V120A7.94,7.94,0,0,0,247.42,117ZM184,88h34.58l9.6,24H184ZM24,72H168v64H24ZM72,208a16,16,0,1,1,16-16A16,16,0,0,1,72,208Zm81-24H103a32,32,0,0,0-62,0H24V152H168v12.31A32.11,32.11,0,0,0,153,184Zm31,24a16,16,0,1,1,16-16A16,16,0,0,1,184,208Zm48-24H215a32.06,32.06,0,0,0-31-24V128h48Z"></path>
                     </svg>
                   </div>
-                  <p class="text-[#181411] text-sm font-medium leading-normal">Orders</p>
+                  <p class="text-[#181411] text-sm font-medium leading-normal"><a href="#recent-orders"></a>Orders</p>
                 </div>
                 <div class="flex items-center gap-3 px-3 py-2">
                   <div class="text-[#181411]" data-icon="CreditCard" data-size="24px" data-weight="regular">
@@ -54,7 +54,7 @@
                         d="M224,48H32A16,16,0,0,0,16,64V192a16,16,0,0,0,16,16H224a16,16,0,0,0,16-16V64A16,16,0,0,0,224,48Zm0,16V88H32V64Zm0,128H32V104H224v88Zm-16-24a8,8,0,0,1-8,8H168a8,8,0,0,1,0-16h32A8,8,0,0,1,208,168Zm-64,0a8,8,0,0,1-8,8H120a8,8,0,0,1,0-16h16A8,8,0,0,1,144,168Z"></path>
                     </svg>
                   </div>
-                  <p class="text-[#181411] text-sm font-medium leading-normal">Payment Methods</p>
+                  <p class="text-[#181411] text-sm font-medium leading-normal"><a href="#payment-methods"></a>Payment Methods</p>
                 </div>
                 <div class="flex items-center gap-3 px-3 py-2">
                   <div class="text-[#181411]" data-icon="MapPin" data-size="24px" data-weight="regular">
@@ -63,7 +63,7 @@
                         d="M128,64a40,40,0,1,0,40,40A40,40,0,0,0,128,64Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,128,128Zm0-112a88.1,88.1,0,0,0-88,88c0,31.4,14.51,64.68,42,96.25a254.19,254.19,0,0,0,41.45,38.3,8,8,0,0,0,9.18,0A254.19,254.19,0,0,0,174,200.25c27.45-31.57,42-64.85,42-96.25A88.1,88.1,0,0,0,128,16Zm0,206c-16.53-13-72-60.75-72-118a72,72,0,0,1,144,0C200,161.23,144.53,209,128,222Z"></path>
                     </svg>
                   </div>
-                  <p class="text-[#181411] text-sm font-medium leading-normal">Addresses</p>
+                  <p class="text-[#181411] text-sm font-medium leading-normal"><a href="#addresses"></a>Addresses</p>
                 </div>
                 <div class="flex items-center gap-3 px-3 py-2">
                   <div class="text-[#181411]" data-icon="Gear" data-size="24px" data-weight="regular">
@@ -72,7 +72,7 @@
                         d="M128,80a48,48,0,1,0,48,48A48.05,48.05,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,128,160Zm88-29.84q.06-2.16,0-4.32l14.92-18.64a8,8,0,0,0,1.48-7.06,107.21,107.21,0,0,0-10.88-26.25,8,8,0,0,0-6-3.93l-23.72-2.64q-1.48-1.56-3-3L186,40.54a8,8,0,0,0-3.94-6,107.71,107.71,0,0,0-26.25-10.87,8,8,0,0,0-7.06,1.49L130.16,40Q128,40,125.84,40L107.2,25.11a8,8,0,0,0-7.06-1.48A107.6,107.6,0,0,0,73.89,34.51a8,8,0,0,0-3.93,6L67.32,64.27q-1.56,1.49-3,3L40.54,70a8,8,0,0,0-6,3.94,107.71,107.71,0,0,0-10.87,26.25,8,8,0,0,0,1.49,7.06L40,125.84Q40,128,40,130.16L25.11,148.8a8,8,0,0,0-1.48,7.06,107.21,107.21,0,0,0,10.88,26.25,8,8,0,0,0,6,3.93l23.72,2.64q1.49,1.56,3,3L70,215.46a8,8,0,0,0,3.94,6,107.71,107.71,0,0,0,26.25,10.87,8,8,0,0,0,7.06-1.49L125.84,216q2.16.06,4.32,0l18.64,14.92a8,8,0,0,0,7.06,1.48,107.21,107.21,0,0,0,26.25-10.88,8,8,0,0,0,3.93-6l2.64-23.72q1.56-1.48,3-3L215.46,186a8,8,0,0,0,6-3.94,107.71,107.71,0,0,0,10.87-26.25,8,8,0,0,0-1.49-7.06Zm-16.1-6.5a73.93,73.93,0,0,1,0,8.68,8,8,0,0,0,1.74,5.48l14.19,17.73a91.57,91.57,0,0,1-6.23,15L187,173.11a8,8,0,0,0-5.1,2.64,74.11,74.11,0,0,1-6.14,6.14,8,8,0,0,0-2.64,5.1l-2.51,22.58a91.32,91.32,0,0,1-15,6.23l-17.74-14.19a8,8,0,0,0-5-1.75h-.48a73.93,73.93,0,0,1-8.68,0,8,8,0,0,0-5.48,1.74L100.45,215.8a91.57,91.57,0,0,1-15-6.23L82.89,187a8,8,0,0,0-2.64-5.1,74.11,74.11,0,0,1-6.14-6.14,8,8,0,0,0-5.1-2.64L46.43,170.6a91.32,91.32,0,0,1-6.23-15l14.19-17.74a8,8,0,0,0,1.74-5.48,73.93,73.93,0,0,1,0-8.68,8,8,0,0,0-1.74-5.48L40.2,100.45a91.57,91.57,0,0,1,6.23-15L69,82.89a8,8,0,0,0,5.1-2.64,74.11,74.11,0,0,1,6.14-6.14A8,8,0,0,0,82.89,69L85.4,46.43a91.32,91.32,0,0,1,15-6.23l17.74,14.19a8,8,0,0,0,5.48,1.74,73.93,73.93,0,0,1,8.68,0,8,8,0,0,0,5.48-1.74L155.55,40.2a91.57,91.57,0,0,1,15,6.23L173.11,69a8,8,0,0,0,2.64,5.1,74.11,74.11,0,0,1,6.14,6.14,8,8,0,0,0,5.1,2.64l22.58,2.51a91.32,91.32,0,0,1,6.23,15l-14.19,17.74A8,8,0,0,0,199.87,123.66Z"></path>
                     </svg>
                   </div>
-                  <p class="text-[#181411] text-sm font-medium leading-normal">Settings</p>
+                  <p class="text-[#181411] text-sm font-medium leading-normal"><a href="#settings"></a>Settings</p>
                 </div>
                 <div class="flex items-center gap-3 px-3 py-2">
                   <div class="text-[#181411]" data-icon="Question" data-size="24px" data-weight="regular">
@@ -81,7 +81,7 @@
                         d="M140,180a12,12,0,1,1-12-12A12,12,0,0,1,140,180ZM128,72c-22.06,0-40,16.15-40,36v4a8,8,0,0,0,16,0v-4c0-11,10.77-20,24-20s24,9,24,20-10.77,20-24,20a8,8,0,0,0-8,8v8a8,8,0,0,0,16,0v-.72c18.24-3.35,32-17.9,32-35.28C168,88.15,150.06,72,128,72Zm104,56A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"></path>
                     </svg>
                   </div>
-                  <p class="text-[#181411] text-sm font-medium leading-normal">Help</p>
+                  <p class="text-[#181411] text-sm font-medium leading-normal"><a href="#help"></a>Help</p>
                 </div>
               </div>
             </div>
@@ -174,145 +174,151 @@
               </div>
             </div>
           </div>
-          <h2 class="text-[#181411] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Recent Orders</h2>
-          <div class="px-4 py-3 @container">
-            <div class="flex overflow-hidden rounded-lg border border-[#e5e0dc] bg-white">
-              <table class="flex-1">
-                <thead>
-                  <tr class="bg-white">
-                    <th class="table-47c2a25e-8e8a-467c-8886-8b69ef66eea4-column-120 px-4 py-3 text-left text-[#181411] w-[400px] text-sm font-medium leading-normal">Order</th>
-                    <th class="table-47c2a25e-8e8a-467c-8886-8b69ef66eea4-column-240 px-4 py-3 text-left text-[#181411] w-[400px] text-sm font-medium leading-normal">Date</th>
-                    <th class="table-47c2a25e-8e8a-467c-8886-8b69ef66eea4-column-360 px-4 py-3 text-left text-[#181411] w-60 text-sm font-medium leading-normal">Status</th>
-                    <th class="table-47c2a25e-8e8a-467c-8886-8b69ef66eea4-column-480 px-4 py-3 text-left text-[#181411] w-[400px] text-sm font-medium leading-normal">Total</th>
-                  </tr>
-                </thead>
-                <tbody id="orders-list">
-                  <!-- Orders will be injected here by JS -->
-                </tbody>
-              </table>
-            </div>
-            <style>
-              @container(max-width:120px) {
-                .table-47c2a25e-8e8a-467c-8886-8b69ef66eea4-column-120 {
-                  display: none;
+          <section id="recent-orders">
+            <h2 class="text-[#181411] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Recent Orders</h2>
+            <div class="px-4 py-3 @container">
+              <div class="flex overflow-hidden rounded-lg border border-[#e5e0dc] bg-white">
+                <table class="flex-1">
+                  <thead>
+                    <tr class="bg-white">
+                      <th class="table-47c2a25e-8e8a-467c-8886-8b69ef66eea4-column-120 px-4 py-3 text-left text-[#181411] w-[400px] text-sm font-medium leading-normal">Order</th>
+                      <th class="table-47c2a25e-8e8a-467c-8886-8b69ef66eea4-column-240 px-4 py-3 text-left text-[#181411] w-[400px] text-sm font-medium leading-normal">Date</th>
+                      <th class="table-47c2a25e-8e8a-467c-8886-8b69ef66eea4-column-360 px-4 py-3 text-left text-[#181411] w-60 text-sm font-medium leading-normal">Status</th>
+                      <th class="table-47c2a25e-8e8a-467c-8886-8b69ef66eea4-column-480 px-4 py-3 text-left text-[#181411] w-[400px] text-sm font-medium leading-normal">Total</th>
+                    </tr>
+                  </thead>
+                  <tbody id="orders-list">
+                    <!-- Orders will be injected here by JS -->
+                  </tbody>
+                </table>
+              </div>
+              <style>
+                @container(max-width:120px) {
+                  .table-47c2a25e-8e8a-467c-8886-8b69ef66eea4-column-120 {
+                    display: none;
+                  }
                 }
-              }
 
-              @container(max-width:240px) {
-                .table-47c2a25e-8e8a-467c-8886-8b69ef66eea4-column-240 {
-                  display: none;
+                @container(max-width:240px) {
+                  .table-47c2a25e-8e8a-467c-8886-8b69ef66eea4-column-240 {
+                    display: none;
+                  }
                 }
-              }
 
-              @container(max-width:360px) {
-                .table-47c2a25e-8e8a-467c-8886-8b69ef66eea4-column-360 {
-                  display: none;
+                @container(max-width:360px) {
+                  .table-47c2a25e-8e8a-467c-8886-8b69ef66eea4-column-360 {
+                    display: none;
+                  }
                 }
-              }
 
-              @container(max-width:480px) {
-                .table-47c2a25e-8e8a-467c-8886-8b69ef66eea4-column-480 {
-                  display: none;
+                @container(max-width:480px) {
+                  .table-47c2a25e-8e8a-467c-8886-8b69ef66eea4-column-480 {
+                    display: none;
+                  }
                 }
-              }
-            </style>
-          </div>
-          <div class="flex px-4 py-3 justify-start">
-            <button
-              class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#f4f2f0] text-[#181411] text-sm font-bold leading-normal tracking-[0.015em]">
-              <span class="truncate"><a href="myorders.php">View All Orders</a></span>
-            </button>
-          </div>
-          <h2 class="text-[#181411] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Payment Methods</h2>
-          <div class="flex items-center gap-4 bg-white px-4 min-h-[72px] py-2 justify-between">
-            <div class="flex items-center gap-4">
-              <div class="bg-center bg-no-repeat aspect-video bg-contain h-6 w-10 shrink-0" style='background-image: url("/visa.svg");'></div>
-              <div class="flex flex-col justify-center">
-                <p class="text-[#181411] text-base font-medium leading-normal line-clamp-1">Visa ...1234</p>
-                <p class="text-[#887563] text-sm font-normal leading-normal line-clamp-2">Expires 05/25</p>
+              </style>
+            </div>
+            <div class="flex px-4 py-3 justify-start">
+              <button
+                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#f4f2f0] text-[#181411] text-sm font-bold leading-normal tracking-[0.015em]">
+                <span class="truncate"><a href="myorders.php">View All Orders</a></span>
+              </button>
+            </div>
+          </section>
+          <section id="payment-methods">
+            <h2 class="text-[#181411] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Payment Methods</h2>
+            <div class="flex items-center gap-4 bg-white px-4 min-h-[72px] py-2 justify-between">
+              <div class="flex items-center gap-4">
+                <div class="bg-center bg-no-repeat aspect-video bg-contain h-6 w-10 shrink-0" style='background-image: url("/visa.svg");'></div>
+                <div class="flex flex-col justify-center">
+                  <p class="text-[#181411] text-base font-medium leading-normal line-clamp-1">Visa ...1234</p>
+                  <p class="text-[#887563] text-sm font-normal leading-normal line-clamp-2">Expires 05/25</p>
+                </div>
+              </div>
+              <div class="shrink-0">
+                <div class="text-[#181411] flex size-7 items-center justify-center" data-icon="CaretRight" data-size="24px" data-weight="regular">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                    <path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"></path>
+                  </svg>
+                </div>
               </div>
             </div>
-            <div class="shrink-0">
-              <div class="text-[#181411] flex size-7 items-center justify-center" data-icon="CaretRight" data-size="24px" data-weight="regular">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
-                  <path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"></path>
-                </svg>
+            <div class="flex items-center gap-4 bg-white px-4 min-h-[72px] py-2 justify-between">
+              <div class="flex items-center gap-4">
+                <div class="bg-center bg-no-repeat aspect-video bg-contain h-6 w-10 shrink-0" style='background-image: url("/mastercard.svg");'></div>
+                <div class="flex flex-col justify-center">
+                  <p class="text-[#181411] text-base font-medium leading-normal line-clamp-1">MasterCard ...5678</p>
+                  <p class="text-[#887563] text-sm font-normal leading-normal line-clamp-2">Expires 08/26</p>
+                </div>
+              </div>
+              <div class="shrink-0">
+                <div class="text-[#181411] flex size-7 items-center justify-center" data-icon="CaretRight" data-size="24px" data-weight="regular">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                    <path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"></path>
+                  </svg>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="flex items-center gap-4 bg-white px-4 min-h-[72px] py-2 justify-between">
-            <div class="flex items-center gap-4">
-              <div class="bg-center bg-no-repeat aspect-video bg-contain h-6 w-10 shrink-0" style='background-image: url("/mastercard.svg");'></div>
-              <div class="flex flex-col justify-center">
-                <p class="text-[#181411] text-base font-medium leading-normal line-clamp-1">MasterCard ...5678</p>
-                <p class="text-[#887563] text-sm font-normal leading-normal line-clamp-2">Expires 08/26</p>
+            <div class="flex px-4 py-3 justify-start">
+              <button
+                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#f4f2f0] text-[#181411] text-sm font-bold leading-normal tracking-[0.015em]">
+                <span class="truncate">Add Payment Method</span>
+              </button>
+            </div>
+          </section>
+          <section id="addresses">
+            <h2 class="text-[#181411] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Addresses</h2>
+            <div class="flex gap-4 bg-white px-4 py-3 justify-between">
+              <div class="flex items-start gap-4">
+                <div class="text-[#181411] flex items-center justify-center rounded-lg bg-[#f4f2f0] shrink-0 size-12" data-icon="House" data-size="24px" data-weight="regular">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                    <path
+                      d="M218.83,103.77l-80-75.48a1.14,1.14,0,0,1-.11-.11,16,16,0,0,0-21.53,0l-.11.11L37.17,103.77A16,16,0,0,0,32,115.55V208a16,16,0,0,0,16,16H96a16,16,0,0,0,16-16V160h32v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V115.55A16,16,0,0,0,218.83,103.77ZM208,208H160V160a16,16,0,0,0-16-16H112a16,16,0,0,0-16,16v48H48V115.55l.11-.1L128,40l79.9,75.43.11.1Z"></path>
+                  </svg>
+                </div>
+                <div class="flex flex-1 flex-col justify-center">
+                  <p class="text-[#181411] text-base font-medium leading-normal">Home</p>
+                  <p class="text-[#887563] text-sm font-normal leading-normal">Apt 3B</p>
+                  <p class="text-[#887563] text-sm font-normal leading-normal">123 Main St, Anytown, CA 91234</p>
+                </div>
+              </div>
+              <div class="shrink-0">
+                <div class="text-[#181411] flex size-7 items-center justify-center" data-icon="CaretRight" data-size="24px" data-weight="regular">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                    <path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"></path>
+                  </svg>
+                </div>
               </div>
             </div>
-            <div class="shrink-0">
-              <div class="text-[#181411] flex size-7 items-center justify-center" data-icon="CaretRight" data-size="24px" data-weight="regular">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
-                  <path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"></path>
-                </svg>
+            <div class="flex gap-4 bg-white px-4 py-3 justify-between">
+              <div class="flex items-start gap-4">
+                <div class="text-[#181411] flex items-center justify-center rounded-lg bg-[#f4f2f0] shrink-0 size-12" data-icon="Briefcase" data-size="24px" data-weight="regular">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                    <path
+                      d="M216,56H176V48a24,24,0,0,0-24-24H104A24,24,0,0,0,80,48v8H40A16,16,0,0,0,24,72V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V72A16,16,0,0,0,216,56ZM96,48a8,8,0,0,1,8-8h48a8,8,0,0,1,8,8v8H96ZM216,72v41.61A184,184,0,0,1,128,136a184.07,184.07,0,0,1-88-22.38V72Zm0,128H40V131.64A200.19,200.19,0,0,0,128,152a200.25,200.25,0,0,0,88-20.37V200ZM104,112a8,8,0,0,1,8-8h32a8,8,0,0,1,0,16H112A8,8,0,0,1,104,112Z"></path>
+                  </svg>
+                </div>
+                <div class="flex flex-1 flex-col justify-center">
+                  <p class="text-[#181411] text-base font-medium leading-normal">Work</p>
+                  <p class="text-[#887563] text-sm font-normal leading-normal">Floor 2</p>
+                  <p class="text-[#887563] text-sm font-normal leading-normal">456 Oak Ave, Anytown, CA 91234</p>
+                </div>
+              </div>
+              <div class="shrink-0">
+                <div class="text-[#181411] flex size-7 items-center justify-center" data-icon="CaretRight" data-size="24px" data-weight="regular">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                    <path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"></path>
+                  </svg>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="flex px-4 py-3 justify-start">
-            <button
-              class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#f4f2f0] text-[#181411] text-sm font-bold leading-normal tracking-[0.015em]">
-              <span class="truncate">Add Payment Method</span>
-            </button>
-          </div>
-          <h2 class="text-[#181411] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Addresses</h2>
-          <div class="flex gap-4 bg-white px-4 py-3 justify-between">
-            <div class="flex items-start gap-4">
-              <div class="text-[#181411] flex items-center justify-center rounded-lg bg-[#f4f2f0] shrink-0 size-12" data-icon="House" data-size="24px" data-weight="regular">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
-                  <path
-                    d="M218.83,103.77l-80-75.48a1.14,1.14,0,0,1-.11-.11,16,16,0,0,0-21.53,0l-.11.11L37.17,103.77A16,16,0,0,0,32,115.55V208a16,16,0,0,0,16,16H96a16,16,0,0,0,16-16V160h32v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V115.55A16,16,0,0,0,218.83,103.77ZM208,208H160V160a16,16,0,0,0-16-16H112a16,16,0,0,0-16,16v48H48V115.55l.11-.1L128,40l79.9,75.43.11.1Z"></path>
-                </svg>
-              </div>
-              <div class="flex flex-1 flex-col justify-center">
-                <p class="text-[#181411] text-base font-medium leading-normal">Home</p>
-                <p class="text-[#887563] text-sm font-normal leading-normal">Apt 3B</p>
-                <p class="text-[#887563] text-sm font-normal leading-normal">123 Main St, Anytown, CA 91234</p>
-              </div>
+            <div class="flex px-4 py-3 justify-start">
+              <button
+                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#f4f2f0] text-[#181411] text-sm font-bold leading-normal tracking-[0.015em]">
+                <span class="truncate">Add Address</span>
+              </button>
             </div>
-            <div class="shrink-0">
-              <div class="text-[#181411] flex size-7 items-center justify-center" data-icon="CaretRight" data-size="24px" data-weight="regular">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
-                  <path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"></path>
-                </svg>
-              </div>
-            </div>
-          </div>
-          <div class="flex gap-4 bg-white px-4 py-3 justify-between">
-            <div class="flex items-start gap-4">
-              <div class="text-[#181411] flex items-center justify-center rounded-lg bg-[#f4f2f0] shrink-0 size-12" data-icon="Briefcase" data-size="24px" data-weight="regular">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
-                  <path
-                    d="M216,56H176V48a24,24,0,0,0-24-24H104A24,24,0,0,0,80,48v8H40A16,16,0,0,0,24,72V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V72A16,16,0,0,0,216,56ZM96,48a8,8,0,0,1,8-8h48a8,8,0,0,1,8,8v8H96ZM216,72v41.61A184,184,0,0,1,128,136a184.07,184.07,0,0,1-88-22.38V72Zm0,128H40V131.64A200.19,200.19,0,0,0,128,152a200.25,200.25,0,0,0,88-20.37V200ZM104,112a8,8,0,0,1,8-8h32a8,8,0,0,1,0,16H112A8,8,0,0,1,104,112Z"></path>
-                </svg>
-              </div>
-              <div class="flex flex-1 flex-col justify-center">
-                <p class="text-[#181411] text-base font-medium leading-normal">Work</p>
-                <p class="text-[#887563] text-sm font-normal leading-normal">Floor 2</p>
-                <p class="text-[#887563] text-sm font-normal leading-normal">456 Oak Ave, Anytown, CA 91234</p>
-              </div>
-            </div>
-            <div class="shrink-0">
-              <div class="text-[#181411] flex size-7 items-center justify-center" data-icon="CaretRight" data-size="24px" data-weight="regular">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
-                  <path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"></path>
-                </svg>
-              </div>
-            </div>
-          </div>
-          <div class="flex px-4 py-3 justify-start">
-            <button
-              class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#f4f2f0] text-[#181411] text-sm font-bold leading-normal tracking-[0.015em]">
-              <span class="truncate">Add Address</span>
-            </button>
-          </div>
+          </section>
         </div>
       </div>
       <footer class="flex justify-center">
