@@ -13,6 +13,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const modal = document.getElementById('user-modal');
         if (modal) {
           modal.style.display = 'block';
+          // Asignar evento a la X para cerrar el modal
+          const closeBtn = modal.querySelector('.close');
+          if (closeBtn) {
+            closeBtn.onclick = function() {
+              modal.style.display = 'none';
+            };
+          }
         } else {
           alert('Por favor inicia sesión o regístrate.');
         }
