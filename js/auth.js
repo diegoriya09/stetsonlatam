@@ -195,7 +195,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     localStorage.setItem('carrito', JSON.stringify(carrito));
                 }
                 localStorage.removeItem('jwt');
-                location.reload();
+                window.location.href = 'index.php';
             });
         });
     }
