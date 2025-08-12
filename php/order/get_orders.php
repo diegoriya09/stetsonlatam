@@ -53,7 +53,7 @@ try {
     SELECT 
         p.id, 
         p.fecha,
-        MIN(d.estado) as estado,
+        MIN(p.estado) as estado,
         SUM(d.precio * d.cantidad) as total
     FROM pedidos p
     JOIN pedido_detalle d ON p.id = d.pedido_id
