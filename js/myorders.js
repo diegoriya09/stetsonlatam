@@ -110,29 +110,29 @@ function openModalWithOrderDetails(orderId) {
 
 // Función para mostrar las órdenes
 function renderOrders(orders) {
-  const container = document.getElementById("orders-section");
-  container.innerHTML = "<h2>My Orders</h2>";
+  const tableBody = document.querySelector("tbody");
+  tableBody.innerHTML = ""; // Vaciar la tabla
 
   orders.forEach((order) => {
-    const orderDiv = document.createElement("div");
-    orderDiv.classList.add("order");
+    const row = document.createElement("tr");
+    row.classList.add("border-t", "border-t-[#e5e0dc]");
 
-    orderDiv.innerHTML = `
-      <h3>Orden #${order.id}</h3>
-      <p><strong>Date:</strong> ${order.fecha}</p>
-      <p><strong>Total:</strong> $${order.total}</p>
-      <p><strong>Status:</strong> ${order.estado || "Pendiente"}</p>
-      <button class="btn-detalle" data-id="${order.id}">View Details</button>
+    row.innerHTML = `
+      <td class="h-[72px] px-4 py-2 w-14 text-sm font-normal leading-normal">
+        <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full w-10"></div>
+        #${order.id}
+      </td>
+      <td class="h-[72px] px-4 py-2 w-[400px] text-[#181411] text-sm font-normal leading-normal">
+        ${order.fecha}
+      </td>
+      <td class="h-[72px] px-4 py-2 w-[400px] text-[#887563] text-sm font-normal leading-normal">
+        ${order.estado}
+      </td>
+      <td class="h-[72px] px-4 py-2 w-[400px] text-[#887563] text-sm font-normal leading-normal">
+        $${order.total}
+      </td>
     `;
 
-    container.appendChild(orderDiv);
-  });
-
-  // Agrega evento a cada botón
-  document.querySelectorAll(".btn-detalle").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const orderId = btn.getAttribute("data-id");
-      openModalWithOrderDetails(orderId);
-    });
+    tableBody.appendChild(row);
   });
 }

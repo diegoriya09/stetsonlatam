@@ -110,23 +110,7 @@
                            </tr>
                         </thead>
                         <tbody>
-                           <?php foreach ($pedidos as $pedido): ?>
-                              <tr class="border-t border-t-[#e5e0dc]">
-                                 <td class="h-[72px] px-4 py-2 w-14 text-sm font-normal leading-normal">
-                                    <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full w-10"></div>
-                                    #<?php echo $pedido['id']; ?>
-                                 </td>
-                                 <td class="h-[72px] px-4 py-2 w-[400px] text-[#181411] text-sm font-normal leading-normal">
-                                    <?php echo $pedido['fecha']; ?>
-                                 </td>
-                                 <td class="h-[72px] px-4 py-2 w-[400px] text-[#887563] text-sm font-normal leading-normal">
-                                    <?php echo $pedido['estado']; ?>
-                                 </td>
-                                 <td class="h-[72px] px-4 py-2 w-[400px] text-[#887563] text-sm font-normal leading-normal">
-                                    $<?php echo $pedido['total']; ?>
-                                 </td>
-                              </tr>
-                           <?php endforeach; ?>
+                           <!-- JavaScript will dynamically populate this section -->
                         </tbody>
                      </table>
                   </div>
