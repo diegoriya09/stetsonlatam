@@ -7,7 +7,8 @@ use Firebase\JWT\Key;
 
 header('Content-Type: application/json');
 
-function getAuthorizationHeader() {
+function getAuthorizationHeader()
+{
     if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
         return trim($_SERVER['HTTP_AUTHORIZATION']);
     } elseif (isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION'])) {
@@ -35,12 +36,11 @@ try {
     $decoded = JWT::decode($jwt, new Key($secret_key, 'HS256'));
     $user_id = $decoded->data->id;
 
-    $stmt = $conn->prepare("SELECT name FROM users WHERE id = ?");
+    $stmt = $conn->prepare("SELECT name, email FROM users WHERE id = ?");
     $stmt->bind_param("i", $user_id);
     $stmt->execute();
     $result = $stmt->get_result();
     $user = $result->fetch_assoc();
-
     echo json_encode(['success' => true, 'user' => $user]);
 } catch (Exception $e) {
     echo json_encode(['success' => false, 'message' => 'Invalid token', 'error' => $e->getMessage()]);
