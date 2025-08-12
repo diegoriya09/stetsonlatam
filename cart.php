@@ -12,6 +12,7 @@
     <link rel="icon" href="img/logo.webp" type="image/x-icon" loading="lazy">
 
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -28,8 +29,8 @@
                         <h2 class="text-[#181411] text-lg font-bold leading-tight tracking-[-0.015em]"><a href="index.php">Stetson Latam</a></h2>
                     </div>
                     <div class="flex items-center gap-9">
-                        <a class="text-[#181411] text-sm font-medium leading-normal" href="#">Shop</a>
-                        <a class="text-[#181411] text-sm font-medium leading-normal" href="#">Specials</a>
+                        <a class="text-[#181411] text-sm font-medium leading-normal" href="hats.php">Hats</a>
+                        <a class="text-[#181411] text-sm font-medium leading-normal" href="caps.php">Caps</a>
                         <a class="text-[#181411] text-sm font-medium leading-normal" href="#">Contact</a>
                     </div>
                 </div>
@@ -53,6 +54,16 @@
                         </div>
                     </label>
                     <div class="flex gap-2">
+                        <button
+                            id="logout-btn"
+                            style="display:none;"
+                            class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-[#f4f2f0] text-[#181411] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
+                            <div class="text-[#181411]" data-icon="SignOut" data-size="20px" data-weight="regular">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256">
+                                    <path d="M216,128a8,8,0,0,1-8,8H104v16a8,8,0,0,1-13.66,5.66l-32-32a8,8,0,0,1,0-11.32l32-32A8,8,0,0,1,104,104v16h104A8,8,0,0,1,216,128ZM128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Z"></path>
+                                </svg>
+                            </div>
+                        </button>
                         <button
                             id="user-btn"
                             class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-[#f4f2f0] text-[#181411] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
@@ -239,6 +250,9 @@
             </footer>
         </div>
     </div>
+    <? include 'modal.php'; ?>
+    <script src="js/auth.js?v=<?php echo time(); ?>"></script>
+    <script src="js/index.js?v=<?php echo time(); ?>"></script>
 </body>
 
 </html>
