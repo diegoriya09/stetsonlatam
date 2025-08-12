@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       headers: { 'Authorization': 'Bearer ' + jwt }
    });
    const ordersData = await ordersRes.json();
-   console.log('ordersData:', ordersData);
+   console.log('ordersData:', ordersData); // Verificar datos recibidos del backend
    const ordersList = document.getElementById('orders-list');
    ordersList.innerHTML = '';
    if (ordersData.success && ordersData.orders && ordersData.orders.length > 0) {
