@@ -18,7 +18,8 @@ if (!$conn) {
 }
 
 // Obtener token JWT desde el header
-function getAuthorizationHeader() {
+function getAuthorizationHeader()
+{
     if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
         return trim($_SERVER["HTTP_AUTHORIZATION"]);
     } elseif (isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION'])) {
@@ -48,7 +49,14 @@ try {
     $decoded = JWT::decode($jwt, new Key($secret_key, 'HS256'));
     $user_id = $decoded->data->id;
 
-    $stmt = $conn->prepare("SELECT id, total, fecha, estado FROM pedidos WHERE user_id = ?");
+    $stmt = $conn->prepare("
+    SELECT p.id, p.total, p.fecha, 
+           GROUP_CONCAT(d.estado SEPARATOR ', ') as estado
+    FROM pedidos p
+    LEFT JOIN pedido_detalle d ON p.id = d.pedido_id
+    WHERE p.user_id = ?
+    GROUP BY p.id
+");
     $stmt->bind_param("i", $user_id);
     $stmt->execute();
     $result = $stmt->get_result();
