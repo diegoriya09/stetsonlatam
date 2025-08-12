@@ -112,7 +112,7 @@
               <label class="flex flex-col min-w-40 !h-10 max-w-64">
                 <div class="flex w-full flex-1 items-stretch rounded-lg h-full">
                   <div
-                    class="text-[#887563] flex border-none bg-[#f4f2f0] items-center justify-center pl-4 rounded-l-lg border-r-0"
+                    class="text-[#7a7671] flex border-none bg-[#f3f2f2] items-center justify-center pl-4 rounded-l-lg border-r-0"
                     data-icon="MagnifyingGlass"
                     data-size="24px"
                     data-weight="regular">
@@ -123,7 +123,7 @@
                   </div>
                   <input
                     placeholder="Search"
-                    class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#181411] focus:outline-0 focus:ring-0 border-none bg-[#f4f2f0] focus:border-none h-full placeholder:text-[#887563] px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal"
+                    class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#151514] focus:outline-0 focus:ring-0 border-none bg-[#f3f2f2] focus:border-none h-full placeholder:text-[#7a7671] px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal"
                     value="" />
                 </div>
               </label>
