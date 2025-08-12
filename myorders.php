@@ -1,32 +1,13 @@
-<?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-
-require_once 'php/conexion.php';
-// Ahora puedes ejecutar la consulta
-$stmt = $conn->prepare("SELECT * FROM pedidos WHERE user_id = ? ORDER BY fecha DESC");
-$stmt->bind_param("i", $user_id);
-$stmt->execute();
-$result = $stmt->get_result();
-$pedidos = $result->fetch_all(MYSQLI_ASSOC);
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
    <meta charset="UTF-8">
    <title>My Orders</title>
-   <meta name="description" content="Stetson LATAM - Legendary Hats for Latin America and Central America">
    <link rel="icon" href="img/logo.webp" type="image/x-icon" loading="lazy">
-   <link rel="stylesheet" href="css/index.css?v=<?php echo time(); ?>">
-   <link rel="stylesheet" href="css/product.css?v=<?php echo time(); ?>">
-   <link rel="stylesheet" href="css/myorders.css?v=<?php echo time(); ?>">
-   <link rel="stylesheet" href="css/wishlist.css?v=<?php echo time(); ?>">
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-   <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -199,7 +180,6 @@ $pedidos = $result->fetch_all(MYSQLI_ASSOC);
    <?php include 'modal.php'; ?>
    <script src="js/auth.js?v=<?php echo time(); ?>"></script>
    <script src="js/index.js?v=<?php echo time(); ?>"></script>
-   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </body>
 
