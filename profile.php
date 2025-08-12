@@ -25,7 +25,7 @@
               <div class="flex gap-3">
                 <div
                   class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
-                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBQ9q9A-buRPv5pvQ4jwpBcRI2jMopsbnINcgml1qh2nm3xT0LUamHoRJKeOj8c4olbGNlfAsZUCzgibWurSuTs91H0mKQcqaUBVUUUM3sGF17-Fm8o1_tlfu9eDxdcNP7WwQA6Sv42-dps2JzEjKIAl4Yd5gbZfaPul0dFkvDl8vO7QHq3VooF-YklZiYtPOUve9vuWlq7oFuLoUHnaQHaa_mkfCvxPnc9zijMdnzvP8Fvncx4nQGszoWXkbAX3nxRf8ur54W1G6UO");'></div>
+                  style='background-image: url("img/logo.webp");'></div>
                 <h1 id="profile-name-hero" class="text-[#181411] text-base font-medium leading-normal"><?php echo $userName ? $userName : '&nbsp;'; ?></h1>
               </div>
               <div class="flex flex-col gap-2">
@@ -105,7 +105,6 @@
               <div class="flex items-center gap-9">
                 <a class="text-[#181411] text-sm font-medium leading-normal" onclick="reloadPage()">Profile</a>
                 <a class="text-[#181411] text-sm font-medium leading-normal" href="#">Settings</a>
-                <a class="text-[#181411] text-sm font-medium leading-normal" href="#">Support</a>
               </div>
             </div>
             <div class="flex flex-1 justify-end gap-8">
@@ -159,10 +158,6 @@
                   </div>
                 </button>
               </div>
-              <div
-                class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
-                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBpPq3l3rvpjbVJNy6S2fbI9Zyw-OPjH8DfItxc4LqFiij-MsUFqDwijH5sA55k9VfNRc0YX-CJJvbLsNwRcvZu6QGgYAJaxJx2eCmcPNj2SrdLu3P53NFV3HrZ0O0aPTKemSAR1LNHVU-1IoP0sNJM_115OGGtIq_wBPPQTgnnwJckZ_sPFI97pmQu8BV3DDSUj-iXah5Zc4AfM8HsxYZ3LxLsefGeJERGvMu6ZJbmXDMvHC9sSZZHrvErPqNxYQRvInSDur1f9CWg");'></div>
-            </div>
           </header>
           <div class="flex flex-wrap justify-between gap-3 p-4">
             <p class="text-[#181411] tracking-light text-[32px] font-bold leading-tight min-w-72">Overview</p>
