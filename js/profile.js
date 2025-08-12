@@ -7,23 +7,17 @@ document.addEventListener('DOMContentLoaded', async () => {
    }
 
    // Obtener datos del usuario
-   try {
-    const response = await fetch('php/user/get_user.php', {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('jwtToken')}`, // Asegúrate de que el token JWT esté almacenado en localStorage
-      },
-    });
-
-    const data = await response.json();
-    if (data.success) {
-      document.getElementById('profile-name').textContent = data.user.name;
-    } else {
-      console.error('Error fetching user:', data.message);
-    }
-  } catch (error) {
-    console.error('Error:', error);
-  }
+   const userRes = await fetch('php/user/get_user.php', {
+      headers: { 'Authorization': 'Bearer ' + jwt }
+   });
+   const userData = await userRes.json();
+   console.log('userData:', userData);
+   if (userData.success && userData.user) {
+      document.getElementById('profile-name').textContent = userData.user.name;
+      // Si tienes otro campo para el nombre en la sección principal:
+      const heroName = document.getElementById('profile-name-hero');
+      if (heroName) heroName.textContent = userData.user.name;
+   }
 
    // Obtener órdenes recientes
    const ordersRes = await fetch('php/order/get_orders.php', {
