@@ -132,17 +132,17 @@ document.addEventListener("DOMContentLoaded", () => {
                     }).then(() => {
                         window.location.href = 'index.php';
                     });
-    // Cerrar modal con la X (siempre funciona)
-    function setupCloseModal() {
-        const closeModalBtn = document.querySelector('#user-modal .close');
-        if (closeModalBtn) {
-            closeModalBtn.onclick = function() {
-                const userModal = document.getElementById('user-modal');
-                if (userModal) userModal.style.display = 'none';
-            };
-        }
-    }
-    setupCloseModal();
+                    // Cerrar modal con la X (siempre funciona)
+                    function setupCloseModal() {
+                        const closeModalBtn = document.querySelector('#user-modal .close');
+                        if (closeModalBtn) {
+                            closeModalBtn.onclick = function () {
+                                const userModal = document.getElementById('user-modal');
+                                if (userModal) userModal.style.display = 'none';
+                            };
+                        }
+                    }
+                    setupCloseModal();
                 } else {
                     Swal.fire("Error", result.message || "Could not register", "error");
                 }

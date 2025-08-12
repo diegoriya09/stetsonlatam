@@ -86,6 +86,7 @@ $conn->close();
   <link rel="icon" href="img/logo.webp" type="image/x-icon" loading="lazy">
 
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
