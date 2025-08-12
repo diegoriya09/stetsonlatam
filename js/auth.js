@@ -119,18 +119,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 const result = await response.json();
 
-                if (result.status === 'success' && result.token) {
-                    localStorage.setItem('jwt', result.token);
-                    if (logoutBtn) logoutBtn.style.display = 'inline-block';
-                    const userModal = document.getElementById('user-modal');
-                    if (userModal) userModal.style.display = 'none';
+                if (result.status === 'success') {
+                    // Mostrar Swal para registro exitoso y redirigir a login
                     Swal.fire({
                         title: 'Registration successful!',
-                        text: 'You are now logged in.',
+                        text: 'You can now log in with your account.',
                         icon: 'success',
-                        confirmButtonText: 'OK'
+                        confirmButtonText: 'Log in',
+                        allowOutsideClick: false
                     }).then(() => {
-                        window.location.href = 'index.php';
+                        // Cambiar a la pestaña de login y limpiar el form de registro
+                        const loginTab = document.getElementById('switch-to-login');
+                        const registerTab = document.getElementById('switch-to-register');
+                        const loginFormSection = document.getElementById('login-form');
+                        const registerFormSection = document.getElementById('register-form');
+                        if (loginTab && registerTab && loginFormSection && registerFormSection) {
+                            loginTab.classList.add('border-[#181411]', 'text-[#181411]');
+                            loginTab.classList.remove('border-transparent', 'text-[#7a7671]');
+                            registerTab.classList.remove('border-[#181411]', 'text-[#181411]');
+                            registerTab.classList.add('border-transparent', 'text-[#7a7671]');
+                            loginFormSection.style.display = 'block';
+                            registerFormSection.style.display = 'none';
+                        }
+                        // Limpiar el formulario de registro
+                        const registerForm = document.getElementById('register-form-inner');
+                        if (registerForm) registerForm.reset();
                     });
                     // Cerrar modal con la X (siempre funciona)
                     function setupCloseModal() {
