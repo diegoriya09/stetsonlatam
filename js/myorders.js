@@ -119,7 +119,6 @@ function renderOrders(orders) {
 
     row.innerHTML = `
       <td class="h-[72px] px-4 py-2 w-14 text-sm font-normal leading-normal">
-        <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full w-10"></div>
         #${order.id}
       </td>
       <td class="h-[72px] px-4 py-2 w-[400px] text-[#181411] text-sm font-normal leading-normal">
