@@ -174,7 +174,7 @@
                   class="bg-center bg-no-repeat aspect-square bg-cover rounded-full min-h-32 w-32"
                   style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBob1EGrJstHfosfZDim_LplEbLnOey2nN6bQd-RljtyfmwtpW8DezCD8j49vxdoNIPvVTjy6cIglBAJi-i4mZFA96cdwEROSGNMdnUvcIdbXxFntgFyDjdIEVs8KtDT6ElykLt9kUsF10DuGP51R4p7BF-xMJvICLAHwaTQTa1Dsl_RP5IRPlmTDYqCZzFy2OrnQu-OaMWTs9lEatZ10IinFaIzL2eLNmmr8QsZLiHHa1C8yBw1k5n8Ci9T0zCwrKuqwWNg_TJNmue");'></div>
                 <div class="flex flex-col justify-center">
-                  <p class="text-[#181411] text-[22px] font-bold leading-tight tracking-[-0.015em]">Isabella Rodriguez</p>
+                  <h1 id="profile-name" class="text-[#181411] text-base font-medium leading-normal">&nbsp;</h1>
                   <p class="text-[#887563] text-base font-normal leading-normal">Member since 2021</p>
                 </div>
               </div>
@@ -193,45 +193,9 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr class="border-t border-t-[#e5e0dc]">
-                    <td class="table-47c2a25e-8e8a-467c-8886-8b69ef66eea4-column-120 h-[72px] px-4 py-2 w-[400px] text-[#181411] text-sm font-normal leading-normal">#123456</td>
-                    <td class="table-47c2a25e-8e8a-467c-8886-8b69ef66eea4-column-240 h-[72px] px-4 py-2 w-[400px] text-[#887563] text-sm font-normal leading-normal">
-                      May 15, 2024
-                    </td>
-                    <td class="table-47c2a25e-8e8a-467c-8886-8b69ef66eea4-column-360 h-[72px] px-4 py-2 w-60 text-sm font-normal leading-normal">
-                      <button
-                        class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-8 px-4 bg-[#f4f2f0] text-[#181411] text-sm font-medium leading-normal w-full">
-                        <span class="truncate">Shipped</span>
-                      </button>
-                    </td>
-                    <td class="table-47c2a25e-8e8a-467c-8886-8b69ef66eea4-column-480 h-[72px] px-4 py-2 w-[400px] text-[#887563] text-sm font-normal leading-normal">$150</td>
-                  </tr>
-                  <tr class="border-t border-t-[#e5e0dc]">
-                    <td class="table-47c2a25e-8e8a-467c-8886-8b69ef66eea4-column-120 h-[72px] px-4 py-2 w-[400px] text-[#181411] text-sm font-normal leading-normal">#123457</td>
-                    <td class="table-47c2a25e-8e8a-467c-8886-8b69ef66eea4-column-240 h-[72px] px-4 py-2 w-[400px] text-[#887563] text-sm font-normal leading-normal">
-                      April 20, 2024
-                    </td>
-                    <td class="table-47c2a25e-8e8a-467c-8886-8b69ef66eea4-column-360 h-[72px] px-4 py-2 w-60 text-sm font-normal leading-normal">
-                      <button
-                        class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-8 px-4 bg-[#f4f2f0] text-[#181411] text-sm font-medium leading-normal w-full">
-                        <span class="truncate">Delivered</span>
-                      </button>
-                    </td>
-                    <td class="table-47c2a25e-8e8a-467c-8886-8b69ef66eea4-column-480 h-[72px] px-4 py-2 w-[400px] text-[#887563] text-sm font-normal leading-normal">$200</td>
-                  </tr>
-                  <tr class="border-t border-t-[#e5e0dc]">
-                    <td class="table-47c2a25e-8e8a-467c-8886-8b69ef66eea4-column-120 h-[72px] px-4 py-2 w-[400px] text-[#181411] text-sm font-normal leading-normal">#123458</td>
-                    <td class="table-47c2a25e-8e8a-467c-8886-8b69ef66eea4-column-240 h-[72px] px-4 py-2 w-[400px] text-[#887563] text-sm font-normal leading-normal">
-                      March 10, 2024
-                    </td>
-                    <td class="table-47c2a25e-8e8a-467c-8886-8b69ef66eea4-column-360 h-[72px] px-4 py-2 w-60 text-sm font-normal leading-normal">
-                      <button
-                        class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-8 px-4 bg-[#f4f2f0] text-[#181411] text-sm font-medium leading-normal w-full">
-                        <span class="truncate">Cancelled</span>
-                      </button>
-                    </td>
-                    <td class="table-47c2a25e-8e8a-467c-8886-8b69ef66eea4-column-480 h-[72px] px-4 py-2 w-[400px] text-[#887563] text-sm font-normal leading-normal">$50</td>
-                  </tr>
+                <tbody id="orders-list">
+                  <!-- Orders will be injected here by JS -->
+                </tbody>
                 </tbody>
               </table>
             </div>
