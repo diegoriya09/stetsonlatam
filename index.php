@@ -204,8 +204,9 @@
                             <div class="flex flex-1 justify-center">
                                 <div class="flex justify-center">
                                     <button
+                                        id="open-user-modal"
                                         class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 @[480px]:h-12 @[480px]:px-5 bg-[#e68019] text-[#181411] text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base @[480px]:font-bold @[480px]:leading-normal @[480px]:tracking-[0.015em] grow">
-                                        <span id="open-user-modal">Sign Up</span>
+                                        <span id="truncate">Sign Up</span>
                                     </button>
                                 </div>
                             </div>
