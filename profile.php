@@ -26,7 +26,7 @@
                 <div
                   class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
                   style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBQ9q9A-buRPv5pvQ4jwpBcRI2jMopsbnINcgml1qh2nm3xT0LUamHoRJKeOj8c4olbGNlfAsZUCzgibWurSuTs91H0mKQcqaUBVUUUM3sGF17-Fm8o1_tlfu9eDxdcNP7WwQA6Sv42-dps2JzEjKIAl4Yd5gbZfaPul0dFkvDl8vO7QHq3VooF-YklZiYtPOUve9vuWlq7oFuLoUHnaQHaa_mkfCvxPnc9zijMdnzvP8Fvncx4nQGszoWXkbAX3nxRf8ur54W1G6UO");'></div>
-                <h1 class="text-[#181411] text-base font-medium leading-normal">Isabella Rodriguez</h1>
+                <h1 id="profile-name" class="text-[#181411] text-base font-medium leading-normal"><?php echo $userName ? $userName : '&nbsp;'; ?></h1>
               </div>
               <div class="flex flex-col gap-2">
                 <div class="flex items-center gap-3 px-3 py-2 rounded-lg bg-[#f4f2f0]">
