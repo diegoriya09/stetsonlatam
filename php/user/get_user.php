@@ -35,7 +35,7 @@ try {
     $decoded = JWT::decode($jwt, new Key($secret_key, 'HS256'));
     $user_id = $decoded->data->id;
 
-    $stmt = $conn->prepare("SELECT name, email FROM users WHERE id = ?");
+    $stmt = $conn->prepare("SELECT name FROM users WHERE id = ?");
     $stmt->bind_param("i", $user_id);
     $stmt->execute();
     $result = $stmt->get_result();

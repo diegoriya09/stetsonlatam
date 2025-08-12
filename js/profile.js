@@ -10,9 +10,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         headers: { 'Authorization': 'Bearer ' + jwt }
     });
     const userData = await userRes.json();
+    console.log('User data:', userData);
     if (userData.success && userData.user) {
         document.getElementById('profile-name').textContent = userData.user.name;
-        document.getElementById('profile-email').textContent = userData.user.email;
+        document.getElementById('profile-name-hero').textContent = userData.user.name;
+    } else {
+        document.getElementById('profile-name').textContent = 'No user';
     }
 
     // Obtener órdenes recientes
@@ -20,13 +23,25 @@ document.addEventListener('DOMContentLoaded', async () => {
         headers: { 'Authorization': 'Bearer ' + jwt }
     });
     const ordersData = await ordersRes.json();
-    if (ordersData.success && ordersData.orders) {
-        const ordersList = document.getElementById('orders-list');
-        ordersList.innerHTML = '';
+    console.log('Orders data:', ordersData);
+    const ordersList = document.getElementById('orders-list');
+    ordersList.innerHTML = '';
+    if (ordersData.success && ordersData.orders && ordersData.orders.length > 0) {
         ordersData.orders.forEach(order => {
-            const li = document.createElement('li');
-            li.textContent = `Order #${order.id} - $${order.total} - ${order.fecha} - ${order.estado}`;
-            ordersList.appendChild(li);
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td class="px-4 py-2 text-[#181411] text-sm font-normal leading-normal">#${order.id}</td>
+                <td class="px-4 py-2 text-[#887563] text-sm font-normal leading-normal">${order.fecha}</td>
+                <td class="px-4 py-2 text-sm font-normal leading-normal">
+                    <span class="inline-block rounded px-3 py-1 bg-[#f4f2f0] text-[#181411]">${order.estado}</span>
+                </td>
+                <td class="px-4 py-2 text-[#887563] text-sm font-normal leading-normal">$${order.total}</td>
+            `;
+            ordersList.appendChild(tr);
         });
+    } else {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td colspan=\"4\" class=\"px-4 py-2 text-center text-[#887563]\">No orders found</td>`;
+        ordersList.appendChild(tr);
     }
 });
