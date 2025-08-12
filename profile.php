@@ -22,7 +22,7 @@
         <div class="layout-content-container flex flex-col w-80">
           <div class="flex h-full min-h-[700px] flex-col justify-between bg-white p-4">
             <div class="flex flex-col gap-4">
-              <div class="flex gap-3">
+              <div class="flex items-center gap-3">
                 <div
                   class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
                   style='background-image: url("img/logo.webp");'></div>
