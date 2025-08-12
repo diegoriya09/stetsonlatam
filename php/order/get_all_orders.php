@@ -49,19 +49,7 @@ try {
     $decoded = JWT::decode($jwt, new Key($secret_key, 'HS256'));
     $user_id = $decoded->data->id;
 
-    $stmt = $conn->prepare("
-    SELECT 
-        p.id, 
-        p.fecha,
-        MIN(p.estado) as estado,
-        SUM(d.precio * d.cantidad) as total
-    FROM pedidos p
-    JOIN pedido_detalle d ON p.id = d.pedido_id
-    WHERE p.user_id = ?
-    GROUP BY p.id, p.fecha
-    ORDER BY p.fecha DESC
-    LIMIT 3
-");
+    $stmt = $conn->prepare("SELECT p.id, p.fecha, MIN(p.estado) as estado, SUM(d.precio * d.cantidad) as total FROM pedidos p JOIN pedido_detalle d ON p.id = d.pedido_id WHERE p.user_id = ? GROUP BY p.id, p.fecha ORDER BY p.fecha DESC");
     $stmt->bind_param("i", $user_id);
     $stmt->execute();
     $result = $stmt->get_result();

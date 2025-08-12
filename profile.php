@@ -225,7 +225,7 @@
           <div class="flex px-4 py-3 justify-start">
             <button
               class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#f4f2f0] text-[#181411] text-sm font-bold leading-normal tracking-[0.015em]">
-              <span class="truncate">View All Orders</span>
+              <span class="truncate"><a href="myorders.php">View All Orders</a></span>
             </button>
           </div>
           <h2 class="text-[#181411] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Payment Methods</h2>

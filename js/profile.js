@@ -6,6 +6,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       return;
    }
 
+   if (jwt) {
+      window.location.href = "myorders.php";
+   } else {
+      alert("You need to log in to view all orders.");
+   }
+
    // Obtener datos del usuario
    const userRes = await fetch('php/user/get_user.php', {
       headers: { 'Authorization': 'Bearer ' + jwt }
@@ -13,13 +19,13 @@ document.addEventListener('DOMContentLoaded', async () => {
    const userData = await userRes.json();
    console.log('userData:', userData);
    if (userData.success && userData.user) {
-    document.getElementById('profile-name').textContent = userData.user.name;
-    // Si tienes otro campo para el nombre en la sección principal:
-    const heroName = document.getElementById('profile-name-hero');
-    if (heroName) heroName.textContent = userData.user.name;
-    const email = document.getElementById('profile-email');
-    if (email) email.textContent = userData.user.email;
-}
+      document.getElementById('profile-name').textContent = userData.user.name;
+      // Si tienes otro campo para el nombre en la sección principal:
+      const heroName = document.getElementById('profile-name-hero');
+      if (heroName) heroName.textContent = userData.user.name;
+      const email = document.getElementById('profile-email');
+      if (email) email.textContent = userData.user.email;
+   }
 
    // Obtener órdenes recientes
    const ordersRes = await fetch('php/order/get_orders.php', {
