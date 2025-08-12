@@ -361,7 +361,7 @@ $conn->close();
                 </div>
               </a>
             </div>
-            <p class="text-[#7a7671] text-base font-normal leading-normal">@2024 Stetson Latin America</p>
+            <p class="text-[#7a7671] text-base font-normal leading-normal">© 2025 Stetson Latam. All rights reserved.</p>
           </footer>
         </div>
       </footer>
