@@ -30,7 +30,6 @@ $pedidos = $result->fetch_all(MYSQLI_ASSOC);
 </head>
 
 <body>
-   <?php include 'modal.php'; ?>
    <div class="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden" style='font-family: "Noto Serif", "Noto Sans", sans-serif;'>
       <div class="layout-container flex h-full grow flex-col">
          <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f4f2f0] px-10 py-3">
@@ -197,6 +196,7 @@ $pedidos = $result->fetch_all(MYSQLI_ASSOC);
          </footer>
       </div>
    </div>
+   <?php include 'modal.php'; ?>
    <script src="js/auth.js?v=<?php echo time(); ?>"></script>
    <script src="js/index.js?v=<?php echo time(); ?>"></script>
    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
