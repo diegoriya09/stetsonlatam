@@ -196,7 +196,6 @@
                 <tbody id="orders-list">
                   <!-- Orders will be injected here by JS -->
                 </tbody>
-                </tbody>
               </table>
             </div>
             <style>
