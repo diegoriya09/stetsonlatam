@@ -192,7 +192,6 @@
                     <th class="table-47c2a25e-8e8a-467c-8886-8b69ef66eea4-column-480 px-4 py-3 text-left text-[#181411] w-[400px] text-sm font-medium leading-normal">Total</th>
                   </tr>
                 </thead>
-                <tbody>
                 <tbody id="orders-list">
                   <!-- Orders will be injected here by JS -->
                 </tbody>
