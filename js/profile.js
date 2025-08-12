@@ -26,8 +26,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.log('Orders data:', ordersData);
     const ordersList = document.getElementById('orders-list');
     ordersList.innerHTML = '';
-    if (ordersData.success && ordersData.orders && ordersData.orders.length > 0) {
-        ordersData.orders.forEach(order => {
+    if (ordersData.success && ordersData.pedidos && ordersData.pedidos.length > 0) {
+        ordersData.pedidos.forEach(order => {
             const tr = document.createElement('tr');
             tr.innerHTML = `
                 <td class="px-4 py-2 text-[#181411] text-sm font-normal leading-normal">#${order.id}</td>
