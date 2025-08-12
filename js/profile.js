@@ -1,5 +1,6 @@
-document.addEventListener('DOMContentLoaded', async () => {
-    const jwt = localStorage.getItem('jwt');
+document.addEventListener('DOMContentLoaded', async () => { 
+   
+   const jwt = localStorage.getItem('jwt');
     if (!jwt) {
         window.location.href = 'index.php';
         return;
@@ -10,10 +11,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         headers: { 'Authorization': 'Bearer ' + jwt }
     });
     const userData = await userRes.json();
-    console.log('User data:', userData);
     if (userData.success && userData.user) {
         document.getElementById('profile-name').textContent = userData.user.name;
-        document.getElementById('profile-name-hero').textContent = userData.user.name;
     } else {
         document.getElementById('profile-name').textContent = 'No user';
     }
@@ -23,7 +22,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         headers: { 'Authorization': 'Bearer ' + jwt }
     });
     const ordersData = await ordersRes.json();
-    console.log('Orders data:', ordersData);
     const ordersList = document.getElementById('orders-list');
     ordersList.innerHTML = '';
     if (ordersData.success && ordersData.pedidos && ordersData.pedidos.length > 0) {

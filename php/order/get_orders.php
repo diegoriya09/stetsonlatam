@@ -50,12 +50,16 @@ try {
     $user_id = $decoded->data->id;
 
     $stmt = $conn->prepare("
-    SELECT p.id, p.total, p.fecha, 
-           GROUP_CONCAT(d.estado SEPARATOR ', ') as estado
+    SELECT 
+        p.id, 
+        p.fecha,
+        MIN(d.estado) as estado, -- o MAX(d.estado) según tu lógica
+        SUM(d.precio * d.cantidad) as total
     FROM pedidos p
-    LEFT JOIN pedido_detalle d ON p.id = d.pedido_id
+    JOIN pedido_detalle d ON p.id = d.pedido_id
     WHERE p.user_id = ?
-    GROUP BY p.id
+    GROUP BY p.id, p.fecha
+    ORDER BY p.fecha DESC
 ");
     $stmt->bind_param("i", $user_id);
     $stmt->execute();
