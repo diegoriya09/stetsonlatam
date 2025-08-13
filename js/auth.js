@@ -49,38 +49,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     localStorage.setItem('jwt', result.token);
                     const jwt = result.token;
 
-                    // 🔁 1. Obtener carrito del backend
-                    const serverCart = await fetch('php/cart/get_cart.php', {
-                        headers: {
-                            'Authorization': 'Bearer ' + jwt
-                        }
-                    }).then(r => r.json());
-
-                    const serverIds = serverCart.map(p => p.id);
-
-                    // 🔁 2. Obtener carrito local
-                    const localCart = JSON.parse(localStorage.getItem('carrito')) || [];
-
-                    // ✅ 3. Filtrar los productos que NO están en el backend
-                    const itemsToSync = localCart.filter(item => !serverIds.includes(item.id));
-
-                    // 🔁 4. Enviar al backend solo los productos nuevos
-                    if (itemsToSync.length > 0) {
-                        await Promise.all(itemsToSync.map(item =>
-                            fetch('php/cart/add_to_cart.php', {
-                                method: 'POST',
-                                headers: {
-                                    'Authorization': 'Bearer ' + jwt,
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify({ producto_id: item.id, quantity: item.quantity })
-                            })
-                        ));
-                    }
-
-                    // ✅ 5. Limpiar el carrito local para evitar futuros duplicados
-                    localStorage.removeItem('carrito');
-
                     // ✅ 6. Mostrar logout, cerrar modal y redirigir con alerta
                     if (logoutBtn) logoutBtn.style.display = 'inline-block';
                     const userModal = document.getElementById('user-modal');
@@ -91,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         icon: 'success',
                         confirmButtonText: 'OK'
                     }).then(() => {
-                        window.location.href = 'index.php';
+                        location.reload();
                     });
                 } else {
                     Swal.fire("Error", result.error || "Could not log in", "error");
