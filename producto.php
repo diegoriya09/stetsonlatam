@@ -175,7 +175,7 @@ $conn->close();
               $<?php echo number_format($producto['price'], 2); ?>
             </p>
             <span class="text-[#887563] text-sm font-normal leading-normal">
-              SKU: <?php echo htmlspecialchars($producto['id']); ?>
+              SKU: <?php echo htmlspecialchars($producto['sku']); ?>
             </span>
             <p class="text-[#181411] text-base font-normal leading-normal pt-2">
               <?php echo htmlspecialchars($producto['description']); ?>
