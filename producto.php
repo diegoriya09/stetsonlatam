@@ -33,7 +33,7 @@ $conn->close();
     onload="this.rel='stylesheet'"
     href="https://fonts.googleapis.com/css2?display=swap&amp;family=Noto+Serif%3Awght%40400%3B500%3B700%3B900&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900" />
 
-  <title>Product Page</title>
+  <title><?php echo htmlspecialchars($producto['name']); ?></title>
   <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
   <link rel="icon" href="img/logo.webp" type="image/x-icon" loading="lazy">
 
@@ -121,7 +121,7 @@ $conn->close();
             <span class="text-[#887563] text-base font-medium leading-normal">/</span>
             <a class="text-[#887563] text-base font-medium leading-normal" href="hats.php">Hats</a>
             <span class="text-[#887563] text-base font-medium leading-normal">/</span>
-            <span class="text-[#181411] text-base font-medium leading-normal">The Marshall</span>
+            <span class="text-[#181411] text-base font-medium leading-normal"><?php echo htmlspecialchars($producto['name']); ?></span>
           </div>
           <div class="flex w-full grow bg-white @container p-4">
             <div class="w-full gap-1 overflow-hidden bg-white @[480px]:gap-2 aspect-[3/2] rounded-lg grid grid-cols-[2fr_1fr_1fr]">
