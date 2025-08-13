@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   // Redirección para los botones del navbar
   const userBtn = document.getElementById('user-btn');
+  const cartBtn = document.getElementById('cart-btn');
 
   if (userBtn) {
     userBtn.addEventListener('click', () => {
@@ -23,6 +24,12 @@ document.addEventListener('DOMContentLoaded', () => {
           alert('Por favor inicia sesión o regístrate.');
         }
       }
+    });
+  }
+
+  if (cartBtn) {
+    cartBtn.addEventListener('click', () => {
+      window.location.href = 'cart.php';
     });
   }
 
