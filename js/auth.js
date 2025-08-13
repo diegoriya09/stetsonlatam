@@ -200,4 +200,31 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    function isTokenExpired(token) {
+        try {
+            const payload = JSON.parse(atob(token.split('.')[1]));
+            const currentTime = Math.floor(Date.now() / 1000);
+            return payload.exp < currentTime;
+        } catch (error) {
+            console.error('Error decoding token:', error);
+            return true; // Si hay un error, asumimos que el token está expirado
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const token = localStorage.getItem('jwt');
+
+        if (token && isTokenExpired(token)) {
+            Swal.fire({
+                title: 'Session expired',
+                text: 'Please log in again to continue.',
+                icon: 'warning',
+                confirmButtonText: 'Log in'
+            }).then(() => {
+                localStorage.removeItem('jwt');
+                window.location.href = 'index.php';
+            });
+        }
+    });
+
 });
