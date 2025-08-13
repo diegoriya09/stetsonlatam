@@ -268,60 +268,17 @@ $conn->close();
             </div>
           </div>
           <div class="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-3 p-4">
-            <div class="flex flex-col gap-3 pb-3">
-              <div
-                class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-lg"
-                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCsKTk0C50uonTaF0PAO1hfMgXjDT7kyu4QVZUmojg_Xy4kGL-7FdOxIddnkIcJktpCpQ8VfnPbmKpdkxTYmlNNi9zDWO8P4CDPDo57IoQ35MQlJvDQG7_2XhV4nW0FSC66WNLXpy7fpEso6WwS59O0zxoKHyiWCzH0sXKSn87IDlapkq-RKNTzKA1uWt4bxIAC_TTQcxe8huhs-1gJR3_iMHu8N3tfrmoG_hKuKfYwSP_ufpVi8DKtUcABgwpbFEbKotbXt4PMVmTH");'></div>
-              <div>
-                <p class="text-[#151514] text-base font-medium leading-normal">The Classic Fedora</p>
-                <p class="text-[#7a7671] text-sm font-normal leading-normal">$120</p>
+            <?php foreach ($productos as $producto): ?>
+              <div class="flex flex-col gap-3 pb-3">
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-lg"
+                  style='background-image: url("<?php echo htmlspecialchars($producto["image"]); ?>");'></div>
+                <div>
+                  <p class="text-[#151514] text-base font-medium leading-normal"><?php echo htmlspecialchars($producto["name"]); ?></p>
+                  <p class="text-[#7a7671] text-sm font-normal leading-normal">$<?php echo number_format($producto["price"], 2); ?></p>
+                </div>
               </div>
-            </div>
-            <div class="flex flex-col gap-3 pb-3">
-              <div
-                class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-lg"
-                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBKzfMOcs7y-692QI4wt9H9j8QRZ-cgEfK5LTp2d36KMasVA4UX5aoVsiilc2Jx474QLwZgj5XqguCNQR8WJdNICyesqXA9scbdXvT7-14zmT22cnZENZQROzi5Talwjo1CirtE13VTDvtIg43bXKawv_dyEOq6IY0nB3rrZSTHNQoe5ebKnVgILlop0XRn3LtQgnmWvRrCOHjFV5gsknIuz_aJlmANSaogLq0rcfLfKrmr6tcEQfnAY7b87yiiw7hBA1ddFjKTOLlJ");'></div>
-              <div>
-                <p class="text-[#151514] text-base font-medium leading-normal">The Outback Hat</p>
-                <p class="text-[#7a7671] text-sm font-normal leading-normal">$90</p>
-              </div>
-            </div>
-            <div class="flex flex-col gap-3 pb-3">
-              <div
-                class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-lg"
-                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAp0J06MZ-MdsynSsewAlSF0ICaa-aGjjaYrzQKJ5EZvFSH7bUG7iIvGT2OnkFtBWMdXhnHW5oQ-Pi9xjuLOneHt9VAuNMED647j-LdEkiD6W_czYDb_3muSY8PlXfrxKKxNcUrMdpAuta5v7rzZle1UFdhAlOW6xW4s9mlpzPFtfIf7RngNNOmkZaT6KM8ci4xuS00T1TEuRco4CLX6IZdDPQJL0Pb5OqmtLsnkbeOhrXZQnzzSH1UiNqrj8p9zzgKM6pZ1LSEhpNz");'></div>
-              <div>
-                <p class="text-[#151514] text-base font-medium leading-normal">The Newsboy Cap</p>
-                <p class="text-[#7a7671] text-sm font-normal leading-normal">$50</p>
-              </div>
-            </div>
-            <div class="flex flex-col gap-3 pb-3">
-              <div
-                class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-lg"
-                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCSOilY4tb42dQHDWt50zXfsXIchXsCL6CLofSxd8AgMDFa4zQroslDtej_vpVuN2YwOfQIU-HAJz_yG6dM9j2SPWownrLXJNaPg3pXnhWfznA4f-N_d2loYR-qZDxLQpj-GIOmovsDpdhvyEuJhDSaNs9R0PxbBCK3FzJSkDt4b_Jctj276ZvmvcA021kHUVMfx4bgQMDW514ArRB3QksGFGKedAljwu1sw4PY5zidj1Y41Y6nK8WaU5ywoVZlykBbpifue-6jJEpJ");'></div>
-              <div>
-                <p class="text-[#151514] text-base font-medium leading-normal">The Panama Hat</p>
-                <p class="text-[#7a7671] text-sm font-normal leading-normal">$150</p>
-              </div>
-            </div>
-            <div class="flex flex-col gap-3 pb-3">
-              <div
-                class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-lg"
-                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBhU7uJmteNSzB_BcvUQ41V-_3fTFGCy956orV_Fn3TEc_vxr4-35IzrvmsbMKHfDGI1w_a9EDlWaaJSdpnqo7ca1AiA1nFA2mpq8okuLBOT8hAK1t4U_KRrKuaajyRzJnfspRIg1qHfxxquprMJI3HGoVxdP6AnZSHtcdL7EEEr3Ca8r7E2-Toe_Om40-fpfYm8DDcrQQRnMi3bXogrtmAX7amHgyg9hkGwSnUHt7R7EEWGCxCvZOkDoYYxRqGa5p4HR72y3nYdTyg");'></div>
-              <div>
-                <p class="text-[#151514] text-base font-medium leading-normal">The Cowboy Hat</p>
-                <p class="text-[#7a7671] text-sm font-normal leading-normal">$100</p>
-              </div>
-            </div>
-            <div class="flex flex-col gap-3 pb-3">
-              <div
-                class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-lg"
-                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA1LfUhgO9vQYVZ_2wDXlxkbkT6pG4weuu1-bPlbocFh1WtTNo0WcjTVZ1HlL2AfcYXZqgMtPzqzW3e_ahEBis0NplnKI_1G2GSd2y_MCU8cr79fXjPoALyMlr2zKjKhBBQldsT_Do9dYfUjF6viHs0FBL52xAhl-0OSjqo9N-PnjgZv3S5yw7Tm3Kp6Dc3Br6AquwpzIQ6LEEZs7fNN3lwgdgLDcdytb8Jj8ShfsqFDC1JldRkfVu-5DuWGFYlnHfIoE6BHl3lCUaU");'></div>
-              <div>
-                <p class="text-[#151514] text-base font-medium leading-normal">The Beanie</p>
-                <p class="text-[#7a7671] text-sm font-normal leading-normal">$40</p>
-              </div>
-            </div>
+            <?php endforeach; ?>
           </div>
         </div>
       </div>
