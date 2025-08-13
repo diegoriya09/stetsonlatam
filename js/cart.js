@@ -23,8 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
           .then((res) => res.json())
           .then((cartData) => {
             if (cartData.success && cartData.cart.length > 0) {
-              const total = cartData.cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
-              renderCart(cartData.cart, total);
+              renderCart(cartData.cart);
             } else {
               cartSection.innerHTML =
                 "<p>No items found in the cart.</p>";
@@ -174,39 +173,6 @@ function handleAddToCart(e) {
   }
 }
 
-function loadCart(isLoggedIn) {
-  const carritoItems = document.getElementById('carrito-items');
-  const totalCarrito = document.getElementById('total-carrito');
-  let total = 0;
-
-  carritoItems.innerHTML = ''; // Limpia el contenido del carrito antes de renderizar
-
-  if (isLoggedIn) {
-    const jwt = localStorage.getItem("jwt");
-    fetch('php/cart/get_cart.php', {
-      headers: {
-        'Authorization': 'Bearer ' + jwt
-      }
-    })
-      .then(response => response.json())
-      .then(carrito => {
-        carrito.forEach(p => {
-          total += p.price * p.quantity;
-          carritoItems.innerHTML += renderItem(p);
-        });
-        totalCarrito.textContent = `Total: $${total.toLocaleString()}`;
-      });
-  } else {
-    const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-    carrito.forEach(p => {
-      total += p.price * p.quantity;
-      carritoItems.innerHTML += renderItem(p); // Renderiza cada producto
-    });
-    totalCarrito.textContent = `Total: $${total.toLocaleString()}`;
-  }
-}
-
-
 document.addEventListener('click', function (e) {
   const removeBtn = e.target.closest('.remove-btn');
   if (removeBtn) {
@@ -258,7 +224,7 @@ document.addEventListener('click', function (e) {
 });
 
 // Función para mostrar el carrito
-function renderCart(carts, total) {
+function renderCart(carts) {
   const tableBody = document.querySelector("tbody");
   tableBody.innerHTML = ""; // Vaciar la tabla
 
@@ -283,7 +249,7 @@ function renderCart(carts, total) {
         ${cart.color_name}
       </td>
       <td class="h-[72px] px-4 py-2 w-[400px] text-[#887563] text-sm font-normal leading-normal">
-        ${cart.total}
+        $${cart.quantity * cart.price}
       </td>
     `;
 
