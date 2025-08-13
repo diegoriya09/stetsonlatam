@@ -187,13 +187,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 timerProgressBar: true
             }).then(async () => {
                 const jwt = localStorage.getItem('jwt');
-                if (jwt) {
-                    // Guarda el carrito actual en localStorage antes de cerrar sesión
-                    const carrito = await fetch('php/cart/get_cart.php', {
-                        headers: { 'Authorization': 'Bearer ' + jwt }
-                    }).then(r => r.json());
-                    localStorage.setItem('carrito', JSON.stringify(carrito));
-                }
                 localStorage.removeItem('jwt');
                 window.location.href = 'index.php';
             });
