@@ -2,56 +2,50 @@
 document.addEventListener("DOMContentLoaded", () => {
   const jwt = localStorage.getItem("jwt");
 
-  // Verificamos sesión válida
+  // Verifica el token con el servidor
   fetch("php/check_session.php", {
     method: "GET",
     headers: {
-      "Authorization": "Bearer " + jwt
-    }
+      Authorization: "Bearer " + jwt,
+    },
   })
-    .then(res => res.json())
-    .then(data => {
+    .then((response) => response.json())
+    .then((data) => {
       if (data.logged_in) {
-        const localCart = JSON.parse(localStorage.getItem('carrito')) || [];
-
-        if (localCart.length > 0) {
-          // Enviamos cada ítem del carrito local al backend
-          const promises = localCart.map(item => {
-            return fetch('php/cart/add_to_cart.php', {
-              method: 'POST',
-              headers: {
-                'Authorization': 'Bearer ' + jwt,
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({
-                producto_id: item.id,
-                quantity: item.quantity,
-                color_id: item.color_id,
-                size_id: item.size_id,
-              })
-            });
+        // ✅ Llama al backend para obtener las órdenes del usuario
+        fetch("php/order/get_cart.php.php", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + jwt,
+          },
+        })
+          .then((res) => res.json())
+          .then((cartData) => {
+            if (cartData.success && cartData.cart.length > 0) {
+              const total = cartData.cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+              renderCart(cartData.cart, total);
+            } else {
+              cartSection.innerHTML =
+                "<p>No items found in the cart.</p>";
+            }
+          })
+          .catch((error) => {
+            console.error("Error getting cart:", error);
+            cartSection.innerHTML =
+              "<p>Error getting your cart. Please try again later.</p>";
           });
-
-          // Esperamos que se sincronicen todos y luego limpiamos el local
-          Promise.all(promises)
-            .then(() => {
-              localStorage.removeItem('carrito'); // Eliminamos el localStorage una vez sincronizado
-              loadCart(true); // Ahora sí, cargamos desde la base de datos
-            })
-            .catch(err => {
-              console.error("Error sincronizando carrito local:", err);
-              loadCart(true); // De todas formas cargar
-            });
-        } else {
-          loadCart(true); // No hay nada local, solo carga del backend
-        }
+      } else {
+        cartSection.innerHTML = `<p>${data.message}</p>`;
       }
     })
-    .catch(() => loadCart(false));
-
-  setupAddToCartButtons();
-
+    .catch((err) => {
+      console.error("Error verifying session:", err);
+      cartSection.innerHTML =
+        "<p>Could not verify your session. Please try again later.</p>";
+    });
 });
+
 
 function setupAddToCartButtons() {
   document.querySelectorAll('.add-to-cart-btn').forEach(button => {
@@ -263,44 +257,38 @@ document.addEventListener('click', function (e) {
   }
 });
 
-function renderItem(product) {
-  const {
-    id,
-    name,
-    price,
-    image,
-    quantity,
-    color_name,
-    color_id,
-    hex,
-    size_name,
-    size_id,
-  } = product;
+// Función para mostrar el carrito
+function renderCart(carts, total) {
+  const tableBody = document.querySelector("tbody");
+  tableBody.innerHTML = ""; // Vaciar la tabla
 
-  return `
-    <div class="carrito-item">
-      <img src="${image}" alt="${name}" class="carrito-img" loading="lazy">
-      <div class="carrito-info">
-        <h4>${name}</h4>
-        <div class="cantidad-control">
-          <label>$${price.toLocaleString()} x </label>
-          <div class="qty-wrapper">
-            <button class="qty-btn minus" data-id="${id}" data-color-id="${color_id}" data-size-id="${size_id}">−</button>
-            <input type="text" class="cantidad-input" value="${quantity}" readonly
-              data-id="${id}" data-color-id="${color_id}" data-size-id="${size_id}" />
-            <button class="qty-btn plus" data-id="${id}" data-color-id="${color_id}" data-size-id="${size_id}">+</button>
-          </div>
-        </div>
-        ${color_name ? `<p><strong>Color:</strong> ${color_name} <span style="display:inline-block;width:16px;height:16px;border-radius:50%;background:${hex};border:1px solid #000;margin-left:5px;vertical-align:middle;"></span></p>` : ''}
-        ${size_name ? `<p><strong>Size:</strong> ${size_name}</p>` : ''}
-        <a class="remove-btn"
-           data-id="${id}"
-           data-color-id="${color_id}"
-           data-size-id="${size_id}">
-           <i class="fas fa-trash-alt"></i></a>
-      </div>
-    </div>
-  `;
+  carts.forEach((cart) => {
+    const row = document.createElement("tr");
+    row.classList.add("border-t", "border-t-[#e5e0dc]");
+
+    row.innerHTML = `
+      <td class="h-[72px] px-4 py-2 w-[400px] text-[#181411] text-sm font-normal leading-normal">
+        ${cart.name}
+      </td>
+      <td class="h-[72px] px-4 py-2 w-[400px] text-[#887563] text-sm font-normal leading-normal">
+        ${cart.price}
+      </td>
+      <td class="h-[72px] px-4 py-2 w-[400px] text-[#887563] text-sm font-normal leading-normal">
+        ${cart.quantity}
+      </td>
+      <td class="h-[72px] px-4 py-2 w-[400px] text-[#887563] text-sm font-normal leading-normal">
+        ${cart.size_name}
+      </td>
+      <td class="h-[72px] px-4 py-2 w-[400px] text-[#887563] text-sm font-normal leading-normal">
+        ${cart.color_name}
+      </td>
+      <td class="h-[72px] px-4 py-2 w-[400px] text-[#887563] text-sm font-normal leading-normal">
+        ${cart.total}
+      </td>
+    `;
+
+    tableBody.appendChild(row);
+  });
 }
 
 function updateQuantity({ id, color_id, size_id, quantity }) {

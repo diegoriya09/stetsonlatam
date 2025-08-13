@@ -1,3 +1,33 @@
+<?php
+session_start();
+require_once 'php/conexion.php';
+
+$user_id = $_SESSION['user_id'] ?? null;
+$cart_items = [];
+
+if ($user_id) {
+    // Consulta el carrito desde la base de datos
+    $stmt = $conn->prepare("
+    SELECT c.*, p.name, p.image, p.price, s.name as size_name, co.name as color_name, co.hex
+    FROM cart c
+    JOIN productos p ON c.producto_id = p.id
+    LEFT JOIN sizes s ON c.size_id = s.id
+    LEFT JOIN colors co ON c.color_id = co.id
+    WHERE c.users_id = ?
+  ");
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    while ($row = $result->fetch_assoc()) {
+        $cart_items[] = $row;
+    }
+    $stmt->close();
+} else {
+    // Si no está logueado, carga del localStorage usando JS
+}
+$conn->close();
+?>
+
 <html>
 
 <head>
@@ -107,34 +137,17 @@
                                         <th class="table-248e4061-a95c-4fec-bd43-b83b4e783d1b-column-296 px-4 py-3 text-left text-[#181411] w-[400px] text-sm font-medium leading-normal">
                                             Quantity
                                         </th>
+                                        <th class="table-248e4061-a95c-4fec-bd43-b83b4e783d1b-column-296 px-4 py-3 text-left text-[#181411] w-[400px] text-sm font-medium leading-normal">
+                                            Size
+                                        </th>
+                                        <th class="table-248e4061-a95c-4fec-bd43-b83b4e783d1b-column-296 px-4 py-3 text-left text-[#181411] w-[400px] text-sm font-medium leading-normal">
+                                            Color
+                                        </th>
                                         <th class="table-248e4061-a95c-4fec-bd43-b83b4e783d1b-column-416 px-4 py-3 text-left text-[#181411] w-[400px] text-sm font-medium leading-normal">Total</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="border-t border-t-[#e5e0dc]">
-                                        <td class="table-248e4061-a95c-4fec-bd43-b83b4e783d1b-column-56 h-[72px] px-4 py-2 w-14 text-sm font-normal leading-normal">
-                                            <div
-                                                class="bg-center bg-no-repeat aspect-square bg-cover rounded-full w-10"
-                                                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC9cxGuOm7znAGLBUahIUzY9zqKvFCwL4hVxs4XnPF-dlhPg66ZEWX705IsjgSnO51h123fL46mTgWNruPoJCHno4RgH_1AF9Ybu9v032HvLacMbEsehoGbKTgQh8G6tHpX2PI9ksh9PWR_9ZqYJ4uSjlH80nyfipNeZCSUfTXAtmREegyOYy5JBP9m8tIPrPrzfupCiNM6npAsORqA9ti9zbGjD3Qheey_mrafiBaln-8cWXmlsipC5mphqaCrDMkxV9EkXsmuFczV");'></div>
-                                        </td>
-                                        <td class="table-248e4061-a95c-4fec-bd43-b83b4e783d1b-column-176 h-[72px] px-4 py-2 w-[400px] text-[#181411] text-sm font-normal leading-normal">
-                                            Classic Cowboy Hat
-                                        </td>
-                                        <td class="table-248e4061-a95c-4fec-bd43-b83b4e783d1b-column-296 h-[72px] px-4 py-2 w-[400px] text-[#887563] text-sm font-normal leading-normal">$120</td>
-                                        <td class="table-248e4061-a95c-4fec-bd43-b83b4e783d1b-column-416 h-[72px] px-4 py-2 w-[400px] text-[#887563] text-sm font-normal leading-normal">1</td>
-                                    </tr>
-                                    <tr class="border-t border-t-[#e5e0dc]">
-                                        <td class="table-248e4061-a95c-4fec-bd43-b83b4e783d1b-column-56 h-[72px] px-4 py-2 w-14 text-sm font-normal leading-normal">
-                                            <div
-                                                class="bg-center bg-no-repeat aspect-square bg-cover rounded-full w-10"
-                                                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAEdBQcIy3ko0R3wz1STpRwS8hiL5riWxlBT46qiNtQauOQIOjFgDgs1YLBIVM7A8a986Kmkbayj2Py5r7xFPfEh4BgVQLl6ccgdj1mhR7z1KtDuh5mNSeIeKp1RSf4GXOfv5xkRT_YH2gYTh9GVDC7YGm0WxEFOM0g0xwrZk5--DXVck6Kl9IwFq0QKnEGj-EXaMg2VuLVTtK94GI4F7Qdz3Nc-se0PWbKmSWQ-if02I_Gwy6STR0Q0Uhqv3GfacsI3tE9XwfX6XNU");'></div>
-                                        </td>
-                                        <td class="table-248e4061-a95c-4fec-bd43-b83b4e783d1b-column-176 h-[72px] px-4 py-2 w-[400px] text-[#181411] text-sm font-normal leading-normal">
-                                            Stylish Fedora Hat
-                                        </td>
-                                        <td class="table-248e4061-a95c-4fec-bd43-b83b4e783d1b-column-296 h-[72px] px-4 py-2 w-[400px] text-[#887563] text-sm font-normal leading-normal">$80</td>
-                                        <td class="table-248e4061-a95c-4fec-bd43-b83b4e783d1b-column-416 h-[72px] px-4 py-2 w-[400px] text-[#887563] text-sm font-normal leading-normal">1</td>
-                                    </tr>
+                                    <!-- JavaScript will dynamically populate this section -->
                                 </tbody>
                             </table>
                         </div>

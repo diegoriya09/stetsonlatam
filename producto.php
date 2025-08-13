@@ -209,7 +209,11 @@ $conn->close();
           </div>
           <div class="flex px-4 py-3 justify-start">
             <button
-              class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#e68019] text-[#181411] text-sm font-bold leading-normal tracking-[0.015em]">
+              class="add-to-cart-btn flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#e68019] text-[#181411] text-sm font-bold leading-normal tracking-[0.015em]"
+              data-id="<?php echo $producto['id']; ?>"
+              data-name="<?php echo htmlspecialchars($producto['name']); ?>"
+              data-price="<?php echo $producto['price']; ?>"
+              data-image="<?php echo htmlspecialchars($producto['image']); ?>">
               <span class="truncate">Add to Cart</span>
             </button>
           </div>
@@ -459,6 +463,22 @@ $conn->close();
   <?php include 'modal.php'; ?>
   <script src="js/index.js?v=<?php echo time(); ?>"></script>
   <script src="js/auth.js?v=<?php echo time(); ?>"></script>
+  <script>
+    document.querySelectorAll('input[name="size"]').forEach(input => {
+      input.addEventListener('change', function() {
+        const btn = document.querySelector('.add-to-cart-btn');
+        btn.dataset.sizeId = this.value;
+        btn.dataset.sizeName = this.parentElement.textContent.trim();
+      });
+    });
+    document.querySelectorAll('input[name="color"]').forEach(input => {
+      input.addEventListener('change', function() {
+        const btn = document.querySelector('.add-to-cart-btn');
+        btn.dataset.colorId = this.value;
+        btn.dataset.colorName = this.parentElement.querySelector('span.text-sm').textContent.trim();
+      });
+    });
+  </script>
 </body>
 
 </html>
