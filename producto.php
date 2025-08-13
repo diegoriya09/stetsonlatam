@@ -174,16 +174,16 @@ $conn->close();
             </div>
           </div>
           <div class="px-4 pb-3 pt-5">
-            <h1 class="text-[#181411] text-[22px] font-bold leading-tight tracking-[-0.015em] text-left">
+            <h1 data-name="<?php echo htmlspecialchars($producto['name']); ?>" class="text-[#181411] text-[22px] font-bold leading-tight tracking-[-0.015em] text-left">
               <?php echo htmlspecialchars($producto['name']); ?>
             </h1>
-            <p class="text-[#7a7671] text-sm font-normal leading-normal">
+            <p data-price="<?php echo htmlspecialchars($producto['price']); ?>" class="text-[#7a7671] text-sm font-normal leading-normal">
               $<?php echo number_format($producto['price'], 2); ?>
             </p>
             <span class="text-[#887563] text-sm font-normal leading-normal">
               SKU: <?php echo htmlspecialchars($producto['sku']); ?>
             </span>
-            <p class="text-[#181411] text-base font-normal leading-normal pt-2">
+            <p data-description="<?php echo htmlspecialchars($producto['description']); ?>" class="text-[#181411] text-base font-normal leading-normal pt-2">
               <?php echo htmlspecialchars($producto['description']); ?>
             </p>
           </div>
@@ -210,10 +210,10 @@ $conn->close();
           <div class="flex px-4 py-3 justify-start">
             <button
               class="add-to-cart-btn flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#e68019] text-[#181411] text-sm font-bold leading-normal tracking-[0.015em]"
-              data-id="<?php echo $producto['id']; ?>"
-              data-name="<?php echo htmlspecialchars($producto['name']); ?>"
-              data-price="<?php echo $producto['price']; ?>"
-              data-image="<?php echo htmlspecialchars($producto['image']); ?>">
+              data-id="id"
+              data-name="name"
+              data-price="price"
+              data-image="image">
               <span class="truncate">Add to Cart</span>
             </button>
           </div>
@@ -463,6 +463,7 @@ $conn->close();
   <?php include 'modal.php'; ?>
   <script src="js/index.js?v=<?php echo time(); ?>"></script>
   <script src="js/auth.js?v=<?php echo time(); ?>"></script>
+  <script src="js/cart.js?v=<?php echo time(); ?>"></script>
   <script>
     document.querySelectorAll('input[name="size"]').forEach(input => {
       input.addEventListener('change', function() {
