@@ -1,3 +1,14 @@
+<?php
+// Al mostrar un producto
+$user_id = $_SESSION['user_id'] ?? null;
+$product_id = $producto['id'];
+if ($user_id) {
+  $stmt = $conn->prepare("INSERT INTO user_visits (user_id, product_id, visited_at) VALUES (?, ?, NOW())");
+  $stmt->bind_param("ii", $user_id, $product_id);
+  $stmt->execute();
+}
+?>
+
 <html>
 
 <head>
