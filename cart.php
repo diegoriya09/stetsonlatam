@@ -132,7 +132,7 @@ $conn->close();
                             <table class="flex-1">
                                 <thead>
                                     <tr class="bg-white">
-                                        <th class="px-4 py-3 text-left text-[#181411] w-14 text-sm font-medium leading-normal">Product
+                                        <th class="px-4 py-3 text-left text-[#181411] w-[400px] text-sm font-medium leading-normal">Product
                                         </th>
                                         <th class="px-4 py-3 text-left text-[#181411] w-[400px] text-sm font-medium leading-normal">Price
                                         </th>
