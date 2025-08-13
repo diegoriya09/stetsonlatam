@@ -69,6 +69,24 @@ $productos = [];
 while ($row = $result->fetch_assoc()) {
   $productos[] = $row;
 }
+//productos más visitados por el usuario
+$user_id = $_SESSION['user_id'] ?? null;
+$recomendados = [];
+if ($user_id) {
+  $sql = "SELECT p.* FROM productos p
+          INNER JOIN user_visits uv ON p.id = uv.product_id
+          WHERE uv.user_id = ?
+          GROUP BY p.id
+          ORDER BY COUNT(*) DESC
+          LIMIT 6";
+  $stmt = $conn->prepare($sql);
+  $stmt->bind_param("i", $user_id);
+  $stmt->execute();
+  $result = $stmt->get_result();
+  while ($row = $result->fetch_assoc()) {
+    $recomendados[] = $row;
+  }
+}
 $conn->close();
 ?>
 
@@ -197,62 +215,19 @@ $conn->close();
             </button>
           </div>
           <h2 class="text-[#151514] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Recommended for You</h2>
-          <div class="flex overflow-y-auto [-ms-scrollbar-style:none] [scrollbar-width:none] [&amp;::-webkit-scrollbar]:hidden">
+          <div class="flex overflow-y-auto [-ms-scrollbar-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             <div class="flex items-stretch p-4 gap-3">
-              <div class="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-40">
-                <div
-                  class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-lg flex flex-col"
-                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBLF3OpOUwEo6XqLl-W6k1VAuyuWmA-nM3PVz4bG61K73qeAN_lJukhrVgtuqY2zyoc4ReH1xOfqzGt-H7h1oAhKfjnSMb64_zYZ81b7xrBn36tvsibpdjLl2w8Pm5g6ocyxJY0jPdK4JLynV5PNgeJQ0j4fcb96wX9k3xxeex8MMcSMxEoTrc5wivlHZ4diClCrBv3PotQz9zV-UkDO3uYXA4OmPdT5nPKB_nfXxwnWp_g1XStSQ30y2V2-y0h3Ig47dZi8NN7l6gn");'></div>
-                <div>
-                  <p class="text-[#151514] text-base font-medium leading-normal">The Classic Fedora</p>
-                  <p class="text-[#7a7671] text-sm font-normal leading-normal">$120</p>
+              <?php foreach ($recomendados as $producto): ?>
+                <div class="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-40">
+                  <div
+                    class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-lg flex flex-col"
+                    style='background-image: url("<?php echo htmlspecialchars($producto["image"]); ?>");'></div>
+                  <div>
+                    <p class="text-[#151514] text-base font-medium leading-normal"><?php echo htmlspecialchars($producto["name"]); ?></p>
+                    <p class="text-[#7a7671] text-sm font-normal leading-normal">$<?php echo number_format($producto["price"], 2); ?></p>
+                  </div>
                 </div>
-              </div>
-              <div class="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-40">
-                <div
-                  class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-lg flex flex-col"
-                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBfRQFhcn2sPrHJdg51hp2OKZtzgxsjmQ8xAFqRvDCnV8jklWh_pLQgl7v43BBVSWvHP3Hq0VrnvAiyPrVGIXeJCP6q66O0IZ_aN7lZrfeGYBy87HafnyTzjuutANGV2iz0WGtHtlhoKM9fFBTFNFf4k5CfhzDXm9k4HMcvz6g_zQEqo5TV4jZbA2h1GPLaG_MC-1x-T1KeDYKhrUi0uLe82M3R54-Acx6TGqQEQ46dz-l5IWPtLCiDsU-VqdsX-KUler70jZULLoAe");'></div>
-                <div>
-                  <p class="text-[#151514] text-base font-medium leading-normal">The Outback Hat</p>
-                  <p class="text-[#7a7671] text-sm font-normal leading-normal">$90</p>
-                </div>
-              </div>
-              <div class="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-40">
-                <div
-                  class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-lg flex flex-col"
-                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCiXLKGurA3K7yB_vNRFffAf17kL79vErTXVhCOIIvLUkCmiGxKImuMfisiNh_x9KuEjEaWvao72bnfPZz-g4zTBx6-FsUFg5Sf5M8DF3NET20SJ3nwU6OauSfr9EDaBRpc9wIdCCT6I4wNPztUanNkWKSy4MZLUEL2TXRADGMUrrNROWf9LWiir7nrbWagGROMe7HlBTNh-77XRvas4KsogeoSU3N9gbn_2mCFpj8PKroOj-9V6T90UhE7wAVoN0UwzH-m3d6zMTaV");'></div>
-                <div>
-                  <p class="text-[#151514] text-base font-medium leading-normal">The Newsboy Cap</p>
-                  <p class="text-[#7a7671] text-sm font-normal leading-normal">$50</p>
-                </div>
-              </div>
-              <div class="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-40">
-                <div
-                  class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-lg flex flex-col"
-                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBwTnuWyqc0iIevjfWcdVP7bvTfPLnU4LPIF1xwUljjHiFaQBv5nm09q5M96myPl18JRX5tF9WD3AyTo2GSCS_883PUF9SV_HowGXEDE2GKqFCi5Q8KM36gn7XuDHf7sSQatEYuv21l-w2Te9BfNEwcNjnPdbsoa23dhdSR_Y0EpBt6_BpBgLRodVDJToHl6-QSWUFvBj9sHLGC9r4p8m11CK04LhLtzYobtLIJ9KjF1hC8wuKyhA-kL-2dZ0gmJKAicavB75J5vCMl");'></div>
-                <div>
-                  <p class="text-[#151514] text-base font-medium leading-normal">The Panama Hat</p>
-                  <p class="text-[#7a7671] text-sm font-normal leading-normal">$150</p>
-                </div>
-              </div>
-              <div class="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-40">
-                <div
-                  class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-lg flex flex-col"
-                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDKzs_6xCR7ySKOC6yBPfDb3C5TQpVWwQ_2XPFHzUGMe9DOCa-3tDhGwBDcaBUQlVWUxLMdjMX-jZne7GJUvs8UyCGlSUv5c2eLnb5IisXUkKa5fnESHfSnfKOQLzID3B8Z7uK92TALac5a_NtPSxPB83uPLFPU-q1Z4LJRUim6DigaXOTtMvOhmg_W5qFALokn5At9PYcQeCerIdVRciBeO8oI89Cdv0fwzDfISJnO_Ztvj2y6luxd3MrzGLTKego6bkxLgXYk0-t-");'></div>
-                <div>
-                  <p class="text-[#151514] text-base font-medium leading-normal">The Cowboy Hat</p>
-                  <p class="text-[#7a7671] text-sm font-normal leading-normal">$100</p>
-                </div>
-              </div>
-              <div class="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-40">
-                <div
-                  class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-lg flex flex-col"
-                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDwoTA-7IwowGAi_spRDKhm4qaRyKNR4Q0cOqGlA2K8r5vH1WmwKIaUPSNH6EnSAOOs7xVKcopZTxnV3zoTBWYCM86hT8T2lKQKKBxqdoYzqMnLjeywUsDyH1X3F2M-tRKtZ_-vW2GwA_hEYpYr4tmiZ2d2mFcFy9tx0k2Ey4ZtoqAXS4SJ4AU9AqMmiNMQgLZN_-_T5ioc97lYJ8McxieJjoUIXC2HEHzKnvVWH20J_7N8-X-YBjKrQ9ilIsu_mDN-oi-hSvcstj_d");'></div>
-                <div>
-                  <p class="text-[#151514] text-base font-medium leading-normal">The Beanie</p>
-                  <p class="text-[#7a7671] text-sm font-normal leading-normal">$40</p>
-                </div>
-              </div>
+              <?php endforeach; ?>
             </div>
           </div>
           <div class="flex justify-between gap-2 px-4 py-3">
@@ -270,13 +245,15 @@ $conn->close();
           <div class="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-3 p-4">
             <?php foreach ($productos as $producto): ?>
               <div class="flex flex-col gap-3 pb-3">
-                <div
-                  class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-lg"
-                  style='background-image: url("<?php echo htmlspecialchars($producto["image"]); ?>");'></div>
-                <div>
-                  <p class="text-[#151514] text-base font-medium leading-normal"><?php echo htmlspecialchars($producto["name"]); ?></p>
-                  <p class="text-[#7a7671] text-sm font-normal leading-normal">$<?php echo number_format($producto["price"], 2); ?></p>
-                </div>
+                <a href="producto.php?id=<?php echo $producto['id']; ?>" class="flex flex-col gap-3 pb-3 hover:scale-[1.03] transition-transform">
+                  <div
+                    class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-lg"
+                    style='background-image: url("<?php echo htmlspecialchars($producto["image"]); ?>");'></div>
+                  <div>
+                    <p class="text-[#151514] text-base font-medium leading-normal"><?php echo htmlspecialchars($producto["name"]); ?></p>
+                    <p class="text-[#7a7671] text-sm font-normal leading-normal">$<?php echo number_format($producto["price"], 2); ?></p>
+                  </div>
+                </a>
               </div>
             <?php endforeach; ?>
           </div>

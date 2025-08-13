@@ -1,12 +1,26 @@
 <?php
-// Al mostrar un producto
+require_once 'php/conexion.php';
+
+$product_id = $_GET['id'] ?? null;
+$producto = null;
+
+if ($product_id) {
+  $stmt = $conn->prepare("SELECT * FROM productos WHERE id = ?");
+  $stmt->bind_param("i", $product_id);
+  $stmt->execute();
+  $result = $stmt->get_result();
+  $producto = $result->fetch_assoc();
+  $stmt->close();
+}
+
 $user_id = $_SESSION['user_id'] ?? null;
-$product_id = $producto['id'];
-if ($user_id) {
+if ($user_id && $producto) {
   $stmt = $conn->prepare("INSERT INTO user_visits (user_id, product_id, visited_at) VALUES (?, ?, NOW())");
   $stmt->bind_param("ii", $user_id, $product_id);
   $stmt->execute();
+  $stmt->close();
 }
+$conn->close();
 ?>
 
 <html>
@@ -113,23 +127,21 @@ if ($user_id) {
             <div class="w-full gap-1 overflow-hidden bg-white @[480px]:gap-2 aspect-[3/2] rounded-lg grid grid-cols-[2fr_1fr_1fr]">
               <div
                 class="w-full bg-center bg-no-repeat bg-cover aspect-auto rounded-none row-span-2"
-                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD6vMCNw0PUmwcRGaDvUNubqtHXSnejGzRXCaUMIco-PE7-GZsTfYoxDDhZNdkrk2RDx1UtyEfA-37lIGgsKMo6s1M9EP1wa_mpzdcW31HB7FL7Zs_dK7mO2lwlj3dK_YXpQeVk7NRLIsdzRhW7gaApMHsRyCD3jl7jY4aQ2RrRND7AMSXkS9p4pltEQa6XjBbw-3o6NqSJ1YMLzKky2cbGX1F72CVcXY4vWfSffFlMERzNaTp9Psgov6Vp69s0xWlAeW4aD4It4we8");'></div>
-              <div
-                class="w-full bg-center bg-no-repeat bg-cover aspect-auto rounded-none col-span-2"
-                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBm0C1HLeMoWvMPpth5DXDeSqyXDQcVMcit-Zd511YHPd0CbUr2QhQA11P8SkufDaL9ymJzb-M5IsBIYrSgNT2mSaI4jCI3KKSjmRze0TjUUpQsa8XtY9IRiQ4ALiqi-l4lgYWn7_X3oOczEHXjXB5yHI-2sjxoe10GsZU8fAb3Van2PHxBmLbGNUodsXMe1s3HkLTWgd6ElaMFazkOF2ry-xCHkBSbYvKVM2Ve6WBhuEVgMayM8upQLMQRHRxsf2TGXywNeHWiI0-F");'></div>
-              <div
-                class="w-full bg-center bg-no-repeat bg-cover aspect-auto rounded-none"
-                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCSiaNPy64vAmTHtl_5MX0evydo-h2-ETnwG2rG9cBlsKXDk-5x1LM0P7ih9-wW_nTP1ILnjjgrG2DVN_MqYeKIAURAK4oYTuT9nmT_JcbQu4l4f6HUVY2ILfUgsE-IRc-jMtu0pciQSPy2ZpyoZtBL6RNPojRLsCA1hPLngnaGaMtWUxQPhe6ctQkJF-NPbKq4MQGQ6eACueAZS828-bu4JdXPZRHEKZy68b85YS-EdrkIVVqhU-Z2z9-6EbwO1ineuibiH7SzWJjt");'></div>
-              <div
-                class="w-full bg-center bg-no-repeat bg-cover aspect-auto rounded-none"
-                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC4xvFxadLKKTGpZDwTRxa9sSwC_nsFXGb_sY9Uu_xnXboJNurF8xYJub4FxYIFE_1NMRS32ilD_LYsgAtwhENkPm8aw9IrN_FRWG17lmEz-GUkuvRi466Qi0W4pssBTwUW9_o6S1GgslN2yzQXliJfP9VJ7EYsJdSI4AtYmtvC8PW751o7vIMKmeVw9axjxKXrhd-7WA93Yb733_rD3Y9D-gjLXix17Ur2vTavXo5EM65MaBGd17NmLXGIgVbah11qeYzRe7WX9HxC");'></div>
+                style='background-image: url("<?php echo htmlspecialchars($producto["image"]); ?>");'></div>
+              <!-- Si tienes más imágenes, puedes mostrarlas aquí usando $producto['images'] -->
             </div>
           </div>
-          <h1 class="text-[#181411] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 text-left pb-3 pt-5">The Marshall</h1>
-          <p class="text-[#887563] text-sm font-normal leading-normal pb-3 pt-1 px-4">SKU: 123456789</p>
+          <h1 class="text-[#181411] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 text-left pb-3 pt-5">
+            <?php echo htmlspecialchars($producto['name']); ?>
+          </h1>
+          <p class="text-[#7a7671] text-sm font-normal leading-normal">
+            $<?php echo number_format($producto['price'], 2); ?>
+          </p>
+          <p class="text-[#887563] text-sm font-normal leading-normal pb-3 pt-1 px-4">
+            SKU: <?php echo htmlspecialchars($producto['id']); ?>
+          </p>
           <p class="text-[#181411] text-base font-normal leading-normal pb-3 pt-1 px-4">
-            The Marshall is a classic cowboy hat made from high-quality materials. It features a traditional design with a wide brim and a comfortable fit. Perfect for any
-            occasion, this hat adds a touch of Western style to your look.
+            <?php echo htmlspecialchars($producto['description']); ?>
           </p>
           <h3 class="text-[#181411] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">Size</h3>
           <div class="flex flex-wrap gap-3 p-4">
