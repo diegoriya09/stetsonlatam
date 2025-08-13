@@ -20,6 +20,42 @@ if ($user_id && $producto) {
   $stmt->execute();
   $stmt->close();
 }
+
+$sizes = [];
+$colors = [];
+
+if ($product_id) {
+  // Tallas disponibles
+  $stmt = $conn->prepare("
+    SELECT s.id, s.name 
+    FROM product_sizes ps
+    JOIN sizes s ON ps.size_id = s.id
+    WHERE ps.product_id = ?
+  ");
+  $stmt->bind_param("i", $product_id);
+  $stmt->execute();
+  $result = $stmt->get_result();
+  while ($row = $result->fetch_assoc()) {
+    $sizes[] = $row;
+  }
+  $stmt->close();
+
+  // Colores disponibles
+  $stmt = $conn->prepare("
+    SELECT c.id, c.name, c.hex 
+    FROM product_colors pc
+    JOIN colors c ON pc.color_id = c.id
+    WHERE pc.product_id = ?
+  ");
+  $stmt->bind_param("i", $product_id);
+  $stmt->execute();
+  $result = $stmt->get_result();
+  while ($row = $result->fetch_assoc()) {
+    $colors[] = $row;
+  }
+  $stmt->close();
+}
+
 $conn->close();
 ?>
 
@@ -145,26 +181,23 @@ $conn->close();
           </p>
           <h3 class="text-[#181411] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">Size</h3>
           <div class="flex flex-wrap gap-3 p-4">
-            <label
-              class="text-sm font-medium leading-normal flex items-center justify-center rounded-lg border border-[#e5e0dc] px-4 h-11 text-[#181411] has-[:checked]:border-[3px] has-[:checked]:px-3.5 has-[:checked]:border-[#e68019] relative cursor-pointer">
-              S
-              <input type="radio" class="invisible absolute" name="0622a7ea-5c59-4a61-96f8-ca19934508f0" />
-            </label>
-            <label
-              class="text-sm font-medium leading-normal flex items-center justify-center rounded-lg border border-[#e5e0dc] px-4 h-11 text-[#181411] has-[:checked]:border-[3px] has-[:checked]:px-3.5 has-[:checked]:border-[#e68019] relative cursor-pointer">
-              M
-              <input type="radio" class="invisible absolute" name="0622a7ea-5c59-4a61-96f8-ca19934508f0" />
-            </label>
-            <label
-              class="text-sm font-medium leading-normal flex items-center justify-center rounded-lg border border-[#e5e0dc] px-4 h-11 text-[#181411] has-[:checked]:border-[3px] has-[:checked]:px-3.5 has-[:checked]:border-[#e68019] relative cursor-pointer">
-              L
-              <input type="radio" class="invisible absolute" name="0622a7ea-5c59-4a61-96f8-ca19934508f0" />
-            </label>
-            <label
-              class="text-sm font-medium leading-normal flex items-center justify-center rounded-lg border border-[#e5e0dc] px-4 h-11 text-[#181411] has-[:checked]:border-[3px] has-[:checked]:px-3.5 has-[:checked]:border-[#e68019] relative cursor-pointer">
-              XL
-              <input type="radio" class="invisible absolute" name="0622a7ea-5c59-4a61-96f8-ca19934508f0" />
-            </label>
+            <?php foreach ($sizes as $size): ?>
+              <label
+                class="text-sm font-medium leading-normal flex items-center justify-center rounded-lg border border-[#e5e0dc] px-4 h-11 text-[#181411] has-[:checked]:border-[3px] has-[:checked]:px-3.5 has-[:checked]:border-[#e68019] relative cursor-pointer">
+                <?php echo htmlspecialchars($size['name']); ?>
+                <input type="radio" class="invisible absolute" name="size" value="<?php echo $size['id']; ?>" />
+              </label>
+            <?php endforeach; ?>
+          </div>
+          <h3 class="text-[#181411] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">Color</h3>
+          <div class="flex flex-wrap gap-3 p-4">
+            <?php foreach ($colors as $color): ?>
+              <label class="flex items-center gap-2 cursor-pointer">
+                <span class="inline-block w-6 h-6 rounded-full border border-[#e5e0dc]" style="background-color: <?php echo htmlspecialchars($color['hex']); ?>;" title="<?php echo htmlspecialchars($color['name']); ?>"></span>
+                <input type="radio" class="invisible absolute" name="color" value="<?php echo $color['id']; ?>" />
+                <span class="text-sm font-medium leading-normal text-[#181411]"><?php echo htmlspecialchars($color['name']); ?></span>
+              </label>
+            <?php endforeach; ?>
           </div>
           <div class="flex px-4 py-3 justify-start">
             <button
