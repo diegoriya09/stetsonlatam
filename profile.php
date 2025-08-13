@@ -19,7 +19,7 @@
   <div class="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden" style='font-family: "Noto Serif", "Noto Sans", sans-serif;'>
     <div class="layout-container flex h-full grow flex-col">
       <div class="gap-1 px-6 flex flex-1 justify-center py-5">
-        <div class="layout-content-container flex flex-col w-80 sticky top-0 bg-white z-10">
+        <div class="layout-content-container flex flex-col w-80 fixed left-0 top-0 h-full bg-white z-10">
           <div class="flex h-full min-h-[700px] flex-col justify-between bg-white p-4">
             <div class="flex flex-col gap-4">
               <div class="flex items-center gap-3">
@@ -89,7 +89,7 @@
             </div>
           </div>
         </div>
-        <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+        <div class="layout-content-container flex flex-col max-w-[960px] flex-1 ml-80">
           <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f4f2f0] px-10 py-3">
             <div class="flex items-center gap-8">
               <div class="flex items-center gap-4 text-[#181411]">
