@@ -19,14 +19,16 @@
   <div class="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden" style='font-family: "Noto Serif", "Noto Sans", sans-serif;'>
     <div class="layout-container flex h-full grow flex-col">
       <div class="gap-1 px-6 flex flex-1 justify-center py-5">
-        <div class="layout-content-container flex flex-col w-80">
+        <div class="layout-content-container flex flex-col w-80 sticky top-0 bg-white z-10">
           <div class="flex h-full min-h-[700px] flex-col justify-between bg-white p-4">
             <div class="flex flex-col gap-4">
               <div class="flex items-center gap-3">
                 <div
                   class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
                   style='background-image: url("img/logo.webp");'></div>
-                <h1 id="profile-name-hero" class="text-[#181411] text-base font-medium leading-normal"><?php echo $userName ? $userName : '&nbsp;'; ?></h1>
+                <h1 id="profile-name-hero" class="text-[#181411] text-base font-medium leading-normal">
+                  <?php echo $userName ? $userName : '&nbsp;'; ?>
+                </h1>
               </div>
               <div class="flex flex-col gap-2">
                 <div class="flex items-center gap-3 px-3 py-2 rounded-lg bg-[#f4f2f0]">
