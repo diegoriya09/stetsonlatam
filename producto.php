@@ -167,18 +167,22 @@ $conn->close();
               <!-- Si tienes más imágenes, puedes mostrarlas aquí usando $producto['images'] -->
             </div>
           </div>
-          <h1 class="text-[#181411] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 text-left pb-3 pt-5">
-            <?php echo htmlspecialchars($producto['name']); ?>
-          </h1>
-          <p class="text-[#7a7671] text-sm font-normal leading-normal">
-            $<?php echo number_format($producto['price'], 2); ?>
-          </p>
-          <p class="text-[#887563] text-sm font-normal leading-normal pb-3 pt-1 px-4">
-            SKU: <?php echo htmlspecialchars($producto['id']); ?>
-          </p>
-          <p class="text-[#181411] text-base font-normal leading-normal pb-3 pt-1 px-4">
-            <?php echo htmlspecialchars($producto['description']); ?>
-          </p>
+          <div class="px-4 pb-3 pt-5">
+            <h1 class="text-[#181411] text-[22px] font-bold leading-tight tracking-[-0.015em] text-left">
+              <?php echo htmlspecialchars($producto['name']); ?>
+            </h1>
+            <div class="flex items-center gap-4">
+              <p class="text-[#7a7671] text-sm font-normal leading-normal">
+                $<?php echo number_format($producto['price'], 2); ?>
+              </p>
+              <span class="text-[#887563] text-sm font-normal leading-normal">
+                SKU: <?php echo htmlspecialchars($producto['id']); ?>
+              </span>
+            </div>
+            <p class="text-[#181411] text-base font-normal leading-normal pt-2">
+              <?php echo htmlspecialchars($producto['description']); ?>
+            </p>
+          </div>
           <h3 class="text-[#181411] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">Size</h3>
           <div class="flex flex-wrap gap-3 p-4">
             <?php foreach ($sizes as $size): ?>
