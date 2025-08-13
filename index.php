@@ -1,3 +1,29 @@
+<?php
+require_once __DIR__ . '/vendor/autoload.php';
+
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+$token = isset($_SESSION['jwt']) ? $_SESSION['jwt'] : (isset($_COOKIE['jwt']) ? $_COOKIE['jwt'] : null);
+
+$isLogged = false;
+if ($token) {
+
+    try {
+        $secret_key = "StetsonLatam1977"; // Usa tu clave secreta real
+        $decoded = JWT::decode($token, new Key($secret_key, 'HS256'));
+        if (isset($decoded->exp) && $decoded->exp > time()) {
+            $isLogged = true;
+        }
+    } catch (Exception $e) {
+        $isLogged = false;
+    }
+}
+?>
+
 <html>
 
 <head>
@@ -192,12 +218,7 @@
                             </div>
                         </div>
                     </div>
-                    <?php
-                    if (session_status() === PHP_SESSION_NONE) {
-                        session_start();
-                    }
-                    $token = isset($_SESSION['token']) ? $_SESSION['token'] : (isset($_COOKIE['token']) ? $_COOKIE['token'] : null);
-                    if (!$token): ?>
+                    <?php if (!$isLogged): ?>
                         <div class="@container">
                             <div class="flex flex-col justify-end gap-6 px-4 py-10 @[480px]:gap-8 @[480px]:px-10 @[480px]:py-20">
                                 <div class="flex flex-col gap-2 text-center">
