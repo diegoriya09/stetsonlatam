@@ -15,7 +15,7 @@ if ($product_id) {
   $stmt->close();
 }
 
-$user_id = $_SESSION['user_id'] ?? null;
+$user_id = $_SESSION['users_id'] ?? null;
 if ($user_id && $producto) {
   $stmt = $conn->prepare("INSERT INTO user_visits (user_id, product_id, visited_at) VALUES (?, ?, NOW())");
   $stmt->bind_param("ii", $user_id, $product_id);
