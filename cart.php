@@ -8,11 +8,13 @@ $cart_items = [];
 if ($user_id) {
     // Consulta el carrito desde la base de datos
     $stmt = $conn->prepare("
-    SELECT c.*, p.name, p.image, p.price, s.name as size_name, co.name as color_name, co.hex
+    SELECT c.*, p.name, p.image, p.price, s.name as size_name, co.name as color_name, co.hex, pc.color_id, ps.size_id
     FROM cart c
     JOIN productos p ON c.producto_id = p.id
-    LEFT JOIN sizes s ON c.size_id = s.id
-    LEFT JOIN colors co ON c.color_id = co.id
+    LEFT JOIN product_colors pc ON c.producto_id = pc.product_id
+    LEFT JOIN product_sizes ps ON c.producto_id = ps.product_id
+    LEFT JOIN colors co ON pc.color_id = co.id
+    LEFT JOIN sizes s ON ps.size_id = s.id
     WHERE c.users_id = ?
   ");
     $stmt->bind_param("i", $user_id);
