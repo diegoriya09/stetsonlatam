@@ -171,14 +171,12 @@ $conn->close();
             <h1 class="text-[#181411] text-[22px] font-bold leading-tight tracking-[-0.015em] text-left">
               <?php echo htmlspecialchars($producto['name']); ?>
             </h1>
-            <div class="flex items-center gap-4">
-              <p class="text-[#7a7671] text-sm font-normal leading-normal">
-                $<?php echo number_format($producto['price'], 2); ?>
-              </p>
-              <span class="text-[#887563] text-sm font-normal leading-normal">
-                SKU: <?php echo htmlspecialchars($producto['id']); ?>
-              </span>
-            </div>
+            <p class="text-[#7a7671] text-sm font-normal leading-normal">
+              $<?php echo number_format($producto['price'], 2); ?>
+            </p>
+            <span class="text-[#887563] text-sm font-normal leading-normal">
+              SKU: <?php echo htmlspecialchars($producto['id']); ?>
+            </span>
             <p class="text-[#181411] text-base font-normal leading-normal pt-2">
               <?php echo htmlspecialchars($producto['description']); ?>
             </p>
