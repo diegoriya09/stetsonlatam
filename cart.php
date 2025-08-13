@@ -132,18 +132,18 @@ $conn->close();
                             <table class="flex-1">
                                 <thead>
                                     <tr class="bg-white">
-                                        <th class="table-248e4061-a95c-4fec-bd43-b83b4e783d1b-column-56 px-4 py-3 text-left text-[#181411] w-14 text-sm font-medium leading-normal">Product</th>
-                                        <th class="table-248e4061-a95c-4fec-bd43-b83b4e783d1b-column-176 px-4 py-3 text-left text-[#181411] w-[400px] text-sm font-medium leading-normal">Price</th>
-                                        <th class="table-248e4061-a95c-4fec-bd43-b83b4e783d1b-column-296 px-4 py-3 text-left text-[#181411] w-[400px] text-sm font-medium leading-normal">
-                                            Quantity
+                                        <th class="px-4 py-3 text-left text-[#181411] w-14 text-sm font-medium leading-normal">Product
                                         </th>
-                                        <th class="table-248e4061-a95c-4fec-bd43-b83b4e783d1b-column-296 px-4 py-3 text-left text-[#181411] w-[400px] text-sm font-medium leading-normal">
-                                            Size
+                                        <th class="px-4 py-3 text-left text-[#181411] w-[400px] text-sm font-medium leading-normal">Price
                                         </th>
-                                        <th class="table-248e4061-a95c-4fec-bd43-b83b4e783d1b-column-296 px-4 py-3 text-left text-[#181411] w-[400px] text-sm font-medium leading-normal">
-                                            Color
+                                        <th class="px-4 py-3 text-left text-[#181411] w-[400px] text-sm font-medium leading-normal">Quantity
                                         </th>
-                                        <th class="table-248e4061-a95c-4fec-bd43-b83b4e783d1b-column-416 px-4 py-3 text-left text-[#181411] w-[400px] text-sm font-medium leading-normal">Total</th>
+                                        <th class="px-4 py-3 text-left text-[#181411] w-[400px] text-sm font-medium leading-normal">Size
+                                        </th>
+                                        <th class="px-4 py-3 text-left text-[#181411] w-[400px] text-sm font-medium leading-normal">Color
+                                        </th>
+                                        <th class="px-4 py-3 text-left text-[#181411] w-[400px] text-sm font-medium leading-normal">Total
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -151,31 +151,6 @@ $conn->close();
                                 </tbody>
                             </table>
                         </div>
-                        <style>
-                            @container(max-width:56px) {
-                                .table-248e4061-a95c-4fec-bd43-b83b4e783d1b-column-56 {
-                                    display: none;
-                                }
-                            }
-
-                            @container(max-width:176px) {
-                                .table-248e4061-a95c-4fec-bd43-b83b4e783d1b-column-176 {
-                                    display: none;
-                                }
-                            }
-
-                            @container(max-width:296px) {
-                                .table-248e4061-a95c-4fec-bd43-b83b4e783d1b-column-296 {
-                                    display: none;
-                                }
-                            }
-
-                            @container(max-width:416px) {
-                                .table-248e4061-a95c-4fec-bd43-b83b4e783d1b-column-416 {
-                                    display: none;
-                                }
-                            }
-                        </style>
                     </div>
                     <div class="flex justify-stretch">
                         <div class="flex flex-1 gap-3 flex-wrap px-4 py-3 justify-end">

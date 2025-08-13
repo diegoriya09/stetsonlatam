@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 function setupAddToCartButtons() {
-  document.querySelectorAll('.add-to-cart-btn.flex.min-w-[84px].max-w-[480px].cursor-pointer.items-center.justify-center.overflow-hidden.rounded-lg.h-10.px-4.bg-[#e68019].text-[#181411].text-sm.font-bold.leading-normal.tracking-[0.015em]').forEach(button => {
+  document.querySelectorAll('.add-to-cart-btn').forEach(button => {
     button.addEventListener('click', handleAddToCart);
   });
 }
