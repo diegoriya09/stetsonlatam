@@ -4,6 +4,8 @@ require_once 'php/conexion.php';
 $product_id = $_GET['id'] ?? null;
 $producto = null;
 
+$from = $_GET['from'] ?? 'hats';
+
 if ($product_id) {
   $stmt = $conn->prepare("SELECT * FROM productos WHERE id = ?");
   $stmt->bind_param("i", $product_id);
@@ -155,7 +157,11 @@ $conn->close();
         <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
           <div class="flex flex-wrap gap-2 p-4">
             <span class="text-[#887563] text-base font-medium leading-normal">/</span>
-            <a class="text-[#887563] text-base font-medium leading-normal" href="hats.php">Hats</a>
+            <?php if ($from === 'caps'): ?>
+              <a class="text-[#887563] text-base font-medium leading-normal" href="caps.php">Caps</a>
+            <?php else: ?>
+              <a class="text-[#887563] text-base font-medium leading-normal" href="hats.php">Hats</a>
+            <?php endif; ?>
             <span class="text-[#887563] text-base font-medium leading-normal">/</span>
             <span class="text-[#181411] text-base font-medium leading-normal"><?php echo htmlspecialchars($producto['name']); ?></span>
           </div>

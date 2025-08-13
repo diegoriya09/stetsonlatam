@@ -245,7 +245,7 @@ $conn->close();
           <div class="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-3 p-4">
             <?php foreach ($productos as $producto): ?>
               <div class="flex flex-col gap-3 pb-3">
-                <a href="producto.php?id=<?php echo $producto['id']; ?>" class="flex flex-col gap-3 pb-3 hover:scale-[1.03] transition-transform">
+                <a href="producto.php?id=<?php echo $producto['id']; ?>&from=hats" class="flex flex-col gap-3 pb-3 hover:scale-[1.03] transition-transform">
                   <div
                     class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-lg"
                     style='background-image: url("<?php echo htmlspecialchars($producto["image"]); ?>");'></div>
