@@ -73,7 +73,11 @@ try {
 
     $stmt->close();
     $conn->close();
+
+    echo json_encode($carrito);
+    exit;
 } catch (Exception $e) {
     http_response_code(500);
     echo json_encode(['success' => false, 'message' => 'Error del servidor', 'error' => $e->getMessage()]);
+    exit;
 }
