@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
     .then((data) => {
       if (data.logged_in) {
         // ✅ Llama al backend para obtener las órdenes del usuario
-        fetch("php/order/get_cart.php", {
+        fetch("php/cart/get_cart.php", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
