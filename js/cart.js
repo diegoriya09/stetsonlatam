@@ -267,7 +267,7 @@ document.addEventListener('click', function (e) {
 // Función para mostrar el carrito
 function renderCart(carts) {
   const tableBody = document.querySelector("tbody");
-  tableBody.innerHTML = ""; // Vaciar la tabla
+  tableBody.innerHTML = ""; // Vaciar la tabla antes de renderizar
 
   carts.forEach((cart) => {
     const {
@@ -284,36 +284,56 @@ function renderCart(carts) {
     } = cart;
 
     const row = document.createElement("tr");
-    row.classList.add("border-t", "border-t-[#e5e0dc]");    
+    row.classList.add("border-t", "border-t-[#e5e0dc]");
 
     row.innerHTML = `
-      <td class="h-[72px] px-4 py-2 w-[120px]">
-        <img src="${image}" alt="${name}" class="w-[60px] h-[60px] object-cover rounded" loading="lazy">
+      <!-- Image -->
+      <td class="h-[72px] px-4 py-2 w-[150px]">
+        <img src="${image}" alt="${name}" 
+             class="w-[60px] h-[60px] object-cover rounded" loading="lazy">
       </td>
+
+      <!-- Product -->
       <td class="h-[72px] px-4 py-2 text-[#181411] text-sm font-normal">
         ${name}
       </td>
+
+      <!-- Price -->
       <td class="h-[72px] px-4 py-2 text-[#887563] text-sm font-normal">
         $${price.toLocaleString()}
       </td>
+
+      <!-- Quantity -->
       <td class="h-[72px] px-4 py-2 text-[#887563] text-sm font-normal">
         <div class="flex items-center">
-          <button class="qty-btn minus" data-id="${id}" data-color-id="${color_id}" data-size-id="${size_id}">−</button>
-          <input type="text" class="cantidad-input w-10 text-center mx-1" value="${quantity}" readonly
-            data-id="${id}" data-color-id="${color_id}" data-size-id="${size_id}" />
-          <button class="qty-btn plus" data-id="${id}" data-color-id="${color_id}" data-size-id="${size_id}">+</button>
+          <button class="qty-btn minus border border-gray-300 px-2" 
+                  data-id="${id}" data-color-id="${color_id}" data-size-id="${size_id}">−</button>
+          <input type="text" class="cantidad-input w-10 text-center mx-1 border border-gray-300 rounded" 
+                 value="${quantity}" readonly
+                 data-id="${id}" data-color-id="${color_id}" data-size-id="${size_id}" />
+          <button class="qty-btn plus border border-gray-300 px-2" 
+                  data-id="${id}" data-color-id="${color_id}" data-size-id="${size_id}">+</button>
         </div>
       </td>
+
+      <!-- Size -->
       <td class="h-[72px] px-4 py-2 text-[#887563] text-sm font-normal">
         ${size_name || "-"}
       </td>
+
+      <!-- Color -->
       <td class="h-[72px] px-4 py-2 text-[#887563] text-sm font-normal">
         ${color_name ? `${color_name} 
-          <span style="display:inline-block;width:16px;height:16px;border-radius:50%;background:${hex};border:1px solid #000;margin-left:5px;vertical-align:middle;"></span>` : "-"}
+          <span style="display:inline-block;width:16px;height:16px;border-radius:50%;background:${hex};
+          border:1px solid #000;margin-left:5px;vertical-align:middle;"></span>` : "-"}
       </td>
+
+      <!-- Total -->
       <td class="h-[72px] px-4 py-2 text-[#887563] text-sm font-normal">
         $${(quantity * price).toLocaleString()}
       </td>
+
+      <!-- Remove -->
       <td class="h-[72px] px-4 py-2 text-center">
         <a class="remove-btn text-red-600 cursor-pointer"
            data-id="${id}"
