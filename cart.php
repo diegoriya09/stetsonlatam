@@ -168,7 +168,7 @@ $conn->close();
                     </div>
                     <div class="flex justify-end px-4 py-3 border-t border-[#e5e0dc]">
                         <span class="text-[#181411] text-base font-bold leading-normal tracking-[0.015em]">
-                            Total: <span id="total-carrito">$0</span>
+                            <span id="total-carrito">$0</span>
                         </span>
                     </div>
                     <div class="flex justify-stretch">
