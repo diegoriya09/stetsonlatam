@@ -173,48 +173,70 @@ $conn->close();
               <!-- Si tienes más imágenes, puedes mostrarlas aquí usando $producto['images'] -->
             </div>
           </div>
-          <div class="px-4 pb-3 pt-5">
-            <h1 data-name="<?php echo htmlspecialchars($producto['name']); ?>" class="text-[#181411] text-[22px] font-bold leading-tight tracking-[-0.015em] text-left">
-              <?php echo htmlspecialchars($producto['name']); ?>
-            </h1>
-            <p data-price="<?php echo htmlspecialchars($producto['price']); ?>" class="text-[#7a7671] text-sm font-normal leading-normal">
-              $<?php echo number_format($producto['price'], 2); ?>
-            </p>
-            <span class="text-[#887563] text-sm font-normal leading-normal">
-              SKU: <?php echo htmlspecialchars($producto['sku']); ?>
-            </span>
-            <p data-description="<?php echo htmlspecialchars($producto['description']); ?>" class="text-[#181411] text-base font-normal leading-normal pt-2">
-              <?php echo htmlspecialchars($producto['description']); ?>
-            </p>
-          </div>
-          <h3 class="text-[#181411] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">Size</h3>
-          <div class="flex flex-wrap gap-3 p-4">
-            <?php foreach ($sizes as $size): ?>
-              <label
-                class="text-sm font-medium leading-normal flex items-center justify-center rounded-lg border border-[#e5e0dc] px-4 h-11 text-[#181411] has-[:checked]:border-[3px] has-[:checked]:px-3.5 has-[:checked]:border-[#e68019] relative cursor-pointer">
-                <?php echo htmlspecialchars($size['name']); ?>
-                <button type="button" class="size-btn" data-size-id="<?= $size['id'] ?>" data-size="<?= $size['name'] ?>" title="<?= $size['name'] ?>"></button>
-              </label>
-            <?php endforeach; ?>
-          </div>
-          <h3 class="text-[#181411] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">Color</h3>
-          <div class="flex flex-wrap gap-3 p-4">
-            <?php foreach ($colors as $color): ?>
-              <label class="flex items-center gap-2 cursor-pointer">
-                <span class="inline-block w-6 h-6 rounded-full border border-[#e5e0dc]" style="background-color: <?php echo htmlspecialchars($color['hex']); ?>;" title="<?php echo htmlspecialchars($color['name']); ?>"></span>
-                <button type="button" class="color-btn" data-color-id="<?= $color['id'] ?>" data-color="<?= $color['name'] ?>" style="--color: <?= $color['hex'] ?>;" title="<?= $color['name'] ?>"></button>
-              </label>
-            <?php endforeach; ?>
-          </div>
-          <div class="flex px-4 py-3 justify-start">
-            <button
-              class="add-to-cart-btn"
-              data-id="<?= $producto['id'] ?>"
-              data-name="<?= htmlspecialchars($producto['name']) ?>"
-              data-price="<?= $producto['price'] ?>"
-              data-image="<?= htmlspecialchars($producto['image']) ?>">
-              Add to Cart
-            </button>
+          <div class="info-producto">
+            <div class="px-4 pb-3 pt-5">
+              <h1 data-name="<?php echo htmlspecialchars($producto['name']); ?>" class="text-[#181411] text-[22px] font-bold leading-tight tracking-[-0.015em] text-left">
+                <?php echo htmlspecialchars($producto['name']); ?>
+              </h1>
+              <p data-price="<?php echo htmlspecialchars($producto['price']); ?>" class="text-[#7a7671] text-sm font-normal leading-normal">
+                $<?php echo number_format($producto['price'], 2); ?>
+              </p>
+              <span class="text-[#887563] text-sm font-normal leading-normal">
+                SKU: <?php echo htmlspecialchars($producto['sku']); ?>
+              </span>
+              <p data-description="<?php echo htmlspecialchars($producto['description']); ?>" class="text-[#181411] text-base font-normal leading-normal pt-2">
+                <?php echo htmlspecialchars($producto['description']); ?>
+              </p>
+            </div>
+            <h3 class="text-[#181411] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">Size</h3>
+            <div class="flex flex-wrap gap-3 p-4">
+              <?php foreach ($sizes as $size): ?>
+                <label
+                  class="text-sm font-medium leading-normal flex items-center justify-center rounded-lg border border-[#e5e0dc] px-4 h-11 text-[#181411] has-[:checked]:border-[3px] has-[:checked]:px-3.5 has-[:checked]:border-[#e68019] relative cursor-pointer">
+                  <?php echo htmlspecialchars($size['name']); ?>
+                  <button type="button" class="size-btn" data-size-id="<?= $size['id'] ?>" data-size="<?= $size['name'] ?>" title="<?= $size['name'] ?>"></button>
+                </label>
+              <?php endforeach; ?>
+            </div>
+            <h3 class="text-[#181411] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">Color</h3>
+            <div class="flex flex-wrap gap-3 p-4">
+              <?php foreach ($colors as $color): ?>
+                <label class="flex items-center gap-2 cursor-pointer">
+                  <span class="inline-block w-6 h-6 rounded-full border border-[#e5e0dc]" style="background-color: <?php echo htmlspecialchars($color['hex']); ?>;" title="<?php echo htmlspecialchars($color['name']); ?>"></span>
+                  <button type="button" class="color-btn" data-color-id="<?= $color['id'] ?>" data-color="<?= $color['name'] ?>" style="--color: <?= $color['hex'] ?>;" title="<?= $color['name'] ?>"></button>
+                </label>
+              <?php endforeach; ?>
+            </div>
+            <div class="flex items-center gap-2 px-4 py-3">
+              <button type="button" class="qty-btn minus border border-gray-300 px-3 rounded">−</button>
+              <input type="text" id="cantidad" value="1"
+                class="w-12 text-center border border-gray-300 rounded" readonly>
+              <button type="button" class="qty-btn plus border border-gray-300 px-3 rounded">+</button>
+            </div>
+            <script>
+              // Lógica + y − adaptada
+              document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('plus')) {
+                  let input = e.target.closest('.info-producto').querySelector('#cantidad');
+                  input.value = parseInt(input.value, 10) + 1;
+                }
+                if (e.target.classList.contains('minus')) {
+                  let input = e.target.closest('.info-producto').querySelector('#cantidad');
+                  let value = parseInt(input.value, 10);
+                  if (value > 1) input.value = value - 1;
+                }
+              });
+            </script>
+            <div class="flex px-4 py-3 justify-start">
+              <button
+                class="add-to-cart-btn"
+                data-id="<?= $producto['id'] ?>"
+                data-name="<?= htmlspecialchars($producto['name']) ?>"
+                data-price="<?= $producto['price'] ?>"
+                data-image="<?= htmlspecialchars($producto['image']) ?>">
+                Add to Cart
+              </button>
+            </div>
           </div>
           <h3 class="text-[#181411] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">Customer Reviews</h3>
           <div class="flex flex-wrap gap-x-8 gap-y-6 p-4">
