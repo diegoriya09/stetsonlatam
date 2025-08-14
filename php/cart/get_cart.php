@@ -43,34 +43,6 @@ $jwt = ltrim($jwt);
 $secret_key = "StetsonLatam1977";
 
 try {
-    // Ajustar la consulta para usar color_id y size_id
-
-
-
-    $stmt = $conn->prepare($sql);
-    if (!$stmt) {
-        throw new Exception("Error al preparar la consulta: " . $conn->error);
-    }
-
-    $stmt->bind_param("i", $user_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    $carrito = [];
-    while ($row = $result->fetch_assoc()) {
-        $carrito[] = $row;
-    }
-
-    echo json_encode($carrito);
-
-    $stmt->close();
-    $conn->close();
-} catch (Exception $e) {
-    http_response_code(500);
-    echo json_encode(['success' => false, 'message' => 'Error del servidor', 'error' => $e->getMessage()]);
-}
-
-try {
     $decoded = JWT::decode($jwt, new Key($secret_key, 'HS256'));
     $user_id = $decoded->data->id;
 
