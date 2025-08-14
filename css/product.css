@@ -1,4 +1,4 @@
-.add-to-cart-btn {
+.add-to-cart-btn button {
   flex: min-w-(84px) max-w-(480px);
   cursor: pointer;
   justify-items: center;
