@@ -193,7 +193,7 @@ $conn->close();
               <label
                 class="text-sm font-medium leading-normal flex items-center justify-center rounded-lg border border-[#e5e0dc] px-4 h-11 text-[#181411] has-[:checked]:border-[3px] has-[:checked]:px-3.5 has-[:checked]:border-[#e68019] relative cursor-pointer">
                 <?php echo htmlspecialchars($size['name']); ?>
-                <button type="button" class="size-btn invisible absolute" data-size-id="<?= $size['id'] ?>" data-size="<?= $size['name'] ?>" title="<?= $size['name'] ?>"></button>
+                <button type="button" class="size-btn" data-size-id="<?= $size['id'] ?>" data-size="<?= $size['name'] ?>" title="<?= $size['name'] ?>"></button>
               </label>
             <?php endforeach; ?>
           </div>
@@ -202,13 +202,13 @@ $conn->close();
             <?php foreach ($colors as $color): ?>
               <label class="flex items-center gap-2 cursor-pointer">
                 <span class="inline-block w-6 h-6 rounded-full border border-[#e5e0dc]" style="background-color: <?php echo htmlspecialchars($color['hex']); ?>;" title="<?php echo htmlspecialchars($color['name']); ?>"></span>
-                <button type="button" class="color-btn invisible absolute" data-color-id="<?= $color['id'] ?>" data-color="<?= $color['name'] ?>" style="--color: <?= $color['hex'] ?>;" title="<?= $color['name'] ?>"></button>
+                <button type="button" class="color-btn" data-color-id="<?= $color['id'] ?>" data-color="<?= $color['name'] ?>" style="--color: <?= $color['hex'] ?>;" title="<?= $color['name'] ?>"></button>
               </label>
             <?php endforeach; ?>
           </div>
           <div class="flex px-4 py-3 justify-start">
             <button
-              class="add-to-cart-btn flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#e68019] text-[#181411] text-sm font-bold leading-normal tracking-[0.015em]"
+              class="add-to-cart-btn"
               data-id="<?= $producto['id'] ?>"
               data-name="<?= htmlspecialchars($producto['name']) ?>"
               data-price="<?= $producto['price'] ?>"
