@@ -193,7 +193,7 @@ $conn->close();
               <label
                 class="text-sm font-medium leading-normal flex items-center justify-center rounded-lg border border-[#e5e0dc] px-4 h-11 text-[#181411] has-[:checked]:border-[3px] has-[:checked]:px-3.5 has-[:checked]:border-[#e68019] relative cursor-pointer">
                 <?php echo htmlspecialchars($size['name']); ?>
-                <input type="radio" class="invisible absolute" name="size" value="<?php echo $size['id']; ?>" />
+                <button type="button" class="size-btn invisible absolute" data-size="<?= $size['name'] ?>" title="<?= $size['name'] ?>"></button>
               </label>
             <?php endforeach; ?>
           </div>
@@ -202,18 +202,17 @@ $conn->close();
             <?php foreach ($colors as $color): ?>
               <label class="flex items-center gap-2 cursor-pointer">
                 <span class="inline-block w-6 h-6 rounded-full border border-[#e5e0dc]" style="background-color: <?php echo htmlspecialchars($color['hex']); ?>;" title="<?php echo htmlspecialchars($color['name']); ?>"></span>
-                <input type="radio" class="invisible absolute" name="color" value="<?php echo $color['id']; ?>" />
-                <span class="text-sm font-medium leading-normal text-[#181411]"><?php echo htmlspecialchars($color['name']); ?></span>
+                <button type="button" class="color-btn invisible absolute" data-color="<?= $color['name'] ?>" style="--color: <?= $color['hex'] ?>;" title="<?= $color['name'] ?>"></button>
               </label>
             <?php endforeach; ?>
           </div>
           <div class="flex px-4 py-3 justify-start">
             <button
               class="add-to-cart-btn flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#e68019] text-[#181411] text-sm font-bold leading-normal tracking-[0.015em]"
-              data-id="id"
-              data-name="name"
-              data-price="price"
-              data-image="image">
+              data-id="<?= $producto['id'] ?>"
+              data-name="<?= htmlspecialchars($producto['name']) ?>"
+              data-price="<?= $producto['price'] ?>"
+              data-image="<?= htmlspecialchars($producto['image']) ?>">
               <span class="truncate">Add to Cart</span>
             </button>
           </div>
@@ -465,19 +464,53 @@ $conn->close();
   <script src="js/auth.js?v=<?php echo time(); ?>"></script>
   <script src="js/cart.js?v=<?php echo time(); ?>"></script>
   <script>
-    document.querySelectorAll('input[name="size"]').forEach(input => {
-      input.addEventListener('change', function() {
-        const btn = document.querySelector('.add-to-cart-btn');
-        btn.dataset.sizeId = this.value;
-        btn.dataset.sizeName = this.parentElement.textContent.trim();
+    // Selección de color y talla
+    document.addEventListener('DOMContentLoaded', function() {
+
+      let selectedColor = null;
+      let selectedSize = null;
+      const addToCartBtn = document.querySelector('.add-to-cart-btn');
+
+      // Color
+      document.querySelectorAll('.color-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('selected'));
+          this.classList.add('selected');
+          selectedColor = this.getAttribute('data-color');
+          if (addToCartBtn) addToCartBtn.dataset.color = selectedColor || '';
+        });
       });
-    });
-    document.querySelectorAll('input[name="color"]').forEach(input => {
-      input.addEventListener('change', function() {
-        const btn = document.querySelector('.add-to-cart-btn');
-        btn.dataset.colorId = this.value;
-        btn.dataset.colorName = this.parentElement.querySelector('span.text-sm').textContent.trim();
+      // Talla
+      document.querySelectorAll('.size-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'));
+          this.classList.add('selected');
+          selectedSize = this.getAttribute('data-size');
+          if (addToCartBtn) addToCartBtn.dataset.size = selectedSize || '';
+        });
       });
+
+      // Interceptar el add-to-cart
+      if (addToCartBtn) {
+        addToCartBtn.addEventListener('click', function(e) {
+          if (document.querySelectorAll('.color-btn').length && !selectedColor) {
+            Swal.fire({
+              icon: 'warning',
+              text: 'Please select a color.'
+            });
+            e.preventDefault();
+            return;
+          }
+          if (document.querySelectorAll('.size-btn').length && !selectedSize) {
+            Swal.fire({
+              icon: 'warning',
+              text: 'Please select a size.'
+            });
+            e.preventDefault();
+            return;
+          }
+        });
+      }
     });
   </script>
 </body>
