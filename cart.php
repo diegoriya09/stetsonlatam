@@ -134,17 +134,29 @@ $conn->close();
                             <table class="flex-1">
                                 <thead>
                                     <tr class="bg-white">
-                                        <th class="px-4 py-3 text-left text-[#181411] w-[400px] text-sm font-medium leading-normal">Product
+                                        <th class="px-4 py-3 text-left text-[#181411] w-[150px] text-sm font-medium leading-normal">
+                                            Image
                                         </th>
-                                        <th class="px-4 py-3 text-left text-[#181411] w-[400px] text-sm font-medium leading-normal">Price
+                                        <th class="px-4 py-3 text-left text-[#181411] w-[300px] text-sm font-medium leading-normal">
+                                            Product
                                         </th>
-                                        <th class="px-4 py-3 text-left text-[#181411] w-[400px] text-sm font-medium leading-normal">Quantity
+                                        <th class="px-4 py-3 text-left text-[#181411] w-[100px] text-sm font-medium leading-normal">
+                                            Price
                                         </th>
-                                        <th class="px-4 py-3 text-left text-[#181411] w-[400px] text-sm font-medium leading-normal">Size
+                                        <th class="px-4 py-3 text-left text-[#181411] w-[150px] text-sm font-medium leading-normal">
+                                            Quantity
                                         </th>
-                                        <th class="px-4 py-3 text-left text-[#181411] w-[400px] text-sm font-medium leading-normal">Color
+                                        <th class="px-4 py-3 text-left text-[#181411] w-[100px] text-sm font-medium leading-normal">
+                                            Size
                                         </th>
-                                        <th class="px-4 py-3 text-left text-[#181411] w-[400px] text-sm font-medium leading-normal">Total
+                                        <th class="px-4 py-3 text-left text-[#181411] w-[150px] text-sm font-medium leading-normal">
+                                            Color
+                                        </th>
+                                        <th class="px-4 py-3 text-left text-[#181411] w-[100px] text-sm font-medium leading-normal">
+                                            Total
+                                        </th>
+                                        <th class="px-4 py-3 text-center text-[#181411] w-[50px] text-sm font-medium leading-normal">
+                                            Remove
                                         </th>
                                     </tr>
                                 </thead>
