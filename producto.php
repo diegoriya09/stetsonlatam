@@ -193,7 +193,7 @@ $conn->close();
               <label
                 class="text-sm font-medium leading-normal flex items-center justify-center rounded-lg border border-[#e5e0dc] px-4 h-11 text-[#181411] has-[:checked]:border-[3px] has-[:checked]:px-3.5 has-[:checked]:border-[#e68019] relative cursor-pointer">
                 <?php echo htmlspecialchars($size['name']); ?>
-                <button type="button" class="size-btn invisible absolute" data-size="<?= $size['name'] ?>" title="<?= $size['name'] ?>"></button>
+                <button type="button" class="size-btn invisible absolute" data-size-id="<?= $size['id'] ?>" data-size="<?= $size['name'] ?>" title="<?= $size['name'] ?>"></button>
               </label>
             <?php endforeach; ?>
           </div>
@@ -202,7 +202,7 @@ $conn->close();
             <?php foreach ($colors as $color): ?>
               <label class="flex items-center gap-2 cursor-pointer">
                 <span class="inline-block w-6 h-6 rounded-full border border-[#e5e0dc]" style="background-color: <?php echo htmlspecialchars($color['hex']); ?>;" title="<?php echo htmlspecialchars($color['name']); ?>"></span>
-                <button type="button" class="color-btn invisible absolute" data-color="<?= $color['name'] ?>" style="--color: <?= $color['hex'] ?>;" title="<?= $color['name'] ?>"></button>
+                <button type="button" class="color-btn invisible absolute" data-color-id="<?= $color['id'] ?>" data-color="<?= $color['name'] ?>" style="--color: <?= $color['hex'] ?>;" title="<?= $color['name'] ?>"></button>
               </label>
             <?php endforeach; ?>
           </div>
@@ -464,33 +464,51 @@ $conn->close();
   <script src="js/auth.js?v=<?php echo time(); ?>"></script>
   <script src="js/cart.js?v=<?php echo time(); ?>"></script>
   <script>
-    // Selección de color y talla
     document.addEventListener('DOMContentLoaded', function() {
-
       let selectedColor = null;
+      let selectedColorName = null;
+      let selectedHex = null;
       let selectedSize = null;
+      let selectedSizeName = null;
+      let selectedColorId = null;
+      let selectedSizeId = null;
+
       const addToCartBtn = document.querySelector('.add-to-cart-btn');
 
-      // Color
+      // Selección de color
       document.querySelectorAll('.color-btn').forEach(btn => {
         btn.addEventListener('click', function() {
           document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('selected'));
           this.classList.add('selected');
-          selectedColor = this.getAttribute('data-color');
-          if (addToCartBtn) addToCartBtn.dataset.color = selectedColor || '';
+          selectedColor = this.getAttribute('data-color-id');
+          selectedColorName = this.getAttribute('data-color');
+          selectedHex = getComputedStyle(this).getPropertyValue('--color');
+
+          // Guardar en el botón
+          if (addToCartBtn) {
+            addToCartBtn.dataset.colorId = selectedColor;
+            addToCartBtn.dataset.colorName = selectedColorName;
+            addToCartBtn.dataset.hex = selectedHex;
+          }
         });
       });
-      // Talla
+
+      // Selección de talla
       document.querySelectorAll('.size-btn').forEach(btn => {
         btn.addEventListener('click', function() {
           document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'));
           this.classList.add('selected');
-          selectedSize = this.getAttribute('data-size');
-          if (addToCartBtn) addToCartBtn.dataset.size = selectedSize || '';
+          selectedSize = this.getAttribute('data-size-id');
+          selectedSizeName = this.getAttribute('data-size');
+
+          if (addToCartBtn) {
+            addToCartBtn.dataset.sizeId = selectedSize;
+            addToCartBtn.dataset.sizeName = selectedSizeName;
+          }
         });
       });
 
-      // Interceptar el add-to-cart
+      // Validación antes de agregar
       if (addToCartBtn) {
         addToCartBtn.addEventListener('click', function(e) {
           if (document.querySelectorAll('.color-btn').length && !selectedColor) {
