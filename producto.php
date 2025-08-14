@@ -213,7 +213,7 @@ $conn->close();
               data-name="<?= htmlspecialchars($producto['name']) ?>"
               data-price="<?= $producto['price'] ?>"
               data-image="<?= htmlspecialchars($producto['image']) ?>">
-              <span class="truncate">Add to Cart</span>
+              Add to Cart
             </button>
           </div>
           <h3 class="text-[#181411] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">Customer Reviews</h3>
