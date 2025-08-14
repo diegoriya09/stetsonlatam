@@ -183,11 +183,8 @@ function handleAddToCart(e) {
 
 
 function loadCart(isLoggedIn) {
-  const carritoItems = document.getElementById('carrito-items');
   const totalCarrito = document.getElementById('total-carrito');
   let total = 0;
-
-  carritoItems.innerHTML = ''; // Limpia el contenido del carrito antes de renderizar
 
   if (isLoggedIn) {
     const jwt = localStorage.getItem("jwt");
@@ -198,21 +195,24 @@ function loadCart(isLoggedIn) {
     })
       .then(response => response.json())
       .then(carrito => {
-        carrito.forEach(p => {
-          total += p.price * p.quantity;
-          carritoItems.innerHTML += renderItem(p);
-        });
+        // Renderizamos la tabla
+        renderCart(carrito);
+
+        // Calculamos el total
+        total = carrito.reduce((acc, p) => acc + (p.price * p.quantity), 0);
         totalCarrito.textContent = `Total: $${total.toLocaleString()}`;
       });
   } else {
     const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-    carrito.forEach(p => {
-      total += p.price * p.quantity;
-      carritoItems.innerHTML += renderItem(p); // Renderiza cada producto
-    });
+
+    // Renderizamos la tabla
+    renderCart(carrito);
+
+    // Calculamos el total
+    total = carrito.reduce((acc, p) => acc + (p.price * p.quantity), 0);
     totalCarrito.textContent = `Total: $${total.toLocaleString()}`;
   }
-}
+} 
 
 document.addEventListener('click', function (e) {
   const removeBtn = e.target.closest('.remove-btn');
