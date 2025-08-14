@@ -212,7 +212,7 @@ function loadCart(isLoggedIn) {
     total = carrito.reduce((acc, p) => acc + (p.price * p.quantity), 0);
     totalCarrito.textContent = `Total: $${total.toLocaleString()}`;
   }
-} 
+}
 
 document.addEventListener('click', function (e) {
   const removeBtn = e.target.closest('.remove-btn');
@@ -266,8 +266,17 @@ document.addEventListener('click', function (e) {
 
 // Función para mostrar el carrito
 function renderCart(carts) {
-  const tableBody = document.querySelector("tbody");
+  const tableBody = document.getElementById("cart-table-body");
   tableBody.innerHTML = ""; // Vaciar la tabla antes de renderizar
+
+  if (!carts.length) {
+    tableBody.innerHTML = `
+    <tr>
+      <td colspan="8" class="text-center py-4 text-[#887563]">Your cart is empty</td>
+    </tr>
+  `;
+    return;
+  }
 
   carts.forEach((cart) => {
     const {

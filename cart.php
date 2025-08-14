@@ -160,7 +160,7 @@ $conn->close();
                                         </th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="cart-table-body">
                                     <!-- JavaScript will dynamically populate this section -->
                                 </tbody>
                             </table>
