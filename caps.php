@@ -71,22 +71,36 @@ while ($row = $result->fetch_assoc()) {
 }
 
 //productos más visitados por el usuario
-$user_id = $_SESSION['user_id'] ?? null;
 $recomendados = [];
-if ($user_id) {
-  $sql = "SELECT p.* FROM productos p
-          INNER JOIN user_visits uv ON p.id = uv.product_id
-          WHERE uv.user_id = ?
-          GROUP BY p.id
-          ORDER BY COUNT(*) DESC
-          LIMIT 6";
-  $stmt = $conn->prepare($sql);
-  $stmt->bind_param("i", $user_id);
-  $stmt->execute();
-  $result = $stmt->get_result();
-  while ($row = $result->fetch_assoc()) {
+
+if (!empty($_SESSION['user_id'])) {
+    // Usuario logueado
+    $user_id = $_SESSION['user_id'];
+    $sql = "SELECT p.* 
+            FROM productos p
+            INNER JOIN user_visits uv ON p.id = uv.product_id
+            WHERE uv.user_id = ?
+            GROUP BY p.id
+            ORDER BY COUNT(*) DESC
+            LIMIT 6";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $user_id);
+} else {
+    // Usuario no logueado (user_id es NULL)
+    $sql = "SELECT p.* 
+            FROM productos p
+            INNER JOIN user_visits uv ON p.id = uv.product_id
+            WHERE uv.user_id IS NULL
+            GROUP BY p.id
+            ORDER BY COUNT(*) DESC
+            LIMIT 6";
+    $stmt = $conn->prepare($sql);
+}
+
+$stmt->execute();
+$result = $stmt->get_result();
+while ($row = $result->fetch_assoc()) {
     $recomendados[] = $row;
-  }
 }
 $conn->close();
 ?>
