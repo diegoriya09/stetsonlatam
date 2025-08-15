@@ -7,7 +7,7 @@ $product_id = $_GET['id'] ?? null;
 $producto = null;
 $from = $_GET['from'] ?? 'hats';
 
-$user_id = $_SESSION['user_id'] ?? null;
+$user_id = $_GET['user_id'] ?? null;
 
 if (empty($user_id)) {
     $user_id = null; // Forzar a null si no está definido
