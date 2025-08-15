@@ -74,9 +74,8 @@ while ($row = $result->fetch_assoc()) {
 $user_id = $_SESSION['user_id'] ?? null;
 $recomendados = [];
 
-if (!empty($_SESSION['user_id'])) {
+if ($user_id !== null) {
     // Usuario logueado
-    $user_id = $_SESSION['user_id'];
     $sql = "SELECT p.*, COUNT(*) AS visitas
             FROM productos p
             INNER JOIN user_visits uv ON p.id = uv.product_id
