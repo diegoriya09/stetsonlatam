@@ -341,16 +341,6 @@ function renderCart(carts) {
       <td class="h-[72px] px-4 py-2 text-[#887563] text-sm font-normal">
         $${(quantity * price).toLocaleString()}
       </td>
-
-      <!-- Remove -->
-      <td class="h-[72px] px-4 py-2 text-center">
-        <a class="remove-btn text-red-600 cursor-pointer"
-           data-id="${id}"
-           data-color-id="${color_id}"
-           data-size-id="${size_id}">
-           <i class="fas fa-trash-alt"></i>
-        </a>
-      </td>
       <td class="h-[72px] px-4 py-2 text-center">
         <button class="remove-btn text-red-600 cursor-pointer"
            data-id="${id}"
