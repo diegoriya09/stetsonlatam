@@ -70,6 +70,7 @@ while ($row = $result->fetch_assoc()) {
   $productos[] = $row;
 }
 //productos más visitados por el usuario
+$user_id = $_SESSION['user_id'] ?? null;
 $recomendados = [];
 
 if (!empty($_SESSION['user_id'])) {
