@@ -145,21 +145,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // LOGOUT
     if (logoutBtn) {
-        logoutBtn.addEventListener('click', () => {
-            Swal.fire({
-                title: 'Closed session',
-                text: 'You have successfully logged out',
-                icon: 'success',
-                showConfirmButton: false,
-                timer: 1000,
-                timerProgressBar: true
-            }).then(async () => {
-                const jwt = localStorage.getItem('jwt');
-                localStorage.removeItem('jwt');
-                window.location.href = 'index.php';
-            });
+    logoutBtn.addEventListener('click', () => {
+        Swal.fire({
+            title: 'Closed session',
+            text: 'You have successfully logged out',
+            icon: 'success',
+            showConfirmButton: false,
+            timer: 1000,
+            timerProgressBar: true
+        }).then(async () => {
+            // Llamada al backend para destruir la sesión
+            await fetch('php/logout.php', { method: 'POST' });
+
+            // Limpiar JWT del localStorage
+            localStorage.removeItem('jwt');
+
+            // Redirigir
+            window.location.href = 'index.php';
         });
-    }
+    });
+}
 
     function isTokenExpired(token) {
         try {
