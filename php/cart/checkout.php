@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
     if (!$user_id) {
-        echo json_encode(["success" => false, "message" => "Usuario no autenticado"]);
+        echo json_encode(["success" => false, "message" => "You must be logged in to checkout"]);
         exit;
     }
 
