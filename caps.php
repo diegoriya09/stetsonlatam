@@ -254,9 +254,10 @@ $conn->close();
               } ?>
             </div>
           </div>
+
           <div class="flex justify-between gap-2 px-4 py-3">
             <div class="flex gap-2">
-              <button class="p-2 text-[#151514]">
+              <button class="p-2 text-[#151514]" id="sort-btn">
                 <div class="text-[#151514]" data-icon="SortAscending" data-size="24px" data-weight="regular">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
                     <path
@@ -266,9 +267,9 @@ $conn->close();
               </button>
             </div>
           </div>
-          <div class="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-3 p-4">
+          <div id="productos-container" class="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-3 p-4">
             <?php foreach ($productos as $producto): ?>
-              <div class="flex flex-col gap-3 pb-3">
+              <div class="flex flex-col gap-3 pb-3 producto-item" data-price="<?php echo $producto['price']; ?>">
                 <a href="producto.php?id=<?php echo $producto['id']; ?>&from=caps" class="flex flex-col gap-3 pb-3 hover:scale-[1.03] transition-transform">
                   <div
                     class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-lg"
@@ -281,6 +282,31 @@ $conn->close();
               </div>
             <?php endforeach; ?>
           </div>
+          <script>
+            document.addEventListener("DOMContentLoaded", () => {
+              const sortBtn = document.getElementById("sort-btn");
+              const productosContainer = document.getElementById("productos-container");
+
+              let ascending = true; // estado inicial
+
+              sortBtn.addEventListener("click", () => {
+                let productos = Array.from(document.querySelectorAll(".producto-item"));
+
+                productos.sort((a, b) => {
+                  let priceA = parseFloat(a.dataset.price);
+                  let priceB = parseFloat(b.dataset.price);
+                  return ascending ? priceA - priceB : priceB - priceA;
+                });
+
+                // limpiar contenedor y reinsertar productos ordenados
+                productosContainer.innerHTML = "";
+                productos.forEach(p => productosContainer.appendChild(p));
+
+                // alternar orden
+                ascending = !ascending;
+              });
+            });
+          </script>
         </div>
       </div>
       <footer class="flex justify-center">
