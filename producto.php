@@ -19,16 +19,11 @@ if ($product_id) {
 }
 
 
-if ($user_id && $product_id) {
+if ($product_id) {
+    $uid = $user_id ?: null; // puede ser null
     $stmt = $conn->prepare("INSERT INTO user_visits (user_id, product_id, visited_at) VALUES (?, ?, NOW())");
-    if (!$stmt) {
-        die("Error prepare: " . $conn->error);
-    }
-
-    $stmt->bind_param("ii", $user_id, $product_id);
-    if (!$stmt->execute()) {
-        die("Error execute: " . $stmt->error);
-    }
+    $stmt->bind_param("ii", $uid, $product_id);
+    $stmt->execute();
     $stmt->close();
 }
 
