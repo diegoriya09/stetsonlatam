@@ -154,7 +154,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="px-40 flex flex-1 justify-center py-5">
                 <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
                     <form id="checkout-form" method="POST" action="php/checkout.php" class="flex flex-col">
-
+                
                         <!-- Token CSRF (lo generas en PHP antes) -->
                         <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
 
@@ -298,6 +298,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </button>
                         </div>
                     </form>
+                    <script>
+                        document.getElementById('checkout-form').addEventListener('submit', function(e) {
+                            e.preventDefault();
+
+                            const formData = new FormData(this);
+
+                            fetch('php/cart/checkout.php', {
+                                    method: 'POST',
+                                    body: formData
+                                })
+                                .then(res => res.json())
+                                .then(data => {
+                                    if (data.success) {
+                                        Swal.fire({
+                                            icon: 'success',
+                                            title: 'Order Placed',
+                                            html: `<p>Your order number is <strong>#${data.pedido_id}</strong></p>`,
+                                            confirmButtonText: 'OK'
+                                        }).then(() => {
+                                            window.location.href = 'index.php';
+                                        });
+                                    } else {
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Error',
+                                            text: data.message
+                                        });
+                                    }
+                                })
+                                .catch(err => {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Error',
+                                        text: 'Something went wrong.'
+                                    });
+                                });
+                        });
+                    </script>
                 </div>
             </div>
             <footer class="flex justify-center">
