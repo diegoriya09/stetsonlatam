@@ -1,6 +1,8 @@
 <?php
 require_once 'php/conexion.php';
 
+session_start();
+
 $product_id = $_GET['id'] ?? null;
 $producto = null;
 
@@ -15,7 +17,7 @@ if ($product_id) {
   $stmt->close();
 }
 
-session_start();
+
 
 $user_id = $_SESSION['users_id'] ?? null;
 if ($user_id && $product_id) {
