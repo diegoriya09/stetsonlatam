@@ -5,9 +5,9 @@ session_start();
 
 $product_id = $_GET['id'] ?? null;
 $producto = null;
-$from = $_GET['from'] ?? 'hats';
+$from = $_GET['from'] ?? 'hats' ?? 'caps';
 
-$user_id = $_GET['id'] ?? null;
+$user_id = $_GET['users_id'] ?? null;
 
 if ($product_id) {
   $stmt = $conn->prepare("SELECT * FROM productos WHERE id = ?");
