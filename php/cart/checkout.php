@@ -78,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt = $conn->prepare("
     INSERT INTO pedidos 
     (user_id, total, estado, nombre_cliente, email_cliente, pais, ciudad, direccion, telefono, metodo_pago)
-    VALUES (?, ?, 'Pendiente', ?, ?, ?, ?, ?, ?, ?)
+    VALUES (?, ?, 'Pending', ?, ?, ?, ?, ?, ?, ?)
 ");
     $stmt->bind_param("idsssssss", $user_id, $total, $nombre, $email, $pais, $ciudad, $direccion, $telefono, $metodo);
     if (!$stmt->execute()) {

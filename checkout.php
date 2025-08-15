@@ -72,6 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         as="style"
         onload="this.rel='stylesheet'"
         href="https://fonts.googleapis.com/css2?display=swap&amp;family=Noto+Serif%3Awght%40400%3B500%3B700%3B900&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <title>Checkout</title>
     <link rel="icon" href="img/logo.webp" type="image/x-icon" loading="lazy">
@@ -218,6 +219,77 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <input name="telefono" placeholder="Enter your phone number" class="form-input h-14" required />
                             </label>
                         </div>
+                        <div class="flex max-w-[480px] gap-4 px-4 py-3">
+                            <label class="flex flex-col flex-1">
+                                <p>Payment Method</p>
+                                <select name="metodo" class="form-input h-14" required>
+                                    <option value="">Select a payment method</option>
+                                    <option value="tarjeta">Credit/Debit Card</option>
+                                    <option value="pse">PSE</option>
+                                </select>
+                            </label>
+                        </div>
+                        <!-- Campos para tarjeta -->
+                        <div id="tarjeta-fields" class="hidden">
+                            <div class="flex max-w-[480px] gap-4 px-4 py-3">
+                                <label class="flex flex-col flex-1">
+                                    <p>Card Number</p>
+                                    <input name="numero_tarjeta" placeholder="1234 5678 9012 3456" class="form-input h-14" />
+                                </label>
+                            </div>
+                            <div class="flex max-w-[480px] gap-4 px-4 py-3">
+                                <label class="flex flex-col flex-1">
+                                    <p>Name on Card</p>
+                                    <input name="nombre_tarjeta" placeholder="John Doe" class="form-input h-14" />
+                                </label>
+                            </div>
+                            <div class="flex max-w-[480px] gap-4 px-4 py-3">
+                                <label class="flex flex-col flex-1">
+                                    <p>Expiration Date</p>
+                                    <input name="expiracion" placeholder="MM/YY" class="form-input h-14" />
+                                </label>
+                                <label class="flex flex-col flex-1">
+                                    <p>CVV</p>
+                                    <input name="cvv" placeholder="123" class="form-input h-14" />
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Campos para PSE -->
+                        <div id="pse-fields" class="hidden">
+                            <div class="flex max-w-[480px] gap-4 px-4 py-3">
+                                <label class="flex flex-col flex-1">
+                                    <p>Bank</p>
+                                    <input name="banco_pse" placeholder="Enter bank name" class="form-input h-14" />
+                                </label>
+                            </div>
+                            <div class="flex max-w-[480px] gap-4 px-4 py-3">
+                                <label class="flex flex-col flex-1">
+                                    <p>Account Type</p>
+                                    <input name="tipo_cuenta_pse" placeholder="Savings/Checking" class="form-input h-14" />
+                                </label>
+                            </div>
+                            <div class="flex max-w-[480px] gap-4 px-4 py-3">
+                                <label class="flex flex-col flex-1">
+                                    <p>Document</p>
+                                    <input name="documento_pse" placeholder="Enter your document" class="form-input h-14" />
+                                </label>
+                            </div>
+                        </div>
+
+                        <script>
+                            document.querySelector('select[name="metodo"]').addEventListener('change', function() {
+                                document.getElementById('tarjeta-fields').classList.add('hidden');
+                                document.getElementById('pse-fields').classList.add('hidden');
+
+                                if (this.value === 'tarjeta') {
+                                    document.getElementById('tarjeta-fields').classList.remove('hidden');
+                                }
+                                if (this.value === 'pse') {
+                                    document.getElementById('pse-fields').classList.remove('hidden');
+                                }
+                            });
+                        </script>
 
                         <div class="flex px-4 py-3">
                             <button type="submit"
