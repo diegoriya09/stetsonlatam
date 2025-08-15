@@ -83,7 +83,7 @@ if ($user_id !== null) {
             WHERE uv.user_id = ?    
             GROUP BY p.id
             ORDER BY COUNT(*) DESC
-            LIMIT 6";
+            LIMIT 5";
   $stmt = $conn->prepare($sql);
   $stmt->bind_param("i", $user_id);
 } else {
@@ -94,7 +94,7 @@ if ($user_id !== null) {
             WHERE uv.user_id IS NULL
             GROUP BY p.id
             ORDER BY COUNT(*) DESC
-            LIMIT 6";
+            LIMIT 5";
   $stmt = $conn->prepare($sql);
 }
 
