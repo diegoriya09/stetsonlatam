@@ -17,14 +17,19 @@ if ($product_id) {
   $stmt->close();
 }
 
+$_SESSION['users_id'] = $user['id'];
 
-
-$user_id = $_SESSION['users_id'] ?? null;
 if ($user_id && $product_id) {
-  $stmt = $conn->prepare("INSERT INTO user_visits (user_id, product_id, visited_at) VALUES (?, ?, NOW())");
-  $stmt->bind_param("ii", $user_id, $product_id);
-  $stmt->execute();
-  $stmt->close();
+    $stmt = $conn->prepare("INSERT INTO user_visits (user_id, product_id, visited_at) VALUES (?, ?, NOW())");
+    if (!$stmt) {
+        die("Error prepare: " . $conn->error);
+    }
+
+    $stmt->bind_param("ii", $user_id, $product_id);
+    if (!$stmt->execute()) {
+        die("Error execute: " . $stmt->error);
+    }
+    $stmt->close();
 }
 
 $sizes = [];
