@@ -176,7 +176,7 @@ $conn->close();
                         <div class="flex flex-1 gap-3 flex-wrap px-4 py-3 justify-end">
                             <button
                                 class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#f4f2f0] text-[#181411] text-sm font-bold leading-normal tracking-[0.015em]">
-                                <span class="truncate">Continue Shopping</span>
+                                <span class="truncate"><a href="index.php">Continue Shopping</a></span>
                             </button>
                             <button id="checkout-btn"
                                 class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#e68019] text-[#181411] text-sm font-bold leading-normal tracking-[0.015em]">
