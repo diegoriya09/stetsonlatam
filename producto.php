@@ -5,8 +5,9 @@ session_start();
 
 $product_id = $_GET['id'] ?? null;
 $producto = null;
-
 $from = $_GET['from'] ?? 'hats';
+
+$user_id = $_SESSION['users_id'] ?? null;
 
 if ($product_id) {
   $stmt = $conn->prepare("SELECT * FROM productos WHERE id = ?");
@@ -17,7 +18,6 @@ if ($product_id) {
   $stmt->close();
 }
 
-$_SESSION['users_id'] = $user['id'];
 
 if ($user_id && $product_id) {
     $stmt = $conn->prepare("INSERT INTO user_visits (user_id, product_id, visited_at) VALUES (?, ?, NOW())");
