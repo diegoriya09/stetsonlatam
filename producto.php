@@ -9,6 +9,10 @@ $from = $_GET['from'] ?? 'hats';
 
 $user_id = $_SESSION['user_id'] ?? null;
 
+if (empty($user_id)) {
+    $user_id = null; // Forzar a null si no está definido
+}
+
 if ($product_id) {
   $stmt = $conn->prepare("SELECT * FROM productos WHERE id = ?");
   $stmt->bind_param("i", $product_id);
@@ -20,7 +24,7 @@ if ($product_id) {
 
 
 if ($product_id) {
-    if ($user_id) {
+    if (!empty($user_id)) {
         // Usuario logueado
         $stmt = $conn->prepare(
             "INSERT INTO user_visits (user_id, product_id, visited_at) VALUES (?, ?, NOW())"
