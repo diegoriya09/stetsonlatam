@@ -128,7 +128,7 @@
                             <div class="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-60">
                                 <div
                                     class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg flex flex-col"
-                                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD_4bSW7T4MHdOUEUFfsiJ1H8T21Fwlhg5sEnxWw6vVyaj6vy5xs20lpEfrucnndQxFANjgs2x_1IPa5QJlla9uY6JZRPWkSkQoxsAHj2NYONDyWuO_aIZCdxuq3ybq1MI74ezCbCNZ4KQblWdb9aAV1aNNlHQKttdl1I3ZpMkGMrHGDQN-6mHWmhkm_AG40W4wSgHqYc2pxogYh_iMbdEAtiq7Xx7ezAPpHeSRzd5zyHoo8rhSpxOCV9OUZ-eF5CWNjnAGgQsvQA37");'></div>
+                                    style='background-image: url("img/helenastraw.webp");'></div>
                                 <div>
                                     <p class="text-[#181411] text-base font-medium leading-normal">Handcrafted Leather Belt</p>
                                     <p class="text-[#887563] text-sm font-normal leading-normal">Premium leather belt, perfect for any occasion.</p>
@@ -137,7 +137,7 @@
                             <div class="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-60">
                                 <div
                                     class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg flex flex-col"
-                                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuApy6Xh2jT-iLodzlzuvygsLbMV2FE0Aj1487807LZJY5QsNPiXJhmD0B2zbfumWqTo5GpjEgXbs795tYARjrIE6SPEhfq-FQUKaY9Y62JOf2OI4FWK8E9wup_VokXuhMIETR-g6czEkOGHfafTbZGy18iY8GYNdeHQzE3dAY007OAamMCIkguBEr_Tix73lXKThDbEooqQO482rOoJ4smjIMhLWUJ-ifCEG0WXC3umfrWwVyfpjYp9W02uf9tZ3d8ZwrFq1QlcoTWb");'></div>
+                                    style='background-image: url("img/lattemilan.webp");'></div>
                                 <div>
                                     <p class="text-[#181411] text-base font-medium leading-normal">Western Style Shirt</p>
                                     <p class="text-[#887563] text-sm font-normal leading-normal">Embrace the spirit of the West with our stylish shirts.</p>
@@ -159,7 +159,7 @@
                         <div class="flex flex-col gap-3 pb-3">
                             <div
                                 class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg"
-                                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA-uiEsmZ1f-GhLno4ZXFPnmv0NUQozj_GI9imMshIMapgKyGmOWFDAmiW7ipS3P2ScjyvDJg-T1P_blq-q6GjDUMmxWi3qRZiNGgICjamEXc6UzSSFs-i1_tJsS5-EsgSrYXRc8FGxpXJ47QfGWZM_cx95JfuSpXGg-97Ekha4RsXLm-pmf7_fQZZoJkIASI_AvNZvFt5BIkTHQ-t8JZ7ng2My2xHc5ys-Oi-bIgES_alj2hiU2aNbROK10VCUWH74DfKV49bMXrEf");'></div>
+                                style='background-image: url("img/lobocowboy.webp");'></div>
                             <div>
                                 <p class="text-[#181411] text-base font-medium leading-normal">The Heritage Series</p>
                                 <p class="text-[#887563] text-sm font-normal leading-normal">Celebrating our rich history with classic styles.</p>
@@ -168,7 +168,7 @@
                         <div class="flex flex-col gap-3 pb-3">
                             <div
                                 class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg"
-                                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBz5mD-6bflPGIqNfcO7EUyf9k9p7iyyVauQFflGMMyHJN4RVRRU_1wk_mqQDvbExzvukaAeRI-jgKi_OLbG64WtQvWooUdqd8ysO1XcJvd-0zuc4aOfr20UnjKK9FEW4KD8-v2BoH4DTo5_KRcRCR3tZrqOFS4wS_wTBATIEJ4uBl75ivV4gXI3xrE3WPqTnEhlOkJwXKEcqxCb-NaxxySHvRa4CyDvuDvC7aqTXrkrCmWWPJHs-5sky8NcBiUFDd6Bn3CZtkzcBU8");'></div>
+                                style='background-image: url("img/kenton10xstraw.webp");'></div>
                             <div>
                                 <p class="text-[#181411] text-base font-medium leading-normal">The Urban Cowboy</p>
                                 <p class="text-[#887563] text-sm font-normal leading-normal">A contemporary take on Western fashion.</p>
@@ -180,7 +180,7 @@
                         <div class="flex flex-col items-stretch justify-start rounded-lg @xl:flex-row @xl:items-start">
                             <div
                                 class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-lg"
-                                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBngfkD4V0yl4Wz2667alQUjTgSwfa7Eou7sOg_EueCU6QRC8qypC8ER2CMSDwiwhxC8NTz7HyuEFSxsNeeXoM6yHnv74heJg_GTWKQyrCPp45G4IxeugJatQkanVwfdsmjaf_eTZPMP3qthlBK8CNayUiE0f5oLxpBRTUPe5pIWKywC6YBnws9LQ8JERv_a8MWaPbMRU2LBO6XtmO9t7iXe1rx95-wDCjaWcKFYd67qrjdCKdeKqsmicf_tB75N6jTVXXaSPk9zimh");'></div>
+                                style='background-image: url("img/story1.webp");'></div>
                             <div class="flex w-full min-w-72 grow flex-col items-stretch justify-center gap-1 py-4 @xl:px-4">
                                 <p class="text-[#181411] text-lg font-bold leading-tight tracking-[-0.015em]">A Legacy of Craftsmanship</p>
                                 <div class="flex items-end gap-3 justify-between">
