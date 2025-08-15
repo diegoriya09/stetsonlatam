@@ -71,12 +71,12 @@ while ($row = $result->fetch_assoc()) {
 }
 
 //productos más visitados por el usuario
-$user_id = $_SESSION['user_id'] ?? null;
+$user_id = $_SESSION['users_id'] ?? null;
 $recomendados = [];
 
-if (!empty($_SESSION['user_id'])) {
+if (!empty($_SESSION['users_id'])) {
     // Usuario logueado
-    $user_id = $_SESSION['user_id'];
+    $user_id = $_SESSION['users_id'];
     $sql = "SELECT p.* 
             FROM productos p
             INNER JOIN user_visits uv ON p.id = uv.product_id
