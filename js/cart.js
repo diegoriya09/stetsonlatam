@@ -352,6 +352,15 @@ function renderCart(carts) {
            <i class="fas fa-trash-alt"></i>
         </a>
       </td>
+      <td class="h-[72px] px-4 py-2 text-center">
+        <button class="remove-btn text-red-600 cursor-pointer"
+           data-id="${id}"
+           data-color-id="${color_id}"
+           data-size-id="${size_id}"
+           title="Remove item">
+           <i class="fas fa-trash-alt"></i>
+        </button>
+      </td>
     `;
 
     tableBody.appendChild(row);
