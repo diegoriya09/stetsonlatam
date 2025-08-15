@@ -20,9 +20,19 @@ if ($product_id) {
 
 
 if ($product_id) {
-    $uid = $user_id ?: null; // puede ser null
-    $stmt = $conn->prepare("INSERT INTO user_visits (user_id, product_id, visited_at) VALUES (?, ?, NOW())");
-    $stmt->bind_param("ii", $uid, $product_id);
+    if ($user_id) {
+        // Usuario logueado
+        $stmt = $conn->prepare(
+            "INSERT INTO user_visits (user_id, product_id, visited_at) VALUES (?, ?, NOW())"
+        );
+        $stmt->bind_param("ii", $user_id, $product_id);
+    } else {
+        // Usuario no logueado
+        $stmt = $conn->prepare(
+            "INSERT INTO user_visits (user_id, product_id, visited_at) VALUES (NULL, ?, NOW())"
+        );
+        $stmt->bind_param("i", $product_id);
+    }
     $stmt->execute();
     $stmt->close();
 }
