@@ -9,10 +9,6 @@ $from = $_GET['from'] ?? 'hats';
 
 $user_id = $_GET['user_id'] ?? null;
 
-if (empty($user_id)) {
-    $user_id = null; // Forzar a null si no está definido
-}
-
 if ($product_id) {
   $stmt = $conn->prepare("SELECT * FROM productos WHERE id = ?");
   $stmt->bind_param("i", $product_id);
