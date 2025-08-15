@@ -253,10 +253,10 @@ $conn->close();
             </div>
             <script>
               document.addEventListener("DOMContentLoaded", () => {
-                const sizeBtn = document.getElementById("sizeFilterBtn");
-                const sizeDropdown = document.getElementById("sizeDropdown");
-                const colorBtn = document.getElementById("colorFilterBtn");
-                const colorDropdown = document.getElementById("colorDropdown");
+                const sizeBtn = document.getElementById("size-filter-btn");
+                const sizeDropdown = document.getElementById("size-dropdown");
+                const colorBtn = document.getElementById("color-filter-btn");
+                const colorDropdown = document.getElementById("color-dropdown");
 
                 // Toggle dropdowns
                 sizeBtn.addEventListener("click", () => {
