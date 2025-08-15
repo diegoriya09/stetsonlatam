@@ -7,7 +7,7 @@ $product_id = $_GET['id'] ?? null;
 $producto = null;
 $from = $_GET['from'] ?? 'hats';
 
-$user_id = $_GET['user_id'] ?? null;
+$user_id = $_GET['id'] ?? null;
 
 if ($product_id) {
   $stmt = $conn->prepare("SELECT * FROM productos WHERE id = ?");
