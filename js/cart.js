@@ -279,6 +279,8 @@ document.addEventListener('click', function (e) {
 // Función para mostrar el carrito
 function renderCart(carts) {
   const tableBody = document.getElementById("cart-table-body");
+  console.log("tableBody:", tableBody);
+  
   tableBody.innerHTML = ""; // Vaciar la tabla antes de renderizar
 
   if (!carts.length) {
