@@ -39,7 +39,7 @@ $conn->close();
         as="style"
         onload="this.rel='stylesheet'"
         href="https://fonts.googleapis.com/css2?display=swap&amp;family=Noto+Serif%3Awght%40400%3B500%3B700%3B900&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <title>Shopping Bag</title>
     <link rel="icon" href="img/logo.webp" type="image/x-icon" loading="lazy">
@@ -178,10 +178,34 @@ $conn->close();
                                 class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#f4f2f0] text-[#181411] text-sm font-bold leading-normal tracking-[0.015em]">
                                 <span class="truncate">Continue Shopping</span>
                             </button>
-                            <button
+                            <button id="checkout-btn"
                                 class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#e68019] text-[#181411] text-sm font-bold leading-normal tracking-[0.015em]">
                                 <span class="truncate">Proceed to Checkout</span>
                             </button>
+                            <script>
+                                document.getElementById('btnCheckout').addEventListener('click', function() {
+                                    // 1️⃣ Revisar si hay sesión (opcional)
+                                    const jwt = localStorage.getItem('jwt');
+                                    const isLoggedIn = !!jwt;
+
+                                    // 2️⃣ Obtener carrito
+                                    let carrito = [];
+                                    if (isLoggedIn) {
+                                        // Si el usuario está logueado, asumimos que el backend tiene el carrito
+                                        // Aquí podrías hacer una petición AJAX para verificar si tiene productos
+                                        // Pero para este ejemplo solo redirigimos
+                                    } else {
+                                        carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+                                        if (carrito.length === 0) {
+                                            alert("Tu carrito está vacío. Agrega productos antes de continuar.");
+                                            return;
+                                        }
+                                    }
+
+                                    // 3️⃣ Redirigir al checkout
+                                    window.location.href = 'checkout.php';
+                                });
+                            </script>
                         </div>
                     </div>
                     <h2 class="text-[#181411] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">You may also like</h2>
