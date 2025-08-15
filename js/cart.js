@@ -196,7 +196,6 @@ function loadCart(isLoggedIn) {
       .then(response => response.json())
       .then(carrito => {
         // Renderizamos la tabla
-        console.log(carrito);
         renderCart(carrito);
 
         // Calculamos el total
