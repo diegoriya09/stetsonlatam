@@ -20,7 +20,7 @@ if ($product_id) {
 
 
 if ($product_id) {
-    if (!empty($user_id)) {
+    if ($user_id !== null) {
         // Usuario logueado
         $stmt = $conn->prepare(
             "INSERT INTO user_visits (user_id, product_id, visited_at) VALUES (?, ?, NOW())"
