@@ -205,8 +205,9 @@ $conn->close();
             <p class="text-[#151514] tracking-light text-[32px] font-bold leading-tight min-w-72">Hats</p>
           </div>
           <div class="flex gap-3 p-3 flex-wrap pr-4">
+            <!-- Filtro de tallas -->
             <div class="relative">
-              <button id="size-filter-btn" class="flex h-8 items-center justify-center gap-x-2 rounded-lg bg-[#f3f2f2] pl-4 pr-2">
+              <button id="size-filter-btn" type="button" class="flex h-8 items-center justify-center gap-x-2 rounded-lg bg-[#f3f2f2] pl-4 pr-2">
                 <p class="text-[#151514] text-sm font-medium leading-normal">Size</p>
                 <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256">
                   <path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path>
@@ -215,15 +216,20 @@ $conn->close();
               <div id="size-dropdown" class="absolute hidden mt-1 w-40 bg-white shadow rounded-lg p-2 z-10">
                 <?php foreach ($tallas as $talla): ?>
                   <label class="flex items-center gap-2 text-sm cursor-pointer">
-                    <input type="checkbox" class="size-check" value="<?php echo $talla['id']; ?>">
+                    <input
+                      type="checkbox"
+                      class="size-check"
+                      value="<?php echo $talla['id']; ?>"
+                      <?php echo in_array($talla['id'], $_GET['sizes'] ?? []) ? 'checked' : ''; ?>>
                     <?php echo htmlspecialchars($talla['name']); ?>
                   </label>
                 <?php endforeach; ?>
               </div>
             </div>
+
             <!-- Filtro de colores -->
             <div class="relative">
-              <button id="color-filter-btn" class="flex h-8 items-center justify-center gap-x-2 rounded-lg bg-[#f3f2f2] pl-4 pr-2">
+              <button id="color-filter-btn" type="button" class="flex h-8 items-center justify-center gap-x-2 rounded-lg bg-[#f3f2f2] pl-4 pr-2">
                 <p class="text-[#151514] text-sm font-medium leading-normal">Color</p>
                 <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256">
                   <path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path>
@@ -232,8 +238,12 @@ $conn->close();
               <div id="color-dropdown" class="absolute hidden mt-1 w-40 bg-white shadow rounded-lg p-2 z-10">
                 <?php foreach ($colores as $color): ?>
                   <label class="flex items-center gap-2 text-sm cursor-pointer">
-                    <input type="checkbox" class="color-check" value="<?php echo $color['id']; ?>">
-                    <span class="w-4 h-4 rounded-full" style="background-color: <?php echo htmlspecialchars($color['hex']); ?>"></span>
+                    <input
+                      type="checkbox"
+                      class="color-check"
+                      value="<?php echo $color['id']; ?>"
+                      <?php echo in_array($color['id'], $_GET['colors'] ?? []) ? 'checked' : ''; ?>>
+                    <span class="w-4 h-4 rounded-full border" style="background-color: <?php echo htmlspecialchars($color['hex']); ?>"></span>
                     <?php echo htmlspecialchars($color['name']); ?>
                   </label>
                 <?php endforeach; ?>
@@ -254,18 +264,19 @@ $conn->close();
                   colorDropdown.classList.toggle("hidden");
                 });
 
-                // Detectar cambios en los filtros
+                // Manejo de cambios en filtros
                 document.querySelectorAll(".size-check, .color-check").forEach(input => {
                   input.addEventListener("change", () => {
                     const selectedSizes = Array.from(document.querySelectorAll(".size-check:checked")).map(cb => cb.value);
                     const selectedColors = Array.from(document.querySelectorAll(".color-check:checked")).map(cb => cb.value);
 
-                    // Construir la URL con parámetros GET
+                    // Construir URL manteniendo filtros seleccionados
                     const params = new URLSearchParams();
+
                     selectedSizes.forEach(size => params.append("sizes[]", size));
                     selectedColors.forEach(color => params.append("colors[]", color));
 
-                    // Recargar con filtros aplicados
+                    // Recargar página con filtros
                     window.location.href = "?" + params.toString();
                   });
                 });
