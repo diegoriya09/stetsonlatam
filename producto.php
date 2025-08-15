@@ -88,6 +88,7 @@ $conn->close();
   <title><?php echo htmlspecialchars($producto['name']); ?></title>
   <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
   <link rel="icon" href="img/logo.webp" type="image/x-icon" loading="lazy">
+  <link rel="stylesheet" href="css/product.css?v=<?php echo time(); ?>" />
 
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
