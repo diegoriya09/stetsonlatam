@@ -218,15 +218,15 @@ $conn->close();
           <h2 class="text-[#151514] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Recommended for You</h2>
           <div class="flex overflow-y-auto [-ms-scrollbar-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             <div class="flex items-stretch p-4 gap-3">
-              <?php foreach ($recomendados as $producto): ?>
+              <?php foreach ($recomendados as $recomendado): ?>
                 <div class="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-40">
-                  <a href="producto.php?id=<?php echo $producto['id']; ?>" class="flex flex-col gap-3 pb-3 hover:scale-[1.03] transition-transform">
+                  <a href="producto.php?id=<?php echo $recomendado['id']; ?>" class="flex flex-col gap-3 pb-3 hover:scale-[1.03] transition-transform">
                     <div
                       class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-lg flex flex-col"
-                      style='background-image: url("<?php echo htmlspecialchars($producto["image"]); ?>");'></div>
+                      style='background-image: url("<?php echo htmlspecialchars($recomendado["image"]); ?>");'></div>
                     <div>
-                      <p class="text-[#151514] text-base font-medium leading-normal"><?php echo htmlspecialchars($producto["name"]); ?></p>
-                      <p class="text-[#7a7671] text-sm font-normal leading-normal">$<?php echo number_format($producto["price"], 2); ?></p>
+                      <p class="text-[#151514] text-base font-medium leading-normal"><?php echo htmlspecialchars($recomendado["name"]); ?></p>
+                      <p class="text-[#7a7671] text-sm font-normal leading-normal">$<?php echo number_format($recomendado["price"], 2); ?></p>
                     </div>
                   </a>
                 </div>
