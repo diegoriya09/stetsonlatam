@@ -183,26 +183,7 @@ $conn->close();
                                 <span class="truncate">Proceed to Checkout</span>
                             </button>
                             <script>
-                                document.getElementById('btnCheckout').addEventListener('click', function() {
-                                    // 1️⃣ Revisar si hay sesión (opcional)
-                                    const jwt = localStorage.getItem('jwt');
-                                    const isLoggedIn = !!jwt;
-
-                                    // 2️⃣ Obtener carrito
-                                    let carrito = [];
-                                    if (isLoggedIn) {
-                                        // Si el usuario está logueado, asumimos que el backend tiene el carrito
-                                        // Aquí podrías hacer una petición AJAX para verificar si tiene productos
-                                        // Pero para este ejemplo solo redirigimos
-                                    } else {
-                                        carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-                                        if (carrito.length === 0) {
-                                            alert("Tu carrito está vacío. Agrega productos antes de continuar.");
-                                            return;
-                                        }
-                                    }
-
-                                    // 3️⃣ Redirigir al checkout
+                                document.getElementById('checkout-btn').addEventListener('click', function() {
                                     window.location.href = 'checkout.php';
                                 });
                             </script>
