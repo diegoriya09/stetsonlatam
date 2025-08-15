@@ -188,13 +188,11 @@ function handleAddToCart(e) {
 
 
 function loadCart(isLoggedIn) {
-  console.log("loadCart ejecutado. isLoggedIn =", isLoggedIn);
   
   const totalCarrito = document.getElementById('total-carrito');
   let total = 0;
 
   if (isLoggedIn) {
-    console.log("Usuario logueado");
     const jwt = localStorage.getItem("jwt");
     fetch('php/cart/get_cart.php', {
       headers: {
@@ -211,9 +209,7 @@ function loadCart(isLoggedIn) {
         totalCarrito.textContent = `Total: $${total.toLocaleString()}`;
       });
   } else {
-    console.log("Usuario NO logueado");
     const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-    console.log("Carrito desde localStorage:", carrito);
 
     // Renderizamos la tabla
     renderCart(carrito);
@@ -279,7 +275,6 @@ document.addEventListener('click', function (e) {
 // Función para mostrar el carrito
 function renderCart(carts) {
   const tableBody = document.getElementById("cart-table-body");
-  console.log("tableBody:", tableBody);
   
   tableBody.innerHTML = ""; // Vaciar la tabla antes de renderizar
 
