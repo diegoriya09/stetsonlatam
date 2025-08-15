@@ -1,6 +1,9 @@
 <?php
 require_once 'php/conexion.php';
 
+session_start();
+$user_id = $_SESSION['user_id'] ?? null;
+
 // Obtener colores disponibles para sombreros
 $sql_colores = "SELECT DISTINCT c.id, c.name, c.hex 
                 FROM colors c 
@@ -70,7 +73,6 @@ while ($row = $result->fetch_assoc()) {
   $productos[] = $row;
 }
 //productos más visitados por el usuario
-$user_id = $_SESSION['user_id'] ?? null;
 $recomendados = [];
 
 if ($user_id !== null) {
