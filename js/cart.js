@@ -51,6 +51,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   setupAddToCartButtons();
 
+
+  if (document.getElementById("cart-table-body")) {
+    const isLoggedIn = !!localStorage.getItem("jwt");
+    loadCart(isLoggedIn);
+  }
 });
 
 
