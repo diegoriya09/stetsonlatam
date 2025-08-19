@@ -64,7 +64,7 @@ $conn->close();
                     <div class="flex items-center gap-9">
                         <a class="text-[#181411] text-sm font-medium leading-normal" href="hats.php">Hats</a>
                         <a class="text-[#181411] text-sm font-medium leading-normal" href="caps.php">Caps</a>
-                        <a class="text-[#181411] text-sm font-medium leading-normal" href="#">Contact</a>
+                        <a class="text-[#181411] text-sm font-medium leading-normal" href="contactUs.php">Contact Us</a>
                     </div>
                 </div>
                 <div class="flex flex-1 justify-end gap-8">
