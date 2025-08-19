@@ -144,8 +144,8 @@
       </div>
    </div>
    <?php include 'modal.php'; ?>
-   <script src="auth.js?v=<?php echo time(); ?>"></script>
-   <script src="index.js?v=<?php echo time(); ?>"></script>
+   <script src="js/auth.js?v=<?php echo time(); ?>"></script>
+   <script src="js/index.js?v=<?php echo time(); ?>"></script>
 </body>
 
 </html>
