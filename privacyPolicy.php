@@ -91,7 +91,6 @@
          </header>
          <div class="px-40 flex flex-1 justify-center py-5">
             <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
-               <div class="flex flex-wrap gap-2 p-4"><span class="text-[#151514] text-base font-medium leading-normal">Privacy Policy</span></div>
                <h2 class="text-[#151514] tracking-light text-[28px] font-bold leading-tight px-4 text-left pb-3 pt-5">Privacy Policy</h2>
                <p class="text-[#151514] text-base font-normal leading-normal pb-3 pt-1 px-4">
                   At Stetson Latin America, we value your privacy and are committed to protecting your personal information. This Privacy Policy explains how we collect, use, and

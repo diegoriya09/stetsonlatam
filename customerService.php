@@ -117,20 +117,22 @@
                <h2 class="text-[#151514] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Help topics</h2>
                <div class="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-3 p-4">
                   <div class="flex flex-1 gap-3 rounded-lg border border-[#e2e1df] bg-white p-4 flex-col">
-                     <div class="text-[#151514]" data-icon="Question" data-size="24px" data-weight="regular">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
-                           <path
-                              d="M140,180a12,12,0,1,1-12-12A12,12,0,0,1,140,180ZM128,72c-22.06,0-40,16.15-40,36v4a8,8,0,0,0,16,0v-4c0-11,10.77-20,24-20s24,9,24,20-10.77,20-24,20a8,8,0,0,0-8,8v8a8,8,0,0,0,16,0v-.72c18.24-3.35,32-17.9,32-35.28C168,88.15,150.06,72,128,72Zm104,56A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"></path>
-                        </svg>
-                     </div>
-                     <div class="flex flex-col gap-1">
-                        <a href="faqs.php">
+                     <a href="faqs.php">
+                        <div class="text-[#151514]" data-icon="Question" data-size="24px" data-weight="regular">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                              <path
+                                 d="M140,180a12,12,0,1,1-12-12A12,12,0,0,1,140,180ZM128,72c-22.06,0-40,16.15-40,36v4a8,8,0,0,0,16,0v-4c0-11,10.77-20,24-20s24,9,24,20-10.77,20-24,20a8,8,0,0,0-8,8v8a8,8,0,0,0,16,0v-.72c18.24-3.35,32-17.9,32-35.28C168,88.15,150.06,72,128,72Zm104,56A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"></path>
+                           </svg>
+                        </div>
+                        <div class="flex flex-col gap-1">
                            <h2 class="text-[#151514] text-base font-bold leading-tight">FAQs</h2>
                            <p class="text-[#7a7671] text-sm font-normal leading-normal">Find answers to common questions</p>
-                        </a>
-                     </div>
+                        </div>
+                     </a>
                   </div>
-                  <div class="flex flex-1 gap-3 rounded-lg border border-[#e2e1df] bg-white p-4 flex-col">
+               </div>
+               <div class="flex flex-1 gap-3 rounded-lg border border-[#e2e1df] bg-white p-4 flex-col">
+                  <a href="contactUs.php">
                      <div class="text-[#151514]" data-icon="Envelope" data-size="24px" data-weight="regular">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
                            <path
@@ -138,13 +140,13 @@
                         </svg>
                      </div>
                      <div class="flex flex-col gap-1">
-                        <a href="contactUs.php">
-                           <h2 class="text-[#151514] text-base font-bold leading-tight">Contact Us</h2>
-                           <p class="text-[#7a7671] text-sm font-normal leading-normal">Get in touch with our support team</p>
-                        </a>
+                        <h2 class="text-[#151514] text-base font-bold leading-tight">Contact Us</h2>
+                        <p class="text-[#7a7671] text-sm font-normal leading-normal">Get in touch with our support team</p>
                      </div>
-                  </div>
-                  <div class="flex flex-1 gap-3 rounded-lg border border-[#e2e1df] bg-white p-4 flex-col">
+                  </a>
+               </div>
+               <div class="flex flex-1 gap-3 rounded-lg border border-[#e2e1df] bg-white p-4 flex-col">
+                  <a href="shippingReturns.php">
                      <div class="text-[#151514]" data-icon="Truck" data-size="24px" data-weight="regular">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
                            <path
@@ -152,13 +154,13 @@
                         </svg>
                      </div>
                      <div class="flex flex-col gap-1">
-                        <a href="shippingReturns.php">
-                           <h2 class="text-[#151514] text-base font-bold leading-tight">Shipping &amp; Returns</h2>
-                           <p class="text-[#7a7671] text-sm font-normal leading-normal">Learn about our shipping and return policies</p>
-                        </a>
+                        <h2 class="text-[#151514] text-base font-bold leading-tight">Shipping &amp; Returns</h2>
+                        <p class="text-[#7a7671] text-sm font-normal leading-normal">Learn about our shipping and return policies</p>
                      </div>
-                  </div>
-                  <div class="flex flex-1 gap-3 rounded-lg border border-[#e2e1df] bg-white p-4 flex-col">
+                  </a>
+               </div>
+               <div class="flex flex-1 gap-3 rounded-lg border border-[#e2e1df] bg-white p-4 flex-col">
+                  <a href="privacyPolicy.php">
                      <div class="text-[#151514]" data-icon="ShieldCheck" data-size="24px" data-weight="regular">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
                            <path
@@ -166,13 +168,13 @@
                         </svg>
                      </div>
                      <div class="flex flex-col gap-1">
-                        <a href="privacyPolicy.php">
-                           <h2 class="text-[#151514] text-base font-bold leading-tight">Privacy Policy</h2>
-                           <p class="text-[#7a7671] text-sm font-normal leading-normal">Read our privacy policy</p>
-                        </a>
+                        <h2 class="text-[#151514] text-base font-bold leading-tight">Privacy Policy</h2>
+                        <p class="text-[#7a7671] text-sm font-normal leading-normal">Read our privacy policy</p>
                      </div>
-                  </div>
-                  <div class="flex flex-1 gap-3 rounded-lg border border-[#e2e1df] bg-white p-4 flex-col">
+                  </a>
+               </div>
+               <div class="flex flex-1 gap-3 rounded-lg border border-[#e2e1df] bg-white p-4 flex-col">
+                  <a href="termsOfService.php">
                      <div class="text-[#151514]" data-icon="FileText" data-size="24px" data-weight="regular">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
                            <path
@@ -180,34 +182,33 @@
                         </svg>
                      </div>
                      <div class="flex flex-col gap-1">
-                        <a href="termsOfService.php">
-                           <h2 class="text-[#151514] text-base font-bold leading-tight">Terms of Service</h2>
-                           <p class="text-[#7a7671] text-sm font-normal leading-normal">View our terms of service</p>
-                        </a>
+                        <h2 class="text-[#151514] text-base font-bold leading-tight">Terms of Service</h2>
+                        <p class="text-[#7a7671] text-sm font-normal leading-normal">View our terms of service</p>
                      </div>
-                  </div>
+                  </a>
                </div>
-               <h2 class="text-[#151514] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Contact Us</h2>
-               <p class="text-[#151514] text-base font-normal leading-normal pb-3 pt-1 px-4">
-                  If you have any questions or need assistance, please contact us using the information below:
-               </p>
-               <div class="p-4 grid grid-cols-[20%_1fr] gap-x-6">
-                  <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#e2e1df] py-5">
-                     <p class="text-[#7a7671] text-sm font-normal leading-normal">Email</p>
-                     <p class="text-[#151514] text-sm font-normal leading-normal">support@stetson.com</p>
-                  </div>
-                  <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#e2e1df] py-5">
-                     <p class="text-[#7a7671] text-sm font-normal leading-normal">Phone</p>
-                     <p class="text-[#151514] text-sm font-normal leading-normal">+1 (555) 123-4567</p>
-                  </div>
-                  <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#e2e1df] py-5">
-                     <p class="text-[#7a7671] text-sm font-normal leading-normal">Address</p>
-                     <p class="text-[#151514] text-sm font-normal leading-normal">123 Main Street, Anytown, USA</p>
-                  </div>
+            </div>
+            <h2 class="text-[#151514] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Contact Us</h2>
+            <p class="text-[#151514] text-base font-normal leading-normal pb-3 pt-1 px-4">
+               If you have any questions or need assistance, please contact us using the information below:
+            </p>
+            <div class="p-4 grid grid-cols-[20%_1fr] gap-x-6">
+               <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#e2e1df] py-5">
+                  <p class="text-[#7a7671] text-sm font-normal leading-normal">Email</p>
+                  <p class="text-[#151514] text-sm font-normal leading-normal">support@stetson.com</p>
+               </div>
+               <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#e2e1df] py-5">
+                  <p class="text-[#7a7671] text-sm font-normal leading-normal">Phone</p>
+                  <p class="text-[#151514] text-sm font-normal leading-normal">+1 (555) 123-4567</p>
+               </div>
+               <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#e2e1df] py-5">
+                  <p class="text-[#7a7671] text-sm font-normal leading-normal">Address</p>
+                  <p class="text-[#151514] text-sm font-normal leading-normal">123 Main Street, Anytown, USA</p>
                </div>
             </div>
          </div>
       </div>
+   </div>
    </div>
    <?php include "modal.php" ?>
    <script src="js/auth.js?v=<? echo time(); ?>"></script>
