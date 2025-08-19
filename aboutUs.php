@@ -25,7 +25,7 @@
                      <path fill-rule="evenodd" clip-rule="evenodd" d="M24 4H42V17.3333V30.6667H24V44H6V30.6667V17.3333H24V4Z" fill="currentColor"></path>
                   </svg>
                </div>
-               <h2 class="text-[#151514] text-lg font-bold leading-tight tracking-[-0.015em]">Stetson Latam</h2>
+               <h2 class="text-[#151514] text-lg font-bold leading-tight tracking-[-0.015em]"><a href="index.php">Stetson Latam</a></h2>
             </div>
             <div class="flex flex-1 justify-end gap-8">
                <div class="flex items-center gap-9">
@@ -73,6 +73,9 @@
                         </svg>
                      </div>
                   </button>
+                  <div
+                     class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
+                     style='background-image: url("img/logo.webp");'></div>
                </div>
             </div>
          </header>
@@ -134,8 +137,8 @@
       </div>
    </div>
    <?php include 'modal.php'; ?>
-   <script src="auth.js?v=<?php echo time(); ?>"></script>
-   <script src="index.js?v=<?php echo time(); ?>"></script>
+   <script src="js/auth.js?v=<?php echo time(); ?>"></script>
+   <script src="js/index.js?v=<?php echo time(); ?>"></script>
 </body>
 
 </html>
