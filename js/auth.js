@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         confirmButtonText: 'OK'
                     }).then(() => {
                         if (userRole === 'admin') {
-                            window.location.href = 'admin.php'; // 👈 admin redirigido
+                            window.location.href = '../admin/admin.php'; // 👈 admin redirigido
                         } else {
                             location.reload(); // 👈 usuario normal se queda en index
                         }
