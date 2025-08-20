@@ -1,12 +1,35 @@
-.add-to-cart-btn button {
-  flex: min-w-(84px) max-w-(480px);
+/* Estilo de seleccionado */
+.size-btn.active,
+.color-btn.active {
+  border: 3px solid #e68019;
+  /* naranja */
+  border-radius: 8px;
+}
+
+/* Que el color se vea más claro cuando está activo */
+.color-btn.active {
+  box-shadow: 0 0 0 3px #e68019;
+}
+
+.add-to-cart-btn {
+  border: 2px solid #e68019;
+  /* borde naranja */
+  border-radius: 8px;
+  /* esquinas redondeadas */
+  padding: 0.75rem 1.5rem;
+  /* espacio interno */
+  font-weight: 600;
+  /* texto un poco más fuerte */
+  color: #181411;
+  /* texto oscuro */
+  background-color: #fff;
+  /* fondo blanco */
   cursor: pointer;
-  justify-items: center;
-  overflow: hidden;
-  background-color: bg-(#e68019);
-  color: text-(#181411);
-  font-size: text-sm;
-  font-weight: font-bold;
-  line-height: leading-normal;
-  letter-spacing: tracking-(0.015em);
+  transition: all 0.2s ease-in-out;
+}
+
+/* Efecto hover */
+.add-to-cart-btn:hover {
+  background-color: #e68019;
+  color: #fff;
 }
