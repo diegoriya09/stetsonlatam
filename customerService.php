@@ -117,74 +117,74 @@
                <h2 class="text-[#151514] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Help topics</h2>
                <div class="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-3 p-4">
                   <div class="flex flex-1 gap-3 rounded-lg border border-[#e2e1df] bg-white p-4 flex-col">
-                     <div class="text-[#151514]" data-icon="Question" data-size="24px" data-weight="regular">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
-                           <path
-                              d="M140,180a12,12,0,1,1-12-12A12,12,0,0,1,140,180ZM128,72c-22.06,0-40,16.15-40,36v4a8,8,0,0,0,16,0v-4c0-11,10.77-20,24-20s24,9,24,20-10.77,20-24,20a8,8,0,0,0-8,8v8a8,8,0,0,0,16,0v-.72c18.24-3.35,32-17.9,32-35.28C168,88.15,150.06,72,128,72Zm104,56A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"></path>
-                        </svg>
-                     </div>
-                     <div class="flex flex-col gap-1">
-                        <a href="faqs.php">
+                     <a href="faqs.php">
+                        <div class="text-[#151514]" data-icon="Question" data-size="24px" data-weight="regular">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                              <path
+                                 d="M140,180a12,12,0,1,1-12-12A12,12,0,0,1,140,180ZM128,72c-22.06,0-40,16.15-40,36v4a8,8,0,0,0,16,0v-4c0-11,10.77-20,24-20s24,9,24,20-10.77,20-24,20a8,8,0,0,0-8,8v8a8,8,0,0,0,16,0v-.72c18.24-3.35,32-17.9,32-35.28C168,88.15,150.06,72,128,72Zm104,56A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"></path>
+                           </svg>
+                        </div>
+                        <div class="flex flex-col gap-1">
                            <h2 class="text-[#151514] text-base font-bold leading-tight">FAQs</h2>
                            <p class="text-[#7a7671] text-sm font-normal leading-normal">Find answers to common questions</p>
-                        </a>
-                     </div>
+                        </div>
+                     </a>
                   </div>
                   <div class="flex flex-1 gap-3 rounded-lg border border-[#e2e1df] bg-white p-4 flex-col">
-                     <div class="text-[#151514]" data-icon="Envelope" data-size="24px" data-weight="regular">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
-                           <path
-                              d="M224,48H32a8,8,0,0,0-8,8V192a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A8,8,0,0,0,224,48Zm-96,85.15L52.57,64H203.43ZM98.71,128,40,181.81V74.19Zm11.84,10.85,12,11.05a8,8,0,0,0,10.82,0l12-11.05,58,53.15H52.57ZM157.29,128,216,74.18V181.82Z"></path>
-                        </svg>
-                     </div>
-                     <div class="flex flex-col gap-1">
-                        <a href="contactUs.php">
+                     <a href="contactUs.php">
+                        <div class="text-[#151514]" data-icon="Envelope" data-size="24px" data-weight="regular">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                              <path
+                                 d="M224,48H32a8,8,0,0,0-8,8V192a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A8,8,0,0,0,224,48Zm-96,85.15L52.57,64H203.43ZM98.71,128,40,181.81V74.19Zm11.84,10.85,12,11.05a8,8,0,0,0,10.82,0l12-11.05,58,53.15H52.57ZM157.29,128,216,74.18V181.82Z"></path>
+                           </svg>
+                        </div>
+                        <div class="flex flex-col gap-1">
                            <h2 class="text-[#151514] text-base font-bold leading-tight">Contact Us</h2>
                            <p class="text-[#7a7671] text-sm font-normal leading-normal">Get in touch with our support team</p>
-                        </a>
-                     </div>
+                        </div>
+                     </a>
                   </div>
                   <div class="flex flex-1 gap-3 rounded-lg border border-[#e2e1df] bg-white p-4 flex-col">
-                     <div class="text-[#151514]" data-icon="Truck" data-size="24px" data-weight="regular">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
-                           <path
-                              d="M247.42,117l-14-35A15.93,15.93,0,0,0,218.58,72H184V64a8,8,0,0,0-8-8H24A16,16,0,0,0,8,72V184a16,16,0,0,0,16,16H41a32,32,0,0,0,62,0h50a32,32,0,0,0,62,0h17a16,16,0,0,0,16-16V120A7.94,7.94,0,0,0,247.42,117ZM184,88h34.58l9.6,24H184ZM24,72H168v64H24ZM72,208a16,16,0,1,1,16-16A16,16,0,0,1,72,208Zm81-24H103a32,32,0,0,0-62,0H24V152H168v12.31A32.11,32.11,0,0,0,153,184Zm31,24a16,16,0,1,1,16-16A16,16,0,0,1,184,208Zm48-24H215a32.06,32.06,0,0,0-31-24V128h48Z"></path>
-                        </svg>
-                     </div>
-                     <div class="flex flex-col gap-1">
-                        <a href="shippingReturns.php">
+                     <a href="shippingReturns.php">
+                        <div class="text-[#151514]" data-icon="Truck" data-size="24px" data-weight="regular">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                              <path
+                                 d="M247.42,117l-14-35A15.93,15.93,0,0,0,218.58,72H184V64a8,8,0,0,0-8-8H24A16,16,0,0,0,8,72V184a16,16,0,0,0,16,16H41a32,32,0,0,0,62,0h50a32,32,0,0,0,62,0h17a16,16,0,0,0,16-16V120A7.94,7.94,0,0,0,247.42,117ZM184,88h34.58l9.6,24H184ZM24,72H168v64H24ZM72,208a16,16,0,1,1,16-16A16,16,0,0,1,72,208Zm81-24H103a32,32,0,0,0-62,0H24V152H168v12.31A32.11,32.11,0,0,0,153,184Zm31,24a16,16,0,1,1,16-16A16,16,0,0,1,184,208Zm48-24H215a32.06,32.06,0,0,0-31-24V128h48Z"></path>
+                           </svg>
+                        </div>
+                        <div class="flex flex-col gap-1">
                            <h2 class="text-[#151514] text-base font-bold leading-tight">Shipping &amp; Returns</h2>
                            <p class="text-[#7a7671] text-sm font-normal leading-normal">Learn about our shipping and return policies</p>
-                        </a>
-                     </div>
+                        </div>
+                     </a>
                   </div>
                   <div class="flex flex-1 gap-3 rounded-lg border border-[#e2e1df] bg-white p-4 flex-col">
-                     <div class="text-[#151514]" data-icon="ShieldCheck" data-size="24px" data-weight="regular">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
-                           <path
-                              d="M208,40H48A16,16,0,0,0,32,56v58.78c0,89.61,75.82,119.34,91,124.39a15.53,15.53,0,0,0,10,0c15.2-5.05,91-34.78,91-124.39V56A16,16,0,0,0,208,40Zm0,74.79c0,78.42-66.35,104.62-80,109.18-13.53-4.51-80-30.69-80-109.18V56H208ZM82.34,141.66a8,8,0,0,1,11.32-11.32L112,148.68l50.34-50.34a8,8,0,0,1,11.32,11.32l-56,56a8,8,0,0,1-11.32,0Z"></path>
-                        </svg>
-                     </div>
-                     <div class="flex flex-col gap-1">
-                        <a href="privacyPolicy.php">
+                     <a href="privacyPolicy.php">
+                        <div class="text-[#151514]" data-icon="ShieldCheck" data-size="24px" data-weight="regular">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                              <path
+                                 d="M208,40H48A16,16,0,0,0,32,56v58.78c0,89.61,75.82,119.34,91,124.39a15.53,15.53,0,0,0,10,0c15.2-5.05,91-34.78,91-124.39V56A16,16,0,0,0,208,40Zm0,74.79c0,78.42-66.35,104.62-80,109.18-13.53-4.51-80-30.69-80-109.18V56H208ZM82.34,141.66a8,8,0,0,1,11.32-11.32L112,148.68l50.34-50.34a8,8,0,0,1,11.32,11.32l-56,56a8,8,0,0,1-11.32,0Z"></path>
+                           </svg>
+                        </div>
+                        <div class="flex flex-col gap-1">
                            <h2 class="text-[#151514] text-base font-bold leading-tight">Privacy Policy</h2>
                            <p class="text-[#7a7671] text-sm font-normal leading-normal">Read our privacy policy</p>
-                        </a>
-                     </div>
+                        </div>
+                     </a>
                   </div>
                   <div class="flex flex-1 gap-3 rounded-lg border border-[#e2e1df] bg-white p-4 flex-col">
-                     <div class="text-[#151514]" data-icon="FileText" data-size="24px" data-weight="regular">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
-                           <path
-                              d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Zm-32-80a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h64A8,8,0,0,1,168,136Zm0,32a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h64A8,8,0,0,1,168,168Z"></path>
-                        </svg>
-                     </div>
-                     <div class="flex flex-col gap-1">
-                        <a href="termsOfService.php">
+                     <a href="termsOfService.php">
+                        <div class="text-[#151514]" data-icon="FileText" data-size="24px" data-weight="regular">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                              <path
+                                 d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Zm-32-80a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h64A8,8,0,0,1,168,136Zm0,32a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h64A8,8,0,0,1,168,168Z"></path>
+                           </svg>
+                        </div>
+                        <div class="flex flex-col gap-1">
                            <h2 class="text-[#151514] text-base font-bold leading-tight">Terms of Service</h2>
                            <p class="text-[#7a7671] text-sm font-normal leading-normal">View our terms of service</p>
-                        </a>
-                     </div>
+                        </div>
+                     </a>
                   </div>
                </div>
                <h2 class="text-[#151514] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Contact Us</h2>
