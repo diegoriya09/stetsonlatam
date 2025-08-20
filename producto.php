@@ -229,7 +229,7 @@ $conn->close();
                   class="hidden peer" />
                 <label
                   for="color-<?= $color['id'] ?>"
-                  class="peer-checked:ring-2 peer-checked:ring-[#e68019] flex items-center gap-2 cursor-pointer p-1 rounded">
+                  class="peer-checked:ring-2 peer-checked:ring-[#e68019] flex items-center gap-2 cursor-pointer p-1 rounded border border-[#e5e0dc]">
                   <span
                     class="inline-block w-6 h-6 rounded-full border border-[#e5e0dc]"
                     style="background-color: <?= htmlspecialchars($color['hex']) ?>;"
