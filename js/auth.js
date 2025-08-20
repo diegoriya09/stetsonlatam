@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     // 🔎 Decodificar payload del JWT
                     const payload = JSON.parse(atob(jwt.split('.')[1]));
-                    const userRole = payload.role;
+                    const userRole = payload.data.role;
 
                     // ✅ Mostrar logout, cerrar modal y redirigir con alerta
                     if (logoutBtn) logoutBtn.style.display = 'inline-block';
