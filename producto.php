@@ -20,21 +20,21 @@ if ($product_id) {
 
 
 if ($product_id) {
-    if ($user_id !== null) {
-        // Usuario logueado
-        $stmt = $conn->prepare(
-            "INSERT INTO user_visits (user_id, product_id, visited_at) VALUES (?, ?, NOW())"
-        );
-        $stmt->bind_param("ii", $user_id, $product_id);
-    } else {
-        // Usuario no logueado
-        $stmt = $conn->prepare(
-            "INSERT INTO user_visits (user_id, product_id, visited_at) VALUES (NULL, ?, NOW())"
-        );
-        $stmt->bind_param("i", $product_id);
-    }
-    $stmt->execute();
-    $stmt->close();
+  if ($user_id !== null) {
+    // Usuario logueado
+    $stmt = $conn->prepare(
+      "INSERT INTO user_visits (user_id, product_id, visited_at) VALUES (?, ?, NOW())"
+    );
+    $stmt->bind_param("ii", $user_id, $product_id);
+  } else {
+    // Usuario no logueado
+    $stmt = $conn->prepare(
+      "INSERT INTO user_visits (user_id, product_id, visited_at) VALUES (NULL, ?, NOW())"
+    );
+    $stmt->bind_param("i", $product_id);
+  }
+  $stmt->execute();
+  $stmt->close();
 }
 
 $sizes = [];
@@ -205,19 +205,37 @@ $conn->close();
             <h3 class="text-[#181411] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">Size</h3>
             <div class="flex flex-wrap gap-3 p-4">
               <?php foreach ($sizes as $size): ?>
+                <input
+                  type="radio"
+                  name="size"
+                  id="size-<?= $size['id'] ?>"
+                  value="<?= htmlspecialchars($size['name']) ?>"
+                  class="hidden peer" />
                 <label
-                  class="text-sm font-medium leading-normal flex items-center justify-center rounded-lg border border-[#e5e0dc] px-4 h-11 text-[#181411] has-[:checked]:border-[3px] has-[:checked]:px-3.5 has-[:checked]:border-[#e68019] relative cursor-pointer">
-                  <?php echo htmlspecialchars($size['name']); ?>
-                  <button type="button" class="size-btn" data-size-id="<?= $size['id'] ?>" data-size="<?= $size['name'] ?>" title="<?= $size['name'] ?>"></button>
+                  for="size-<?= $size['id'] ?>"
+                  class="peer-checked:border-[3px] peer-checked:px-3.5 peer-checked:border-[#e68019] text-sm font-medium leading-normal flex items-center justify-center rounded-lg border border-[#e5e0dc] px-4 h-11 text-[#181411] cursor-pointer">
+                  <?= htmlspecialchars($size['name']) ?>
                 </label>
               <?php endforeach; ?>
             </div>
             <h3 class="text-[#181411] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">Color</h3>
             <div class="flex flex-wrap gap-3 p-4">
               <?php foreach ($colors as $color): ?>
-                <label class="flex items-center gap-2 cursor-pointer">
-                  <span class="inline-block w-6 h-6 rounded-full border border-[#e5e0dc]" style="background-color: <?php echo htmlspecialchars($color['hex']); ?>;" title="<?php echo htmlspecialchars($color['name']); ?>"></span>
-                  <button type="button" class="color-btn" data-color-id="<?= $color['id'] ?>" data-color="<?= $color['name'] ?>" style="--color: <?= $color['hex'] ?>;" title="<?= $color['name'] ?>"></button>
+                <input
+                  type="radio"
+                  name="color"
+                  id="color-<?= $color['id'] ?>"
+                  value="<?= htmlspecialchars($color['name']) ?>"
+                  class="hidden peer" />
+                <label
+                  for="color-<?= $color['id'] ?>"
+                  class="peer-checked:ring-2 peer-checked:ring-[#e68019] flex items-center gap-2 cursor-pointer p-1 rounded">
+                  <span
+                    class="inline-block w-6 h-6 rounded-full border border-[#e5e0dc]"
+                    style="background-color: <?= htmlspecialchars($color['hex']) ?>;"
+                    title="<?= htmlspecialchars($color['name']) ?>">
+                  </span>
+                  <?= htmlspecialchars($color['name']) ?>
                 </label>
               <?php endforeach; ?>
             </div>
