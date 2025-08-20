@@ -209,8 +209,8 @@ $conn->close();
                   type="radio"
                   name="size"
                   id="size-<?= $size['id'] ?>"
-                  value="<?= htmlspecialchars($size['name']) ?>"
-                  class="hidden peer" />
+                  value="<?= $size['id'] ?>"
+                  class="hidden peer">
                 <label
                   for="size-<?= $size['id'] ?>"
                   class="peer-checked:border-[3px] peer-checked:px-3.5 peer-checked:border-[#e68019] text-sm font-medium leading-normal flex items-center justify-center rounded-lg border border-[#e5e0dc] px-4 h-11 text-[#181411] cursor-pointer">
@@ -225,16 +225,14 @@ $conn->close();
                   type="radio"
                   name="color"
                   id="color-<?= $color['id'] ?>"
-                  value="<?= htmlspecialchars($color['name']) ?>"
-                  class="hidden peer" />
+                  value="<?= $color['id'] ?>"
+                  class="hidden peer">
                 <label
                   for="color-<?= $color['id'] ?>"
                   class="peer-checked:ring-2 peer-checked:ring-[#e68019] flex items-center gap-2 cursor-pointer p-1 rounded border border-[#e5e0dc]">
                   <span
                     class="inline-block w-6 h-6 rounded-full border border-[#e5e0dc]"
-                    style="background-color: <?= htmlspecialchars($color['hex']) ?>;"
-                    title="<?= htmlspecialchars($color['name']) ?>">
-                  </span>
+                    style="background-color: <?= htmlspecialchars($color['hex']) ?>;"></span>
                   <?= htmlspecialchars($color['name']) ?>
                 </label>
               <?php endforeach; ?>
