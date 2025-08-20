@@ -2,13 +2,13 @@
    <div class="flex max-w-[960px] flex-1 flex-col">
       <footer class="flex flex-col gap-6 px-5 py-10 text-center @container">
          <div class="flex flex-wrap items-center justify-center gap-6 @[480px]:flex-row @[480px]:justify-around">
-            <a class="text-[#887563] text-base font-normal leading-normal min-w-40" href="footer/aboutUs.php">About Us</a>
-            <a class="text-[#887563] text-base font-normal leading-normal min-w-40" href="footer/contactUs.php">Contact Us</a>
-            <a class="text-[#887563] text-base font-normal leading-normal min-w-40" href="footer/customerService.php">Customer Service</a>
-            <a class="text-[#887563] text-base font-normal leading-normal min-w-40" href="footer/privacyPolicy.php">Privacy Policy</a>
-            <a class="text-[#887563] text-base font-normal leading-normal min-w-40" href="footer/termsOfService.php">Terms of Service</a>
-            <a class="text-[#887563] text-base font-normal leading-normal min-w-40" href="footer/faqs.php">FAQs</a>
-            <a class="text-[#887563] text-base font-normal leading-normal min-w-40" href="footer/shippingReturns.php">Shipping &amp; Returns</a>
+            <a class="text-[#887563] text-base font-normal leading-normal min-w-40" href="aboutUs.php">About Us</a>
+            <a class="text-[#887563] text-base font-normal leading-normal min-w-40" href="contactUs.php">Contact Us</a>
+            <a class="text-[#887563] text-base font-normal leading-normal min-w-40" href="customerService.php">Customer Service</a>
+            <a class="text-[#887563] text-base font-normal leading-normal min-w-40" href="privacyPolicy.php">Privacy Policy</a>
+            <a class="text-[#887563] text-base font-normal leading-normal min-w-40" href="termsOfService.php">Terms of Service</a>
+            <a class="text-[#887563] text-base font-normal leading-normal min-w-40" href="faqs.php">FAQs</a>
+            <a class="text-[#887563] text-base font-normal leading-normal min-w-40" href="shippingReturns.php">Shipping &amp; Returns</a>
          </div>
          <div class="flex flex-wrap justify-center gap-4">
             <a href="https://www.facebook.com/distribuidora.nacionaldesombreros">
