@@ -9,7 +9,7 @@
       href="https://fonts.googleapis.com/css2?display=swap&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900&amp;family=Work+Sans%3Awght%40400%3B500%3B700%3B900" />
 
    <title>Customer Service | Stetson LATAM</title>
-   <link rel="icon" href="img/logo.webp" type="image/x-icon" loading="lazy">
+   <link rel="icon" href="../img/logo.webp" type="image/x-icon" loading="lazy">
 
    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -26,11 +26,11 @@
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M24 4H42V17.3333V30.6667H24V44H6V30.6667V17.3333H24V4Z" fill="currentColor"></path>
                      </svg>
                   </div>
-                  <h2 class="text-[#181411] text-lg font-bold leading-tight tracking-[-0.015em]"><a href="index.php">Stetson Latam</a></h2>
+                  <h2 class="text-[#181411] text-lg font-bold leading-tight tracking-[-0.015em]"><a href="../index.php">Stetson Latam</a></h2>
                </div>
                <div class="flex items-center gap-9">
-                  <a class="text-[#181411] text-sm font-medium leading-normal" href="hats.php">Hats</a>
-                  <a class="text-[#181411] text-sm font-medium leading-normal" href="caps.php">Caps</a>
+                  <a class="text-[#181411] text-sm font-medium leading-normal" href="../hats.php">Hats</a>
+                  <a class="text-[#181411] text-sm font-medium leading-normal" href="../caps.php">Caps</a>
                </div>
             </div>
             <div class="flex flex-1 justify-end gap-8">
@@ -86,7 +86,7 @@
                </div>
                <div
                   class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
-                  style='background-image: url("img/logo.webp");'></div>
+                  style='background-image: url("../img/logo.webp");'></div>
             </div>
          </header>
          <div class="px-40 flex flex-1 justify-center py-5">
@@ -209,9 +209,9 @@
          </div>
       </div>
    </div>
-   <?php include "modal.php" ?>
-   <script src="js/auth.js?v=<? echo time(); ?>"></script>
-   <script src="js/index.js?v=<? echo time(); ?>"></script>
+   <?php include "../modal.php" ?>
+   <script src="../js/auth.js?v=<? echo time(); ?>"></script>
+   <script src="../js/index.js?v=<? echo time(); ?>"></script>
 </body>
 
 </html>
