@@ -219,11 +219,12 @@ $conn->close();
                                 <span class="truncate">Proceed to Checkout</span>
                             </button>
                             <script>
-                                document.getElementById('checkout-btn').addEventListener('click', function() {
+                                document.getElementById('checkout-btn').addEventListener('click', function(event) {
+                                    event.preventDefault(); // 🔥 evita cualquier acción por defecto
+
                                     const cartTable = document.getElementById('cart-table-body');
                                     const total = document.getElementById('total-carrito').innerText.replace('$', '').trim();
 
-                                    // Contar solo filas (tr), no nodos de texto
                                     const rowCount = cartTable.querySelectorAll("tr").length;
 
                                     if (rowCount === 0 || parseFloat(total) === 0) {
@@ -233,10 +234,10 @@ $conn->close();
                                             text: 'You must add products to your cart before continuing.',
                                             confirmButtonColor: '#e68019'
                                         });
-                                        return; // Detiene el redirect
+                                        return; // no redirige
                                     }
 
-                                    // Si hay productos, redirige al checkout
+                                    // ✅ Solo si hay productos pasa al checkout
                                     window.location.href = 'checkout.php';
                                 });
                             </script>
