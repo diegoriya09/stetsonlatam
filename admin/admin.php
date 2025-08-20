@@ -383,8 +383,7 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
                     let html = "<ul>";
                     data.details.forEach(item => {
                         html += `<li>
-                        ${item.name} - Quantity: ${item.cantidad} - Price: $${item.price} - Size: ${item.size_nombre || "N/A"}
-                        ${item.color ? `- Color: ${item.color_nombre || "N/A"}` : ""}
+                        ${item.name} - Quantity: ${item.cantidad} - Price: $${item.price} - Size: ${item.size_nombre || "N/A"} - Color: ${item.color_nombre || "N/A"}
                     </li>`;
                     });
                     html += "</ul>";
