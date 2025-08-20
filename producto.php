@@ -183,7 +183,7 @@ $conn->close();
             <div class="w-full gap-1 overflow-hidden bg-white @[480px]:gap-2 aspect-[3/2] rounded-lg grid grid-cols-[2fr_1fr_1fr]">
               <div
                 class="w-full bg-center bg-no-repeat bg-cover aspect-auto rounded-none row-span-2"
-                style='background-image: url("<?php echo htmlspecialchars($producto['images'][0]); ?>");'></div>
+                style='background-image: url("<?php echo htmlspecialchars($producto["image"]); ?>");'></div>
               <!-- Si tienes más imágenes, puedes mostrarlas aquí usando $producto['images'] -->
             </div>
           </div>
