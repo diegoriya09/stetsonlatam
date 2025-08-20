@@ -32,32 +32,32 @@ if ($user_id) {
 $recomendados = [];
 
 if ($user_id !== null) {
-  // Usuario logueado
-  $sql = "SELECT p.* 
+    // Usuario logueado
+    $sql = "SELECT p.* 
             FROM productos p
             INNER JOIN user_visits uv ON p.id = uv.product_id
             WHERE uv.user_id = ?    
             GROUP BY p.id
             ORDER BY COUNT(*) DESC
             LIMIT 5";
-  $stmt = $conn->prepare($sql);
-  $stmt->bind_param("i", $user_id);
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $user_id);
 } else {
-  // Usuario no logueado (user_id es NULL)
-  $sql = "SELECT p.* 
+    // Usuario no logueado (user_id es NULL)
+    $sql = "SELECT p.* 
             FROM productos p
             INNER JOIN user_visits uv ON p.id = uv.product_id
             WHERE uv.user_id IS NULL
             GROUP BY p.id
             ORDER BY COUNT(*) DESC
             LIMIT 5";
-  $stmt = $conn->prepare($sql);
+    $stmt = $conn->prepare($sql);
 }
 
 $stmt->execute();
 $result = $stmt->get_result();
 while ($row = $result->fetch_assoc()) {
-  $recomendados[] = $row;
+    $recomendados[] = $row;
 }
 
 $conn->close();
@@ -220,6 +220,16 @@ $conn->close();
                             </button>
                             <script>
                                 document.getElementById('checkout-btn').addEventListener('click', function() {
+                                    const cartTable = document.getElementById('cart-table-body');
+                                    const total = document.getElementById('total-carrito').innerText.replace('$', '').trim();
+
+                                    // Validar si hay filas en la tabla o si el total es mayor que 0
+                                    if (cartTable.children.length === 0 || parseFloat(total) === 0) {
+                                        alert('Your cart is empty. Please add products before continuing.');
+                                        return; // no hace redirect
+                                    }
+
+                                    // Si hay productos, redirige al checkout
                                     window.location.href = 'checkout.php';
                                 });
                             </script>
