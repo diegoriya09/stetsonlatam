@@ -64,14 +64,14 @@ if ($stmt->num_rows > 0) {
             "exp" => time() + 3600, //1 hour expiration
             "data" => [
                 "id" => $user_id,
-                "email" => $email
+                "email" => $email,
+                "role" => $user_role
             ]
         ];
 
         $jwt = JWT::encode($payload, $secret_key, 'HS256');
         echo json_encode([
-        "token" => $jwt,
-        "role" => $user_role // <-- agrega el rol aquí
+        "token" => $jwt
     ]);
         exit;
     } else {
