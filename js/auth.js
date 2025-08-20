@@ -49,17 +49,27 @@ document.addEventListener("DOMContentLoaded", () => {
                     localStorage.setItem('jwt', result.token);
                     const jwt = result.token;
 
-                    // ✅ 6. Mostrar logout, cerrar modal y redirigir con alerta
+                    // 🔎 Decodificar payload del JWT
+                    const payload = JSON.parse(atob(jwt.split('.')[1]));
+                    const userRole = payload.role;
+
+                    // ✅ Mostrar logout, cerrar modal y redirigir con alerta
                     if (logoutBtn) logoutBtn.style.display = 'inline-block';
                     const userModal = document.getElementById('user-modal');
                     if (userModal) userModal.style.display = 'none';
+
+                    // ✅ Alerta y redirección
                     Swal.fire({
                         title: 'Welcome back!',
                         text: 'Successful login',
                         icon: 'success',
                         confirmButtonText: 'OK'
                     }).then(() => {
-                        location.reload();
+                        if (userRole === 'admin') {
+                            window.location.href = 'admin.php'; // 👈 admin redirigido
+                        } else {
+                            location.reload(); // 👈 usuario normal se queda en index
+                        }
                     });
                 } else {
                     Swal.fire("Error", result.error || "Could not log in", "error");
@@ -145,26 +155,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // LOGOUT
     if (logoutBtn) {
-    logoutBtn.addEventListener('click', () => {
-        Swal.fire({
-            title: 'Closed session',
-            text: 'You have successfully logged out',
-            icon: 'success',
-            showConfirmButton: false,
-            timer: 1000,
-            timerProgressBar: true
-        }).then(async () => {
-            // Llamada al backend para destruir la sesión
-            await fetch('php/logout.php', { method: 'POST' });
+        logoutBtn.addEventListener('click', () => {
+            Swal.fire({
+                title: 'Closed session',
+                text: 'You have successfully logged out',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 1000,
+                timerProgressBar: true
+            }).then(async () => {
+                // Llamada al backend para destruir la sesión
+                await fetch('php/logout.php', { method: 'POST' });
 
-            // Limpiar JWT del localStorage
-            localStorage.removeItem('jwt');
+                // Limpiar JWT del localStorage
+                localStorage.removeItem('jwt');
 
-            // Redirigir
-            window.location.href = 'index.php';
+                // Redirigir
+                window.location.href = 'index.php';
+            });
         });
-    });
-}
+    }
 
     function isTokenExpired(token) {
         try {
