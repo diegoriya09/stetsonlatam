@@ -220,14 +220,23 @@ $conn->close();
                             </button>
                             <script>
                                 document.getElementById('checkout-btn').addEventListener('click', function(event) {
-                                    event.preventDefault(); // 🔥 evita cualquier acción por defecto
+                                    event.preventDefault(); // evita comportamiento por defecto siempre
 
                                     const cartTable = document.getElementById('cart-table-body');
-                                    const total = document.getElementById('total-carrito').innerText.replace('$', '').trim();
+                                    const totalElement = document.getElementById('total-carrito');
 
+                                    // Contar solo filas <tr>
                                     const rowCount = cartTable.querySelectorAll("tr").length;
 
-                                    if (rowCount === 0 || parseFloat(total) === 0) {
+                                    // Sacar el total como número
+                                    let total = 0;
+                                    if (totalElement) {
+                                        const raw = totalElement.innerText.replace(/[^0-9.]/g, ''); // quita $ y otros símbolos
+                                        total = parseFloat(raw) || 0;
+                                    }
+
+                                    // Validación
+                                    if (rowCount === 0 || total === 0) {
                                         Swal.fire({
                                             icon: 'warning',
                                             title: 'Empty cart',
@@ -237,7 +246,7 @@ $conn->close();
                                         return; // no redirige
                                     }
 
-                                    // ✅ Solo si hay productos pasa al checkout
+                                    // ✅ Solo si hay productos
                                     window.location.href = 'checkout.php';
                                 });
                             </script>
