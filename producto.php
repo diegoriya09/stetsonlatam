@@ -205,36 +205,40 @@ $conn->close();
             <h3 class="text-[#181411] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">Size</h3>
             <div class="flex flex-wrap gap-3 p-4">
               <?php foreach ($sizes as $size): ?>
-                <input
-                  type="radio"
-                  name="size"
-                  id="size-<?= $size['id'] ?>"
-                  value="<?= $size['id'] ?>"
-                  class="hidden peer">
-                <label
-                  for="size-<?= $size['id'] ?>"
-                  class="peer-checked:border-[3px] peer-checked:px-3.5 peer-checked:border-[#e68019] text-sm font-medium leading-normal flex items-center justify-center rounded-lg border border-[#e5e0dc] px-4 h-11 text-[#181411] cursor-pointer">
-                  <?= htmlspecialchars($size['name']) ?>
-                </label>
+                <button
+                  type="button"
+                  class="size-btn border border-[#e5e0dc] px-4 h-11 rounded-lg text-sm font-medium text-[#181411]"
+                  data-size-id="<?= $size['id'] ?>"
+                  data-size="<?= $size['name'] ?>">
+                  <?= htmlspecialchars($size['name']); ?>
+                </button>
               <?php endforeach; ?>
             </div>
+            <style>
+              /* Estilo de seleccionado */
+              .size-btn.active,
+              .color-btn.active {
+                border: 3px solid #e68019;
+                /* naranja */
+                border-radius: 8px;
+              }
+
+              /* Que el color se vea más claro cuando está activo */
+              .color-btn.active {
+                box-shadow: 0 0 0 3px #e68019;
+              }
+            </style>
             <h3 class="text-[#181411] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">Color</h3>
             <div class="flex flex-wrap gap-3 p-4">
               <?php foreach ($colors as $color): ?>
-                <input
-                  type="radio"
-                  name="color"
-                  id="color-<?= $color['id'] ?>"
-                  value="<?= $color['id'] ?>"
-                  class="hidden peer">
-                <label
-                  for="color-<?= $color['id'] ?>"
-                  class="peer-checked:ring-2 peer-checked:ring-[#e68019] flex items-center gap-2 cursor-pointer p-1 rounded border border-[#e5e0dc]">
-                  <span
-                    class="inline-block w-6 h-6 rounded-full border border-[#e5e0dc]"
-                    style="background-color: <?= htmlspecialchars($color['hex']) ?>;"></span>
-                  <?= htmlspecialchars($color['name']) ?>
-                </label>
+                <button
+                  type="button"
+                  class="color-btn w-10 h-10 rounded-full border border-[#e5e0dc]"
+                  style="background-color: <?= $color['hex'] ?>;"
+                  data-color-id="<?= $color['id'] ?>"
+                  data-color="<?= $color['name'] ?>"
+                  title="<?= $color['name'] ?>">
+                </button>
               <?php endforeach; ?>
             </div>
             <div class="flex items-center gap-2 px-4 py-3">
@@ -243,6 +247,25 @@ $conn->close();
                 class="w-12 text-center border border-gray-300 rounded" readonly>
               <button type="button" class="qty-btn plus border border-gray-300 px-3 rounded">+</button>
             </div>
+            <script>
+              // Función genérica para manejar selección única
+              function handleSelection(buttons) {
+                buttons.forEach(btn => {
+                  btn.addEventListener("click", () => {
+                    buttons.forEach(b => b.classList.remove("active")); // quita el activo
+                    btn.classList.add("active"); // marca el seleccionado
+                  });
+                });
+              }
+
+              // Aplica a tallas
+              const sizeBtns = document.querySelectorAll(".size-btn");
+              handleSelection(sizeBtns);
+
+              // Aplica a colores
+              const colorBtns = document.querySelectorAll(".color-btn");
+              handleSelection(colorBtns);
+            </script>
             <script>
               // Lógica + y − adaptada
               document.addEventListener('click', function(e) {
