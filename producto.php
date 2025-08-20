@@ -227,6 +227,29 @@ $conn->close();
               .color-btn.active {
                 box-shadow: 0 0 0 3px #e68019;
               }
+
+              .add-to-cart-btn {
+                border: 2px solid #e68019;
+                /* borde naranja */
+                border-radius: 8px;
+                /* esquinas redondeadas */
+                padding: 0.75rem 1.5rem;
+                /* espacio interno */
+                font-weight: 600;
+                /* texto un poco más fuerte */
+                color: #181411;
+                /* texto oscuro */
+                background-color: #fff;
+                /* fondo blanco */
+                cursor: pointer;
+                transition: all 0.2s ease-in-out;
+              }
+
+              /* Efecto hover */
+              .add-to-cart-btn:hover {
+                background-color: #e68019;
+                color: #fff;
+              }
             </style>
             <h3 class="text-[#181411] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">Color</h3>
             <div class="flex flex-wrap gap-3 p-4">
