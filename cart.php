@@ -27,6 +27,39 @@ if ($user_id) {
 } else {
     // Si no está logueado, carga del localStorage usando JS
 }
+
+//productos más visitados por el usuario
+$recomendados = [];
+
+if ($user_id !== null) {
+  // Usuario logueado
+  $sql = "SELECT p.* 
+            FROM productos p
+            INNER JOIN user_visits uv ON p.id = uv.product_id
+            WHERE uv.user_id = ?    
+            GROUP BY p.id
+            ORDER BY COUNT(*) DESC
+            LIMIT 5";
+  $stmt = $conn->prepare($sql);
+  $stmt->bind_param("i", $user_id);
+} else {
+  // Usuario no logueado (user_id es NULL)
+  $sql = "SELECT p.* 
+            FROM productos p
+            INNER JOIN user_visits uv ON p.id = uv.product_id
+            WHERE uv.user_id IS NULL
+            GROUP BY p.id
+            ORDER BY COUNT(*) DESC
+            LIMIT 5";
+  $stmt = $conn->prepare($sql);
+}
+
+$stmt->execute();
+$result = $stmt->get_result();
+while ($row = $result->fetch_assoc()) {
+  $recomendados[] = $row;
+}
+
 $conn->close();
 ?>
 
@@ -195,33 +228,23 @@ $conn->close();
                     <h2 class="text-[#181411] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">You may also like</h2>
                     <div class="flex overflow-y-auto [-ms-scrollbar-style:none] [scrollbar-width:none] [&amp;::-webkit-scrollbar]:hidden">
                         <div class="flex items-stretch p-4 gap-3">
-                            <div class="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-40">
-                                <div
-                                    class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-lg flex flex-col"
-                                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBGJoTweVx-e3vNbYD7aZY8QpDeI4Cn9FP8jyzaYB61r08rmUubyayJxPo_V4gW-sRy2tR2uw4lAVj6wPm8GH2A9KdorVvfprer00yrL7dqujEr6ZshNYmUC2edvNQfid8LOIsbROm1CUFyNuFbT9sbHJTej88ho3tZ-9CRQg5UbXGOtxJb9cnWLk9SmJ79Sn1NeQZKEraSLB33KUon31IJdYeGjU4GPOp5t_Wu5WoQejL0oGF23LM0mUYW0iCP_zTZFhRS82VscxAg");'></div>
-                                <div>
-                                    <p class="text-[#181411] text-base font-medium leading-normal">Classic Cowboy Hat</p>
-                                    <p class="text-[#887563] text-sm font-normal leading-normal">$120</p>
-                                </div>
-                            </div>
-                            <div class="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-40">
-                                <div
-                                    class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-lg flex flex-col"
-                                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC62EaHPGrX3IdLX9hWmiNOicoyotbYYs0kpxfy6CAFCQFBi7qe2G4a7QM8Nj-zfQLVO1KZgwOgu-DgqmXaDcWrZqQZV5AgDop4o_vxw9jt_9L6zXauFE49dzdlPv7I6yb9m85Yrdlu42IBy5L_-muIpePLabRk1uzG0upSjG7_6iM49ps0Fs0TJE9kh7Ahx_SSgfKv0YJjrBt8dzeZx63T-Bbkk1X0cVVBs-om4HxnIvI-OKnsPeH7k0UzbkS2iKcKqqzQrNG9jP2K");'></div>
-                                <div>
-                                    <p class="text-[#181411] text-base font-medium leading-normal">Stylish Fedora Hat</p>
-                                    <p class="text-[#887563] text-sm font-normal leading-normal">$80</p>
-                                </div>
-                            </div>
-                            <div class="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-40">
-                                <div
-                                    class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-lg flex flex-col"
-                                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAo2DzWDFiJRdfL4YCos70uPdznHSa9t7hIoswXQhoEzrzaOfPxqqrkMPFAzlinVuNCZigwoMig-hKdPjQwHpHp_Vk7a1P_xzWMgYLtIsz9yHxOfRpFLtzAHZfSt_B-9uqIFPXDEhgxvnP0NNiTAQim5x3GQ1AAu41Vx8-VhAkgxCRE5nYAFIsgCC9SW_RN8nmYqDBiOPmxZ3JzbBExDyZAJxowNfyeBqFsd051n71S7gleczP6h_5zGMRcKjpaUfpMO_XLznZePDn-");'></div>
-                                <div>
-                                    <p class="text-[#181411] text-base font-medium leading-normal">Casual Baseball Cap</p>
-                                    <p class="text-[#887563] text-sm font-normal leading-normal">$30</p>
-                                </div>
-                            </div>
+                            <?php if (!empty($recomendados)) {
+                                foreach ($recomendados as $recomendado): ?>
+                                    <div class="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-40">
+                                        <a href="producto.php?id=<?php echo $recomendado['id']; ?>" class="flex flex-col gap-3 pb-3 hover:scale-[1.03] transition-transform">
+                                            <div
+                                                class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-lg flex flex-col"
+                                                style='background-image: url("<?php echo htmlspecialchars($recomendado["image"]); ?>");'></div>
+                                            <div>
+                                                <p class="text-[#151514] text-base font-medium leading-normal"><?php echo htmlspecialchars($recomendado["name"]); ?></p>
+                                                <p class="text-[#7a7671] text-sm font-normal leading-normal">$<?php echo number_format($recomendado["price"], 2); ?></p>
+                                            </div>
+                                        </a>
+                                    </div>
+                            <?php endforeach;
+                            } else {
+                                echo "<p>No hay productos recomendados aún.</p>";
+                            } ?>
                         </div>
                     </div>
                 </div>
