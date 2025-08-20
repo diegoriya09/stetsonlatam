@@ -223,10 +223,17 @@ $conn->close();
                                     const cartTable = document.getElementById('cart-table-body');
                                     const total = document.getElementById('total-carrito').innerText.replace('$', '').trim();
 
-                                    // Validar si hay filas en la tabla o si el total es mayor que 0
-                                    if (cartTable.children.length === 0 || parseFloat(total) === 0) {
-                                        alert('Your cart is empty. Please add products before continuing.');
-                                        return; // no hace redirect
+                                    // Contar solo filas (tr), no nodos de texto
+                                    const rowCount = cartTable.querySelectorAll("tr").length;
+
+                                    if (rowCount === 0 || parseFloat(total) === 0) {
+                                        Swal.fire({
+                                            icon: 'warning',
+                                            title: 'Empty cart',
+                                            text: 'You must add products to your cart before continuing.',
+                                            confirmButtonColor: '#e68019'
+                                        });
+                                        return; // Detiene el redirect
                                     }
 
                                     // Si hay productos, redirige al checkout
