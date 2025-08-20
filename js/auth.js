@@ -176,6 +176,16 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    const signupSection = document.getElementById('signup-section');
+
+    if (signupSection) {
+        if (token) {
+            signupSection.style.display = 'none'; // ✅ ocultar si ya hay sesión
+        } else {
+            signupSection.style.display = 'block'; // ✅ mostrar si NO hay sesión
+        }
+    }
+
     function isTokenExpired(token) {
         try {
             const payload = JSON.parse(atob(token.split('.')[1]));

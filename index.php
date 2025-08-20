@@ -192,7 +192,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="@container">
+                    <div id="signup-section" class="@container">
                         <div class="flex flex-col justify-end gap-6 px-4 py-10 @[480px]:gap-8 @[480px]:px-10 @[480px]:py-20">
                             <div class="flex flex-col gap-2 text-center">
                                 <h1
