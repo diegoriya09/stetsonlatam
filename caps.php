@@ -306,7 +306,7 @@ $conn->close();
                   </div>
               <?php endforeach;
               } else {
-                echo "<p>No hay productos recomendados aún.</p>";
+                echo "<p>No products recommended yet.</p>";
               } ?>
             </div>
           </div>
