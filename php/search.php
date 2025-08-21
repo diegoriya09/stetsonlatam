@@ -1,6 +1,9 @@
 <?php
-// search.php
-require_once __DIR__ . '/php/conexion.php';
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+
+require 'conexion.php';
 header('Content-Type: application/json; charset=utf-8');
 
 $q = trim($_GET['q'] ?? '');
