@@ -148,7 +148,7 @@ $conn->close();
                                 const data = await res.json();
 
                                 if (!data.productos.length && !data.categorias.length) {
-                                    resultsBox.innerHTML = "<p class='p-2 text-gray-500'>No se encontraron resultados</p>";
+                                    resultsBox.innerHTML = "<p class='p-2 text-gray-500'>No results found</p>";
                                 } else {
                                     let html = "";
                                     if (data.productos.length) {
@@ -328,7 +328,7 @@ $conn->close();
                                     </div>
                             <?php endforeach;
                             } else {
-                                echo "<p>No hay productos recomendados aún.</p>";
+                                echo "<p>No recommended products yet.</p>";
                             } ?>
                         </div>
                     </div>
