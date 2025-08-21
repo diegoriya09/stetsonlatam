@@ -33,7 +33,7 @@
                                     Authentic Style, Timeless Legacy
                                 </h1>
                                 <h2 class="text-white text-sm font-normal leading-normal @[480px]:text-base @[480px]:font-normal @[480px]:leading-normal">
-                                    Explore our curated collection of premium hats and accessories, crafted with the spirit of the American West.
+                                    Explore our curated collection of premium hats, crafted with the spirit of the American West.
                                 </h2>
                             </div>
                             <a href="hats.php">
