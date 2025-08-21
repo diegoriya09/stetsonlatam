@@ -113,36 +113,36 @@
                             </div>
                         </div>
                     </div>
+                    <?php
+                    require_once 'php/conexion.php';
+
+                    // Traer productos destacados (is_featured = 1)
+                    $sql = "SELECT id, name, description, image FROM productos WHERE is_featured = 1 LIMIT 6";
+                    $result = $conn->query($sql);
+                    ?>
+
                     <h2 class="text-[#181411] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Featured Products</h2>
-                    <div class="flex overflow-y-auto [-ms-scrollbar-style:none] [scrollbar-width:none] [&amp;::-webkit-scrollbar]:hidden">
+                    <div class="flex overflow-y-auto [-ms-scrollbar-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                         <div class="flex items-stretch p-4 gap-3">
-                            <div class="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-60">
-                                <div
-                                    class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg flex flex-col"
-                                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDRy-iWpxjuMsTym_9FgPFPhk1IDl5Rop0_YOLLpoJQHepoBXXd3HBLtge2ZwkMcMdsSUC-4bSlHkzEYvcYvdh289Zl5aS7tuqxK0_EzalFFAeGesS5eY0mBjkR8o1eKP7BXsYsPj7YSU-CsHs4LYoNFL4SSKICZV5N80Q_seI1hMGxewvq8g-QRUr_ic0j7OWzl8t-TgXhfxoM3Ush07-rItcKzcXv_ZBWKsHrKCtvEdh3WlrhKx6dKtlikPTxDeyM64iDVeth0Wvh");'></div>
-                                <div>
-                                    <p class="text-[#181411] text-base font-medium leading-normal">The Classic Stetson</p>
-                                    <p class="text-[#887563] text-sm font-normal leading-normal">Our iconic hat, a symbol of American craftsmanship.</p>
-                                </div>
-                            </div>
-                            <div class="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-60">
-                                <div
-                                    class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg flex flex-col"
-                                    style='background-image: url("img/helenastraw.webp");'></div>
-                                <div>
-                                    <p class="text-[#181411] text-base font-medium leading-normal">Handcrafted Leather Belt</p>
-                                    <p class="text-[#887563] text-sm font-normal leading-normal">Premium leather belt, perfect for any occasion.</p>
-                                </div>
-                            </div>
-                            <div class="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-60">
-                                <div
-                                    class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg flex flex-col"
-                                    style='background-image: url("img/lattemilan.webp");'></div>
-                                <div>
-                                    <p class="text-[#181411] text-base font-medium leading-normal">Western Style Shirt</p>
-                                    <p class="text-[#887563] text-sm font-normal leading-normal">Embrace the spirit of the West with our stylish shirts.</p>
-                                </div>
-                            </div>
+                            <?php if ($result && $result->num_rows > 0): ?>
+                                <?php while ($row = $result->fetch_assoc()): ?>
+                                    <div class="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-60">
+                                        <div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg flex flex-col"
+                                            style='background-image: url("<?php echo htmlspecialchars($row["image"]); ?>");'>
+                                        </div>
+                                        <div>
+                                            <p class="text-[#181411] text-base font-medium leading-normal">
+                                                <?php echo htmlspecialchars($row["name"]); ?>
+                                            </p>
+                                            <p class="text-[#887563] text-sm font-normal leading-normal">
+                                                <?php echo htmlspecialchars($row["description"]); ?>
+                                            </p>
+                                        </div>
+                                    </div>
+                                <?php endwhile; ?>
+                            <?php else: ?>
+                                <p class="text-gray-500">No featured products found.</p>
+                            <?php endif; ?>
                         </div>
                     </div>
                     <h2 class="text-[#181411] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">New Arrivals</h2>
@@ -177,20 +177,22 @@
                     </div>
                     <h2 class="text-[#181411] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Our Story</h2>
                     <div class="p-4 @container">
-                        <div class="flex flex-col items-stretch justify-start rounded-lg @xl:flex-row @xl:items-start">
-                            <div
-                                class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-lg"
-                                style='background-image: url("img/story1.webp");'></div>
-                            <div class="flex w-full min-w-72 grow flex-col items-stretch justify-center gap-1 py-4 @xl:px-4">
-                                <p class="text-[#181411] text-lg font-bold leading-tight tracking-[-0.015em]">A Legacy of Craftsmanship</p>
-                                <div class="flex items-end gap-3 justify-between">
-                                    <p class="text-[#887563] text-base font-normal leading-normal">
-                                        For over 150 years, Stetson has been synonymous with quality and authenticity. Our products are crafted with meticulous attention to detail, using the finest
-                                        materials to ensure lasting style and durability.
-                                    </p>
+                        <a href="aboutUs.php">
+                            <div class="flex flex-col items-stretch justify-start rounded-lg @xl:flex-row @xl:items-start">
+                                <div
+                                    class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-lg"
+                                    style='background-image: url("img/story1.webp");'></div>
+                                <div class="flex w-full min-w-72 grow flex-col items-stretch justify-center gap-1 py-4 @xl:px-4">
+                                    <p class="text-[#181411] text-lg font-bold leading-tight tracking-[-0.015em]">A Legacy of Craftsmanship</p>
+                                    <div class="flex items-end gap-3 justify-between">
+                                        <p class="text-[#887563] text-base font-normal leading-normal">
+                                            For over 150 years, Stetson has been synonymous with quality and authenticity. Our products are crafted with meticulous attention to detail, using the finest
+                                            materials to ensure lasting style and durability.
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     <div id="signup-section" class="@container">
                         <div class="flex flex-col justify-end gap-6 px-4 py-10 @[480px]:gap-8 @[480px]:px-10 @[480px]:py-20">
