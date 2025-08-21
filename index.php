@@ -123,7 +123,7 @@
 
                     <h2 class="text-[#181411] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Featured Products</h2>
                     <div class="flex overflow-y-auto [-ms-scrollbar-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                        <div class="flex items-stretch p-4 gap-3">
+                        <div class="flex flex-wrap p-4 gap-3">
                             <?php if ($result && $result->num_rows > 0): ?>
                                 <?php while ($row = $result->fetch_assoc()): ?>
                                     <a href="producto.php?id=<?php echo $row['id']; ?>">
