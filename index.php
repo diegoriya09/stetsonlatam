@@ -147,35 +147,37 @@
                             <?php endif; ?>
                         </div>
                     </div>
+                    <?php
+                    require_once 'php/conexion.php';
+
+                    // Últimos 3 productos (ordenados por fecha o id)
+                    $sql = "SELECT id, name, description, image 
+                    FROM productos 
+                    ORDER BY id DESC 
+                    LIMIT 3";
+                    $result = $conn->query($sql);
+                    ?>
+
                     <h2 class="text-[#181411] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">New Arrivals</h2>
-                    <div class="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-3 p-4">
-                        <div class="flex flex-col gap-3 pb-3">
-                            <div
-                                class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg"
-                                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC0n9UT8RSB4SMQtGhKgvB7Ci_kElF7dDsjGbS6QjSBPMU562cBfYpecr3uyRNPvGgOSUgOb80LulYE-_OsFFjvOarkHiMK2UP-apbjz1UgXvOq14p2_gcYaH15qGOwh9Qrorrtc2yvzfG5WHPx6LkSaBXTpGXusQti-795A_MgVwt-N4YFFsCigQ1EnWEO2JCc0vx7X3KGSHu7ItM1ZFGgWEWt2Ir6PhmCR7ngGWgpXCn-N9sS6fX0WlUihywA6Aqc9x7-i67e1BeQ");'></div>
-                            <div>
-                                <p class="text-[#181411] text-base font-medium leading-normal">The Outlaw Collection</p>
-                                <p class="text-[#887563] text-sm font-normal leading-normal">Bold and rugged designs for the modern adventurer.</p>
-                            </div>
-                        </div>
-                        <div class="flex flex-col gap-3 pb-3">
-                            <div
-                                class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg"
-                                style='background-image: url("img/lobocowboy.webp");'></div>
-                            <div>
-                                <p class="text-[#181411] text-base font-medium leading-normal">The Heritage Series</p>
-                                <p class="text-[#887563] text-sm font-normal leading-normal">Celebrating our rich history with classic styles.</p>
-                            </div>
-                        </div>
-                        <div class="flex flex-col gap-3 pb-3">
-                            <div
-                                class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg"
-                                style='background-image: url("img/kenton10xstraw.webp");'></div>
-                            <div>
-                                <p class="text-[#181411] text-base font-medium leading-normal">The Urban Cowboy</p>
-                                <p class="text-[#887563] text-sm font-normal leading-normal">A contemporary take on Western fashion.</p>
-                            </div>
-                        </div>
+                    <div class="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-6 p-4">
+                        <?php if ($result && $result->num_rows > 0): ?>
+                            <?php while ($row = $result->fetch_assoc()): ?>
+                                <a href="producto.php?id=<?php echo $row['id']; ?>" class="flex flex-col gap-3 pb-3">
+                                    <div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg"
+                                        style='background-image: url("<?php echo htmlspecialchars($row["image"]); ?>");'></div>
+                                    <div>
+                                        <p class="text-[#181411] text-base font-medium leading-normal">
+                                            <?php echo htmlspecialchars($row["name"]); ?>
+                                        </p>
+                                        <p class="text-[#887563] text-sm font-normal leading-normal">
+                                            <?php echo htmlspecialchars($row["description"]); ?>
+                                        </p>
+                                    </div>
+                                </a>
+                            <?php endwhile; ?>
+                        <?php else: ?>
+                            <p class="text-gray-500">No new arrivals found.</p>
+                        <?php endif; ?>
                     </div>
                     <h2 class="text-[#181411] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Our Story</h2>
                     <div class="p-4 @container">
