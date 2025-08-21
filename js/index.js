@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
           // Asignar evento a la X para cerrar el modal
           const closeBtn = modal.querySelector('.close');
           if (closeBtn) {
-            closeBtn.onclick = function() {
+            closeBtn.onclick = function () {
               modal.style.display = 'none';
             };
           }
@@ -56,12 +56,58 @@ document.addEventListener('DOMContentLoaded', () => {
         // Asignar evento a la X para cerrar el modal
         const closeBtn = modal.querySelector('.close');
         if (closeBtn) {
-          closeBtn.onclick = function() {
+          closeBtn.onclick = function () {
             modal.style.display = 'none';
           };
         }
       }
     });
   }
+
+  const input = document.getElementById('search-input');
+  const container = document.getElementById('productos-container');
+
+  // Indicador liviano de "cargando"
+  function showLoading() {
+    container.innerHTML = '<p class="col-span-3 text-center py-6">Searching...</p>';
+  }
+
+  // Debounce: evita bombardear al servidor en cada tecla
+  function debounce(fn, delay = 300) {
+    let t;
+    return (...args) => {
+      clearTimeout(t);
+      t = setTimeout(() => fn(...args), delay);
+    };
+  }
+
+  let controller = null;
+  const runSearch = debounce(async (q) => {
+    try {
+      if (controller) controller.abort();
+      controller = new AbortController();
+
+      showLoading();
+
+      const res = await fetch('php/search_products.php?q=' + encodeURIComponent(q), {
+        signal: controller.signal,
+        headers: { 'X-Requested-With': 'fetch' }
+      });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+
+      const html = await res.text();
+      container.innerHTML = html;
+    } catch (err) {
+      if (err.name === 'AbortError') return; // petición cancelada por nueva tecla
+      console.error(err);
+      container.innerHTML = '<p class="col-span-3 text-center text-red-600 py-6">Error finding.</p>';
+    }
+  }, 350);
+
+  // Buscar mientras escribe
+  input.addEventListener('input', (e) => runSearch(e.target.value));
+
+  // Enter no recarga página
+  document.getElementById('search-form').addEventListener('submit', (e) => e.preventDefault());
 });
 
