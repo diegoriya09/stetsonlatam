@@ -113,12 +113,70 @@ $conn->close();
                                         d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path>
                                 </svg>
                             </div>
-                            <input
-                                placeholder="Search"
-                                class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#151514] focus:outline-0 focus:ring-0 border-none bg-[#f3f2f2] focus:border-none h-full placeholder:text-[#7a7671] px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal"
-                                value="" />
+                            <div class="relative">
+                                <input
+                                    id="search-input"
+                                    name="q"
+                                    placeholder="Search..."
+                                    autocomplete="off"
+                                    class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#151514] focus:outline-0 focus:ring-0 border-none bg-[#f3f2f2] focus:border-none h-full placeholder:text-[#7a7671] px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal"
+                                    value="" />
+                                <div id="search-results" class="absolute top-full left-0 w-full bg-white border rounded-lg shadow-md hidden z-50 
+                max-h-80 overflow-y-auto"></div>
+                            </div>
                         </div>
                     </label>
+                    <script>
+                        const input = document.getElementById("search-input");
+                        const resultsBox = document.getElementById("search-results");
+
+                        let controller = null;
+                        async function doSearch(q) {
+                            if (controller) controller.abort();
+                            controller = new AbortController();
+
+                            if (q.trim() === "") {
+                                resultsBox.classList.add("hidden");
+                                return;
+                            }
+
+                            try {
+                                const res = await fetch("php/search.php?q=" + encodeURIComponent(q), {
+                                    signal: controller.signal
+                                });
+                                if (!res.ok) throw new Error("HTTP " + res.status);
+                                const data = await res.json();
+
+                                if (!data.productos.length && !data.categorias.length) {
+                                    resultsBox.innerHTML = "<p class='p-2 text-gray-500'>No se encontraron resultados</p>";
+                                } else {
+                                    let html = "";
+                                    if (data.productos.length) {
+                                        html += "<h4 class='px-2 py-1 font-bold text-sm text-gray-600'>Productos</h4>";
+                                        data.productos.forEach(p => {
+                                            html += `
+                                        <a href="${p.url}" class="flex items-center gap-2 p-2 hover:bg-gray-100">
+                                        <img src="${p.image}" class="w-10 h-10 object-contain rounded">
+                                        <span>${p.title}</span>
+                                        </a>
+                                    `;
+                                        });
+                                    }
+                                    resultsBox.innerHTML = html;
+                                }
+
+                                resultsBox.classList.remove("hidden");
+                            } catch (err) {
+                                if (err.name !== "AbortError") console.error(err);
+                            }
+                        }
+
+                        let timer;
+                        input.addEventListener("input", () => {
+                            clearTimeout(timer);
+                            timer = setTimeout(() => doSearch(input.value), 300);
+                        });
+                    </script>
                     <div class="flex gap-2">
                         <button
                             id="logout-btn"

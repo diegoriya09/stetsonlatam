@@ -35,15 +35,82 @@
                   <a class="text-[#151514] text-sm font-medium leading-normal" href="caps.php">Caps</a>
                </div>
                <div class="flex gap-2">
-                  <button
-                     class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-[#f3f2f2] text-[#151514] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
-                     <div class="text-[#151514]" data-icon="MagnifyingGlass" data-size="20px" data-weight="regular">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256">
-                           <path
-                              d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path>
-                        </svg>
+                  <label class="flex flex-col min-w-40 !h-10 max-w-64">
+                     <div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+                        <div
+                           class="text-[#7a7671] flex border-none bg-[#f3f2f2] items-center justify-center pl-4 rounded-l-lg border-r-0"
+                           data-icon="MagnifyingGlass"
+                           data-size="24px"
+                           data-weight="regular">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                              <path
+                                 d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path>
+                           </svg>
+                        </div>
+                        <div class="relative">
+                           <input
+                              id="search-input"
+                              name="q"
+                              placeholder="Search..."
+                              autocomplete="off"
+                              class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#151514] focus:outline-0 focus:ring-0 border-none bg-[#f3f2f2] focus:border-none h-full placeholder:text-[#7a7671] px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal"
+                              value="" />
+                           <div id="search-results" class="absolute top-full left-0 w-full bg-white border rounded-lg shadow-md hidden z-50 
+                max-h-80 overflow-y-auto"></div>
+                        </div>
                      </div>
-                  </button>
+                  </label>
+                  <script>
+                     const input = document.getElementById("search-input");
+                     const resultsBox = document.getElementById("search-results");
+
+                     let controller = null;
+                     async function doSearch(q) {
+                        if (controller) controller.abort();
+                        controller = new AbortController();
+
+                        if (q.trim() === "") {
+                           resultsBox.classList.add("hidden");
+                           return;
+                        }
+
+                        try {
+                           const res = await fetch("php/search.php?q=" + encodeURIComponent(q), {
+                              signal: controller.signal
+                           });
+                           if (!res.ok) throw new Error("HTTP " + res.status);
+                           const data = await res.json();
+
+                           if (!data.productos.length && !data.categorias.length) {
+                              resultsBox.innerHTML = "<p class='p-2 text-gray-500'>No se encontraron resultados</p>";
+                           } else {
+                              let html = "";
+                              if (data.productos.length) {
+                                 html += "<h4 class='px-2 py-1 font-bold text-sm text-gray-600'>Productos</h4>";
+                                 data.productos.forEach(p => {
+                                    html += `
+            <a href="${p.url}" class="flex items-center gap-2 p-2 hover:bg-gray-100">
+              <img src="${p.image}" class="w-10 h-10 object-contain rounded">
+              <span>${p.title}</span>
+            </a>
+          `;
+                                 });
+                              }
+                              resultsBox.innerHTML = html;
+                           }
+
+                           resultsBox.classList.remove("hidden");
+                        } catch (err) {
+                           if (err.name !== "AbortError") console.error(err);
+                        }
+                     }
+
+                     let timer;
+                     input.addEventListener("input", () => {
+                        clearTimeout(timer);
+                        timer = setTimeout(() => doSearch(input.value), 300);
+                     });
+                  </script>
                   <button
                      id="logout-btn"
                      style="display:none;"
@@ -134,8 +201,7 @@
                <p class="text-[#151514] text-base font-normal leading-normal pb-3 pt-1 px-4">Address: 123 Main Street, Anytown, USA</p>
                <div class="flex px-4 py-3">
                   <div
-                     class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-lg object-cover"
-                  >
+                     class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-lg object-cover">
                      <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d15865.44227855455!2d-75.58828815!3d6.2160896!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses-419!2sco!4v1755633569983!5m2!1ses-419!2sco" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                   </div>
                </div>
