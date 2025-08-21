@@ -23,9 +23,11 @@
           <div class="flex h-full min-h-[700px] flex-col justify-between bg-white p-4">
             <div class="flex flex-col gap-4">
               <div class="flex items-center gap-3">
-                <div
-                  class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
-                  style='background-image: url("img/logo.webp");'></div>
+                <a href="index.php">
+                  <div
+                    class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
+                    style='background-image: url("img/logo.webp");'></div>
+                </a>
                 <h1 id="profile-name-hero" class="text-[#181411] text-base font-medium leading-normal"><?php echo $userName ? $userName : '&nbsp;'; ?></h1>
               </div>
               <div class="flex flex-col gap-2">

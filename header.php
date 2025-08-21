@@ -121,9 +121,11 @@
                 </svg>
               </div>
             </button>
-            <div
-              class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
-              style='background-image: url("img/logo.webp");'></div>
+            <a href="index.php">
+              <div
+                class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
+                style='background-image: url("img/logo.webp");'></div>
+            </a>
           </div>
         </div>
       </header>
