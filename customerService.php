@@ -46,8 +46,8 @@
                </div>
                <h2 class="text-[#151514] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Help topics</h2>
                <div class="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-3 p-4">
-                  <div class="flex flex-1 gap-3 rounded-lg border border-[#e2e1df] bg-white p-4 flex-col">
-                     <a href="faqs.php">
+                  <a href="faqs.php">
+                     <div class="flex flex-1 gap-3 rounded-lg border border-[#e2e1df] bg-white p-4 flex-col">
                         <div class="text-[#151514]" data-icon="Question" data-size="24px" data-weight="regular">
                            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
                               <path
@@ -58,10 +58,10 @@
                            <h2 class="text-[#151514] text-base font-bold leading-tight">FAQs</h2>
                            <p class="text-[#7a7671] text-sm font-normal leading-normal">Find answers to common questions</p>
                         </div>
-                     </a>
-                  </div>
-                  <div class="flex flex-1 gap-3 rounded-lg border border-[#e2e1df] bg-white p-4 flex-col">
-                     <a href="contactUs.php">
+                     </div>
+                  </a>
+                  <a href="contactUs.php">
+                     <div class="flex flex-1 gap-3 rounded-lg border border-[#e2e1df] bg-white p-4 flex-col">
                         <div class="text-[#151514]" data-icon="Envelope" data-size="24px" data-weight="regular">
                            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
                               <path
@@ -72,10 +72,10 @@
                            <h2 class="text-[#151514] text-base font-bold leading-tight">Contact Us</h2>
                            <p class="text-[#7a7671] text-sm font-normal leading-normal">Get in touch with our support team</p>
                         </div>
-                     </a>
-                  </div>
-                  <div class="flex flex-1 gap-3 rounded-lg border border-[#e2e1df] bg-white p-4 flex-col">
-                     <a href="shippingReturns.php">
+                     </div>
+                  </a>
+                  <a href="shippingReturns.php">
+                     <div class="flex flex-1 gap-3 rounded-lg border border-[#e2e1df] bg-white p-4 flex-col">
                         <div class="text-[#151514]" data-icon="Truck" data-size="24px" data-weight="regular">
                            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
                               <path
@@ -86,10 +86,10 @@
                            <h2 class="text-[#151514] text-base font-bold leading-tight">Shipping &amp; Returns</h2>
                            <p class="text-[#7a7671] text-sm font-normal leading-normal">Learn about our shipping and return policies</p>
                         </div>
-                     </a>
-                  </div>
-                  <div class="flex flex-1 gap-3 rounded-lg border border-[#e2e1df] bg-white p-4 flex-col">
-                     <a href="privacyPolicy.php">
+                     </div>
+                  </a>
+                  <a href="privacyPolicy.php">
+                     <div class="flex flex-1 gap-3 rounded-lg border border-[#e2e1df] bg-white p-4 flex-col">
                         <div class="text-[#151514]" data-icon="ShieldCheck" data-size="24px" data-weight="regular">
                            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
                               <path
@@ -100,10 +100,10 @@
                            <h2 class="text-[#151514] text-base font-bold leading-tight">Privacy Policy</h2>
                            <p class="text-[#7a7671] text-sm font-normal leading-normal">Read our privacy policy</p>
                         </div>
-                     </a>
-                  </div>
-                  <div class="flex flex-1 gap-3 rounded-lg border border-[#e2e1df] bg-white p-4 flex-col">
-                     <a href="termsOfService.php">
+                     </div>
+                  </a>
+                  <a href="termsOfService.php">
+                     <div class="flex flex-1 gap-3 rounded-lg border border-[#e2e1df] bg-white p-4 flex-col">
                         <div class="text-[#151514]" data-icon="FileText" data-size="24px" data-weight="regular">
                            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
                               <path
@@ -114,8 +114,8 @@
                            <h2 class="text-[#151514] text-base font-bold leading-tight">Terms of Service</h2>
                            <p class="text-[#7a7671] text-sm font-normal leading-normal">View our terms of service</p>
                         </div>
-                     </a>
-                  </div>
+                     </div>
+                  </a>
                </div>
                <h2 class="text-[#151514] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Contact Us</h2>
                <p class="text-[#151514] text-base font-normal leading-normal pb-3 pt-1 px-4">
