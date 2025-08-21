@@ -106,13 +106,12 @@
                                         Explore our curated collection of premium hats and accessories, crafted with the spirit of the American West.
                                     </h2>
                                 </div>
-                                <button
-
-                                    class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 @[480px]:h-12 @[480px]:px-5 bg-[#e68019] text-[#181411] text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base @[480px]:font-bold @[480px]:leading-normal @[480px]:tracking-[0.015em]">
-                                    <a href="hats.php">
+                                <a href="hats.php">
+                                    <button
+                                        class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 @[480px]:h-12 @[480px]:px-5 bg-[#e68019] text-[#181411] text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base @[480px]:font-bold @[480px]:leading-normal @[480px]:tracking-[0.015em]">
                                         <span class="truncate">Shop Now</span>
-                                    </a>
-                                </button>
+                                    </button>
+                                </a>
                             </div>
                         </div>
                     </div>
