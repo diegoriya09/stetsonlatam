@@ -126,19 +126,21 @@
                         <div class="flex items-stretch p-4 gap-3">
                             <?php if ($result && $result->num_rows > 0): ?>
                                 <?php while ($row = $result->fetch_assoc()): ?>
-                                    <div class="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-60">
-                                        <div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg flex flex-col"
-                                            style='background-image: url("<?php echo htmlspecialchars($row["image"]); ?>");'>
+                                    <a href="producto.php?id=<?php echo $row['id']; ?>">
+                                        <div class="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-60">
+                                            <div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg flex flex-col"
+                                                style='background-image: url("<?php echo htmlspecialchars($row["image"]); ?>");'>
+                                            </div>
+                                            <div>
+                                                <p class="text-[#181411] text-base font-medium leading-normal">
+                                                    <?php echo htmlspecialchars($row["name"]); ?>
+                                                </p>
+                                                <p class="text-[#887563] text-sm font-normal leading-normal">
+                                                    <?php echo htmlspecialchars($row["description"]); ?>
+                                                </p>
+                                            </div>
                                         </div>
-                                        <div>
-                                            <p class="text-[#181411] text-base font-medium leading-normal">
-                                                <?php echo htmlspecialchars($row["name"]); ?>
-                                            </p>
-                                            <p class="text-[#887563] text-sm font-normal leading-normal">
-                                                <?php echo htmlspecialchars($row["description"]); ?>
-                                            </p>
-                                        </div>
-                                    </div>
+                                    </a>
                                 <?php endwhile; ?>
                             <?php else: ?>
                                 <p class="text-gray-500">No featured products found.</p>
