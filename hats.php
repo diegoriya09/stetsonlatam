@@ -181,7 +181,7 @@ $conn->close();
               }
 
               try {
-                const res = await fetch("search.php?q=" + encodeURIComponent(q), {
+                const res = await fetch("php/search.php?q=" + encodeURIComponent(q), {
                   signal: controller.signal
                 });
                 if (!res.ok) throw new Error("HTTP " + res.status);
