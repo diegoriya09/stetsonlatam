@@ -288,7 +288,7 @@ $conn->close();
           </div>
           <h2 class="text-[#151514] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Recommended for You</h2>
           <div class="flex overflow-y-auto [-ms-scrollbar-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            <div class="flex items-stretch p-4 gap-3">
+            <div class="grid grid-cols-3 p-4 gap-3">
               <?php if (!empty($recomendados)) {
                 foreach ($recomendados as $recomendado): ?>
                   <div class="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-40">
@@ -320,7 +320,7 @@ $conn->close();
               </button>
             </div>
           </div>
-          <div id="productos-container" class="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-3 p-4">
+          <div id="productos-container" class="grid grid-cols-3 gap-3 p-4">
             <?php foreach ($productos as $producto): ?>
               <div class="flex flex-col gap-3 pb-3 producto-item" data-price="<?php echo $producto['price']; ?>">
                 <a href="producto.php?id=<?php echo $producto['id']; ?>&from=hats" class="flex flex-col gap-3 pb-3 hover:scale-[1.03] transition-transform">
