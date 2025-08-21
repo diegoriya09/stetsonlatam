@@ -117,7 +117,7 @@
                     require_once 'php/conexion.php';
 
                     // Traer productos destacados (is_featured = 1)
-                    $sql = "SELECT id, name, description, image FROM productos WHERE is_featured = 1 LIMIT 6";
+                    $sql = "SELECT id, name, description, image FROM productos WHERE is_featured = 1 LIMIT 3";
                     $result = $conn->query($sql);
                     ?>
 
