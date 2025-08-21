@@ -294,7 +294,7 @@ $conn->close();
                   <div class="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-40">
                     <a href="producto.php?id=<?php echo $recomendado['id']; ?>" class="flex flex-col gap-3 pb-3 hover:scale-[1.03] transition-transform">
                       <div
-                        class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-lg flex flex-col"
+                        class="w-full bg-center bg-no-repeat aspect-[3/4] bg-contain rounded-lg flex flex-col"
                         style='background-image: url("<?php echo htmlspecialchars($recomendado["image"]); ?>");'></div>
                       <div>
                         <p class="text-[#151514] text-base font-medium leading-normal"><?php echo htmlspecialchars($recomendado["name"]); ?></p>
@@ -325,7 +325,7 @@ $conn->close();
               <div class="flex flex-col gap-3 pb-3 producto-item" data-price="<?php echo $producto['price']; ?>">
                 <a href="producto.php?id=<?php echo $producto['id']; ?>&from=hats" class="flex flex-col gap-3 pb-3 hover:scale-[1.03] transition-transform">
                   <div
-                    class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-lg"
+                    class="w-full bg-center bg-no-repeat aspect-[3/4] bg-contain rounded-lg"
                     style='background-image: url("<?php echo htmlspecialchars($producto["image"]); ?>");'></div>
                   <div>
                     <p class="text-[#151514] text-base font-medium leading-normal"><?php echo htmlspecialchars($producto["name"]); ?></p>
