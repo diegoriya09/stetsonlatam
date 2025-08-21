@@ -186,7 +186,7 @@
                         <a href="aboutUs.php">
                             <div class="flex flex-col items-stretch justify-start rounded-lg @xl:flex-row @xl:items-start">
                                 <div
-                                    class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-lg"
+                                    class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg flex flex-col"
                                     style='background-image: url("img/story1.webp");'></div>
                                 <div class="flex w-full min-w-72 grow flex-col items-stretch justify-center gap-1 py-4 @xl:px-4">
                                     <p class="text-[#181411] text-lg font-bold leading-tight tracking-[-0.015em]">A Legacy of Craftsmanship</p>
