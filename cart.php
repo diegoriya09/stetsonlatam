@@ -74,7 +74,7 @@ $conn->close();
         href="https://fonts.googleapis.com/css2?display=swap&amp;family=Noto+Serif%3Awght%40400%3B500%3B700%3B900&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <title>Shopping Bag</title>
+    <title>Shopping Cart</title>
     <link rel="icon" href="img/logo.webp" type="image/x-icon" loading="lazy">
 
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
