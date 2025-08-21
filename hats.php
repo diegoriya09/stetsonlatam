@@ -162,7 +162,8 @@ $conn->close();
                   autocomplete="off"
                   class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#151514] focus:outline-0 focus:ring-0 border-none bg-[#f3f2f2] focus:border-none h-full placeholder:text-[#7a7671] px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal"
                   value="" />
-                <div id="search-results" class="absolute top-full left-0 w-full bg-white border rounded-lg shadow-md hidden z-50"></div>
+                <div id="search-results" class="absolute top-full left-0 w-full bg-white border rounded-lg shadow-md hidden z-50 
+                max-h-80 overflow-y-auto"></div>
               </div>
             </div>
           </label>
