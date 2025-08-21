@@ -48,11 +48,29 @@
                                 </svg>
                             </div>
                             <input
+                                id="search-input"
                                 placeholder="Search"
                                 class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#151514] focus:outline-0 focus:ring-0 border-none bg-[#f3f2f2] focus:border-none h-full placeholder:text-[#7a7671] px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal"
                                 value="" />
                         </div>
                     </label>
+                    <script>
+                        const searchInput = document.getElementById("search-input");
+                        const productos = document.querySelectorAll("#productos-container .producto-item");
+
+                        searchInput.addEventListener("input", function() {
+                            const query = this.value.toLowerCase();
+
+                            productos.forEach(producto => {
+                                const name = producto.querySelector("p").innerText.toLowerCase(); // primer <p> = nombre del producto
+                                if (name.includes(query)) {
+                                    producto.style.display = "block";
+                                } else {
+                                    producto.style.display = "none";
+                                }
+                            });
+                        });
+                    </script>
                     <div class="flex gap-2">
                         <button
                             id="logout-btn"
