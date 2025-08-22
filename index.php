@@ -19,7 +19,7 @@
 </head>
 
 <body>
-    <div class="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden" style='font-family: "GT America", sans-serif;'>
+    <div class="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden">
         <div class="layout-container flex h-full grow flex-col">
             <?php include 'header.php'; ?>
             <div class="px-40 flex flex-1 justify-center py-5">

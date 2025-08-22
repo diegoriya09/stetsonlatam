@@ -24,4 +24,7 @@
   font-style: normal;
 }
 
-/* Repite el proceso para otras variantes como Italic, Light, etc. */
+body {
+  /* Esto aplica GT America a toda la página por defecto */
+  font-family: 'GT America', sans-serif;
+}
