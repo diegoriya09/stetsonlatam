@@ -12,8 +12,8 @@
 
   <div class="flex justify-center">
     <div class="flex items-center gap-9">
-      <a class="text-[#3c3737] text-base font-medium leading-normal" href="hats.php">Hats</a>
-      <a class="text-[#3c3737] text-base font-medium leading-normal" href="caps.php">Caps</a>
+      <a class="text-[#3c3737] text-sm font-bold uppercase leading-normal" href="hats.php">Hats</a>
+      <a class="text-[#3c3737] text-sm font-bold uppercase leading-normal" href="caps.php">Caps</a>
     </div>
   </div>
 
