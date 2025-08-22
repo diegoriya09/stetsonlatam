@@ -12,13 +12,14 @@
     <meta name="description" content="In Stetson LATAM, in alliance with DINALSOM, find legendary hats with shipments to all Latin America. Shop online with confidence." />
     <link rel="icon" href="img/logo.webp" type="image/x-icon" loading="lazy">
     <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+    <link href="css/fonts.css?v=<?php echo time(); ?>" rel="stylesheet">
 
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
-    <div class="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden" style='font-family: "GT-America", "Lora Regular", sans-serif;'>
+    <div class="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden" style='font-family: "GT America", sans-serif;'>
         <div class="layout-container flex h-full grow flex-col">
             <?php include 'header.php'; ?>
             <div class="px-40 flex flex-1 justify-center py-5">
