@@ -135,16 +135,16 @@
                         <div class="flex flex-col justify-end gap-6 px-4 py-10 @[480px]:gap-8 @[480px]:px-10 @[480px]:py-20">
                             <div class="flex flex-col gap-2 text-center">
                                 <h1
-                                    class="text-[#181411] tracking-light text-[32px] font-bold leading-tight @[480px]:text-4xl @[480px]:font-black @[480px]:leading-tight @[480px]:tracking-[-0.033em] max-w-[720px]">
+                                    class="text-[#3c3737] tracking-light text-[32px] font-bold leading-tight @[480px]:text-4xl @[480px]:font-black @[480px]:leading-tight @[480px]:tracking-[-0.033em] max-w-[720px]">
                                     Join the Stetson Community
                                 </h1>
-                                <p class="text-[#181411] text-base font-normal leading-normal max-w-[720px]">Stay up-to-date on the latest news, exclusive offers, and new product releases.</p>
+                                <p class="text-[#3c3737] text-base font-normal leading-normal max-w-[720px]">Stay up-to-date on the latest news, exclusive offers, and new product releases.</p>
                             </div>
                             <div class="flex flex-1 justify-center">
                                 <div class="flex justify-center">
                                     <button
                                         id="open-user-modal"
-                                        class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 @[480px]:h-12 @[480px]:px-5 bg-[#e68019] text-[#181411] text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base @[480px]:font-bold @[480px]:leading-normal @[480px]:tracking-[0.015em] grow">
+                                        class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 @[480px]:h-12 @[480px]:px-5 bg-[#3f1e1f] text-[#3c3737] text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base @[480px]:font-bold @[480px]:leading-normal @[480px]:tracking-[0.015em] grow">
                                         <span id="truncate">Sign Up</span>
                                     </button>
                                 </div>
