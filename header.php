@@ -1,4 +1,4 @@
-<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f3f2f2] px-10 py-20px h-20">
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f3f2f2] px-10 py-5 h-20">
   <div class="flex-1 flex justify-start">
     <div class="flex items-center gap-4 text-[#3c3737]">
       <div class="size-4">
