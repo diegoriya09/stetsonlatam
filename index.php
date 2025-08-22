@@ -27,7 +27,7 @@
                             <div class="relative overflow-hidden flex min-h-[480px] flex-col gap-6 @[480px]:gap-8 @[480px]:rounded-lg items-center justify-center p-4">
 
                                 <video autoplay loop muted playsinline class="absolute top-0 left-0 w-full h-full object-cover -z-20">
-                                    <source src="img/stetsonlatamvideo.mp4" type="video/mp4">
+                                    <source src="https://stetsonlatam.com/img/stetsonlatamvideo.mp4" type="video/mp4">
                                     Tu navegador no soporta la etiqueta de video.
                                 </video>
 
