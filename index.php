@@ -24,29 +24,31 @@
                 <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
                     <div class="@container">
                         <div class="@[480px]:p-4">
-                            <div
-                                class="relative overflow-hidden flex min-h-[480px] flex-col gap-6 bg-cover bg-center bg-no-repeat @[480px]:gap-8 @[480px]:rounded-lg items-center justify-center p-4">
-                                <video autoplay loop muted playsinline class="absolute top-0 left-0 w-full h-full object-cover -z-10">
+                            <div class="relative overflow-hidden flex min-h-[480px] flex-col gap-6 @[480px]:gap-8 @[480px]:rounded-lg items-center justify-center p-4">
+
+                                <video autoplay loop muted playsinline class="absolute top-0 left-0 w-full h-full object-cover -z-20">
                                     <source src="img/stetsonlatamvideo.mp4" type="video/mp4">
                                     Tu navegador no soporta la etiqueta de video.
                                 </video>
 
                                 <div class="absolute top-0 left-0 w-full h-full bg-black/40 -z-10"></div>
-                                <div class="flex flex-col gap-2 text-center">
-                                    <h1
-                                        class="text-white text-4xl font-black leading-tight tracking-[-0.033em] @[480px]:text-5xl @[480px]:font-black @[480px]:leading-tight @[480px]:tracking-[-0.033em]">
-                                        Authentic Style, Timeless Legacy
-                                    </h1>
-                                    <h2 class="text-white text-sm font-normal leading-normal @[480px]:text-base @[480px]:font-normal @[480px]:leading-normal">
-                                        Explore our curated collection of premium hats, crafted with the spirit of the American West.
-                                    </h2>
+
+                                <div class="z-10 flex flex-col items-center gap-6 @[480px]:gap-8">
+                                    <div class="flex flex-col gap-2 text-center">
+                                        <h1 class="text-white text-4xl font-black leading-tight tracking-[-0.033em] @[480px]:text-5xl @[480px]:font-black @[480px]:leading-tight @[480px]:tracking-[-0.033em]">
+                                            Authentic Style, Timeless Legacy
+                                        </h1>
+                                        <h2 class="text-white text-sm font-normal leading-normal @[480px]:text-base @[480px]:font-normal @[480px]:leading-normal">
+                                            Explore our curated collection of premium hats, crafted with the spirit of the American West.
+                                        </h2>
+                                    </div>
+                                    <a href="hats.php">
+                                        <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 @[480px]:h-12 @[480px]:px-5 bg-[#e68019] text-[#181411] text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base @[480px]:font-bold @[480px]:leading-normal @[480px]:tracking-[0.015em]">
+                                            <span class="truncate">Shop Now</span>
+                                        </button>
+                                    </a>
                                 </div>
-                                <a href="hats.php">
-                                    <button
-                                        class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 @[480px]:h-12 @[480px]:px-5 bg-[#e68019] text-[#181411] text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base @[480px]:font-bold @[480px]:leading-normal @[480px]:tracking-[0.015em]">
-                                        <span class="truncate">Shop Now</span>
-                                    </button>
-                                </a>
+
                             </div>
                         </div>
                     </div>
