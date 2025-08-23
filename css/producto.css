@@ -86,6 +86,7 @@
 .size-btn {
     padding: 0.5rem 1rem;
     border: 1px solid #d1d5db;
+    color: #3c3737;
     border-radius: 0.25rem;
     background-color: white;
     cursor: pointer;
@@ -94,7 +95,7 @@
 }
 .size-btn.selected, .size-btn:hover {
     background-color: #3c3737;
-    color: white;
+    color: #f1eeea;
     border-color: #3c3737;
 }
 
@@ -106,9 +107,9 @@
 .qty-btn {
     width: 40px;
     height: 40px;
-    border: 1px solid #fff;
+    border: 1px solid #d1d5db;
     border-radius: 0.25rem;
-    background-color: #fff;
+    background-color: #d1d5db;
     font-size: 12px;
     line-height: 1;
 }
@@ -135,6 +136,7 @@
 .add-to-cart-btn:hover {
     background-color: #fff;
     color: #3c3737;
+    border: 1px solid #3c3737;
 }
 
 /* Descripción Larga */
