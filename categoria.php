@@ -180,60 +180,78 @@ try {
 
                 <section class="product-section">
 
-                    <div class="flex gap-3 p-4 flex-wrap items-center">
-                        <div class="relative">
-                            <button id="size-filter-btn" type="button"
-                                class="flex h-10 items-center justify-center gap-x-2 rounded-lg bg-[#f3f2f2] px-4">
-                                <p class="text-[#151514] text-sm font-medium">Size</p>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor"
-                                    viewBox="0 0 256 256">
-                                    <path
-                                        d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z">
-                                    </path>
-                                </svg>
-                            </button>
-                            <div id="size-dropdown"
-                                class="absolute hidden mt-1 w-40 bg-white shadow-lg rounded-lg p-2 z-10">
-                                <?php foreach ($tallas as $talla): ?>
-                                    <label
-                                        class="flex items-center gap-2 p-1 text-sm cursor-pointer hover:bg-gray-100 rounded">
-                                        <input type="checkbox" class="size-check" value="<?php echo $talla['id']; ?>" <?php echo in_array($talla['id'], $_GET['sizes'] ?? []) ? 'checked' : ''; ?>>
-                                        <?php echo htmlspecialchars($talla['name']); ?>
-                                    </label>
-                                <?php endforeach; ?>
+                    <div class="flex gap-4 p-4 flex-wrap items-center justify-between">
+                        <div class="flex gap-3 flex-wrap">
+                            <div class="relative">
+                                <button id="size-filter-btn" type="button"
+                                    class="flex h-10 items-center justify-center gap-x-2 rounded-lg bg-[#f3f2f2] px-4">
+                                    <p class="text-[#151514] text-sm font-medium">Size</p>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px"
+                                        fill="currentColor" viewBox="0 0 256 256">
+                                        <path
+                                            d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z">
+                                        </path>
+                                    </svg>
+                                </button>
+                                <div id="size-dropdown"
+                                    class="absolute hidden mt-1 w-40 bg-white shadow-lg rounded-lg p-2 z-10">
+                                    <?php foreach ($tallas as $talla): ?>
+                                        <label
+                                            class="flex items-center gap-2 p-1 text-sm cursor-pointer hover:bg-gray-100 rounded">
+                                            <input type="checkbox" class="size-check" value="<?php echo $talla['id']; ?>"
+                                                <?php echo in_array($talla['id'], $_GET['sizes'] ?? []) ? 'checked' : ''; ?>>
+                                            <?php echo htmlspecialchars($talla['name']); ?>
+                                        </label>
+                                    <?php endforeach; ?>
+                                </div>
+                            </div>
+
+                            <div class="relative">
+                                <button id="color-filter-btn" type="button"
+                                    class="flex h-10 items-center justify-center gap-x-2 rounded-lg bg-[#f3f2f2] px-4">
+                                    <p class="text-[#151514] text-sm font-medium">Color</p>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px"
+                                        fill="currentColor" viewBox="0 0 256 256">
+                                        <path
+                                            d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z">
+                                        </path>
+                                    </svg>
+                                </button>
+                                <div id="color-dropdown"
+                                    class="absolute hidden mt-1 w-48 bg-white shadow-lg rounded-lg p-2 z-10">
+                                    <?php foreach ($colores as $color): ?>
+                                        <label
+                                            class="flex items-center gap-2 p-1 text-sm cursor-pointer hover:bg-gray-100 rounded">
+                                            <input type="checkbox" class="color-check" value="<?php echo $color['id']; ?>"
+                                                <?php echo in_array($color['id'], $_GET['colors'] ?? []) ? 'checked' : ''; ?>>
+                                            <span class="w-4 h-4 rounded-full border"
+                                                style="background-color: <?php echo htmlspecialchars($color['hex']); ?>"></span>
+                                            <?php echo htmlspecialchars($color['name']); ?>
+                                        </label>
+                                    <?php endforeach; ?>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="relative">
-                            <button id="color-filter-btn" type="button"
-                                class="flex h-10 items-center justify-center gap-x-2 rounded-lg bg-[#f3f2f2] px-4">
-                                <p class="text-[#151514] text-sm font-medium">Color</p>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor"
+                        <div class="flex items-center gap-2">
+                            <span class="text-sm font-medium text-gray-600">Sort by Price</span>
+                            <button id="sort-btn" class="p-2 rounded-lg bg-[#f3f2f2] text-[#151514]">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor"
                                     viewBox="0 0 256 256">
                                     <path
-                                        d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z">
+                                        d="M128,128a8,8,0,0,1-8,8H48a8,8,0,0,1,0-16h72A8,8,0,0,1,128,128ZM48,72H184a8,8,0,0,0,0-16H48a8,8,0,0,0,0,16Zm56,112H48a8,8,0,0,0,0,16h56a8,8,0,0,0,0-16Zm125.66-21.66a8,8,0,0,0-11.32,0L192,188.69V112a8,8,0,0,0-16,0v76.69l-26.34-26.35a8,8,0,0,0-11.32,11.32l40,40a8,8,0,0,0,11.32,0l40-40A8,8,0,0,0,229.66,162.34Z">
                                     </path>
                                 </svg>
                             </button>
-                            <div id="color-dropdown"
-                                class="absolute hidden mt-1 w-48 bg-white shadow-lg rounded-lg p-2 z-10">
-                                <?php foreach ($colores as $color): ?>
-                                    <label
-                                        class="flex items-center gap-2 p-1 text-sm cursor-pointer hover:bg-gray-100 rounded">
-                                        <input type="checkbox" class="color-check" value="<?php echo $color['id']; ?>" <?php echo in_array($color['id'], $_GET['colors'] ?? []) ? 'checked' : ''; ?>>
-                                        <span class="w-4 h-4 rounded-full border"
-                                            style="background-color: <?php echo htmlspecialchars($color['hex']); ?>"></span>
-                                        <?php echo htmlspecialchars($color['name']); ?>
-                                    </label>
-                                <?php endforeach; ?>
-                            </div>
                         </div>
                     </div>
 
-                    <div class="product-grid">
+                    <div id="productos-container" class="product-grid">
                         <?php if (!empty($productos)): ?>
                             <?php foreach ($productos as $producto): ?>
-                                <a href="producto.php?id=<?php echo $producto['id']; ?>" class="product-card">
+                                <a href="producto.php?id=<?php echo $producto['id']; ?>" class="product-card producto-item"
+                                    data-price="<?php echo $producto['price']; ?>">
+
                                     <div class="product-card-image"
                                         style="background-image: url('<?php echo htmlspecialchars($producto['image']); ?>');">
                                     </div>
@@ -281,6 +299,53 @@ try {
                     window.location.href = window.location.pathname + "?" + currentParams.toString();
                 });
             });
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // --- CÓDIGO DE FILTROS (que ya tienes) ---
+            const sizeBtn = document.getElementById("size-filter-btn");
+            const sizeDropdown = document.getElementById("size-dropdown");
+            const colorBtn = document.getElementById("color-filter-btn");
+            const colorDropdown = document.getElementById("color-dropdown");
+
+            if (sizeBtn) sizeBtn.addEventListener("click", () => sizeDropdown.classList.toggle("hidden"));
+            if (colorBtn) colorBtn.addEventListener("click", () => colorDropdown.classList.toggle("hidden"));
+
+            document.querySelectorAll(".size-check, .color-check").forEach(input => {
+                input.addEventListener("change", () => {
+                    const currentParams = new URLSearchParams(window.location.search);
+                    currentParams.delete('sizes[]');
+                    currentParams.delete('colors[]');
+                    document.querySelectorAll(".size-check:checked").forEach(cb => currentParams.append("sizes[]", cb.value));
+                    document.querySelectorAll(".color-check:checked").forEach(cb => currentParams.append("colors[]", cb.value));
+                    window.location.href = window.location.pathname + "?" + currentParams.toString();
+                });
+            });
+
+            // --- CÓDIGO NUEVO PARA ORDENAR POR PRECIO ---
+            const sortBtn = document.getElementById("sort-btn");
+            const productosContainer = document.getElementById("productos-container");
+            let ascending = true; // estado inicial del orden
+
+            if (sortBtn) {
+                sortBtn.addEventListener("click", () => {
+                    let productos = Array.from(productosContainer.querySelectorAll(".producto-item"));
+
+                    productos.sort((a, b) => {
+                        let priceA = parseFloat(a.dataset.price);
+                        let priceB = parseFloat(b.dataset.price);
+                        return ascending ? priceA - priceB : priceB - priceA;
+                    });
+
+                    // Limpiar el contenedor y reinsertar los productos ya ordenados
+                    productosContainer.innerHTML = "";
+                    productos.forEach(p => productosContainer.appendChild(p));
+
+                    // Alternar el estado del orden para la próxima vez que se haga clic
+                    ascending = !ascending;
+                });
+            }
         });
     </script>
     <?php include 'modal.php'; ?>
