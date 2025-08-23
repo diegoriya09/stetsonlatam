@@ -10,13 +10,14 @@
 
    <title>Contact Us | Stetson LATAM</title>
    <link rel="icon" href="img/logo.webp" type="image/x-icon" loading="lazy">
+   <link href="css/index.css?v=<?php echo time(); ?>" rel="stylesheet">
 
    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
-   <div class="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden" style='font-family: "Work Sans", "Noto Sans", sans-serif;'>
+   <div class="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden">
       <div class="layout-container flex h-full grow flex-col">
          <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f3f2f2] px-10 py-3">
             <div class="flex items-center gap-4 text-[#151514]">

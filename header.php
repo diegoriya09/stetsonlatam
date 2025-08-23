@@ -1,3 +1,43 @@
+<?php
+// --- 1. CONFIGURACIÓN DE LA BASE DE DATOS ---
+require 'php/conexion.php';
+
+// --- 3. CONSTRUIR EL ÁRBOL JERÁRQUICO COMPLETO ---
+$categorias_tree = [];
+$hat_collections = [];
+$cap_collections = [];
+
+if (!empty($categorias_flat)) {
+    $categorias_by_id = [];
+    foreach ($categorias_flat as $cat) {
+        $categorias_by_id[$cat['id']] = $cat;
+        $categorias_by_id[$cat['id']]['children'] = [];
+    }
+
+    foreach ($categorias_by_id as $id => &$cat) {
+        if ($cat['categoria_padre_id'] !== null && isset($categorias_by_id[$cat['categoria_padre_id']])) {
+            $categorias_by_id[$cat['categoria_padre_id']]['children'][] = &$cat;
+        } else if ($cat['categoria_padre_id'] === null) {
+            $categorias_tree[] = &$cat;
+        }
+    }
+    unset($cat);
+    
+    // --- 4. SEPARAR COLECCIONES DE HATS Y CAPS ---
+    foreach ($categorias_tree as $categoria_principal) {
+        // Usamos strtolower y trim para una comparación robusta
+        if (trim(strtolower($categoria_principal['nombre'])) === 'cachuchas (caps)') {
+            // Si es la colección de cachuchas, la guardamos para el menú de Caps
+            $cap_collections = $categoria_principal['children'];
+        } else {
+            // Todas las demás colecciones van al menú de Hats
+            $hat_collections[] = $categoria_principal;
+        }
+    }
+}
+?>
+
+
 <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f3f2f2] px-10 py-5 h-20">
     <div class="flex-1 flex justify-start">
       <div class="flex items-center gap-4">
@@ -9,12 +49,55 @@
       </div>
   </div>
 
-  <div class="flex justify-center">
-    <div class="flex items-center gap-9">
-      <a class="text-[#3c3737] text-sm font-bold uppercase leading-normal" href="hats.php">Hats</a>
-      <a class="text-[#3c3737] text-sm font-bold uppercase leading-normal" href="caps.php">Caps</a>
-    </div>
-  </div>
+  <nav class="flex justify-center">
+        <div class="flex items-center gap-9">
+
+            <div class="nav-item">
+                <a href="hats.php" class="text-[#3c3737] text-sm font-bold uppercase leading-normal">Hats</a>
+                <?php if (!empty($hat_collections)): ?>
+                    <div class="mega-menu">
+                        <div class="mega-menu-content">
+                            <?php foreach ($hat_collections as $collection): ?>
+                                <div class="mega-menu-column">
+                                    <a href="categoria.php?id=<?php echo $collection['id']; ?>" class="column-title"><?php echo htmlspecialchars($collection['nombre']); ?></a>
+                                    <?php if (!empty($collection['children'])): ?>
+                                        <ul>
+                                            <?php foreach ($collection['children'] as $subcat): ?>
+                                                <li><a href="categoria.php?id=<?php echo $subcat['id']; ?>"><?php echo htmlspecialchars($subcat['nombre']); ?></a></li>
+                                            <?php endforeach; ?>
+                                        </ul>
+                                    <?php endif; ?>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                <?php endif; ?>
+            </div>
+
+            <div class="nav-item">
+                <a href="caps.php" class="text-[#3c3737] text-sm font-bold uppercase leading-normal">Caps</a>
+                <?php if (!empty($cap_collections)): ?>
+                    <div class="mega-menu">
+                        <div class="mega-menu-content">
+                            <?php foreach ($cap_collections as $collection): // Classic, Trucker, etc. ?>
+                                <div class="mega-menu-column">
+                                    <a href="categoria.php?id=<?php echo $collection['id']; ?>" class="column-title"><?php echo htmlspecialchars($collection['nombre']); ?></a>
+                                    <?php if (!empty($collection['children'])): ?>
+                                        <ul>
+                                            <?php foreach ($collection['children'] as $subcat): // Malla, Tela, etc. ?>
+                                                <li><a href="categoria.php?id=<?php echo $subcat['id']; ?>"><?php echo htmlspecialchars($subcat['nombre']); ?></a></li>
+                                            <?php endforeach; ?>
+                                        </ul>
+                                    <?php endif; ?>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                <?php endif; ?>
+            </div>
+
+        </div>
+    </nav>
 
   <div class="flex-1 flex justify-end">
     <div class="flex items-center gap-8">

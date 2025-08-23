@@ -16,7 +16,8 @@ if (empty($_SESSION['csrf_token'])) {
 
     <title>Login / Register</title>
     <link rel="icon" href="img/logo.webp" type="image/x-icon" loading="lazy">
-
+    <link href="css/index.css?v=<?php echo time(); ?>" rel="stylesheet">
+    
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 </head>
 
@@ -24,7 +25,7 @@ if (empty($_SESSION['csrf_token'])) {
 
 <div id="user-modal" style="display:none; position:fixed; z-index:1050; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.35);">
     <div class="flex items-center justify-center min-h-screen">
-        <div class="relative w-full max-w-md mx-auto bg-white rounded-2xl shadow-2xl p-8 animate-fade-in" style="font-family: 'Work Sans', 'Noto Sans', sans-serif;">
+        <div class="relative w-full max-w-md mx-auto bg-white rounded-2xl shadow-2xl p-8 animate-fade-in">
             <button type="button" class="close absolute top-4 right-4 text-3xl text-[#b0a99f] hover:text-[#e68019] transition-colors" style="background:none;border:none;cursor:pointer;z-index:10001;">&times;</button>
             <h1 class="text-[#181411] text-2xl font-extrabold text-center mb-2">Welcome to Stetson Latam</h1>
                     <div class="flex justify-center mb-6">

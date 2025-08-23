@@ -1,0 +1,106 @@
+/* 1. Definimos la fuente REGULAR */
+@font-face {
+  /* Este es el nombre que usarás en tu CSS. Puede ser lo que quieras, pero mantenlo simple. */
+  font-family: 'GT America';
+
+  /* Esta es la ruta al archivo de la fuente. ¡Asegúrate de que la ruta sea correcta! */
+  src: url('../fonts/GT-America/GT-America-Standard-Regular-Trial.woff2') format('woff2');
+
+  /* Le decimos al navegador que este archivo es para el peso de fuente normal */
+  font-weight: normal;
+  /* o 400 */
+  font-style: normal;
+}
+
+/* 2. Definimos la fuente BOLD (Negrita) */
+@font-face {
+  /* ¡Importante! Usamos el MISMO nombre de font-family */
+  font-family: 'GT America';
+
+  /* Ruta al archivo de la fuente en negrita */
+  src: url('../fonts/GT-America/GT-America-Standard-Bold-Trial.woff2') format('woff2');
+
+  /* Le decimos que este archivo es para el peso de fuente negrita */
+  font-weight: bold;
+  /* o 700 */
+  font-style: normal;
+}
+
+body {
+  /* Esto aplica GT America a toda la página por defecto */
+  font-family: 'GT America', sans-serif;
+}
+
+/* Contenedor para cada elemento del menú principal.
+   Esencial para que el menú desplegable se posicione correctamente. */
+.nav-item {
+  position: relative;
+}
+
+/* El menú desplegable (mega menú).
+   Oculto por defecto. */
+.mega-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  /* Se posiciona justo debajo del enlace padre */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 50;
+  /* Asegura que esté por encima de otros elementos */
+
+  /* Estilos para que coincida con tu diseño */
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  margin-top: 1rem;
+  min-width: 40rem;
+  /* Puedes ajustar esto según necesites */
+  max-width: 60rem;
+}
+
+/* LA MAGIA: Cuando pasas el cursor sobre .nav-item,
+   se muestra el .mega-menu que está dentro. */
+.nav-item:hover .mega-menu {
+  display: block;
+}
+
+/* Contenido y columnas del menú */
+.mega-menu-content {
+  display: flex;
+  gap: 2rem;
+}
+
+.mega-menu-column {
+  flex: 1;
+}
+
+.mega-menu-column .column-title {
+  display: block;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #3c3737;
+  text-decoration: none;
+}
+
+.mega-menu-column ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.mega-menu-column ul li a {
+  text-decoration: none;
+  color: #555;
+  font-weight: normal;
+  text-transform: none;
+}
+
+.mega-menu-column ul li a:hover {
+  text-decoration: underline;
+}

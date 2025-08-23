@@ -10,6 +10,7 @@
 
    <title>Shipping & Returns | Stetson LATAM</title>
    <link rel="icon" href="img/logo.webp" type="image/x-icon" loading="lazy">
+   <link href="css/index.css?v=<?php echo time(); ?>" rel="stylesheet">
 
    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -18,7 +19,7 @@
 <body>
    <div
       class="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden"
-      style='--checkbox-tick-svg: url(&apos;data:image/svg+xml,%3csvg viewBox=%270 0 16 16%27 fill=%27rgb(21,21,20)%27 xmlns=%27http://www.w3.org/2000/svg%27%3e%3cpath d=%27M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z%27/%3e%3c/svg%3e&apos;); font-family: "Work Sans", "Noto Sans", sans-serif;'>
+      style='--checkbox-tick-svg: url(&apos;data:image/svg+xml,%3csvg viewBox=%270 0 16 16%27 fill=%27rgb(21,21,20)%27 xmlns=%27http://www.w3.org/2000/svg%27%3e%3cpath d=%27M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z%27/%3e%3c/svg%3e&apos;);'>
       <div class="layout-container flex h-full grow flex-col">
          <?php include "header.php" ?>
          <div class="px-40 flex flex-1 justify-center py-5">
