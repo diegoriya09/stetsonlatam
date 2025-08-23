@@ -63,7 +63,7 @@ try {
             JOIN producto_categoria pc ON p.id = pc.producto_id
             WHERE pc.categoria_id IN ($placeholders)
             GROUP BY p.id
-            ORDER BY p.nombre;
+            ORDER BY p.name;
         ";
 
         $stmt_prod = $conn->prepare($sql_prod);
