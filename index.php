@@ -19,7 +19,7 @@
 </head>
 
 <body>
-    <div class="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden">
+    <div class="relative flex size-full min-h-screen flex-col bg-white group/design-root">
         <div class="layout-container flex h-full grow flex-col">
             <?php include "header.php"; ?>
             <div class="px-40 flex flex-1 justify-center py-5">
@@ -41,7 +41,7 @@
                                 <a href="hats.php">
                                     <button
                                         class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 @[480px]:h-12 @[480px]:px-5 bg-[#ffffff] text-[#3c3737] text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base @[480px]:font-bold @[480px]:leading-normal @[480px]:tracking-[0.015em]">
-                                        <span class="truncate">Shop Now</span>
+                                        <span class="truncate">SHOP NOW</span>
                                     </button>
                                 </a>
                             </div>
@@ -146,7 +146,7 @@
                                     <button
                                         id="open-user-modal"
                                         class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 @[480px]:h-12 @[480px]:px-5 bg-[#3f1e1f] text-[#ffffff] text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base @[480px]:font-bold @[480px]:leading-normal @[480px]:tracking-[0.015em] grow">
-                                        <span id="truncate">Sign Up</span>
+                                        <span id="truncate">SIGN UP</span>
                                     </button>
                                 </div>
                             </div>
