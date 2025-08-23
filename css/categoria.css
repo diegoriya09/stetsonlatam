@@ -76,12 +76,13 @@
 }
 
 .product-name {
-    font-weight: 500;
+    font-weight: bold;
+    font-size: 14px;
     color: #3c3737;
 }
 
 .product-price {
-    font-weight: bold;
+    font-size: 14px;
     color: #3c3737;
     margin-top: 0.5rem; /* 8px */
     font-size: 1.125rem; /* 18px */
@@ -91,5 +92,5 @@
     grid-column: 1 / -1; /* Ocupa todas las columnas */
     text-align: center;
     padding: 4rem;
-    color: #888;
+    color: #3c3737;
 }
