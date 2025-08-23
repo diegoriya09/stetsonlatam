@@ -73,70 +73,62 @@ $conn->close();
 </head>
 
 <body>
-  <div class="relative flex size-full min-h-screen flex-col bg-white">
-    <div class="layout-container flex h-full grow flex-col">
+  <div class="page-wrapper">
+    <div class="content-container">
       <?php include 'header.php'; ?>
 
-      <main class="py-10">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+      <main class="product-main">
+        <div class="product-container">
 
-            <div class="product-gallery">
-              <div class="main-image-container">
-                <img id="main-product-image" src="<?php echo htmlspecialchars($producto['image']); ?>"
-                  alt="<?php echo htmlspecialchars($producto['name']); ?>">
+          <div class="product-gallery">
+            <div class="main-image-container">
+              <img id="main-product-image" src="<?php echo htmlspecialchars($producto['image']); ?>"
+                alt="<?php echo htmlspecialchars($producto['name']); ?>">
+            </div>
+          </div>
+
+          <div class="product-details">
+            <h1 class="product-title"><?php echo htmlspecialchars($producto['name']); ?></h1>
+            <p class="product-price">$<?php echo number_format($producto['price'], 2); ?></p>
+
+            <?php if (!empty($colors)): ?>
+              <div class="options-group">
+                <h3 class="options-label">Color</h3>
+                <div class="options-selector">
+                  <?php foreach ($colors as $color): ?>
+                    <button class="color-btn" style="background-color: <?php echo $color['hex']; ?>;"
+                      title="<?php echo $color['name']; ?>" data-color-id="<?php echo $color['id']; ?>"></button>
+                  <?php endforeach; ?>
+                </div>
+              </div>
+            <?php endif; ?>
+
+            <?php if (!empty($sizes)): ?>
+              <div class="options-group">
+                <h3 class="options-label">Size</h3>
+                <div class="options-selector">
+                  <?php foreach ($sizes as $size): ?>
+                    <button class="size-btn" data-size-id="<?php echo $size['id']; ?>"><?php echo $size['name']; ?></button>
+                  <?php endforeach; ?>
+                </div>
+              </div>
+            <?php endif; ?>
+
+            <div class="options-group">
+              <h3 class="options-label">Quantity</h3>
+              <div class="quantity-selector">
+                <button type="button" class="qty-btn minus">-</button>
+                <input type="text" id="cantidad" value="1" readonly>
+                <button type="button" class="qty-btn plus">+</button>
               </div>
             </div>
 
-            <div class="product-details">
-              <h1 class="text-3xl font-bold tracking-tight text-gray-900">
-                <?php echo htmlspecialchars($producto['name']); ?></h1>
-              <p class="text-3xl tracking-tight text-gray-900 mt-3">$<?php echo number_format($producto['price'], 2); ?>
-              </p>
+            <button class="add-to-cart-btn">Add to Cart</button>
 
-              <?php if (!empty($colors)): ?>
-                <div class="mt-6">
-                  <h3 class="text-sm font-medium text-gray-900">Color</h3>
-                  <div class="flex items-center space-x-3 mt-2">
-                    <?php foreach ($colors as $color): ?>
-                      <button class="color-btn" style="background-color: <?php echo $color['hex']; ?>;"
-                        title="<?php echo $color['name']; ?>" data-color-id="<?php echo $color['id']; ?>"></button>
-                    <?php endforeach; ?>
-                  </div>
-                </div>
-              <?php endif; ?>
-
-              <?php if (!empty($sizes)): ?>
-                <div class="mt-6">
-                  <h3 class="text-sm font-medium text-gray-900">Size</h3>
-                  <div class="flex flex-wrap gap-2 mt-2">
-                    <?php foreach ($sizes as $size): ?>
-                      <button class="size-btn"
-                        data-size-id="<?php echo $size['id']; ?>"><?php echo $size['name']; ?></button>
-                    <?php endforeach; ?>
-                  </div>
-                </div>
-              <?php endif; ?>
-
-              <div class="mt-6">
-                <h3 class="text-sm font-medium text-gray-900">Quantity</h3>
-                <div class="flex items-center gap-2 mt-2">
-                  <button type="button" class="qty-btn minus">-</button>
-                  <input type="text" id="cantidad" value="1" class="w-12 text-center border-gray-300 rounded" readonly>
-                  <button type="button" class="qty-btn plus">+</button>
-                </div>
-              </div>
-
-              <button
-                class="add-to-cart-btn mt-8 w-full bg-gray-800 text-white font-bold py-3 px-8 rounded-md hover:bg-gray-900 transition">
-                Add to Cart
-              </button>
-
-              <div class="mt-10">
-                <h3 class="text-sm font-medium text-gray-900">Description</h3>
-                <div class="prose mt-4 text-gray-600">
-                  <p><?php echo nl2br(htmlspecialchars($producto['description'])); ?></p>
-                </div>
+            <div class="description-group">
+              <h3 class="description-label">Description</h3>
+              <div class="description-content">
+                <p><?php echo nl2br(htmlspecialchars($producto['description'])); ?></p>
               </div>
             </div>
           </div>

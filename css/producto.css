@@ -1,10 +1,31 @@
 /* css/producto.css */
 
+/* --- Contenedores Principales --- */
+.product-main {
+    padding: 2.5rem 0; /* 40px de espacio arriba y abajo */
+}
+
+.product-container {
+    max-width: 1280px; /* Ancho máximo similar a 7xl de Tailwind */
+    margin: 0 auto; /* Centra el contenedor */
+    padding: 0 1.5rem; /* Espacio a los lados */
+    display: grid;
+    grid-template-columns: 1fr; /* Una columna en móvil */
+    gap: 2.5rem; /* 40px de espacio entre columnas */
+}
+
+/* En pantallas más grandes, cambiamos a dos columnas */
+@media (min-width: 768px) {
+    .product-container {
+        grid-template-columns: 1fr 1fr; /* Dos columnas de igual tamaño */
+    }
+}
+
+/* --- Columna Izquierda: Galería --- */
 .main-image-container {
     border: 1px solid #e5e7eb;
     border-radius: 0.5rem;
     overflow: hidden;
-    aspect-ratio: 1 / 1; /* Mantiene la imagen cuadrada */
 }
 
 .main-image-container img {
@@ -13,8 +34,39 @@
     object-fit: cover;
 }
 
+/* --- Columna Derecha: Detalles --- */
+.product-details .product-title {
+    font-size: 1.875rem; /* 30px */
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    color: #111827;
+}
 
-/* --- Selectores de Color, Talla y Cantidad --- */
+.product-details .product-price {
+    font-size: 1.875rem; /* 30px */
+    letter-spacing: -0.025em;
+    color: #111827;
+    margin-top: 0.75rem;
+}
+
+.options-group {
+    margin-top: 1.5rem; /* 24px */
+}
+
+.options-label {
+    font-size: 0.875rem; /* 14px */
+    font-weight: 500;
+    color: #111827;
+}
+
+.options-selector {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem; /* 12px */
+    margin-top: 0.5rem;
+}
+
+/* Estilos para los botones (talla, color, cantidad) */
 .color-btn {
     width: 32px;
     height: 32px;
@@ -44,6 +96,11 @@
     border-color: #111827;
 }
 
+.quantity-selector {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
 .qty-btn {
     width: 40px;
     height: 40px;
@@ -53,6 +110,40 @@
     font-size: 1.25rem;
     line-height: 1;
 }
-#cantidad {
+.quantity-selector input {
+    width: 3rem; /* 48px */
     height: 40px;
+    text-align: center;
+    border: 1px solid #d1d5db;
+    border-radius: 0.25rem;
+}
+
+.add-to-cart-btn {
+    margin-top: 2rem;
+    width: 100%;
+    background-color: #1f2937;
+    color: white;
+    font-weight: 700;
+    padding: 0.75rem 1rem;
+    border-radius: 0.375rem;
+    transition: background-color 0.2s ease;
+}
+.add-to-cart-btn:hover {
+    background-color: #111827;
+}
+
+/* Descripción Larga */
+.description-group {
+    margin-top: 2.5rem;
+}
+.description-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #111827;
+}
+.description-content {
+    margin-top: 1rem;
+    color: #4b5563;
+    font-size: 1rem;
+    line-height: 1.75;
 }
