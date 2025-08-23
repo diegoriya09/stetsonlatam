@@ -249,81 +249,51 @@ try {
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const sizeBtn = document.getElementById("size-filter-btn");
-            const sizeDropdown = document.getElementById("size-dropdown");
-            const colorBtn = document.getElementById("color-filter-btn");
-            const colorDropdown = document.getElementById("color-dropdown");
+    document.addEventListener("DOMContentLoaded", () => {
+        
+        // --- LÓGICA PARA FILTROS ---
+        const sizeBtn = document.getElementById("size-filter-btn");
+        const sizeDropdown = document.getElementById("size-dropdown");
+        const colorBtn = document.getElementById("color-filter-btn");
+        const colorDropdown = document.getElementById("color-dropdown");
 
-            if (sizeBtn) sizeBtn.addEventListener("click", () => sizeDropdown.classList.toggle("hidden"));
-            if (colorBtn) colorBtn.addEventListener("click", () => colorDropdown.classList.toggle("hidden"));
+        if (sizeBtn) sizeBtn.addEventListener("click", () => sizeDropdown.classList.toggle("hidden"));
+        if (colorBtn) colorBtn.addEventListener("click", () => colorDropdown.classList.toggle("hidden"));
 
-            document.querySelectorAll(".size-check, .color-check").forEach(input => {
-                input.addEventListener("change", () => {
-                    // Obtenemos los parámetros ACTUALES de la URL, incluyendo el ID de la categoría
-                    const currentParams = new URLSearchParams(window.location.search);
-
-                    // Limpiamos los filtros anteriores de tallas y colores para reconstruirlos
-                    currentParams.delete('sizes[]');
-                    currentParams.delete('colors[]');
-
-                    // Añadimos los filtros que están seleccionados
-                    document.querySelectorAll(".size-check:checked").forEach(cb => currentParams.append("sizes[]", cb.value));
-                    document.querySelectorAll(".color-check:checked").forEach(cb => currentParams.append("colors[]", cb.value));
-
-                    // Recargamos la página con TODOS los parámetros: el ID de la categoría + los filtros
-                    window.location.href = window.location.pathname + "?" + currentParams.toString();
-                });
+        document.querySelectorAll(".size-check, .color-check").forEach(input => {
+            input.addEventListener("change", () => {
+                const currentParams = new URLSearchParams(window.location.search);
+                currentParams.delete('sizes[]');
+                currentParams.delete('colors[]');
+                document.querySelectorAll(".size-check:checked").forEach(cb => currentParams.append("sizes[]", cb.value));
+                document.querySelectorAll(".color-check:checked").forEach(cb => currentParams.append("colors[]", cb.value));
+                window.location.href = window.location.pathname + "?" + currentParams.toString();
             });
         });
-    </script>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            // --- CÓDIGO DE FILTROS (que ya tienes) ---
-            const sizeBtn = document.getElementById("size-filter-btn");
-            const sizeDropdown = document.getElementById("size-dropdown");
-            const colorBtn = document.getElementById("color-filter-btn");
-            const colorDropdown = document.getElementById("color-dropdown");
 
-            if (sizeBtn) sizeBtn.addEventListener("click", () => sizeDropdown.classList.toggle("hidden"));
-            if (colorBtn) colorBtn.addEventListener("click", () => colorDropdown.classList.toggle("hidden"));
+        // --- LÓGICA PARA ORDENAR POR PRECIO ---
+        const sortBtn = document.getElementById("sort-btn");
+        const productosContainer = document.getElementById("productos-container");
+        let ascending = true; // estado inicial del orden
 
-            document.querySelectorAll(".size-check, .color-check").forEach(input => {
-                input.addEventListener("change", () => {
-                    const currentParams = new URLSearchParams(window.location.search);
-                    currentParams.delete('sizes[]');
-                    currentParams.delete('colors[]');
-                    document.querySelectorAll(".size-check:checked").forEach(cb => currentParams.append("sizes[]", cb.value));
-                    document.querySelectorAll(".color-check:checked").forEach(cb => currentParams.append("colors[]", cb.value));
-                    window.location.href = window.location.pathname + "?" + currentParams.toString();
+        if (sortBtn) {
+            sortBtn.addEventListener("click", () => {
+                let productos = Array.from(productosContainer.querySelectorAll(".producto-item"));
+
+                productos.sort((a, b) => {
+                    let priceA = parseFloat(a.dataset.price);
+                    let priceB = parseFloat(b.dataset.price);
+                    return ascending ? priceA - priceB : priceB - priceA;
                 });
+
+                productosContainer.innerHTML = "";
+                productos.forEach(p => productosContainer.appendChild(p));
+                
+                ascending = !ascending;
             });
-
-            // --- CÓDIGO NUEVO PARA ORDENAR POR PRECIO ---
-            const sortBtn = document.getElementById("sort-btn");
-            const productosContainer = document.getElementById("productos-container");
-            let ascending = true; // estado inicial del orden
-
-            if (sortBtn) {
-                sortBtn.addEventListener("click", () => {
-                    let productos = Array.from(productosContainer.querySelectorAll(".producto-item"));
-
-                    productos.sort((a, b) => {
-                        let priceA = parseFloat(a.dataset.price);
-                        let priceB = parseFloat(b.dataset.price);
-                        return ascending ? priceA - priceB : priceB - priceA;
-                    });
-
-                    // Limpiar el contenedor y reinsertar los productos ya ordenados
-                    productosContainer.innerHTML = "";
-                    productos.forEach(p => productosContainer.appendChild(p));
-
-                    // Alternar el estado del orden para la próxima vez que se haga clic
-                    ascending = !ascending;
-                });
-            }
-        });
-    </script>
+        }
+    });
+</script>
     <?php include 'modal.php'; ?>
     <script src="js/auth.js?v=<?php echo time(); ?>"></script>
     <script src="js/index.js?v=<?php echo time(); ?>"></script>
