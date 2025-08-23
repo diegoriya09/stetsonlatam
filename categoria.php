@@ -4,13 +4,13 @@ require 'php/conexion.php';
 
 // 1. OBTENER Y VALIDAR EL ID DE LA CATEGORÍA
 if (!isset($_GET['id']) || !filter_var($_GET['id'], FILTER_VALIDATE_INT)) {
-    exit('Categoría no válida');
+    exit('Invalid category');
 }
 $categoria_id = $_GET['id'];
 
 // 2. OBTENER LA INFORMACIÓN DE LA CATEGORÍA SELECCIONADA
 try {
-    $sql_cat = "SELECT nombre, descripcion FROM Categorias WHERE id = ?";
+    $sql_cat = "SELECT nombre, descripcion FROM categorias WHERE id = ?";
     $stmt_cat = $conn->prepare($sql_cat);
     // En MySQLi, los parámetros se "atan" con bind_param
     $stmt_cat->bind_param("i", $categoria_id);
@@ -19,12 +19,12 @@ try {
     $categoria = $result_cat->fetch_assoc();
 
     if (!$categoria) {
-        exit('Categoría no encontrada');
+        exit('Category not found');
     }
 
 } catch (Exception $e) {
-    error_log("Error al obtener categoría: " . $e->getMessage());
-    exit('Error al cargar la página.');
+    error_log("Error obtaining category: " . $e->getMessage());
+    exit('Error loading page.');
 }
 
 // 3. OBTENER LOS PRODUCTOS DE LA CATEGORÍA Y SUS SUBCATEGORÍAS
@@ -32,7 +32,7 @@ try {
 $productos = [];
 try {
     // Primero, traemos TODAS las categorías para construir el árbol en PHP
-    $all_categories_sql = "SELECT id, categoria_padre_id FROM Categorias";
+    $all_categories_sql = "SELECT id, categoria_padre_id FROM categorias";
     $all_categories_result = $conn->query($all_categories_sql);
     $all_categories = $all_categories_result->fetch_all(MYSQLI_ASSOC);
 
@@ -58,11 +58,11 @@ try {
         $types = str_repeat('i', count($relevant_ids));
 
         $sql_prod = "
-            SELECT p.id, p.nombre, p.descripcion, p.image 
-            FROM Productos p
-            JOIN Producto_Categoria pc ON p.id = pc.producto_id
+            SELECT p.id, p.name, p.description, p.image 
+            FROM productos p
+            JOIN producto_categoria pc ON p.id = pc.producto_id
             WHERE pc.categoria_id IN ($placeholders)
-            GROUP BY p.id -- Agrupamos para evitar productos duplicados si están en varias subcategorías
+            GROUP BY p.id
             ORDER BY p.nombre;
         ";
 
@@ -75,7 +75,7 @@ try {
     }
 
 } catch (Exception $e) {
-    error_log("Error al obtener productos: " . $e->getMessage());
+    error_log("Error retrieving products: " . $e->getMessage());
     $productos = [];
 }
 ?>
@@ -87,7 +87,7 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title><?php echo htmlspecialchars($categoria['nombre']); ?> - Stetson LATAM</title>
+    <title><?php echo htmlspecialchars($categoria['nombre']); ?> | Stetson LATAM</title>
 
     <link rel="icon" href="img/logo.webp" type="image/x-icon">
     <link href="css/index.css?v=<?php echo time(); ?>" rel="stylesheet">
