@@ -142,10 +142,8 @@ $conn->close();
   <?php include 'modal.php'; ?>
   <script src="js/cart.js?v=<?php echo time(); ?>"></script>
   <script>
+    // Tu JavaScript se mantiene igual, ya que se basa en las clases de los botones que hemos conservado.
     document.addEventListener('DOMContentLoaded', function () {
-      // A FUTURO: Aquí iría el script para la galería de imágenes
-
-      // --- Selección de Talla y Color ---
       let selectedColorId = null;
       let selectedSizeId = null;
       const colorBtns = document.querySelectorAll('.color-btn');
@@ -167,7 +165,6 @@ $conn->close();
         });
       });
 
-      // --- Cantidad ---
       const qtyInput = document.getElementById('cantidad');
       document.querySelector('.qty-btn.plus').addEventListener('click', () => {
         qtyInput.value = parseInt(qtyInput.value) + 1;
@@ -177,7 +174,6 @@ $conn->close();
         if (value > 1) qtyInput.value = value - 1;
       });
 
-      // --- Añadir al Carrito ---
       const addToCartBtn = document.querySelector('.add-to-cart-btn');
       if (addToCartBtn) {
         addToCartBtn.addEventListener('click', function () {
@@ -200,7 +196,6 @@ $conn->close();
             quantity: parseInt(qtyInput.value)
           };
 
-          // Llama a la función global de tu archivo cart.js
           addToCart(cartData);
         });
       }
