@@ -142,6 +142,8 @@ $conn->close();
 
   <?php include 'modal.php'; ?>
   <script src="js/cart.js?v=<?php echo time(); ?>"></script>
+  <script src="js/auth.js?v=<?php echo time(); ?>"></script>
+  <script src="js/index.js?v=<?php echo time(); ?>"></script>
   <script>
     // Tu JavaScript se mantiene igual, ya que se basa en las clases de los botones que hemos conservado.
     document.addEventListener('DOMContentLoaded', function () {
