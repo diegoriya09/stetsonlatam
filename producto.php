@@ -1,486 +1,215 @@
 <?php
 require_once 'php/conexion.php';
-
 session_start();
 
 $product_id = $_GET['id'] ?? null;
-$producto = null;
-$from = $_GET['from'] ?? 'hats' ?? 'caps';
+if (!$product_id || !filter_var($product_id, FILTER_VALIDATE_INT)) {
+  exit('Producto no válido');
+}
 
-$user_id = $_SESSION['user_id'] ?? null;
-
-if ($product_id) {
+// OBTENER TODA LA INFORMACIÓN DEL PRODUCTO
+try {
+  // Detalles del producto
   $stmt = $conn->prepare("SELECT * FROM productos WHERE id = ?");
   $stmt->bind_param("i", $product_id);
   $stmt->execute();
   $result = $stmt->get_result();
   $producto = $result->fetch_assoc();
   $stmt->close();
-}
 
-
-if ($product_id) {
-  if ($user_id !== null) {
-    // Usuario logueado
-    $stmt = $conn->prepare(
-      "INSERT INTO user_visits (user_id, product_id, visited_at) VALUES (?, ?, NOW())"
-    );
-    $stmt->bind_param("ii", $user_id, $product_id);
-  } else {
-    // Usuario no logueado
-    $stmt = $conn->prepare(
-      "INSERT INTO user_visits (user_id, product_id, visited_at) VALUES (NULL, ?, NOW())"
-    );
-    $stmt->bind_param("i", $product_id);
+  if (!$producto) {
+    exit('Producto no encontrado');
   }
-  $stmt->execute();
-  $stmt->close();
-}
 
-$sizes = [];
-$colors = [];
+  // A FUTURO: Aquí procesarías las imágenes adicionales. Por ahora lo dejamos comentado.
+  // $producto['additional_images'] = !empty($producto['images']) ? json_decode($producto['images'], true) : [];
 
-if ($product_id) {
   // Tallas disponibles
-  $stmt = $conn->prepare("
-    SELECT s.id, s.name 
-    FROM product_sizes ps
-    JOIN sizes s ON ps.size_id = s.id
-    WHERE ps.product_id = ?
-  ");
-  $stmt->bind_param("i", $product_id);
-  $stmt->execute();
-  $result = $stmt->get_result();
-  while ($row = $result->fetch_assoc()) {
-    $sizes[] = $row;
-  }
-  $stmt->close();
+  $stmt_sizes = $conn->prepare("SELECT s.id, s.name FROM product_sizes ps JOIN sizes s ON ps.size_id = s.id WHERE ps.product_id = ?");
+  $stmt_sizes->bind_param("i", $product_id);
+  $stmt_sizes->execute();
+  $result_sizes = $stmt_sizes->get_result();
+  $sizes = $result_sizes->fetch_all(MYSQLI_ASSOC);
+  $stmt_sizes->close();
 
   // Colores disponibles
-  $stmt = $conn->prepare("
-    SELECT c.id, c.name, c.hex 
-    FROM product_colors pc
-    JOIN colors c ON pc.color_id = c.id
-    WHERE pc.product_id = ?
-  ");
-  $stmt->bind_param("i", $product_id);
-  $stmt->execute();
-  $result = $stmt->get_result();
-  while ($row = $result->fetch_assoc()) {
-    $colors[] = $row;
-  }
-  $stmt->close();
-}
+  $stmt_colors = $conn->prepare("SELECT c.id, c.name, c.hex FROM product_colors pc JOIN colors c ON pc.color_id = c.id WHERE pc.product_id = ?");
+  $stmt_colors->bind_param("i", $product_id);
+  $stmt_colors->execute();
+  $result_colors = $stmt_colors->get_result();
+  $colors = $result_colors->fetch_all(MYSQLI_ASSOC);
+  $stmt_colors->close();
 
+  // Registrar visita de usuario
+  $user_id = $_SESSION['user_id'] ?? null;
+  if ($user_id !== null) {
+    $stmt_visit = $conn->prepare("INSERT INTO user_visits (user_id, product_id, visited_at) VALUES (?, ?, NOW())");
+    $stmt_visit->bind_param("ii", $user_id, $product_id);
+  } else {
+    $stmt_visit = $conn->prepare("INSERT INTO user_visits (user_id, product_id, visited_at) VALUES (NULL, ?, NOW())");
+    $stmt_visit->bind_param("i", $product_id);
+  }
+  $stmt_visit->execute();
+  $stmt_visit->close();
+
+} catch (Exception $e) {
+  error_log("Error al cargar producto: " . $e->getMessage());
+  exit('Error al cargar la página del producto.');
+}
 $conn->close();
 ?>
-
-<html>
+<!DOCTYPE html>
+<html lang="es">
 
 <head>
-  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
-  <link
-    rel="stylesheet"
-    as="style"
-    onload="this.rel='stylesheet'"
-    href="https://fonts.googleapis.com/css2?display=swap&amp;family=Noto+Serif%3Awght%40400%3B500%3B700%3B900&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900" />
+  <meta charset="UTF-8">
+  <title><?php echo htmlspecialchars($producto['name']); ?> | Stetson LATAM</title>
 
-  <title><?php echo htmlspecialchars($producto['name']); ?></title>
-  <link rel="icon" href="img/logo.webp" type="image/x-icon" loading="lazy">
-  <link rel="stylesheet" href="css/product.css?v=<?php echo time(); ?>" />
+  <link rel="icon" href="img/logo.webp" type="image/x-icon">
   <link href="css/index.css?v=<?php echo time(); ?>" rel="stylesheet">
-
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="css/producto.css?v=<?php echo time(); ?>" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
-  <div class="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden">
+  <div class="relative flex size-full min-h-screen flex-col bg-white">
     <div class="layout-container flex h-full grow flex-col">
       <?php include 'header.php'; ?>
-      <div class="px-40 flex flex-1 justify-center py-5">
-        <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
-          <div class="flex flex-wrap gap-2 p-4">
-            <span class="text-[#887563] text-base font-medium leading-normal">/</span>
-            <?php if ($from === 'caps'): ?>
-              <a class="text-[#887563] text-base font-medium leading-normal" href="caps.php">Caps</a>
-            <?php else: ?>
-              <a class="text-[#887563] text-base font-medium leading-normal" href="hats.php">Hats</a>
-            <?php endif; ?>
-            <span class="text-[#887563] text-base font-medium leading-normal">/</span>
-            <span class="text-[#181411] text-base font-medium leading-normal"><?php echo htmlspecialchars($producto['name']); ?></span>
-          </div>
-          <div class="flex w-full grow bg-white @container p-4">
-            <div class="w-full gap-1 overflow-hidden bg-white @[480px]:gap-2 aspect-[3/2] rounded-lg grid grid-cols-[2fr_1fr_1fr]">
-              <div
-                class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg flex flex-col"
-                style='background-image: url("<?php echo htmlspecialchars($producto["image"]); ?>");'></div>
-              <!-- Si tienes más imágenes, puedes mostrarlas aquí usando $producto['images'] -->
-            </div>
-          </div>
-          <div class="info-producto">
-            <div class="px-4 pb-3 pt-5">
-              <h1 data-name="<?php echo htmlspecialchars($producto['name']); ?>" class="text-[#181411] text-[22px] font-bold leading-tight tracking-[-0.015em] text-left">
-                <?php echo htmlspecialchars($producto['name']); ?>
-              </h1>
-              <p data-price="<?php echo htmlspecialchars($producto['price']); ?>" class="text-[#7a7671] text-sm font-normal leading-normal">
-                $<?php echo number_format($producto['price'], 2); ?>
-              </p>
-              <span class="text-[#887563] text-sm font-normal leading-normal">
-                SKU: <?php echo htmlspecialchars($producto['sku']); ?>
-              </span>
-              <p data-description="<?php echo htmlspecialchars($producto['description']); ?>" class="text-[#181411] text-base font-normal leading-normal pt-2">
-                <?php echo htmlspecialchars($producto['description']); ?>
-              </p>
-            </div>
-            <h3 class="text-[#181411] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">Size</h3>
-            <div class="flex flex-wrap gap-3 p-4">
-              <?php foreach ($sizes as $size): ?>
-                <button
-                  type="button"
-                  class="size-btn border border-[#e5e0dc] px-4 h-11 rounded-lg text-sm font-medium text-[#181411]"
-                  data-size-id="<?= $size['id'] ?>"
-                  data-size="<?= $size['name'] ?>">
-                  <?= htmlspecialchars($size['name']); ?>
-                </button>
-              <?php endforeach; ?>
-            </div>
-            <h3 class="text-[#181411] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">Color</h3>
-            <div class="flex flex-wrap gap-3 p-4">
-              <?php foreach ($colors as $color): ?>
-                <button
-                  type="button"
-                  class="color-btn w-10 h-10 rounded-full border border-[#e5e0dc]"
-                  style="background-color: <?= $color['hex'] ?>;"
-                  data-color-id="<?= $color['id'] ?>"
-                  data-color="<?= $color['name'] ?>"
-                  title="<?= $color['name'] ?>">
-                </button>
-              <?php endforeach; ?>
-            </div>
-            <div class="flex items-center gap-2 px-4 py-3">
-              <button type="button" class="qty-btn minus border border-gray-300 px-3 rounded">−</button>
-              <input type="text" id="cantidad" value="1"
-                class="w-12 text-center border border-gray-300 rounded" readonly>
-              <button type="button" class="qty-btn plus border border-gray-300 px-3 rounded">+</button>
-            </div>
-            <script>
-              // Función genérica para manejar selección única
-              function handleSelection(buttons) {
-                buttons.forEach(btn => {
-                  btn.addEventListener("click", () => {
-                    buttons.forEach(b => b.classList.remove("active")); // quita el activo
-                    btn.classList.add("active"); // marca el seleccionado
-                  });
-                });
-              }
 
-              // Aplica a tallas
-              const sizeBtns = document.querySelectorAll(".size-btn");
-              handleSelection(sizeBtns);
+      <main class="py-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
 
-              // Aplica a colores
-              const colorBtns = document.querySelectorAll(".color-btn");
-              handleSelection(colorBtns);
-            </script>
-            <script>
-              // Lógica + y − adaptada
-              document.addEventListener('click', function(e) {
-                if (e.target.classList.contains('plus')) {
-                  let input = e.target.closest('.info-producto').querySelector('#cantidad');
-                  input.value = parseInt(input.value, 10) + 1;
-                }
-                if (e.target.classList.contains('minus')) {
-                  let input = e.target.closest('.info-producto').querySelector('#cantidad');
-                  let value = parseInt(input.value, 10);
-                  if (value > 1) input.value = value - 1;
-                }
-              });
-            </script>
-            <div class="flex px-4 py-3 justify-start">
+            <div class="product-gallery">
+              <div class="main-image-container">
+                <img id="main-product-image" src="<?php echo htmlspecialchars($producto['image']); ?>"
+                  alt="<?php echo htmlspecialchars($producto['name']); ?>">
+              </div>
+            </div>
+
+            <div class="product-details">
+              <h1 class="text-3xl font-bold tracking-tight text-gray-900">
+                <?php echo htmlspecialchars($producto['name']); ?></h1>
+              <p class="text-3xl tracking-tight text-gray-900 mt-3">$<?php echo number_format($producto['price'], 2); ?>
+              </p>
+
+              <?php if (!empty($colors)): ?>
+                <div class="mt-6">
+                  <h3 class="text-sm font-medium text-gray-900">Color</h3>
+                  <div class="flex items-center space-x-3 mt-2">
+                    <?php foreach ($colors as $color): ?>
+                      <button class="color-btn" style="background-color: <?php echo $color['hex']; ?>;"
+                        title="<?php echo $color['name']; ?>" data-color-id="<?php echo $color['id']; ?>"></button>
+                    <?php endforeach; ?>
+                  </div>
+                </div>
+              <?php endif; ?>
+
+              <?php if (!empty($sizes)): ?>
+                <div class="mt-6">
+                  <h3 class="text-sm font-medium text-gray-900">Size</h3>
+                  <div class="flex flex-wrap gap-2 mt-2">
+                    <?php foreach ($sizes as $size): ?>
+                      <button class="size-btn"
+                        data-size-id="<?php echo $size['id']; ?>"><?php echo $size['name']; ?></button>
+                    <?php endforeach; ?>
+                  </div>
+                </div>
+              <?php endif; ?>
+
+              <div class="mt-6">
+                <h3 class="text-sm font-medium text-gray-900">Quantity</h3>
+                <div class="flex items-center gap-2 mt-2">
+                  <button type="button" class="qty-btn minus">-</button>
+                  <input type="text" id="cantidad" value="1" class="w-12 text-center border-gray-300 rounded" readonly>
+                  <button type="button" class="qty-btn plus">+</button>
+                </div>
+              </div>
+
               <button
-                class="add-to-cart-btn"
-                data-id="<?= $producto['id'] ?>"
-                data-name="<?= htmlspecialchars($producto['name']) ?>"
-                data-price="<?= $producto['price'] ?>"
-                data-image="<?= htmlspecialchars($producto['image']) ?>">
+                class="add-to-cart-btn mt-8 w-full bg-gray-800 text-white font-bold py-3 px-8 rounded-md hover:bg-gray-900 transition">
                 Add to Cart
               </button>
-            </div>
-          </div>
-          <h3 class="text-[#181411] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">Customer Reviews</h3>
-          <div class="flex flex-wrap gap-x-8 gap-y-6 p-4">
-            <div class="flex flex-col gap-2">
-              <p class="text-[#181411] text-4xl font-black leading-tight tracking-[-0.033em]">4.5</p>
-              <div class="flex gap-0.5">
-                <div class="text-[#181411]" data-icon="Star" data-size="18px" data-weight="fill">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" fill="currentColor" viewBox="0 0 256 256">
-                    <path
-                      d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"></path>
-                  </svg>
+
+              <div class="mt-10">
+                <h3 class="text-sm font-medium text-gray-900">Description</h3>
+                <div class="prose mt-4 text-gray-600">
+                  <p><?php echo nl2br(htmlspecialchars($producto['description'])); ?></p>
                 </div>
-                <div class="text-[#181411]" data-icon="Star" data-size="18px" data-weight="fill">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" fill="currentColor" viewBox="0 0 256 256">
-                    <path
-                      d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"></path>
-                  </svg>
-                </div>
-                <div class="text-[#181411]" data-icon="Star" data-size="18px" data-weight="fill">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" fill="currentColor" viewBox="0 0 256 256">
-                    <path
-                      d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"></path>
-                  </svg>
-                </div>
-                <div class="text-[#181411]" data-icon="Star" data-size="18px" data-weight="fill">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" fill="currentColor" viewBox="0 0 256 256">
-                    <path
-                      d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"></path>
-                  </svg>
-                </div>
-                <div class="text-[#181411]" data-icon="Star" data-size="18px" data-weight="regular">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" fill="currentColor" viewBox="0 0 256 256">
-                    <path
-                      d="M239.2,97.29a16,16,0,0,0-13.81-11L166,81.17,142.72,25.81h0a15.95,15.95,0,0,0-29.44,0L90.07,81.17,30.61,86.32a16,16,0,0,0-9.11,28.06L66.61,153.8,53.09,212.34a16,16,0,0,0,23.84,17.34l51-31,51.11,31a16,16,0,0,0,23.84-17.34l-13.51-58.6,45.1-39.36A16,16,0,0,0,239.2,97.29Zm-15.22,5-45.1,39.36a16,16,0,0,0-5.08,15.71L187.35,216v0l-51.07-31a15.9,15.9,0,0,0-16.54,0l-51,31h0L82.2,157.4a16,16,0,0,0-5.08-15.71L32,102.35a.37.37,0,0,1,0-.09l59.44-5.14a16,16,0,0,0,13.35-9.75L128,32.08l23.2,55.29a16,16,0,0,0,13.35,9.75L224,102.26S224,102.32,224,102.33Z"></path>
-                  </svg>
-                </div>
-              </div>
-              <p class="text-[#181411] text-base font-normal leading-normal">125 reviews</p>
-            </div>
-            <div class="grid min-w-[200px] max-w-[400px] flex-1 grid-cols-[20px_1fr_40px] items-center gap-y-3">
-              <p class="text-[#181411] text-sm font-normal leading-normal">5</p>
-              <div class="flex h-2 flex-1 overflow-hidden rounded-full bg-[#e5e0dc]">
-                <div class="rounded-full bg-[#181411]" style="width: 40%;"></div>
-              </div>
-              <p class="text-[#887563] text-sm font-normal leading-normal text-right">40%</p>
-              <p class="text-[#181411] text-sm font-normal leading-normal">4</p>
-              <div class="flex h-2 flex-1 overflow-hidden rounded-full bg-[#e5e0dc]">
-                <div class="rounded-full bg-[#181411]" style="width: 30%;"></div>
-              </div>
-              <p class="text-[#887563] text-sm font-normal leading-normal text-right">30%</p>
-              <p class="text-[#181411] text-sm font-normal leading-normal">3</p>
-              <div class="flex h-2 flex-1 overflow-hidden rounded-full bg-[#e5e0dc]">
-                <div class="rounded-full bg-[#181411]" style="width: 15%;"></div>
-              </div>
-              <p class="text-[#887563] text-sm font-normal leading-normal text-right">15%</p>
-              <p class="text-[#181411] text-sm font-normal leading-normal">2</p>
-              <div class="flex h-2 flex-1 overflow-hidden rounded-full bg-[#e5e0dc]">
-                <div class="rounded-full bg-[#181411]" style="width: 10%;"></div>
-              </div>
-              <p class="text-[#887563] text-sm font-normal leading-normal text-right">10%</p>
-              <p class="text-[#181411] text-sm font-normal leading-normal">1</p>
-              <div class="flex h-2 flex-1 overflow-hidden rounded-full bg-[#e5e0dc]">
-                <div class="rounded-full bg-[#181411]" style="width: 5%;"></div>
-              </div>
-              <p class="text-[#887563] text-sm font-normal leading-normal text-right">5%</p>
-            </div>
-          </div>
-          <div class="flex flex-col gap-8 overflow-x-hidden bg-white p-4">
-            <div class="flex flex-col gap-3 bg-white">
-              <div class="flex items-center gap-3">
-                <div
-                  class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
-                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCjWN5LXiCDDUQ55l6Q4U1ENzEMqCeGDG8j09kQshxVRygyOX6Wq5WGqXExYFilVLz9l19cqNuMir6p4AzHs6m5ALYg9HW1p-9sUpAf6mfz7TIgc1TOzLeo_yfpbMlqiX2A4dEc8GzV6GLnwSlAjtY1BZFdfh6o7F9vUPDXFPjsHhsYTwSkhNsM0ZRsvdRf5OXMTaBBDlBfbJj_OKYr6djhzSSpDnNZnOmQyFK1WNz0lFr1ehI7AP8sasx3RTHWzRsA8kQfyHT6mAvH");'></div>
-                <div class="flex-1">
-                  <p class="text-[#181411] text-base font-medium leading-normal">Ethan Vargas</p>
-                  <p class="text-[#887563] text-sm font-normal leading-normal">2023-08-15</p>
-                </div>
-              </div>
-              <div class="flex gap-0.5">
-                <div class="text-[#181411]" data-icon="Star" data-size="20px" data-weight="fill">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256">
-                    <path
-                      d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"></path>
-                  </svg>
-                </div>
-                <div class="text-[#181411]" data-icon="Star" data-size="20px" data-weight="fill">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256">
-                    <path
-                      d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"></path>
-                  </svg>
-                </div>
-                <div class="text-[#181411]" data-icon="Star" data-size="20px" data-weight="fill">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256">
-                    <path
-                      d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"></path>
-                  </svg>
-                </div>
-                <div class="text-[#181411]" data-icon="Star" data-size="20px" data-weight="fill">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256">
-                    <path
-                      d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"></path>
-                  </svg>
-                </div>
-                <div class="text-[#181411]" data-icon="Star" data-size="20px" data-weight="fill">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256">
-                    <path
-                      d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"></path>
-                  </svg>
-                </div>
-              </div>
-              <p class="text-[#181411] text-base font-normal leading-normal">
-                This hat is amazing! The quality is top-notch, and it fits perfectly. I've received so many compliments on it. Highly recommend!
-              </p>
-              <div class="flex gap-9 text-[#887563]">
-                <button class="flex items-center gap-2">
-                  <div class="text-inherit" data-icon="ThumbsUp" data-size="20px" data-weight="regular">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256">
-                      <path
-                        d="M234,80.12A24,24,0,0,0,216,72H160V56a40,40,0,0,0-40-40,8,8,0,0,0-7.16,4.42L75.06,96H32a16,16,0,0,0-16,16v88a16,16,0,0,0,16,16H204a24,24,0,0,0,23.82-21l12-96A24,24,0,0,0,234,80.12ZM32,112H72v88H32ZM223.94,97l-12,96a8,8,0,0,1-7.94,7H88V105.89l36.71-73.43A24,24,0,0,1,144,56V80a8,8,0,0,0,8,8h64a8,8,0,0,1,7.94,9Z"></path>
-                    </svg>
-                  </div>
-                  <p class="text-inherit">25</p>
-                </button>
-                <button class="flex items-center gap-2">
-                  <div class="text-inherit" data-icon="ThumbsDown" data-size="20px" data-weight="regular">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256">
-                      <path
-                        d="M239.82,157l-12-96A24,24,0,0,0,204,40H32A16,16,0,0,0,16,56v88a16,16,0,0,0,16,16H75.06l37.78,75.58A8,8,0,0,0,120,240a40,40,0,0,0,40-40V184h56a24,24,0,0,0,23.82-27ZM72,144H32V56H72Zm150,21.29a7.88,7.88,0,0,1-6,2.71H152a8,8,0,0,0-8,8v24a24,24,0,0,1-19.29,23.54L88,150.11V56H204a8,8,0,0,1,7.94,7l12,96A7.87,7.87,0,0,1,222,165.29Z"></path>
-                    </svg>
-                  </div>
-                  <p class="text-inherit">5</p>
-                </button>
-              </div>
-            </div>
-            <div class="flex flex-col gap-3 bg-white">
-              <div class="flex items-center gap-3">
-                <div
-                  class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
-                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBSYVz1vll2dyADzJorwBoHzhmOZIsnGnod1QCxNhPbivs3njaDibNVQO46KCTUuP48DnR9lCfamgj2hXakaH0Ux2VFlqis1JQK1vFGECyYuYDFj_jLbjPpJjLMbp1dysKO5OzNufS2zQofm6V4NnFXVquRsqgbGuMrimXBd-2bksyiiaOqUAj8BU1zKwkbqdwHxdYvN2zT8AFNu4rkpKUYQdLVrabVOhIUs7iV1Pt--LJPs67AUz08pKTSLXQYCtSxlNDQ_zy77LNE");'></div>
-                <div class="flex-1">
-                  <p class="text-[#181411] text-base font-medium leading-normal">Sophia Costa</p>
-                  <p class="text-[#887563] text-sm font-normal leading-normal">2023-07-22</p>
-                </div>
-              </div>
-              <div class="flex gap-0.5">
-                <div class="text-[#181411]" data-icon="Star" data-size="20px" data-weight="fill">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256">
-                    <path
-                      d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"></path>
-                  </svg>
-                </div>
-                <div class="text-[#181411]" data-icon="Star" data-size="20px" data-weight="fill">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256">
-                    <path
-                      d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"></path>
-                  </svg>
-                </div>
-                <div class="text-[#181411]" data-icon="Star" data-size="20px" data-weight="fill">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256">
-                    <path
-                      d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"></path>
-                  </svg>
-                </div>
-                <div class="text-[#181411]" data-icon="Star" data-size="20px" data-weight="fill">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256">
-                    <path
-                      d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"></path>
-                  </svg>
-                </div>
-                <div class="text-[#cec4bb]" data-icon="Star" data-size="20px" data-weight="regular">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256">
-                    <path
-                      d="M239.2,97.29a16,16,0,0,0-13.81-11L166,81.17,142.72,25.81h0a15.95,15.95,0,0,0-29.44,0L90.07,81.17,30.61,86.32a16,16,0,0,0-9.11,28.06L66.61,153.8,53.09,212.34a16,16,0,0,0,23.84,17.34l51-31,51.11,31a16,16,0,0,0,23.84-17.34l-13.51-58.6,45.1-39.36A16,16,0,0,0,239.2,97.29Zm-15.22,5-45.1,39.36a16,16,0,0,0-5.08,15.71L187.35,216v0l-51.07-31a15.9,15.9,0,0,0-16.54,0l-51,31h0L82.2,157.4a16,16,0,0,0-5.08-15.71L32,102.35a.37.37,0,0,1,0-.09l59.44-5.14a16,16,0,0,0,13.35-9.75L128,32.08l23.2,55.29a16,16,0,0,0,13.35,9.75L224,102.26S224,102.32,224,102.33Z"></path>
-                  </svg>
-                </div>
-              </div>
-              <p class="text-[#181411] text-base font-normal leading-normal">
-                Great hat, but the brim is a bit wider than I expected. Still, it's a stylish and well-made product.
-              </p>
-              <div class="flex gap-9 text-[#887563]">
-                <button class="flex items-center gap-2">
-                  <div class="text-inherit" data-icon="ThumbsUp" data-size="20px" data-weight="regular">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256">
-                      <path
-                        d="M234,80.12A24,24,0,0,0,216,72H160V56a40,40,0,0,0-40-40,8,8,0,0,0-7.16,4.42L75.06,96H32a16,16,0,0,0-16,16v88a16,16,0,0,0,16,16H204a24,24,0,0,0,23.82-21l12-96A24,24,0,0,0,234,80.12ZM32,112H72v88H32ZM223.94,97l-12,96a8,8,0,0,1-7.94,7H88V105.89l36.71-73.43A24,24,0,0,1,144,56V80a8,8,0,0,0,8,8h64a8,8,0,0,1,7.94,9Z"></path>
-                    </svg>
-                  </div>
-                  <p class="text-inherit">18</p>
-                </button>
-                <button class="flex items-center gap-2">
-                  <div class="text-inherit" data-icon="ThumbsDown" data-size="20px" data-weight="regular">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256">
-                      <path
-                        d="M239.82,157l-12-96A24,24,0,0,0,204,40H32A16,16,0,0,0,16,56v88a16,16,0,0,0,16,16H75.06l37.78,75.58A8,8,0,0,0,120,240a40,40,0,0,0,40-40V184h56a24,24,0,0,0,23.82-27ZM72,144H32V56H72Zm150,21.29a7.88,7.88,0,0,1-6,2.71H152a8,8,0,0,0-8,8v24a24,24,0,0,1-19.29,23.54L88,150.11V56H204a8,8,0,0,1,7.94,7l12,96A7.87,7.87,0,0,1,222,165.29Z"></path>
-                    </svg>
-                  </div>
-                  <p class="text-inherit">3</p>
-                </button>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </main>
+
       <?php include 'footer.php'; ?>
     </div>
   </div>
+
   <?php include 'modal.php'; ?>
-  <script src="js/index.js?v=<?php echo time(); ?>"></script>
-  <script src="js/auth.js?v=<?php echo time(); ?>"></script>
   <script src="js/cart.js?v=<?php echo time(); ?>"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      let selectedColor = null;
-      let selectedColorName = null;
-      let selectedHex = null;
-      let selectedSize = null;
-      let selectedSizeName = null;
+    document.addEventListener('DOMContentLoaded', function () {
+      // A FUTURO: Aquí iría el script para la galería de imágenes
+
+      // --- Selección de Talla y Color ---
       let selectedColorId = null;
       let selectedSizeId = null;
+      const colorBtns = document.querySelectorAll('.color-btn');
+      const sizeBtns = document.querySelectorAll('.size-btn');
 
+      colorBtns.forEach(btn => {
+        btn.addEventListener('click', function () {
+          colorBtns.forEach(b => b.classList.remove('selected'));
+          this.classList.add('selected');
+          selectedColorId = this.dataset.colorId;
+        });
+      });
+
+      sizeBtns.forEach(btn => {
+        btn.addEventListener('click', function () {
+          sizeBtns.forEach(b => b.classList.remove('selected'));
+          this.classList.add('selected');
+          selectedSizeId = this.dataset.sizeId;
+        });
+      });
+
+      // --- Cantidad ---
+      const qtyInput = document.getElementById('cantidad');
+      document.querySelector('.qty-btn.plus').addEventListener('click', () => {
+        qtyInput.value = parseInt(qtyInput.value) + 1;
+      });
+      document.querySelector('.qty-btn.minus').addEventListener('click', () => {
+        let value = parseInt(qtyInput.value);
+        if (value > 1) qtyInput.value = value - 1;
+      });
+
+      // --- Añadir al Carrito ---
       const addToCartBtn = document.querySelector('.add-to-cart-btn');
-
-      // Selección de color
-      document.querySelectorAll('.color-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-          document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('selected'));
-          this.classList.add('selected');
-          selectedColor = this.getAttribute('data-color-id');
-          selectedColorName = this.getAttribute('data-color');
-          selectedHex = getComputedStyle(this).getPropertyValue('--color');
-
-          // Guardar en el botón
-          if (addToCartBtn) {
-            addToCartBtn.dataset.colorId = selectedColor;
-            addToCartBtn.dataset.colorName = selectedColorName;
-            addToCartBtn.dataset.hex = selectedHex;
-          }
-        });
-      });
-
-      // Selección de talla
-      document.querySelectorAll('.size-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-          document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'));
-          this.classList.add('selected');
-          selectedSize = this.getAttribute('data-size-id');
-          selectedSizeName = this.getAttribute('data-size');
-
-          if (addToCartBtn) {
-            addToCartBtn.dataset.sizeId = selectedSize;
-            addToCartBtn.dataset.sizeName = selectedSizeName;
-          }
-        });
-      });
-
-      // Validación antes de agregar
       if (addToCartBtn) {
-        addToCartBtn.addEventListener('click', function(e) {
-          if (document.querySelectorAll('.color-btn').length && !selectedColor) {
-            Swal.fire({
-              icon: 'warning',
-              text: 'Please select a color.'
-            });
-            e.preventDefault();
+        addToCartBtn.addEventListener('click', function () {
+          if (colorBtns.length > 0 && !selectedColorId) {
+            Swal.fire({ icon: 'warning', text: 'Please select a color.' });
             return;
           }
-          if (document.querySelectorAll('.size-btn').length && !selectedSize) {
-            Swal.fire({
-              icon: 'warning',
-              text: 'Please select a size.'
-            });
-            e.preventDefault();
+          if (sizeBtns.length > 0 && !selectedSizeId) {
+            Swal.fire({ icon: 'warning', text: 'Please select a size.' });
             return;
           }
+
+          const cartData = {
+            id: <?php echo $producto['id']; ?>,
+            name: '<?php echo addslashes($producto['name']); ?>',
+            price: <?php echo $producto['price']; ?>,
+            image: '<?php echo htmlspecialchars($producto['image']); ?>',
+            color: selectedColorId,
+            size: selectedSizeId,
+            quantity: parseInt(qtyInput.value)
+          };
+
+          // Llama a la función global de tu archivo cart.js
+          addToCart(cartData);
         });
       }
     });

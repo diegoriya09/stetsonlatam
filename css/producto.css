@@ -1,0 +1,58 @@
+/* css/producto.css */
+
+.main-image-container {
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    aspect-ratio: 1 / 1; /* Mantiene la imagen cuadrada */
+}
+
+.main-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+/* --- Selectores de Color, Talla y Cantidad --- */
+.color-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid #d1d5db;
+    cursor: pointer;
+    outline: 2px solid transparent;
+    outline-offset: 1px;
+    transition: outline-color 0.2s ease;
+}
+.color-btn.selected {
+    outline-color: #111827;
+}
+
+.size-btn {
+    padding: 0.5rem 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.25rem;
+    background-color: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.875rem;
+}
+.size-btn.selected, .size-btn:hover {
+    background-color: #111827;
+    color: white;
+    border-color: #111827;
+}
+
+.qty-btn {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #d1d5db;
+    border-radius: 0.25rem;
+    background-color: #f9fafb;
+    font-size: 1.25rem;
+    line-height: 1;
+}
+#cantidad {
+    height: 40px;
+}
