@@ -4,7 +4,7 @@ require 'php/conexion.php';
 
 try {
   // Esta es la consulta que ya tienes
-  $stmt = $conn->prepare("SELECT id, nombre, categoria_padre_id FROM Categorias ORDER BY nombre");
+  $stmt = $conn->prepare("SELECT id, nombre, categoria_padre_id FROM categorias ORDER BY nombre");
   $stmt->execute();
 
   $result = $stmt->get_result();
@@ -40,7 +40,7 @@ if (!empty($categorias_flat)) {
   // --- 4. SEPARAR COLECCIONES DE HATS Y CAPS ---
   foreach ($categorias_tree as $categoria_principal) {
     // Usamos strtolower y trim para una comparación robusta
-    if (trim(strtolower($categoria_principal['nombre'])) === 'cachuchas (caps)') {
+    if (trim(strtolower($categoria_principal['nombre'])) === 'cachuchas') {
       // Si es la colección de cachuchas, la guardamos para el menú de Caps
       $cap_collections = $categoria_principal['children'];
     } else {
