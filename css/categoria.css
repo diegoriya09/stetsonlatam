@@ -1,0 +1,86 @@
+/* --- Banner de la Categoría --- */
+.category-banner {
+    display: flex;
+    height: 350px;
+    background-color: #3f1e1f; /* Un color de fondo oscuro */
+    color: white;
+}
+
+.category-info {
+    flex: 1; /* Ocupa la mitad del espacio */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 4rem;
+}
+
+.category-info h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+}
+
+.category-info p {
+    font-size: 1rem;
+    max-width: 500px;
+}
+
+.category-image {
+    flex: 1; /* Ocupa la otra mitad */
+    overflow: hidden;
+}
+
+.category-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Asegura que la imagen cubra el espacio sin deformarse */
+}
+
+/* --- Grid de Productos --- */
+.product-section {
+    padding: 2rem 5%; /* Padding a los lados */
+}
+
+.product-grid {
+    display: grid;
+    /* Crea columnas automáticas. Cada una de mínimo 280px */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem; /* Espacio entre productos */
+}
+
+.product-card {
+    border: 1px solid #f0f0f0;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    transition: box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+.product-card-image {
+    width: 100%;
+    padding-top: 100%; /* Crea un contenedor cuadrado (aspect-ratio 1:1) */
+    background-size: cover;
+    background-position: center;
+}
+
+.product-card-info {
+    padding: 1rem;
+}
+
+.product-name {
+    font-weight: 500;
+    color: #333;
+}
+
+.no-products {
+    grid-column: 1 / -1; /* Ocupa todas las columnas */
+    text-align: center;
+    padding: 4rem;
+    color: #888;
+}

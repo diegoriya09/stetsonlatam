@@ -51,7 +51,7 @@ header {
   left: 50%;
   transform: translateX(-50%);
   z-index: 50;
-  background-color: #ffffff;
+  background-color: #f1eeea;
   padding: 2rem;
   border-radius: 0.5rem;
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
@@ -87,6 +87,7 @@ header {
   font-weight: bold;
   color: #3c3737;
   text-decoration: none;
+  font-size: 14px;
 }
 
 .mega-menu-column ul {
@@ -100,8 +101,9 @@ header {
 
 .mega-menu-column ul li a {
   text-decoration: none;
-  color: #555;
+  color: #3c3737;
   font-weight: normal;
+  font-size: 14px;
   text-transform: none;
 }
 
