@@ -3,7 +3,7 @@
     display: flex;
     height: 350px;
     background-color: #3f1e1f; /* Un color de fondo oscuro */
-    color: white;
+    color: #f1eeea;
 }
 
 .category-info {
@@ -15,14 +15,16 @@
 }
 
 .category-info h1 {
+    font-family: Lora, sans-serif;
     font-size: 2.5rem;
     font-weight: bold;
     text-transform: uppercase;
     margin-bottom: 1rem;
+    font-size: 36px;
 }
 
 .category-info p {
-    font-size: 1rem;
+    font-size: 16px;
     max-width: 500px;
 }
 
@@ -50,7 +52,7 @@
 }
 
 .product-card {
-    border: 1px solid #f0f0f0;
+    border: 1px solid #f1eeea;
     border-radius: 0.5rem;
     overflow: hidden;
     text-decoration: none;
@@ -75,7 +77,14 @@
 
 .product-name {
     font-weight: 500;
-    color: #333;
+    color: #3c3737;
+}
+
+.product-price {
+    font-weight: bold;
+    color: #3c3737;
+    margin-top: 0.5rem; /* 8px */
+    font-size: 1.125rem; /* 18px */
 }
 
 .no-products {

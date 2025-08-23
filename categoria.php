@@ -58,7 +58,7 @@ try {
         $types = str_repeat('i', count($relevant_ids));
 
         $sql_prod = "
-            SELECT p.id, p.name, p.description, p.image 
+            SELECT p.id, p.name, p.description, p.image, p.price 
             FROM productos p
             JOIN producto_categoria pc ON p.id = pc.producto_id
             WHERE pc.categoria_id IN ($placeholders)
@@ -123,7 +123,9 @@ try {
                                         style="background-image: url('<?php echo htmlspecialchars($producto['image']); ?>');">
                                     </div>
                                     <div class="product-card-info">
-                                        <h3 class="product-name"><?php echo htmlspecialchars($producto['nombre']); ?></h3>
+                                        <h3 class="product-name"><?php echo htmlspecialchars($producto['name']); ?></h3>
+
+                                        <p class="product-price">$<?php echo number_format($producto['price'], 2); ?></p>
                                     </div>
                                 </a>
                             <?php endforeach; ?>
