@@ -37,16 +37,17 @@
 
 /* --- Columna Derecha: Detalles del Producto --- */
 .product-details .product-title {
-    font-size: 1.875rem; /* 30px */
-    font-weight: 700;
+    font-family: 'Lora',sans-serif;
+    font-size: 36px;
     letter-spacing: -0.025em;
-    color: #111827;
+    color: #3c3737;
 }
 
 .product-details .product-price {
-    font-size: 1.875rem; /* 30px */
+    font-family: 'Lora',sans-serif;
+    font-size: 24px;
     letter-spacing: -0.025em;
-    color: #111827;
+    color: #3c3737;
     margin-top: 0.75rem;
 }
 
@@ -57,7 +58,7 @@
 .options-label {
     font-size: 0.875rem; /* 14px */
     font-weight: 500;
-    color: #111827;
+    color: #3c3737;
 }
 
 .options-selector {
@@ -79,7 +80,7 @@
     transition: outline-color 0.2s ease;
 }
 .color-btn.selected {
-    outline-color: #111827;
+    outline-color: #3c3737;
 }
 
 .size-btn {
@@ -89,12 +90,12 @@
     background-color: white;
     cursor: pointer;
     transition: all 0.2s ease;
-    font-size: 0.875rem;
+    font-size: 12px;
 }
 .size-btn.selected, .size-btn:hover {
-    background-color: #111827;
+    background-color: #3c3737;
     color: white;
-    border-color: #111827;
+    border-color: #3c3737;
 }
 
 .quantity-selector {
@@ -105,24 +106,24 @@
 .qty-btn {
     width: 40px;
     height: 40px;
-    border: 1px solid #d1d5db;
+    border: 1px solid #fff;
     border-radius: 0.25rem;
-    background-color: #f9fafb;
-    font-size: 1.25rem;
+    background-color: #fff;
+    font-size: 12px;
     line-height: 1;
 }
 .quantity-selector input {
     width: 3rem; /* 48px */
     height: 40px;
     text-align: center;
-    border: 1px solid #d1d5db;
+    border: 1px solid #fff;
     border-radius: 0.25rem;
 }
 
 .add-to-cart-btn {
     margin-top: 2rem;
     width: 100%;
-    background-color: #1f2937;
+    background-color: #3f1e1f;
     color: white;
     font-weight: 700;
     padding: 0.75rem 1rem;
@@ -132,21 +133,17 @@
     cursor: pointer;
 }
 .add-to-cart-btn:hover {
-    background-color: #111827;
+    background-color: #fff;
+    color: #3c3737;
 }
 
 /* Descripción Larga */
 .description-group {
     margin-top: 2.5rem;
 }
-.description-label {
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: #111827;
-}
 .description-content {
     margin-top: 1rem;
-    color: #4b5563;
-    font-size: 1rem;
+    color: #3c3737;
+    font-size: 16px;
     line-height: 1.75;
 }

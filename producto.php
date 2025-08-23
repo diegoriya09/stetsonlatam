@@ -126,7 +126,6 @@ $conn->close();
             <button class="add-to-cart-btn">Add to Cart</button>
 
             <div class="description-group">
-              <h3 class="description-label">Description</h3>
               <div class="description-content">
                 <p><?php echo nl2br(htmlspecialchars($producto['description'])); ?></p>
               </div>
