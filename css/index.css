@@ -32,41 +32,37 @@ body {
 }
 
 header {
-  /* Estas dos líneas son la solución. */
   position: relative;
   z-index: 1000;
 }
 
-/* Contenedor para cada elemento del menú principal.
-   Esencial para que el menú desplegable se posicione correctamente. */
+/* Contenedor para cada elemento del menú principal */
 .nav-item {
   position: relative;
+  /* ¡CAMBIO! Añadimos padding para "cerrar" el abismo del hover */
+  padding-bottom: 1.5rem;
 }
 
-/* El menú desplegable (mega menú).
-   Oculto por defecto. */
+/* El menú desplegable (mega menú) */
 .mega-menu {
   display: none;
   position: absolute;
   top: 100%;
-  /* Se posiciona justo debajo del enlace padre */
   left: 50%;
   transform: translateX(-50%);
   z-index: 50;
-  /* Asegura que esté por encima de otros elementos */
-
-  /* Estilos para que coincida con tu diseño */
   background-color: #ffffff;
   padding: 2rem;
   border-radius: 0.5rem;
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-  margin-top: 1rem;
-  min-width: 40rem;
-  max-width: 60rem;
+  /* ¡CAMBIO! Eliminamos el margen superior que causaba el problema del hover */
+  margin-top: 0;
+  width: 90vw;
+  /* Ancho relativo a la ventana del navegador */
+  max-width: 1100px;
+  /* Un ancho máximo para pantallas grandes */
 }
 
-/* LA MAGIA: Cuando pasas el cursor sobre .nav-item,
-   se muestra el .mega-menu que está dentro. */
 .nav-item:hover .mega-menu {
   display: block;
 }
@@ -75,10 +71,13 @@ header {
 .mega-menu-content {
   display: flex;
   gap: 2rem;
+  /* ¡NUEVO! Permite que las columnas pasen a la siguiente línea si no caben */
+  flex-wrap: wrap;
 }
 
 .mega-menu-column {
-  flex: 1;
+  /* ¡CAMBIO! Le damos un ancho base para que se organicen mejor */
+  flex-basis: 180px;
 }
 
 .mega-menu-column .column-title {
