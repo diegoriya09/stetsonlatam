@@ -37,14 +37,14 @@
 
 /* --- Columna Derecha: Detalles del Producto --- */
 .product-details .product-title {
-    font-family: 'Lora',sans-serif;
+    font-family: Lora, sans-serif;
     font-size: 36px;
     letter-spacing: -0.025em;
     color: #3c3737;
 }
 
 .product-details .product-price {
-    font-family: 'Lora',sans-serif;
+    font-family: Lora, sans-serif;
     font-size: 24px;
     letter-spacing: -0.025em;
     color: #3c3737;
