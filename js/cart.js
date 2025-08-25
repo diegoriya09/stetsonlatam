@@ -128,23 +128,47 @@ async function postToCartAPI(endpoint, body) {
 }
 
 document.getElementById('cart-items-container')?.addEventListener('click', async e => {
-  const target = e.target.closest('.qty-btn, .item-remove');
-  if (!target) return;
+  const jwt = localStorage.getItem("jwt");
+  if (!jwt) return; // No hacer nada si no hay sesión
 
-  const cart_item_id = target.dataset.id;
+  // --- LÓGICA PARA BOTONES DE CANTIDAD (+ y -) ---
+  if (e.target.matches('.qty-btn')) {
+    const cart_item_id = e.target.dataset.id;
+    const currentQty = parseInt(e.target.parentElement.querySelector('input').value);
+    let newQty;
 
-  if (target.matches('.qty-btn')) {
-    const cantidad = parseInt(target.dataset.qty);
-    // RUTAS CORREGIDAS
-    if (cantidad > 0) {
-      await postToCartAPI('php/cart/update_cart.php', { cart_item_id, cantidad });
+    if (e.target.textContent === '+') {
+      newQty = currentQty + 1;
     } else {
-      await postToCartAPI('php/cart/remove_from_cart.php', { cart_item_id });
+      newQty = currentQty - 1;
     }
-  } else if (target.matches('.item-remove')) {
-    // RUTA CORREGIDA
-    await postToCartAPI('php/cart/remove_from_cart.php', { cart_item_id });
+
+    if (newQty < 1) { // No permitir que baje de 1
+      return;
+    }
+
+    await postToCartAPI('php/cart/update_cart.php', { cart_item_id: cart_item_id, cantidad: newQty });
+    loadCart(); // Recarga el carrito para mostrar el cambio
   }
 
-  loadCart();
+  // --- LÓGICA PARA BOTÓN DE ELIMINAR ---
+  if (e.target.closest('.item-remove')) {
+    const cart_item_id = e.target.closest('.item-remove').dataset.id;
+
+    // Opcional: Alerta de confirmación
+    Swal.fire({
+      title: 'Remove item?',
+      text: "Are you sure you want to remove this item from your cart?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3f1e1f',
+      cancelButtonColor: '#6b7280',
+      confirmButtonText: 'Yes, remove it!'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        await postToCartAPI('php/cart/remove_from_cart.php', { cart_item_id: cart_item_id });
+        loadCart(); // Recarga el carrito
+      }
+    });
+  }
 });
