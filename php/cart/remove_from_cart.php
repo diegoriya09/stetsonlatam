@@ -29,29 +29,30 @@ try {
 }
 
 $data = json_decode(file_get_contents('php://input'), true);
-$producto_id = isset($data['producto_id']) ? (int)$data['producto_id'] : null;
-$color_id = isset($data['color_id']) ? (int)$data['color_id'] : null;
-$size_id = isset($data['size_id']) ? (int)$data['size_id'] : null;
 
-if (!$producto_id || !$color_id || !$size_id) {
-    echo json_encode(['success' => false, 'message' => 'Missing data']);
+$cart_item_id = $data['cart_item_id'] ?? null;
+
+if (!is_numeric($cart_item_id)) {
+    http_response_code(400);
+    echo json_encode(['success' => false, 'message' => 'Invalid item ID.']);
     exit;
 }
 
-// Usamos el ID único del item del carrito y el ID del usuario por seguridad.
-$sql = "DELETE FROM cart WHERE id = ? AND users_id = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("ii", $cart_item_id, $user_id);
-
-if ($stmt->execute()) {
-    if ($stmt->affected_rows > 0) {
-        echo json_encode(['success' => true, 'message' => 'Item deleted']);
+try {
+    $stmt = $conn->prepare("DELETE FROM cart WHERE id = ? AND users_id = ?");
+    $stmt->bind_param("ii", $cart_item_id, $user_id);
+    if ($stmt->execute()) {
+        if ($stmt->affected_rows > 0) {
+            echo json_encode(['success' => true, 'message' => 'Item deleted.']);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'The item was not found in your cart.']);
+        }
     } else {
-        echo json_encode(['success' => false, 'message' => 'The item was not found or does not belong to you.']);
+        throw new Exception("Error while executing deletion.");
     }
-} else {
-    echo json_encode(['success' => false, 'message' => 'Error deleting']);
+    $stmt->close();
+} catch (Exception $e) {
+    http_response_code(500);
+    echo json_encode(['success' => false, 'message' => 'Server error.']);
 }
-
-$stmt->close();
 $conn->close();

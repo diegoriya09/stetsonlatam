@@ -33,30 +33,31 @@ try {
 
 $data = json_decode(file_get_contents('php://input'), true);
 
-$producto_id = $data['producto_id'] ?? null;
-$color_id = $data['color_id'] ?? null;
-$size_id = $data['size_id'] ?? null;
-$quantity = $data['quantity'] ?? null;
+// Verificación más clara de los datos
+$cart_item_id = $data['cart_item_id'] ?? null;
+$cantidad = $data['quantity'] ?? null;
 
-if (!$producto_id || !$color_id || !$size_id || $quantity < 1) {
+if (!is_numeric($cart_item_id) || !is_numeric($cantidad) || $cantidad < 1) {
     http_response_code(400);
-    echo json_encode(['success' => false, 'message' => 'Invalid data']);
+    echo json_encode(['success' => false, 'message' => 'Invalid data provided.']);
     exit;
 }
 
-$stmt = $conn->prepare("UPDATE cart SET quantity = ? WHERE id = ? AND users_id = ?");
-$stmt->bind_param("iii", $quantity, $cart_item_id, $user_id);
-
-if ($stmt->execute()) {
-    if ($stmt->affected_rows > 0) {
-        echo json_encode(['success' => true, 'message' => 'Updated quantity']);
+try {
+    $stmt = $conn->prepare("UPDATE cart SET quantity = ? WHERE id = ? AND users_id = ?");
+    $stmt->bind_param("iii", $cantidad, $cart_item_id, $user_id);
+    if ($stmt->execute()) {
+        if ($stmt->affected_rows > 0) {
+            echo json_encode(['success' => true, 'message' => 'Updated amount.']);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'The item was not found in your cart.']);
+        }
     } else {
-         echo json_encode(['success' => false, 'message' => 'The item was not found or does not belong to you.']);
+        throw new Exception("Error while running the update.");
     }
-} else {
+    $stmt->close();
+} catch (Exception $e) {
     http_response_code(500);
-    echo json_encode(['success' => false, 'message' => 'Error updating quantity']);
+    echo json_encode(['success' => false, 'message' => 'Server error.']);
 }
-
-$stmt->close();
 $conn->close();
