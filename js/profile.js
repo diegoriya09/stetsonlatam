@@ -1,3 +1,4 @@
+// js/profile.js
 document.addEventListener('DOMContentLoaded', async () => {
     const jwt = localStorage.getItem('jwt');
     if (!jwt) {
@@ -5,18 +6,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
-    // --- LÓGICA PARA NAVEGAR ENTRE PANELES (TABS) ---
+    // --- LÓGICA DE PANELES (TABS) ---
     const navLinks = document.querySelectorAll('.sidebar-nav .nav-link');
     const contentPanels = document.querySelectorAll('.content-panel');
-
     navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
+        link.addEventListener('click', function (e) {
             e.preventDefault();
             const targetId = this.dataset.target;
-            
             navLinks.forEach(l => l.classList.remove('active'));
             contentPanels.forEach(p => p.classList.remove('active'));
-
             this.classList.add('active');
             document.getElementById(targetId).classList.add('active');
         });
@@ -25,11 +23,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     // --- FUNCIÓN GENÉRICA PARA PEDIR DATOS ---
     const fetchData = async (endpoint) => {
         try {
-            const res = await fetch(endpoint, {
-                headers: { 'Authorization': 'Bearer ' + jwt }
-            });
+            const res = await fetch(endpoint, { headers: { 'Authorization': 'Bearer ' + jwt } });
             if (!res.ok) {
-                // Si el token es inválido o hay otro error, redirigir
                 if (res.status === 401) {
                     localStorage.removeItem('jwt');
                     window.location.href = 'index.php';
@@ -43,7 +38,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     };
 
-    // --- CARGAR Y MOSTRAR DATOS DEL USUARIO ---
+    // --- CARGAR DATOS DEL USUARIO ---
     const loadUserData = async () => {
         const userData = await fetchData('php/user/get_user.php');
         if (userData.success && userData.user) {
@@ -54,39 +49,29 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     };
 
-    // --- CARGAR Y MOSTRAR ÓRDENES ---
+    // --- CARGAR ÓRDENES ---
     const loadOrdersData = async () => {
         const ordersData = await fetchData('php/order/get_orders.php');
         const ordersTbody = document.getElementById('orders-tbody');
-        ordersTbody.innerHTML = ''; // Limpiar
-
+        ordersTbody.innerHTML = '';
         if (ordersData.success && ordersData.orders.length > 0) {
             ordersData.orders.forEach(order => {
                 const tr = document.createElement('tr');
-                const orderDate = new Date(order.fecha).toLocaleDateString('en-US', {
-                    year: 'numeric', month: 'long', day: 'numeric'
-                });
+                const orderDate = new Date(order.fecha).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
                 const orderStatus = order.estado ? order.estado.toLowerCase() : 'unknown';
-
-                tr.innerHTML = `
-                    <td>#${order.id}</td>
-                    <td>${orderDate}</td>
-                    <td><span class="status-badge status-${orderStatus}">${order.estado}</span></td>
-                    <td>$${parseFloat(order.total).toFixed(2)}</td>
-                `;
+                tr.innerHTML = `<td>#${order.id}</td><td>${orderDate}</td><td><span class="status-badge status-${orderStatus}">${order.estado}</span></td><td>$${parseFloat(order.total).toFixed(2)}</td>`;
                 ordersTbody.appendChild(tr);
             });
         } else {
             ordersTbody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 2rem;">You have not placed any orders yet.</td></tr>`;
         }
     };
-    
+
     // --- CARGAR Y MOSTRAR DIRECCIONES ---
     const loadAddressesData = async () => {
         const addrData = await fetchData('php/user/get_addresses.php');
         const container = document.getElementById('address-list');
         container.innerHTML = '';
-
         if (addrData.success && addrData.addresses.length > 0) {
             addrData.addresses.forEach(addr => {
                 const div = document.createElement('div');
@@ -108,7 +93,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         const paymentData = await fetchData('php/user/get_payment_methods.php');
         const container = document.getElementById('payment-method-list');
         container.innerHTML = '';
-
         if (paymentData.success && paymentData.payment_methods.length > 0) {
             paymentData.payment_methods.forEach(pm => {
                 const div = document.createElement('div');
@@ -124,7 +108,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             container.innerHTML = '<p>You have no saved payment methods.</p>';
         }
     };
-
 
     // --- EJECUTAR TODAS LAS FUNCIONES AL CARGAR LA PÁGINA ---
     loadUserData();
