@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const jwt = localStorage.getItem('jwt');
     if (!jwt) {
         // Si no hay token, redirige al inicio
-        window.location.href = 'index.php';
+        window.location.href = '../index.php';
         return;
     }
 
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // --- CARGAR DATOS DEL USUARIO DESDE EL SERVIDOR ---
     try {
-        const userRes = await fetch('php/user/get_user.php', {
+        const userRes = await fetch('../php/user/get_user.php', {
             headers: { 'Authorization': 'Bearer ' + jwt }
         });
         const userData = await userRes.json();
@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // --- CARGAR ÓRDENES RECIENTES DESDE EL SERVIDOR ---
     try {
-        const ordersRes = await fetch('php/order/get_orders.php', {
+        const ordersRes = await fetch('../php/order/get_orders.php', {
             headers: { 'Authorization': 'Bearer ' + jwt }
         });
         const ordersData = await ordersRes.json();
