@@ -197,25 +197,6 @@ $conn->close();
             <?php endforeach; ?>
           </div>
         </section>
-        <section class="px-4 py-8">
-          <h2 class="text-[#151514] text-2xl font-bold mb-4">Recommended for You</h2>
-          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            <?php if (!empty($recomendados)): ?>
-              <?php foreach ($recomendados as $recomendado): ?>
-                <a href="producto.php?id=<?php echo $recomendado['id']; ?>" class="product-card">
-                  <div class="product-card-image"
-                    style="background-image: url('<?php echo htmlspecialchars($recomendado["image"]); ?>');"></div>
-                  <div class="product-card-info">
-                    <h3 class="product-name"><?php echo htmlspecialchars($recomendado["name"]); ?></h3>
-                    <p class="product-price">$<?php echo number_format($recomendado["price"], 2); ?></p>
-                  </div>
-                </a>
-              <?php endforeach; ?>
-            <?php else: ?>
-              <p class="text-gray-500">No products recommended yet.</p>
-            <?php endif; ?>
-          </div>
-        </section>
       </main>
       <?php include 'footer.php'; ?>
     </div>
