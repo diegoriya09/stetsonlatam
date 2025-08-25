@@ -175,23 +175,42 @@ if (!empty($categorias_flat)) {
         });
       </script>
       <div class="flex gap-2">
-        <button id="logout-btn" style="display:none;" class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-[#f1eeea] text-[#3c3737] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256">
-            <path d="M216,128a8,8,0,0,1-8,8H104v16a8,8,0,0,1-13.66,5.66l-32-32a8,8,0,0,1,0-11.32l32-32A8,8,0,0,1,104,104v16h104A8,8,0,0,1,216,128ZM128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Z"></path>
-          </svg>
+        <button id="logout-btn" style="display:none;"
+          class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-[#f1eeea] text-[#3c3737] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
+          <div class="text-[#3c3737]" data-icon="SignOut" data-size="24px" data-weight="regular">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor"
+              viewBox="0 0 256 256">
+              <path
+                d="M216,128a8,8,0,0,1-8,8H104v16a8,8,0,0,1-13.66,5.66l-32-32a8,8,0,0,1,0-11.32l32-32A8,8,0,0,1,104,104v16h104A8,8,0,0,1,216,128ZM128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Z">
+              </path>
+            </svg>
+          </div>
         </button>
-        <button id="user-btn" class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-[#f1eeea] text-[#3c3737] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="20px" fill="currentColor" viewBox="0 0 256 256">
-            <path d="M230.92,212c-15.23-26.33-38.7-45.21-66.09-54.16a72,72,0,1,0-73.66,0C63.78,166.78,40.31,185.66,25.08,212a8,8,0,1,0,13.85,8c18.84-32.56,52.14-52,89.07-52s70.23,19.44,89.07,52a8,8,0,1,0,13.85-8ZM72,96a56,56,0,1,1,56,56A56.06,56.06,0,0,1,72,96Z"></path>
-          </svg>
+        <button id="user-btn"
+          class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-[#f1eeea] text-[#3c3737] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
+          <div class="text-[#3c3737]" data-icon="User" data-size="20px" data-weight="regular">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="20px" fill="currentColor"
+              viewBox="0 0 256 256">
+              <path
+                d="M230.92,212c-15.23-26.33-38.7-45.21-66.09-54.16a72,72,0,1,0-73.66,0C63.78,166.78,40.31,185.66,25.08,212a8,8,0,1,0,13.85,8c18.84-32.56,52.14-52,89.07-52s70.23,19.44,89.07,52a8,8,0,1,0,13.85-8ZM72,96a56,56,0,1,1,56,56A56.06,56.06,0,0,1,72,96Z">
+              </path>
+            </svg>
+          </div>
         </button>
-        <button id="cart-btn" class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-[#f1eeea] text-[#3c3737] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="20px" fill="currentColor" viewBox="0 0 256 256">
-            <path d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40Zm0,160H40V56H216V200ZM176,88a48,48,0,0,1-96,0,8,8,0,0,1,16,0,32,32,0,0,0,64,0,8,8,0,0,1,16,0Z"></path>
-          </svg>
+        <button id="cart-btn"
+          class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-[#f1eeea] text-[#3c3737] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
+          <div class="text-[#3c3737]" data-icon="ShoppingBag" data-size="20px" data-weight="regular">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="20px" fill="currentColor"
+              viewBox="0 0 256 256">
+              <path
+                d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40Zm0,160H40V56H216V200ZM176,88a48,48,0,0,1-96,0,8,8,0,0,1,16,0,32,32,0,0,0,64,0,8,8,0,0,1,16,0Z">
+              </path>
+            </svg>
+          </div>
         </button>
         <a href="index.php">
-          <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" style='background-image: url("img/logo.webp");'></div>
+          <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
+            style='background-image: url("img/logo.webp");'></div>
         </a>
       </div>
     </div>
