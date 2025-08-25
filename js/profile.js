@@ -1,66 +1,76 @@
+// js/profile.js
+
 document.addEventListener('DOMContentLoaded', async () => {
+    const jwt = localStorage.getItem('jwt');
+    if (!jwt) {
+        window.location.href = 'index.php';
+        return;
+    }
 
-   const jwt = localStorage.getItem('jwt');
-   if (!jwt) {
-      window.location.href = 'index.php';
-      return;
-   }
-
-   // Obtener datos del usuario
-   const userRes = await fetch('php/user/get_user.php', {
-      headers: { 'Authorization': 'Bearer ' + jwt }
-   });
-   const userData = await userRes.json();
-   console.log('userData:', userData);
-   if (userData.success && userData.user) {
-      document.getElementById('profile-name').textContent = userData.user.name;
-      // Si tienes otro campo para el nombre en la sección principal:
-      const heroName = document.getElementById('profile-name-hero');
-      if (heroName) heroName.textContent = userData.user.name;
-   }
-
-   // Obtener órdenes recientes
-   const ordersRes = await fetch('php/order/get_orders.php', {
-      headers: { 'Authorization': 'Bearer ' + jwt }
-   });
-   const ordersData = await ordersRes.json();
-   console.log('ordersData:', ordersData); // Verificar datos recibidos del backend
-   const ordersList = document.getElementById('orders-list');
-   ordersList.innerHTML = '';
-   if (ordersData.success && ordersData.orders && ordersData.orders.length > 0) {
-      ordersData.orders.forEach(order => {
-         const tr = document.createElement('tr');
-         tr.innerHTML = `
-                <td class="px-4 py-2 text-[#181411] text-sm font-normal leading-normal">#${order.id}</td>
-                <td class="px-4 py-2 text-[#887563] text-sm font-normal leading-normal">${order.fecha}</td>
-                <td class="px-4 py-2 text-sm font-normal leading-normal">
-                    <span class="inline-block rounded px-3 py-1 bg-[#f4f2f0] text-[#181411]">${order.estado}</span>
-                </td>
-                <td class="px-4 py-2 text-[#887563] text-sm font-normal leading-normal">$${order.total}</td>
-            `;
-         ordersList.appendChild(tr);
-      });
-   } else {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `<td colspan=\"4\" class=\"px-4 py-2 text-center text-[#887563]\">No orders found</td>`;
-      ordersList.appendChild(tr);
-   }
-});
-
-document.getElementById("view-all-orders-btn").addEventListener("click", () => {
-  const jwt = localStorage.getItem("jwt");
-  if (jwt) {
-    window.location.href = "myorders.php";
-  } else {
-    alert("You need to log in to view all orders.");
-  }
-});
-
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function (e) {
-    e.preventDefault();
-    document.querySelector(this.getAttribute('href')).scrollIntoView({
-      behavior: 'smooth'
+    // --- LÓGICA DE PANELES (TABS) ---
+    const navLinks = document.querySelectorAll('.sidebar-nav .nav-link');
+    const contentPanels = document.querySelectorAll('.content-panel');
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.dataset.target;
+            navLinks.forEach(l => l.classList.remove('active'));
+            contentPanels.forEach(p => p.classList.remove('active'));
+            this.classList.add('active');
+            document.getElementById(targetId).classList.add('active');
+        });
     });
-  });
+
+    // --- CARGAR DATOS DEL USUARIO ---
+    try {
+        const userRes = await fetch('php/user/get_user.php', {
+            headers: { 'Authorization': 'Bearer ' + jwt }
+        });
+        const userData = await userRes.json();
+        
+        if (userData.success && userData.user) {
+            const user = userData.user;
+            document.getElementById('sidebar-username').textContent = user.name;
+            document.getElementById('sidebar-avatar').textContent = user.name.charAt(0).toUpperCase();
+            document.getElementById('overview-username').textContent = user.name.split(' ')[0]; // Solo el primer nombre
+        } else {
+            // Manejar error si no se encuentra el usuario
+            console.error('Error fetching user:', userData.message);
+        }
+    } catch (error) {
+        console.error('Network error fetching user:', error);
+    }
+
+    // --- CARGAR ÓRDENES RECIENTES ---
+    try {
+        const ordersRes = await fetch('php/order/get_orders.php', {
+            headers: { 'Authorization': 'Bearer ' + jwt }
+        });
+        const ordersData = await ordersRes.json();
+        const ordersTbody = document.getElementById('orders-tbody');
+        ordersTbody.innerHTML = ''; // Limpiar "Loading..."
+
+        if (ordersData.success && ordersData.orders.length > 0) {
+            ordersData.orders.forEach(order => {
+                const tr = document.createElement('tr');
+                const orderDate = new Date(order.fecha).toLocaleDateString('en-US', {
+                    year: 'numeric', month: 'long', day: 'numeric'
+                });
+                const orderStatus = order.estado.toLowerCase();
+
+                tr.innerHTML = `
+                    <td>#${order.id}</td>
+                    <td>${orderDate}</td>
+                    <td><span class="status-badge status-${orderStatus}">${order.estado}</span></td>
+                    <td>$${parseFloat(order.total).toFixed(2)}</td>
+                `;
+                ordersTbody.appendChild(tr);
+            });
+        } else {
+            ordersTbody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 2rem;">You have not placed any orders yet.</td></tr>`;
+        }
+    } catch (error) {
+        console.error('Network error fetching orders:', error);
+        document.getElementById('orders-tbody').innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 2rem;">Error loading orders.</td></tr>`;
+    }
 });
