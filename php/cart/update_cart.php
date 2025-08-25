@@ -35,7 +35,7 @@ $data = json_decode(file_get_contents('php://input'), true);
 
 // Verificación más clara de los datos
 $cart_item_id = $data['cart_item_id'] ?? null;
-$cantidad = $data['quantity'] ?? null;
+$cantidad = $data['cantidad'] ?? null;
 
 if (!is_numeric($cart_item_id) || !is_numeric($cantidad) || $cantidad < 1) {
     http_response_code(400);
