@@ -1,9 +1,27 @@
 /* css/profile.css */
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+.page-wrapper {
+    flex-grow: 1; /* ¡Esta es la línea clave! */
+    display: flex;
+    flex-direction: column;
+}
+
 .profile-main {
-   background-color: #f9fafb;
-   /* Un fondo gris claro */
-   padding: 2.5rem 5%;
-   flex-grow: 1;
+    flex-grow: 1; /* Asegura que el contenido principal también crezca */
+}
+
+/* --- El resto de tu CSS de profile.css va aquí abajo --- */
+.profile-main {
+    background-color: #f9fafb;
+    /* ... etc ... */
 }
 
 .profile-container {
