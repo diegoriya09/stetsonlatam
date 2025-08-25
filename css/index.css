@@ -1,119 +1,141 @@
 /* 1. Definimos la fuente REGULAR */
 @font-face {
-  /* Este es el nombre que usarás en tu CSS. Puede ser lo que quieras, pero mantenlo simple. */
-  font-family: 'GT America';
+    /* Este es el nombre que usarás en tu CSS. Puede ser lo que quieras, pero mantenlo simple. */
+    font-family: 'GT America';
 
-  /* Esta es la ruta al archivo de la fuente. ¡Asegúrate de que la ruta sea correcta! */
-  src: url('../fonts/GT-America/GT-America-Standard-Regular-Trial.woff2') format('woff2');
+    /* Esta es la ruta al archivo de la fuente. ¡Asegúrate de que la ruta sea correcta! */
+    src: url('../fonts/GT-America/GT-America-Standard-Regular-Trial.woff2') format('woff2');
 
-  /* Le decimos al navegador que este archivo es para el peso de fuente normal */
-  font-weight: normal;
-  /* o 400 */
-  font-style: normal;
+    /* Le decimos al navegador que este archivo es para el peso de fuente normal */
+    font-weight: normal;
+    /* o 400 */
+    font-style: normal;
 }
 
 /* 2. Definimos la fuente BOLD (Negrita) */
 @font-face {
-  /* ¡Importante! Usamos el MISMO nombre de font-family */
-  font-family: 'GT America';
+    /* ¡Importante! Usamos el MISMO nombre de font-family */
+    font-family: 'GT America';
 
-  /* Ruta al archivo de la fuente en negrita */
-  src: url('../fonts/GT-America/GT-America-Standard-Bold-Trial.woff2') format('woff2');
+    /* Ruta al archivo de la fuente en negrita */
+    src: url('../fonts/GT-America/GT-America-Standard-Bold-Trial.woff2') format('woff2');
 
-  /* Le decimos que este archivo es para el peso de fuente negrita */
-  font-weight: bold;
-  /* o 700 */
-  font-style: normal;
+    /* Le decimos que este archivo es para el peso de fuente negrita */
+    font-weight: bold;
+    /* o 700 */
+    font-style: normal;
 }
 
 body {
-  /* Esto aplica GT America a toda la página por defecto */
-  font-family: 'GT America', sans-serif;
+    /* Esto aplica GT America a toda la página por defecto */
+    font-family: 'GT America', sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.page-wrapper {
+    flex-grow: 1;
+    /* Esta es la línea clave */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Hacemos que el main ocupe el espacio disponible */
+.profile-main {
+    flex-grow: 1;
+}
+
+/* Y nos aseguramos que el footer no crezca */
+footer {
+    /* O la clase que use tu footer */
+    flex-shrink: 0;
 }
 
 header {
-  position: relative;
-  z-index: 1000;
+    position: relative;
+    z-index: 1000;
 }
 
 /* Contenedor para cada elemento del menú principal */
 .nav-item {
-  position: relative;
-  /* ¡CAMBIO! Añadimos padding para "cerrar" el abismo del hover */
-  padding-bottom: 1.5rem;
+    position: relative;
+    /* ¡CAMBIO! Añadimos padding para "cerrar" el abismo del hover */
+    padding-bottom: 1.5rem;
 }
 
 /* El menú desplegable (mega menú) */
 .mega-menu {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 50;
-  background-color: #f1eeea;
-  padding: 2rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-  /* ¡CAMBIO! Eliminamos el margen superior que causaba el problema del hover */
-  margin-top: 0;
-  width: 90vw;
-  /* Ancho relativo a la ventana del navegador */
-  max-width: 1100px;
-  /* Un ancho máximo para pantallas grandes */
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 50;
+    background-color: #f1eeea;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    /* ¡CAMBIO! Eliminamos el margen superior que causaba el problema del hover */
+    margin-top: 0;
+    width: 90vw;
+    /* Ancho relativo a la ventana del navegador */
+    max-width: 1100px;
+    /* Un ancho máximo para pantallas grandes */
 }
 
 .nav-item:hover .mega-menu {
-  display: block;
+    display: block;
 }
 
 /* Contenido y columnas del menú */
 .mega-menu-content {
-  display: flex;
-  gap: 2rem;
-  /* ¡NUEVO! Permite que las columnas pasen a la siguiente línea si no caben */
-  flex-wrap: wrap;
+    display: flex;
+    gap: 2rem;
+    /* ¡NUEVO! Permite que las columnas pasen a la siguiente línea si no caben */
+    flex-wrap: wrap;
 }
 
 .mega-menu-column {
-  /* ¡CAMBIO! Le damos un ancho base para que se organicen mejor */
-  flex-basis: 180px;
+    /* ¡CAMBIO! Le damos un ancho base para que se organicen mejor */
+    flex-basis: 180px;
 }
 
 .mega-menu-column .column-title {
-  display: block;
-  margin-bottom: 0.75rem;
-  text-transform: uppercase;
-  font-weight: bold;
-  color: #3c3737;
-  text-decoration: none;
-  font-size: 14px;
+    display: block;
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #3c3737;
+    text-decoration: none;
+    font-size: 14px;
 }
 
 .mega-menu-column ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
 .mega-menu-column ul li a {
-  text-decoration: none;
-  color: #3c3737;
-  font-weight: normal;
-  font-size: 14px;
-  text-transform: none;
+    text-decoration: none;
+    color: #3c3737;
+    font-weight: normal;
+    font-size: 14px;
+    text-transform: none;
 }
 
 .mega-menu-column ul li a:hover {
-  text-decoration: underline;
+    text-decoration: underline;
 }
 
 .hero-section {
     min-height: 500px;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5)), url('../img/hero-banner.jpg'); /* Asegúrate de tener esta imagen */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5)), url('../img/hero-banner.jpg');
+    /* Asegúrate de tener esta imagen */
     background-size: cover;
     background-position: center;
     display: flex;
@@ -124,15 +146,18 @@ header {
     padding: 2rem;
     color: #f1eeea;
 }
+
 .hero-content {
     max-width: 800px;
 }
+
 .hero-title {
     font-family: 'Lora', serif;
     color: #f1eeea;
     font-size: 3rem;
     font-weight: 900;
 }
+
 .hero-subtitle {
     font-size: 1.125rem;
     margin-top: 1rem;
@@ -141,6 +166,7 @@ header {
     margin-left: auto;
     margin-right: auto;
 }
+
 .hero-button {
     display: inline-block;
     margin-top: 2rem;
@@ -153,6 +179,7 @@ header {
     text-decoration: none;
     transition: background-color 0.3s ease;
 }
+
 .hero-button:hover {
     background-color: #f0f0f0;
 }
@@ -160,15 +187,19 @@ header {
 
 /* 2. Secciones Generales */
 .home-section {
-    padding: 4rem 5%; /* 64px de espacio vertical, 5% horizontal */
+    padding: 4rem 5%;
+    /* 64px de espacio vertical, 5% horizontal */
 }
+
 .section-title {
     text-align: center;
     font-family: 'Lora', serif;
     color: #3c3737;
-    font-size: 2.25rem; /* 36px */
+    font-size: 2.25rem;
+    /* 36px */
     font-weight: bold;
-    margin-bottom: 2.5rem; /* 40px */
+    margin-bottom: 2.5rem;
+    /* 40px */
 }
 
 /* 3. Grid de Colecciones */
@@ -177,30 +208,35 @@ header {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 1.5rem;
 }
+
 .collection-card {
     position: relative;
     overflow: hidden;
     border-radius: 0.5rem;
     aspect-ratio: 4 / 5;
 }
+
 .collection-card img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform 0.4s ease;
 }
+
 .collection-card:hover img {
     transform: scale(1.05);
 }
+
 .collection-card-overlay {
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
-    background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
     padding: 3rem 1.5rem 1.5rem 1.5rem;
     text-align: center;
 }
+
 .collection-card h3 {
     color: #f1eeea;
     font-size: 1.5rem;
@@ -215,11 +251,13 @@ header {
     gap: 2rem;
     align-items: center;
 }
+
 @media (min-width: 768px) {
     .story-section {
         grid-template-columns: 1fr 1fr;
     }
 }
+
 .story-image {
     min-height: 400px;
     background-image: url('../img/story.webp');
@@ -227,18 +265,22 @@ header {
     background-position: center;
     border-radius: 0.5rem;
 }
+
 .story-content {
     text-align: center;
 }
+
 .story-content .section-title {
     margin-bottom: 1rem;
 }
+
 .story-content p {
     color: #3c3737;
     max-width: 500px;
     margin: 0 auto;
     line-height: 1.75;
 }
+
 .story-button {
     display: inline-block;
     margin-top: 2rem;
@@ -251,6 +293,7 @@ header {
     text-decoration: none;
     transition: background-color 0.3s ease;
 }
+
 .story-button:hover {
     background-color: #2c1516;
 }
@@ -261,14 +304,17 @@ header {
     background-color: #f1eeea;
     text-align: center;
 }
+
 .signup-section .section-title {
     margin-bottom: 1rem;
 }
+
 .signup-section p {
     color: #3c3737;
     max-width: 500px;
     margin: 0 auto;
 }
+
 .signup-button {
     display: inline-block;
     margin-top: 2rem;
@@ -282,6 +328,7 @@ header {
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
+
 .signup-button:hover {
     background-color: #2c1516;
 }

@@ -122,6 +122,7 @@ $conn->close();
 
   <?php include 'modal.php'; ?>
   <script src="js/auth.js?v=<?php echo time(); ?>"></script>
+  <script src="js/index.js?v=<?php echo time(); ?>"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const navLinks = document.querySelectorAll('.sidebar-nav .nav-link');
