@@ -175,7 +175,11 @@ try {
                         <p><?php echo htmlspecialchars($categoria['descripcion']); ?></p>
                     </div>
                     <div class="category-image">
-                        <img src="img/default-banner.jpg" alt="<?php echo htmlspecialchars($categoria['nombre']); ?>">
+                        <?php
+                        // Determinamos qué imagen mostrar: la de la categoría o una por defecto
+                        $imagen_a_mostrar = !empty($categoria['imagen_banner']) ? $categoria['imagen_banner'] : 'img/default-banner.jpg';
+                        ?>
+                        <img src="<?php echo htmlspecialchars($imagen_a_mostrar); ?>" alt="<?php echo htmlspecialchars($categoria['nombre']); ?>">
                     </div>
                 </section>
 
