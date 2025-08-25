@@ -137,7 +137,6 @@ try {
     while ($row = $result->fetch_assoc()) {
         $productos[] = $row;
     }
-
 } catch (Exception $e) {
     error_log("Error al obtener productos con filtros: " . $e->getMessage());
     $productos = [];
@@ -156,6 +155,7 @@ try {
     <link rel="icon" href="img/logo.webp" type="image/x-icon">
     <link href="css/index.css?v=<?php echo time(); ?>" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
     <link href="css/categoria.css?v=<?php echo time(); ?>" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
@@ -164,7 +164,7 @@ try {
 
     <div class="relative flex size-full min-h-screen flex-col bg-white">
         <div class="layout-container flex h-full grow flex-col">
-            
+
             <?php include 'header.php'; ?>
 
             <main>
@@ -179,7 +179,7 @@ try {
                 </section>
 
                 <section class="product-section">
-                    
+
                     <div class="flex justify-between items-center p-4 border-y border-gray-200">
                         <div>
                             <span class="font-bold text-sm text-gray-800 uppercase">ITEMS (<?php echo count($productos); ?>)</span>
@@ -189,7 +189,9 @@ try {
                             <div class="relative">
                                 <button id="size-filter-btn" type="button" class="flex items-center gap-x-1 text-sm font-semibold text-gray-700">
                                     <span>SIZE</span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" fill="currentColor" viewBox="0 0 256 256"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" fill="currentColor" viewBox="0 0 256 256">
+                                        <path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path>
+                                    </svg>
                                 </button>
                                 <div id="size-dropdown" class="absolute hidden mt-2 w-40 bg-white shadow-lg rounded-lg p-2 z-10 border border-gray-200">
                                     <?php foreach ($tallas as $talla): ?>
@@ -204,7 +206,9 @@ try {
                             <div class="relative">
                                 <button id="color-filter-btn" type="button" class="flex items-center gap-x-1 text-sm font-semibold text-gray-700">
                                     <span>COLOR</span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" fill="currentColor" viewBox="0 0 256 256"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" fill="currentColor" viewBox="0 0 256 256">
+                                        <path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path>
+                                    </svg>
                                 </button>
                                 <div id="color-dropdown" class="absolute hidden mt-2 w-48 bg-white shadow-lg rounded-lg p-2 z-10 border border-gray-200">
                                     <?php foreach ($colores as $color): ?>
@@ -219,13 +223,15 @@ try {
                         </div>
 
                         <div class="flex items-center gap-2">
-                             <button id="sort-btn" class="flex items-center gap-x-1 text-sm font-semibold text-gray-700">
-                                 <span>SORT BY PRICE</span>
-                                 <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" fill="currentColor" viewBox="0 0 256 256"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path></svg>
-                             </button>
+                            <button id="sort-btn" class="flex items-center gap-x-1 text-sm font-semibold text-gray-700">
+                                <span>SORT BY PRICE</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" fill="currentColor" viewBox="0 0 256 256">
+                                    <path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path>
+                                </svg>
+                            </button>
                         </div>
                     </div>
-                    
+
                     <div id="productos-container" class="product-grid">
                         <?php if (!empty($productos)): ?>
                             <?php foreach ($productos as $producto): ?>
@@ -249,51 +255,51 @@ try {
     </div>
 
     <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        
-        // --- LÓGICA PARA FILTROS ---
-        const sizeBtn = document.getElementById("size-filter-btn");
-        const sizeDropdown = document.getElementById("size-dropdown");
-        const colorBtn = document.getElementById("color-filter-btn");
-        const colorDropdown = document.getElementById("color-dropdown");
+        document.addEventListener("DOMContentLoaded", () => {
 
-        if (sizeBtn) sizeBtn.addEventListener("click", () => sizeDropdown.classList.toggle("hidden"));
-        if (colorBtn) colorBtn.addEventListener("click", () => colorDropdown.classList.toggle("hidden"));
+            // --- LÓGICA PARA FILTROS ---
+            const sizeBtn = document.getElementById("size-filter-btn");
+            const sizeDropdown = document.getElementById("size-dropdown");
+            const colorBtn = document.getElementById("color-filter-btn");
+            const colorDropdown = document.getElementById("color-dropdown");
 
-        document.querySelectorAll(".size-check, .color-check").forEach(input => {
-            input.addEventListener("change", () => {
-                const currentParams = new URLSearchParams(window.location.search);
-                currentParams.delete('sizes[]');
-                currentParams.delete('colors[]');
-                document.querySelectorAll(".size-check:checked").forEach(cb => currentParams.append("sizes[]", cb.value));
-                document.querySelectorAll(".color-check:checked").forEach(cb => currentParams.append("colors[]", cb.value));
-                window.location.href = window.location.pathname + "?" + currentParams.toString();
-            });
-        });
+            if (sizeBtn) sizeBtn.addEventListener("click", () => sizeDropdown.classList.toggle("hidden"));
+            if (colorBtn) colorBtn.addEventListener("click", () => colorDropdown.classList.toggle("hidden"));
 
-        // --- LÓGICA PARA ORDENAR POR PRECIO ---
-        const sortBtn = document.getElementById("sort-btn");
-        const productosContainer = document.getElementById("productos-container");
-        let ascending = true; // estado inicial del orden
-
-        if (sortBtn) {
-            sortBtn.addEventListener("click", () => {
-                let productos = Array.from(productosContainer.querySelectorAll(".producto-item"));
-
-                productos.sort((a, b) => {
-                    let priceA = parseFloat(a.dataset.price);
-                    let priceB = parseFloat(b.dataset.price);
-                    return ascending ? priceA - priceB : priceB - priceA;
+            document.querySelectorAll(".size-check, .color-check").forEach(input => {
+                input.addEventListener("change", () => {
+                    const currentParams = new URLSearchParams(window.location.search);
+                    currentParams.delete('sizes[]');
+                    currentParams.delete('colors[]');
+                    document.querySelectorAll(".size-check:checked").forEach(cb => currentParams.append("sizes[]", cb.value));
+                    document.querySelectorAll(".color-check:checked").forEach(cb => currentParams.append("colors[]", cb.value));
+                    window.location.href = window.location.pathname + "?" + currentParams.toString();
                 });
-
-                productosContainer.innerHTML = "";
-                productos.forEach(p => productosContainer.appendChild(p));
-                
-                ascending = !ascending;
             });
-        }
-    });
-</script>
+
+            // --- LÓGICA PARA ORDENAR POR PRECIO ---
+            const sortBtn = document.getElementById("sort-btn");
+            const productosContainer = document.getElementById("productos-container");
+            let ascending = true; // estado inicial del orden
+
+            if (sortBtn) {
+                sortBtn.addEventListener("click", () => {
+                    let productos = Array.from(productosContainer.querySelectorAll(".producto-item"));
+
+                    productos.sort((a, b) => {
+                        let priceA = parseFloat(a.dataset.price);
+                        let priceB = parseFloat(b.dataset.price);
+                        return ascending ? priceA - priceB : priceB - priceA;
+                    });
+
+                    productosContainer.innerHTML = "";
+                    productos.forEach(p => productosContainer.appendChild(p));
+
+                    ascending = !ascending;
+                });
+            }
+        });
+    </script>
     <?php include 'modal.php'; ?>
     <script src="js/auth.js?v=<?php echo time(); ?>"></script>
     <script src="js/index.js?v=<?php echo time(); ?>"></script>
