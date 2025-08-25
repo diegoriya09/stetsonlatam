@@ -49,7 +49,6 @@ if (!isset($_SESSION['user_id'])) {
         <div id="orders-panel" class="content-panel">
           <h1 class="content-title">Recent Orders</h1>
           <div id="orders-table-container" class="orders-table-container">
-
             <table>
               <thead>
                 <tr>
@@ -65,7 +64,6 @@ if (!isset($_SESSION['user_id'])) {
                 </tr>
               </tbody>
             </table>
-
           </div>
           <div class="mt-6 text-center">
             <a href="myorders.php" class="view-all-btn">View All Orders</a>
@@ -74,13 +72,17 @@ if (!isset($_SESSION['user_id'])) {
 
         <div id="addresses-panel" class="content-panel">
           <h1 class="content-title">Addresses</h1>
-          <div id="address-list" class="content-grid"></div>
+          <div id="address-list" class="content-grid">
+            <p>Loading addresses...</p>
+          </div>
           <button class="add-new-btn">Add New Address</button>
         </div>
 
         <div id="payment-panel" class="content-panel">
           <h1 class="content-title">Payment Methods</h1>
-          <div id="payment-method-list" class="content-grid"></div>
+          <div id="payment-method-list" class="content-grid">
+            <p>Loading payment methods...</p>
+          </div>
           <button class="add-new-btn">Add New Payment Method</button>
         </div>
 
@@ -93,7 +95,6 @@ if (!isset($_SESSION['user_id'])) {
   </main>
 
   <?php include 'footer.php'; ?>
-  <?php include 'modal.php'; ?>
 
   <div id="address-modal" class="modal">
     <div class="modal-backdrop"></div>
@@ -117,7 +118,7 @@ if (!isset($_SESSION['user_id'])) {
         </div>
         <div class="form-group">
           <label for="postal_code">Postal Code</label>
-          <input type="text" id="postal_code" name="postal_code">
+          <input type="text" id="postal_code" name="postal_code" required>
         </div>
         <div class="form-group">
           <label for="country">Country</label>
@@ -146,11 +147,11 @@ if (!isset($_SESSION['user_id'])) {
         </div>
         <div class="form-group">
           <label for="card_number">Card Number</label>
-          <input type="text" id="card_number" placeholder="xxxx xxxx xxxx 1234" maxlength="19">
+          <input type="text" id="card_number" placeholder="xxxx xxxx xxxx 1234" maxlength="19" required>
         </div>
         <div class="form-group">
           <label for="expiry_date">Expiry Date</label>
-          <input type="text" id="expiry_date" name="expiry_date" placeholder="MM/YY">
+          <input type="text" id="expiry_date" name="expiry_date" placeholder="MM/YY" required>
         </div>
         <button type="submit" class="form-submit-btn">Save Payment Method</button>
       </form>

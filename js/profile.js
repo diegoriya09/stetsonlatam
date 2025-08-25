@@ -1,4 +1,3 @@
-// js/profile.js
 document.addEventListener('DOMContentLoaded', async () => {
     const jwt = localStorage.getItem('jwt');
     if (!jwt) {
@@ -9,12 +8,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     // --- LÓGICA DE PANELES (TABS) ---
     const navLinks = document.querySelectorAll('.sidebar-nav .nav-link');
     const contentPanels = document.querySelectorAll('.content-panel');
+
     navLinks.forEach(link => {
         link.addEventListener('click', function (e) {
             e.preventDefault();
             const targetId = this.dataset.target;
+
             navLinks.forEach(l => l.classList.remove('active'));
             contentPanels.forEach(p => p.classList.remove('active'));
+
             this.classList.add('active');
             document.getElementById(targetId).classList.add('active');
         });
@@ -23,8 +25,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     // --- LÓGICA PARA MODALES ---
     const addressModal = document.getElementById('address-modal');
     const paymentModal = document.getElementById('payment-modal');
-    const addAddressBtn = document.querySelector('[data-target="addresses-panel"] .add-new-btn');
-    const addPaymentBtn = document.querySelector('[data-target="payment-panel"] .add-new-btn');
+    const addAddressBtn = document.querySelector('#addresses-panel .add-new-btn');
+    const addPaymentBtn = document.querySelector('#payment-panel .add-new-btn');
 
     const openModal = (modal) => modal.classList.add('active');
     const closeModal = (modal) => modal.classList.remove('active');
@@ -57,7 +59,26 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     };
 
-    // --- CARGAR DATOS DEL USUARIO ---
+    // --- FUNCIÓN PARA ENVIAR DATOS (POST) ---
+    const postData = async (endpoint, data) => {
+        try {
+            const res = await fetch(endpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + jwt
+                },
+                body: JSON.stringify(data)
+            });
+            return await res.json();
+        } catch (error) {
+            console.error(`Network error posting to ${endpoint}:`, error);
+            return { success: false, message: 'Network error' };
+        }
+    };
+
+
+    // --- CARGAR Y MOSTRAR DATOS ---
     const loadUserData = async () => {
         const userData = await fetchData('php/user/get_user.php');
         if (userData.success && userData.user) {
@@ -68,7 +89,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     };
 
-    // --- CARGAR ÓRDENES ---
     const loadOrdersData = async () => {
         const ordersData = await fetchData('php/order/get_orders.php');
         const ordersTbody = document.getElementById('orders-tbody');
@@ -86,7 +106,39 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     };
 
-    // --- LÓGICA FORMULARIO DE DIRECCIÓN ---
+    const loadAddressesData = async () => {
+        const addrData = await fetchData('php/user/get_addresses.php');
+        const container = document.getElementById('address-list');
+        container.innerHTML = '';
+        if (addrData.success && addrData.addresses.length > 0) {
+            addrData.addresses.forEach(addr => {
+                const div = document.createElement('div');
+                div.className = 'info-card';
+                div.innerHTML = `<strong>${addr.street_address}</strong><p>${addr.city}, ${addr.state} ${addr.postal_code}</p><p>${addr.country}</p>`;
+                container.appendChild(div);
+            });
+        } else {
+            container.innerHTML = '<p>You have no saved addresses.</p>';
+        }
+    };
+
+    const loadPaymentsData = async () => {
+        const paymentData = await fetchData('php/user/get_payment_methods.php');
+        const container = document.getElementById('payment-method-list');
+        container.innerHTML = '';
+        if (paymentData.success && paymentData.payment_methods.length > 0) {
+            paymentData.payment_methods.forEach(pm => {
+                const div = document.createElement('div');
+                div.className = 'info-card';
+                div.innerHTML = `<strong>${pm.card_type}</strong><p>**** **** **** ${pm.last_four_digits}</p><p>Expires: ${pm.expiry_date}</p>`;
+                container.appendChild(div);
+            });
+        } else {
+            container.innerHTML = '<p>You have no saved payment methods.</p>';
+        }
+    };
+
+    // --- LÓGICA PARA FORMULARIOS DE LOS MODALES ---
     const addAddressForm = document.getElementById('add-address-form');
     if (addAddressForm) {
         addAddressForm.addEventListener('submit', async function (e) {
@@ -94,18 +146,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             const formData = new FormData(this);
             const data = Object.fromEntries(formData.entries());
 
-            const res = await fetch('php/user/add_address.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + jwt
-                },
-                body: JSON.stringify(data)
-            });
-            const result = await res.json();
+            const result = await postData('php/user/add_address.php', data);
+
             if (result.success) {
                 Swal.fire('¡Éxito!', result.message, 'success');
                 closeModal(addressModal);
+                this.reset(); // Limpia el formulario
                 loadAddressesData(); // Recargamos la lista de direcciones
             } else {
                 Swal.fire('Error', result.message, 'error');
@@ -113,7 +159,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
-    // --- LÓGICA FORMULARIO DE PAGO (SIMULACIÓN) ---
     const addPaymentForm = document.getElementById('add-payment-form');
     if (addPaymentForm) {
         addPaymentForm.addEventListener('submit', async function (e) {
@@ -125,56 +170,20 @@ document.addEventListener('DOMContentLoaded', async () => {
                 last_four: cardNumber.slice(-4)
             };
 
-            // ... (Lógica fetch similar a la de dirección, apuntando a add_payment_method.php) ...
-            Swal.fire('¡Éxito!', 'Método de pago añadido (simulación).', 'success');
-            closeModal(paymentModal);
-            loadPaymentsData(); // Recargamos la lista de pagos
+            const result = await postData('php/user/add_payment_method.php', data);
+
+            if (result.success) {
+                Swal.fire('¡Éxito!', result.message, 'success');
+                closeModal(paymentModal);
+                this.reset(); // Limpia el formulario
+                loadPaymentsData(); // Recargamos la lista de pagos
+            } else {
+                Swal.fire('Error', result.message, 'error');
+            }
         });
     }
 
-    // --- CARGAR Y MOSTRAR DIRECCIONES ---
-    const loadAddressesData = async () => {
-        const addrData = await fetchData('php/user/get_addresses.php');
-        const container = document.getElementById('address-list');
-        container.innerHTML = '';
-        if (addrData.success && addrData.addresses.length > 0) {
-            addrData.addresses.forEach(addr => {
-                const div = document.createElement('div');
-                div.className = 'info-card';
-                div.innerHTML = `
-                    <strong>${addr.street_address}</strong>
-                    <p>${addr.city}, ${addr.state} ${addr.postal_code}</p>
-                    <p>${addr.country}</p>
-                `;
-                container.appendChild(div);
-            });
-        } else {
-            container.innerHTML = '<p>You have no saved addresses.</p>';
-        }
-    };
-
-    // --- CARGAR Y MOSTRAR MÉTODOS DE PAGO ---
-    const loadPaymentsData = async () => {
-        const paymentData = await fetchData('php/user/get_payment_methods.php');
-        const container = document.getElementById('payment-method-list');
-        container.innerHTML = '';
-        if (paymentData.success && paymentData.payment_methods.length > 0) {
-            paymentData.payment_methods.forEach(pm => {
-                const div = document.createElement('div');
-                div.className = 'info-card';
-                div.innerHTML = `
-                    <strong>${pm.card_type}</strong>
-                    <p>**** **** **** ${pm.last_four_digits}</p>
-                    <p>Expires: ${pm.expiry_date}</p>
-                `;
-                container.appendChild(div);
-            });
-        } else {
-            container.innerHTML = '<p>You have no saved payment methods.</p>';
-        }
-    };
-
-    // --- EJECUTAR TODAS LAS FUNCIONES AL CARGAR LA PÁGINA ---
+    // --- EJECUTAR TODO AL CARGAR ---
     loadUserData();
     loadOrdersData();
     loadAddressesData();
