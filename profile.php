@@ -3,12 +3,12 @@ require_once 'php/conexion.php';
 session_start();
 
 // Redirigir si el usuario no ha iniciado sesión
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['id'])) {
   header('Location: index.php'); // O a tu página de login
   exit();
 }
 
-$user_id = $_SESSION['user_id'];
+$user_id = $_SESSION['id'];
 $user = null;
 $orders = [];
 
