@@ -1,0 +1,145 @@
+/* css/cart.css */
+.cart-main {
+   padding: 2.5rem 5%;
+}
+
+.cart-container {
+   max-width: 1280px;
+   margin: 0 auto;
+   display: grid;
+   grid-template-columns: 1fr;
+   gap: 2rem;
+}
+
+@media(min-width: 1024px) {
+   .cart-container {
+      grid-template-columns: 2fr 1fr;
+   }
+}
+
+.cart-items-column h1,
+.order-summary-column h2 {
+   font-family: 'Lora', serif;
+   font-size: 1.875rem;
+   font-weight: bold;
+   border-bottom: 1px solid #e5e7eb;
+   padding-bottom: 1rem;
+   margin-bottom: 1.5rem;
+}
+
+.cart-item {
+   display: grid;
+   grid-template-columns: 80px 1fr auto auto 30px;
+   gap: 1rem;
+   align-items: center;
+   padding: 1.5rem 0;
+   border-bottom: 1px solid #e5e7eb;
+}
+
+.item-image {
+   width: 80px;
+   height: 80px;
+   object-fit: cover;
+   border-radius: 0.5rem;
+}
+
+.item-details h3 {
+   font-weight: 600;
+}
+
+.item-details p {
+   font-size: 0.875rem;
+   color: #6b7280;
+}
+
+.item-quantity {
+   display: flex;
+   align-items: center;
+}
+
+.item-quantity input {
+   width: 40px;
+   text-align: center;
+   border: 1px solid #e5e7eb;
+   height: 32px;
+}
+
+.item-quantity .qty-btn {
+   width: 32px;
+   height: 32px;
+   border: 1px solid #e5e7eb;
+   background: #f9fafb;
+   cursor: pointer;
+}
+
+.item-total {
+   font-weight: 600;
+   text-align: right;
+}
+
+.item-remove {
+   background: none;
+   border: none;
+   font-size: 1rem;
+   color: #9ca3af;
+   cursor: pointer;
+}
+
+.item-remove:hover {
+   color: #ef4444;
+}
+
+.order-summary-column {
+   background-color: #f9fafb;
+   padding: 1.5rem;
+   border-radius: 0.5rem;
+   border: 1px solid #e5e7eb;
+   align-self: flex-start;
+   height: fit-content;
+}
+
+.summary-row,
+.summary-total {
+   display: flex;
+   justify-content: space-between;
+   padding: 0.75rem 0;
+}
+
+.summary-total {
+   font-weight: bold;
+   font-size: 1.125rem;
+   border-top: 1px solid #d1d5db;
+   margin-top: 0.75rem;
+}
+
+.checkout-button {
+   display: block;
+   width: 100%;
+   background-color: #3f1e1f;
+   color: white;
+   text-align: center;
+   padding: 0.75rem;
+   border-radius: 0.5rem;
+   font-weight: bold;
+   text-decoration: none;
+   margin-top: 1.5rem;
+}
+
+.empty-cart,
+.loading-cart {
+   text-align: center;
+   padding: 4rem;
+   color: #6b7280;
+}
+
+.recommendations-section {
+   margin-top: 4rem;
+}
+
+.recommendations-section h2 {
+   font-family: 'Lora', serif;
+   font-size: 1.875rem;
+   font-weight: bold;
+   text-align: center;
+   margin-bottom: 2rem;
+}
