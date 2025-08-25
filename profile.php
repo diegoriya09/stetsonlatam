@@ -40,7 +40,7 @@ if (!isset($_SESSION['user_id'])) {
         </nav>
       </aside>
 
-      <section class="profile-content">
+      <section id="profile-content" class="profile-content">
         <div id="overview-panel" class="content-panel active">
           <h1 class="content-title">Overview</h1>
           <p>Welcome back, <span id="overview-username">user</span>. From here you can manage your orders, addresses, and account details.</p>
