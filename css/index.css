@@ -122,7 +122,7 @@ header {
     justify-content: center;
     text-align: center;
     padding: 2rem;
-    color: white;
+    color: #f1eeea;
 }
 .hero-content {
     max-width: 800px;
@@ -234,7 +234,7 @@ header {
     margin-bottom: 1rem;
 }
 .story-content p {
-    color: #4b5563;
+    color: #3c3737;
     max-width: 500px;
     margin: 0 auto;
     line-height: 1.75;
@@ -265,7 +265,7 @@ header {
     margin-bottom: 1rem;
 }
 .signup-section p {
-    color: #4b5563;
+    color: #3c3737;
     max-width: 500px;
     margin: 0 auto;
 }
@@ -273,7 +273,7 @@ header {
     display: inline-block;
     margin-top: 2rem;
     background-color: #3f1e1f;
-    color: white;
+    color: #f1eeea;
     padding: 0.75rem 2.5rem;
     border-radius: 0.5rem;
     text-transform: uppercase;
