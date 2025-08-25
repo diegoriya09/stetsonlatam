@@ -84,8 +84,8 @@ try {
                         <a href="aboutUs.php" class="story-button">OUR STORY</a>
                     </div>
                 </section>
-                
-                <section class="home-section signup-section">
+
+                <section id="signup-section" class="home-section signup-section">
                     <h2 class="section-title">Join the Stetson Community</h2>
                     <p>Stay up-to-date on the latest news, exclusive offers, and new product releases.</p>
                     <button id="open-user-modal" class="signup-button">SIGN UP</button>
