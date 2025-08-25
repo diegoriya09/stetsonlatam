@@ -93,3 +93,11 @@
     padding: 4rem;
     color: #3c3737;
 }
+
+.product-grid.single-item-grid .product-card {
+    /* Le damos un ancho máximo para que la tarjeta no se estire */
+    max-width: 400px;
+    
+    /* Centramos la tarjeta horizontalmente dentro de la fila */
+    justify-self: center;
+}
