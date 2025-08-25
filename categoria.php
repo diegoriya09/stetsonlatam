@@ -239,7 +239,7 @@ $num_productos = count($productos);
                         </div>
                     </div>
 
-                    <div id="productos-container" class="product-grid <?php if ($num_productos === 1) echo 'single-item-grid'; ?>">
+                    <div id="productos-container" class="product-grid">
                         <?php if (!empty($productos)): ?>
                             <?php foreach ($productos as $producto): ?>
                                 <a href="producto.php?id=<?php echo $producto['id']; ?>" class="product-card producto-item" data-price="<?php echo $producto['price']; ?>">
