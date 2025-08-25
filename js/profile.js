@@ -30,11 +30,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         
         if (userData.success && userData.user) {
             const user = userData.user;
+            // Poner el nombre en la barra lateral
             document.getElementById('sidebar-username').textContent = user.name;
+            // Poner la inicial en el avatar
             document.getElementById('sidebar-avatar').textContent = user.name.charAt(0).toUpperCase();
-            document.getElementById('overview-username').textContent = user.name.split(' ')[0]; // Solo el primer nombre
+            // Poner el primer nombre en el saludo de bienvenida
+            document.getElementById('overview-username').textContent = user.name.split(' ')[0];
         } else {
-            // Manejar error si no se encuentra el usuario
             console.error('Error fetching user:', userData.message);
         }
     } catch (error) {
