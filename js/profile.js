@@ -1,5 +1,3 @@
-// js/profile.js
-
 document.addEventListener('DOMContentLoaded', async () => {
     const jwt = localStorage.getItem('jwt');
     if (!jwt) {
@@ -10,6 +8,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // --- LÓGICA PARA NAVEGAR ENTRE PANELES (TABS) ---
     const navLinks = document.querySelectorAll('.sidebar-nav .nav-link');
     const contentPanels = document.querySelectorAll('.content-panel');
+
     navLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
@@ -23,53 +22,102 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     });
 
-    // --- FUNCIONES PARA CARGAR Y MOSTRAR DATOS ---
-    const fetchAndRender = async (endpoint, containerId, renderer) => {
+    // --- FUNCIÓN GENÉRICA PARA PEDIR DATOS ---
+    const fetchData = async (endpoint) => {
         try {
-            const res = await fetch(endpoint, { headers: { 'Authorization': 'Bearer ' + jwt } });
-            const data = await res.json();
-            const container = document.getElementById(containerId);
-            container.innerHTML = ''; // Limpiar
-            if (data.success) {
-                renderer(data, container);
-            } else {
-                container.innerHTML = `<p>${data.message || 'Error loading data.'}</p>`;
+            const res = await fetch(endpoint, {
+                headers: { 'Authorization': 'Bearer ' + jwt }
+            });
+            if (!res.ok) {
+                // Si el token es inválido o hay otro error, redirigir
+                if (res.status === 401) {
+                    localStorage.removeItem('jwt');
+                    window.location.href = 'index.php';
+                }
+                throw new Error(`Server responded with status: ${res.status}`);
             }
+            return await res.json();
         } catch (error) {
-            console.error(`Error fetching from ${endpoint}:`, error);
+            console.error(`Network error fetching from ${endpoint}:`, error);
+            return { success: false, message: 'Network error' };
         }
     };
 
-    // Renderizadores para cada tipo de dato
-    const renderUser = (data) => {
-        if (data.user) {
-            const user = data.user;
+    // --- CARGAR Y MOSTRAR DATOS DEL USUARIO ---
+    const loadUserData = async () => {
+        const userData = await fetchData('php/user/get_user.php');
+        if (userData.success && userData.user) {
+            const user = userData.user;
             document.getElementById('sidebar-username').textContent = user.name;
             document.getElementById('sidebar-avatar').textContent = user.name.charAt(0).toUpperCase();
             document.getElementById('overview-username').textContent = user.name.split(' ')[0];
         }
     };
-    const renderOrders = (data, container) => {
-        // ... (código para renderizar la tabla de órdenes, como lo tenías)
+
+    // --- CARGAR Y MOSTRAR ÓRDENES ---
+    const loadOrdersData = async () => {
+        const ordersData = await fetchData('php/order/get_orders.php');
+        const ordersTbody = document.getElementById('orders-tbody');
+        ordersTbody.innerHTML = ''; // Limpiar
+
+        if (ordersData.success && ordersData.orders.length > 0) {
+            ordersData.orders.forEach(order => {
+                const tr = document.createElement('tr');
+                const orderDate = new Date(order.fecha).toLocaleDateString('en-US', {
+                    year: 'numeric', month: 'long', day: 'numeric'
+                });
+                const orderStatus = order.estado ? order.estado.toLowerCase() : 'unknown';
+
+                tr.innerHTML = `
+                    <td>#${order.id}</td>
+                    <td>${orderDate}</td>
+                    <td><span class="status-badge status-${orderStatus}">${order.estado}</span></td>
+                    <td>$${parseFloat(order.total).toFixed(2)}</td>
+                `;
+                ordersTbody.appendChild(tr);
+            });
+        } else {
+            ordersTbody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 2rem;">You have not placed any orders yet.</td></tr>`;
+        }
     };
-    const renderAddresses = (data, container) => {
-        if (data.addresses && data.addresses.length > 0) {
-            data.addresses.forEach(addr => {
+    
+    // --- CARGAR Y MOSTRAR DIRECCIONES ---
+    const loadAddressesData = async () => {
+        const addrData = await fetchData('php/user/get_addresses.php');
+        const container = document.getElementById('address-list');
+        container.innerHTML = '';
+
+        if (addrData.success && addrData.addresses.length > 0) {
+            addrData.addresses.forEach(addr => {
                 const div = document.createElement('div');
                 div.className = 'info-card';
-                div.innerHTML = `<strong>${addr.street_address}</strong><p>${addr.city}, ${addr.state} ${addr.postal_code}</p><p>${addr.country}</p>`;
+                div.innerHTML = `
+                    <strong>${addr.street_address}</strong>
+                    <p>${addr.city}, ${addr.state} ${addr.postal_code}</p>
+                    <p>${addr.country}</p>
+                `;
                 container.appendChild(div);
             });
         } else {
             container.innerHTML = '<p>You have no saved addresses.</p>';
         }
     };
-    const renderPayments = (data, container) => {
-        if (data.payment_methods && data.payment_methods.length > 0) {
-            data.payment_methods.forEach(pm => {
+
+    // --- CARGAR Y MOSTRAR MÉTODOS DE PAGO ---
+    const loadPaymentsData = async () => {
+        const paymentData = await fetchData('php/user/get_payment_methods.php');
+        const container = document.getElementById('payment-method-list');
+        container.innerHTML = '';
+
+        if (paymentData.success && paymentData.payment_methods.length > 0) {
+            paymentData.payment_methods.forEach(pm => {
                 const div = document.createElement('div');
                 div.className = 'info-card';
-                div.innerHTML = `<strong>${pm.card_type}</strong><p>**** **** **** ${pm.last_four_digits}</p><p>Expires: ${pm.expiry_date}</p>`;
+                div.innerHTML = `
+                    <strong>${pm.card_type}</strong>
+                    <p>**** **** **** ${pm.last_four_digits}</p>
+                    <p>Expires: ${pm.expiry_date}</p>
+                `;
                 container.appendChild(div);
             });
         } else {
@@ -77,9 +125,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     };
 
-    // --- INICIALIZACIÓN ---
-    fetchAndRender('php/user/get_user.php', 'sidebar-username', renderUser);
-    fetchAndRender('php/order/get_orders.php', 'orders-table-container', renderOrders);
-    fetchAndRender('php/user/get_addresses.php', 'address-list', renderAddresses);
-    fetchAndRender('php/user/get_payment_methods.php', 'payment-method-list', renderPayments);
+
+    // --- EJECUTAR TODAS LAS FUNCIONES AL CARGAR LA PÁGINA ---
+    loadUserData();
+    loadOrdersData();
+    loadAddressesData();
+    loadPaymentsData();
 });
