@@ -247,6 +247,32 @@ th {
     font-size: 0.875rem;
 }
 
+.info-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.25rem;
+}
+
+.info-card-header strong {
+    margin-bottom: 0; /* Quitamos el margen que tenía antes */
+}
+
+.delete-btn {
+    background-color: transparent;
+    border: none;
+    color: #9ca3af; /* gris claro */
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.2s ease;
+}
+
+.delete-btn:hover {
+    color: #ef4444; /* rojo al pasar el cursor */
+}
+
 .modal {
     display: none; /* Oculto por defecto */
     position: fixed;
