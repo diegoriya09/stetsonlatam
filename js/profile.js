@@ -71,8 +71,31 @@ document.addEventListener('DOMContentLoaded', async () => {
     };
 
     // --- FUNCIONES PARA CARGAR Y RENDERIZAR DATOS ---
-    const loadUserData = async () => { /* ... tu función ... */ };
-    const loadOrdersData = async () => { /* ... tu función ... */ };
+    const loadUserData = async () => {
+        const userData = await fetchData('php/user/get_user.php');
+        if (userData.success && userData.user) {
+            const user = userData.user;
+            document.getElementById('sidebar-username').textContent = user.name;
+            document.getElementById('sidebar-avatar').textContent = user.name.charAt(0).toUpperCase();
+            document.getElementById('overview-username').textContent = user.name.split(' ')[0];
+        }
+    };
+    const loadOrdersData = async () => {
+        const ordersData = await fetchData('php/order/get_orders.php');
+        const ordersTbody = document.getElementById('orders-tbody');
+        ordersTbody.innerHTML = '';
+        if (ordersData.success && ordersData.orders.length > 0) {
+            ordersData.orders.forEach(order => {
+                const tr = document.createElement('tr');
+                const orderDate = new Date(order.fecha).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+                const orderStatus = order.estado ? order.estado.toLowerCase() : 'unknown';
+                tr.innerHTML = `<td>#${order.id}</td><td>${orderDate}</td><td><span class="status-badge status-${orderStatus}">${order.estado}</span></td><td>$${parseFloat(order.total).toFixed(2)}</td>`;
+                ordersTbody.appendChild(tr);
+            });
+        } else {
+            ordersTbody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 2rem;">You have not placed any orders yet.</td></tr>`;
+        }
+    };
 
     const loadAddressesData = async () => {
         const addrData = await fetchData('php/user/get_addresses.php');
