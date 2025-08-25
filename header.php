@@ -9,6 +9,7 @@ try {
 
   $result = $stmt->get_result();
   $categorias_flat = $result->fetch_all(MYSQLI_ASSOC);
+
 } catch (Exception $e) { // Cambiado a Exception general para MySQLi
   error_log("Error al consultar categorías: " . $e->getMessage());
   $categorias_flat = [];
@@ -51,16 +52,21 @@ if (!empty($categorias_flat)) {
 ?>
 
 
-<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f3f2f2] px-10 h-20">
-
+<header
+  class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f3f2f2] px-10 py-5 h-20">
   <div class="flex-1 flex justify-start">
-    <a href="index.php" aria-label="Stetson Latam">
-      <img src="img/logo.svg" alt="Logo de Stetson Latam" class="h-5 w-auto">
-    </a>
+    <div class="flex items-center gap-4">
+      <a href="index.php" aria-label="Stetson Latam">
+
+        <img src="img/logo.svg" alt="Logo de Stetson Latam" class="h-5 w-auto">
+
+      </a>
+    </div>
   </div>
 
   <nav class="flex justify-center">
     <div class="flex items-center gap-9">
+
       <div class="nav-item">
         <a href="hats.php" class="text-[#3c3737] text-sm font-bold uppercase leading-normal">Hats</a>
         <?php if (!empty($hat_collections)): ?>
@@ -68,11 +74,14 @@ if (!empty($categorias_flat)) {
             <div class="mega-menu-content">
               <?php foreach ($hat_collections as $collection): ?>
                 <div class="mega-menu-column">
-                  <a href="categoria.php?id=<?php echo $collection['id']; ?>" class="column-title"><?php echo htmlspecialchars($collection['nombre']); ?></a>
+                  <a href="categoria.php?id=<?php echo $collection['id']; ?>"
+                    class="column-title"><?php echo htmlspecialchars($collection['nombre']); ?></a>
                   <?php if (!empty($collection['children'])): ?>
                     <ul>
                       <?php foreach ($collection['children'] as $subcat): ?>
-                        <li><a href="categoria.php?id=<?php echo $subcat['id']; ?>"><?php echo htmlspecialchars($subcat['nombre']); ?></a></li>
+                        <li><a
+                            href="categoria.php?id=<?php echo $subcat['id']; ?>"><?php echo htmlspecialchars($subcat['nombre']); ?></a>
+                        </li>
                       <?php endforeach; ?>
                     </ul>
                   <?php endif; ?>
@@ -88,13 +97,16 @@ if (!empty($categorias_flat)) {
         <?php if (!empty($cap_collections)): ?>
           <div class="mega-menu">
             <div class="mega-menu-content">
-              <?php foreach ($cap_collections as $collection): ?>
+              <?php foreach ($cap_collections as $collection): // Classic, Trucker, etc. ?>
                 <div class="mega-menu-column">
-                  <a href="categoria.php?id=<?php echo $collection['id']; ?>" class="column-title"><?php echo htmlspecialchars($collection['nombre']); ?></a>
+                  <a href="categoria.php?id=<?php echo $collection['id']; ?>"
+                    class="column-title"><?php echo htmlspecialchars($collection['nombre']); ?></a>
                   <?php if (!empty($collection['children'])): ?>
                     <ul>
-                      <?php foreach ($collection['children'] as $subcat): ?>
-                        <li><a href="categoria.php?id=<?php echo $subcat['id']; ?>"><?php echo htmlspecialchars($subcat['nombre']); ?></a></li>
+                      <?php foreach ($collection['children'] as $subcat): // Malla, Tela, etc. ?>
+                        <li><a
+                            href="categoria.php?id=<?php echo $subcat['id']; ?>"><?php echo htmlspecialchars($subcat['nombre']); ?></a>
+                        </li>
                       <?php endforeach; ?>
                     </ul>
                   <?php endif; ?>
@@ -104,6 +116,7 @@ if (!empty($categorias_flat)) {
           </div>
         <?php endif; ?>
       </div>
+
     </div>
   </nav>
 
@@ -111,14 +124,23 @@ if (!empty($categorias_flat)) {
     <div class="flex items-center gap-8">
       <label class="flex flex-col min-w-40 !h-10 max-w-64">
         <div class="flex w-full flex-1 items-stretch rounded-lg h-full">
-          <div class="text-[#3c3737] flex border-none bg-[#f1eeea] items-center justify-center pl-4 rounded-l-lg border-r-0">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
-              <path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path>
+          <div
+            class="text-[#3c3737] flex border-none bg-[#f1eeea] items-center justify-center pl-4 rounded-l-lg border-r-0"
+            data-icon="MagnifyingGlass" data-size="24px" data-weight="regular">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor"
+              viewBox="0 0 256 256">
+              <path
+                d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z">
+              </path>
             </svg>
           </div>
           <div class="relative">
-            <input id="search-input" name="q" placeholder="Search..." autocomplete="off" class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#3c3737] focus:outline-0 focus:ring-0 border-none bg-[#f1eeea] focus:border-none h-full placeholder:text-[#3c3737] px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal" value="" />
-            <div id="search-results" class="absolute top-full left-0 w-full bg-white border rounded-lg shadow-md hidden z-50 max-h-80 overflow-y-auto"></div>
+            <input id="search-input" name="q" placeholder="Search..." autocomplete="off"
+              class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#3c3737] focus:outline-0 focus:ring-0 border-none bg-[#f1eeea] focus:border-none h-full placeholder:text-[#3c3737] px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal"
+              value="" />
+            <div id="search-results"
+              class="absolute top-full left-0 w-full bg-white border rounded-lg shadow-md hidden z-50 max-h-80 overflow-y-auto">
+            </div>
           </div>
         </div>
       </label>
