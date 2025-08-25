@@ -10,7 +10,7 @@ $categoria_id = $_GET['id'];
 
 // 2. OBTENER LA INFORMACIÓN DE LA CATEGORÍA SELECCIONADA
 try {
-    $sql_cat = "SELECT nombre, descripcion FROM categorias WHERE id = ?";
+    $sql_cat = "SELECT nombre, descripcion, imagen_banner FROM categorias WHERE id = ?";
     $stmt_cat = $conn->prepare($sql_cat);
     $stmt_cat->bind_param("i", $categoria_id);
     $stmt_cat->execute();
