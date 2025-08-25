@@ -1,27 +1,25 @@
 /* css/profile.css */
-html, body {
-    height: 100%;
-}
-
 body {
-    display: flex;
-    flex-direction: column;
+   display: flex;
+   flex-direction: column;
 }
 
 .page-wrapper {
-    flex-grow: 1; /* ¡Esta es la línea clave! */
-    display: flex;
-    flex-direction: column;
+   flex-grow: 1;
+   /* ¡Esta es la línea clave! */
+   display: flex;
+   flex-direction: column;
 }
 
 .profile-main {
-    flex-grow: 1; /* Asegura que el contenido principal también crezca */
+   flex-grow: 1;
+   /* Asegura que el contenido principal también crezca */
 }
 
-/* --- El resto de tu CSS de profile.css va aquí abajo --- */
-.profile-main {
-    background-color: #f9fafb;
-    /* ... etc ... */
+/* Y nos aseguramos que el footer no crezca */
+footer {
+   /* O la clase que use tu footer */
+   flex-shrink: 0;
 }
 
 .profile-container {
