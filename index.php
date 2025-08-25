@@ -80,7 +80,7 @@ try {
                     <div class="story-image"></div>
                     <div class="story-content">
                         <h2 class="section-title">A Legacy of Craftsmanship</h2>
-                        <p>For over 150 years, Stetson has been synonymous with quality and authenticity. Our products are crafted with meticulous attention to detail, using the finest materials to ensure lasting style and durability.</p>
+                        <p>For over 160 years, Stetson has been synonymous with quality and authenticity. Our products are crafted with meticulous attention to detail, using the finest materials to ensure lasting style and durability.</p>
                         <a href="aboutUs.php" class="story-button">OUR STORY</a>
                     </div>
                 </section>
