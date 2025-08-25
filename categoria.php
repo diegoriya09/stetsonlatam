@@ -187,7 +187,7 @@ $num_productos = count($productos);
 
                 <section class="product-section">
 
-                    <div class="flex justify-between items-center p-4 border-y border-gray-200">
+                    <div class="flex justify-between items-center p-4">
                         <div>
                             <span class="font-bold text-sm text-gray-800 uppercase">ITEMS (<?php echo count($productos); ?>)</span>
                         </div>
