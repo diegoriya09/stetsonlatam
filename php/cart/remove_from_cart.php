@@ -38,12 +38,17 @@ if (!$producto_id || !$color_id || !$size_id) {
     exit;
 }
 
-$sql = "DELETE FROM cart WHERE users_id = ? AND producto_id = ? AND color_id = ? AND size_id = ?";
+// Usamos el ID único del item del carrito y el ID del usuario por seguridad.
+$sql = "DELETE FROM cart WHERE id = ? AND users_id = ?";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("iiii", $user_id, $producto_id, $color_id, $size_id);
+$stmt->bind_param("ii", $cart_item_id, $user_id);
 
 if ($stmt->execute()) {
-    echo json_encode(['success' => true]);
+    if ($stmt->affected_rows > 0) {
+        echo json_encode(['success' => true, 'message' => 'Artículo eliminado']);
+    } else {
+        echo json_encode(['success' => false, 'message' => 'El artículo no se encontró o no te pertenece']);
+    }
 } else {
     echo json_encode(['success' => false, 'message' => 'Error al eliminar']);
 }

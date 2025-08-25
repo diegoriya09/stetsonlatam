@@ -44,13 +44,19 @@ if (!$producto_id || !$color_id || !$size_id || $quantity < 1) {
     exit;
 }
 
-$stmt = $conn->prepare("UPDATE cart SET quantity = ? WHERE users_id = ? AND producto_id = ? AND color_id = ? AND size_id = ?");
-$stmt->bind_param("iiiii", $quantity, $user_id, $producto_id, $color_id, $size_id);
+$stmt = $conn->prepare("UPDATE cart SET quantity = ? WHERE id = ? AND users_id = ?");
+$stmt->bind_param("iii", $quantity, $cart_item_id, $user_id);
+
 if ($stmt->execute()) {
-    echo json_encode(['success' => true, 'message' => 'Quantity updated successfully']);
+    if ($stmt->affected_rows > 0) {
+        echo json_encode(['success' => true, 'message' => 'Cantidad actualizada']);
+    } else {
+         echo json_encode(['success' => false, 'message' => 'El artículo no se encontró o no te pertenece']);
+    }
 } else {
     http_response_code(500);
-    echo json_encode(['success' => false, 'message' => 'Error updating quantity']);
+    echo json_encode(['success' => false, 'message' => 'Error al actualizar la cantidad']);
 }
+
 $stmt->close();
 $conn->close();
