@@ -95,6 +95,68 @@ if (!isset($_SESSION['user_id'])) {
   <?php include 'footer.php'; ?>
   <?php include 'modal.php'; ?>
 
+  <div id="address-modal" class="modal">
+    <div class="modal-backdrop"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>New Address</h2>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      <form id="add-address-form">
+        <div class="form-group">
+          <label for="street_address">Street Address</label>
+          <input type="text" id="street_address" name="street_address" required>
+        </div>
+        <div class="form-group">
+          <label for="city">City</label>
+          <input type="text" id="city" name="city" required>
+        </div>
+        <div class="form-group">
+          <label for="state">State / Province</label>
+          <input type="text" id="state" name="state">
+        </div>
+        <div class="form-group">
+          <label for="postal_code">Postal Code</label>
+          <input type="text" id="postal_code" name="postal_code">
+        </div>
+        <div class="form-group">
+          <label for="country">Country</label>
+          <input type="text" id="country" name="country" required>
+        </div>
+        <button type="submit" class="form-submit-btn">Save Address</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="payment-modal" class="modal">
+    <div class="modal-backdrop"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>New Payment Method</h2>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      <form id="add-payment-form">
+        <p class="form-warning">ADVERTENCIA: Esto es una simulación. Nunca ingreses datos de tarjeta reales.</p>
+        <div class="form-group">
+          <label for="card_type">Card Type</label>
+          <select id="card_type" name="card_type">
+            <option value="Visa">Visa</option>
+            <option value="MasterCard">MasterCard</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="card_number">Card Number</label>
+          <input type="text" id="card_number" placeholder="xxxx xxxx xxxx 1234" maxlength="19">
+        </div>
+        <div class="form-group">
+          <label for="expiry_date">Expiry Date</label>
+          <input type="text" id="expiry_date" name="expiry_date" placeholder="MM/YY">
+        </div>
+        <button type="submit" class="form-submit-btn">Save Payment Method</button>
+      </form>
+    </div>
+  </div>
+
   <script src="js/auth.js?v=<?php echo time(); ?>"></script>
   <script src="js/index.js?v=<?php echo time(); ?>"></script>
   <script src="js/profile.js?v=<?php echo time(); ?>"></script>

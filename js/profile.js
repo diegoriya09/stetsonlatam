@@ -20,6 +20,25 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     });
 
+    // --- LÓGICA PARA MODALES ---
+    const addressModal = document.getElementById('address-modal');
+    const paymentModal = document.getElementById('payment-modal');
+    const addAddressBtn = document.querySelector('[data-target="addresses-panel"] .add-new-btn');
+    const addPaymentBtn = document.querySelector('[data-target="payment-panel"] .add-new-btn');
+
+    const openModal = (modal) => modal.classList.add('active');
+    const closeModal = (modal) => modal.classList.remove('active');
+
+    if (addAddressBtn) addAddressBtn.addEventListener('click', () => openModal(addressModal));
+    if (addPaymentBtn) addPaymentBtn.addEventListener('click', () => openModal(paymentModal));
+
+    document.querySelectorAll('.modal-close-btn, .modal-backdrop').forEach(el => {
+        el.addEventListener('click', () => {
+            if (addressModal) closeModal(addressModal);
+            if (paymentModal) closeModal(paymentModal);
+        });
+    });
+
     // --- FUNCIÓN GENÉRICA PARA PEDIR DATOS ---
     const fetchData = async (endpoint) => {
         try {
@@ -66,6 +85,52 @@ document.addEventListener('DOMContentLoaded', async () => {
             ordersTbody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 2rem;">You have not placed any orders yet.</td></tr>`;
         }
     };
+
+    // --- LÓGICA FORMULARIO DE DIRECCIÓN ---
+    const addAddressForm = document.getElementById('add-address-form');
+    if (addAddressForm) {
+        addAddressForm.addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+
+            const res = await fetch('php/user/add_address.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + jwt
+                },
+                body: JSON.stringify(data)
+            });
+            const result = await res.json();
+            if (result.success) {
+                Swal.fire('¡Éxito!', result.message, 'success');
+                closeModal(addressModal);
+                loadAddressesData(); // Recargamos la lista de direcciones
+            } else {
+                Swal.fire('Error', result.message, 'error');
+            }
+        });
+    }
+
+    // --- LÓGICA FORMULARIO DE PAGO (SIMULACIÓN) ---
+    const addPaymentForm = document.getElementById('add-payment-form');
+    if (addPaymentForm) {
+        addPaymentForm.addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const cardNumber = document.getElementById('card_number').value;
+            const data = {
+                card_type: document.getElementById('card_type').value,
+                expiry_date: document.getElementById('expiry_date').value,
+                last_four: cardNumber.slice(-4)
+            };
+
+            // ... (Lógica fetch similar a la de dirección, apuntando a add_payment_method.php) ...
+            Swal.fire('¡Éxito!', 'Método de pago añadido (simulación).', 'success');
+            closeModal(paymentModal);
+            loadPaymentsData(); // Recargamos la lista de pagos
+        });
+    }
 
     // --- CARGAR Y MOSTRAR DIRECCIONES ---
     const loadAddressesData = async () => {
