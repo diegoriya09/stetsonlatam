@@ -2,29 +2,8 @@
 session_start();
 // El PHP solo obtiene los productos recomendados.
 // El carrito se manejará 100% con JavaScript.
-require_once 'php/conexion.php';
 
 $user_id = $_SESSION['user_id'] ?? null;
-$recomendados = [];
-
-try {
-    if ($user_id !== null) {
-        $sql_rec = "SELECT p.* FROM productos p INNER JOIN user_visits uv ON p.id = uv.product_id WHERE uv.user_id = ? GROUP BY p.id ORDER BY COUNT(*) DESC LIMIT 5";
-        $stmt_rec = $conn->prepare($sql_rec);
-        $stmt_rec->bind_param("i", $user_id);
-    } else {
-        $sql_rec = "SELECT p.* FROM productos p INNER JOIN user_visits uv ON p.id = uv.product_id WHERE uv.user_id IS NULL GROUP BY p.id ORDER BY COUNT(*) DESC LIMIT 5";
-        $stmt_rec = $conn->prepare($sql_rec);
-    }
-    $stmt_rec->execute();
-    $result_rec = $stmt_rec->get_result();
-    while ($row = $result_rec->fetch_assoc()) {
-        $recomendados[] = $row;
-    }
-} catch (Exception $e) {
-    error_log("Error al obtener recomendados en cart.php: " . $e->getMessage());
-}
-$conn->close();
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -65,21 +44,6 @@ $conn->close();
                 <a href="checkout.php" id="checkout-btn" class="checkout-button">Proceed to Checkout</a>
             </aside>
         </div>
-        
-        <section class="recommendations-section">
-            <h2>You may also like</h2>
-            <div class="product-grid">
-                <?php foreach ($recomendados as $producto): ?>
-                    <a href="producto.php?id=<?php echo $producto['id']; ?>" class="product-card">
-                        <div class="product-card-image" style="background-image: url('<?php echo htmlspecialchars($producto['image']); ?>');"></div>
-                        <div class="product-card-info">
-                            <h3 class="product-name"><?php echo htmlspecialchars($producto['name']); ?></h3>
-                            <p class="product-price">$<?php echo number_format($producto['price'], 2); ?></p>
-                        </div>
-                    </a>
-                <?php endforeach; ?>
-            </div>
-        </section>
     </main>
     <?php include 'footer.php'; ?>
     <?php include 'modal.php'; ?>
