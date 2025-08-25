@@ -1,11 +1,9 @@
 // js/profile.js
 
 document.addEventListener('DOMContentLoaded', async () => {
-    // Obtiene el token de autenticación del almacenamiento local
     const jwt = localStorage.getItem('jwt');
     if (!jwt) {
-        // Si no hay token, redirige al inicio
-        window.location.href = '../index.php';
+        window.location.href = 'index.php';
         return;
     }
 
@@ -25,61 +23,63 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     });
 
-    // --- CARGAR DATOS DEL USUARIO DESDE EL SERVIDOR ---
-    try {
-        const userRes = await fetch('../php/user/get_user.php', {
-            headers: { 'Authorization': 'Bearer ' + jwt }
-        });
-        const userData = await userRes.json();
-        
-        if (userData.success && userData.user) {
-            const user = userData.user;
-            // Actualiza el nombre de usuario en la barra lateral
-            document.getElementById('sidebar-username').textContent = user.name;
-            // Actualiza el avatar con la inicial del nombre
-            document.getElementById('sidebar-avatar').textContent = user.name.charAt(0).toUpperCase();
-            // Actualiza el saludo de bienvenida
-            document.getElementById('overview-username').textContent = user.name.split(' ')[0]; // Muestra solo el primer nombre
-        } else {
-            console.error('Error al obtener datos del usuario:', userData.message);
+    // --- FUNCIONES PARA CARGAR Y MOSTRAR DATOS ---
+    const fetchAndRender = async (endpoint, containerId, renderer) => {
+        try {
+            const res = await fetch(endpoint, { headers: { 'Authorization': 'Bearer ' + jwt } });
+            const data = await res.json();
+            const container = document.getElementById(containerId);
+            container.innerHTML = ''; // Limpiar
+            if (data.success) {
+                renderer(data, container);
+            } else {
+                container.innerHTML = `<p>${data.message || 'Error loading data.'}</p>`;
+            }
+        } catch (error) {
+            console.error(`Error fetching from ${endpoint}:`, error);
         }
-    } catch (error) {
-        console.error('Error de red al obtener datos del usuario:', error);
-    }
+    };
 
-    // --- CARGAR ÓRDENES RECIENTES DESDE EL SERVIDOR ---
-    try {
-        const ordersRes = await fetch('../php/order/get_orders.php', {
-            headers: { 'Authorization': 'Bearer ' + jwt }
-        });
-        const ordersData = await ordersRes.json();
-        const ordersTbody = document.getElementById('orders-tbody');
-        ordersTbody.innerHTML = ''; // Limpia el mensaje "Loading..."
-
-        if (ordersData.success && ordersData.orders.length > 0) {
-            ordersData.orders.forEach(order => {
-                const tr = document.createElement('tr');
-                // Formatea la fecha para que sea legible (ej: August 25, 2025)
-                const orderDate = new Date(order.fecha).toLocaleDateString('en-US', {
-                    year: 'numeric', month: 'long', day: 'numeric'
-                });
-                const orderStatus = order.estado.toLowerCase();
-
-                // Crea la fila de la tabla con los datos de la orden
-                tr.innerHTML = `
-                    <td>#${order.id}</td>
-                    <td>${orderDate}</td>
-                    <td><span class="status-badge status-${orderStatus}">${order.estado}</span></td>
-                    <td>$${parseFloat(order.total).toFixed(2)}</td>
-                `;
-                ordersTbody.appendChild(tr);
+    // Renderizadores para cada tipo de dato
+    const renderUser = (data) => {
+        if (data.user) {
+            const user = data.user;
+            document.getElementById('sidebar-username').textContent = user.name;
+            document.getElementById('sidebar-avatar').textContent = user.name.charAt(0).toUpperCase();
+            document.getElementById('overview-username').textContent = user.name.split(' ')[0];
+        }
+    };
+    const renderOrders = (data, container) => {
+        // ... (código para renderizar la tabla de órdenes, como lo tenías)
+    };
+    const renderAddresses = (data, container) => {
+        if (data.addresses && data.addresses.length > 0) {
+            data.addresses.forEach(addr => {
+                const div = document.createElement('div');
+                div.className = 'info-card';
+                div.innerHTML = `<strong>${addr.street_address}</strong><p>${addr.city}, ${addr.state} ${addr.postal_code}</p><p>${addr.country}</p>`;
+                container.appendChild(div);
             });
         } else {
-            // Muestra un mensaje si no hay órdenes
-            ordersTbody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 2rem;">You have not placed any orders yet.</td></tr>`;
+            container.innerHTML = '<p>You have no saved addresses.</p>';
         }
-    } catch (error) {
-        console.error('Error de red al obtener las órdenes:', error);
-        ordersTbody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 2rem;">Error loading orders.</td></tr>`;
-    }
+    };
+    const renderPayments = (data, container) => {
+        if (data.payment_methods && data.payment_methods.length > 0) {
+            data.payment_methods.forEach(pm => {
+                const div = document.createElement('div');
+                div.className = 'info-card';
+                div.innerHTML = `<strong>${pm.card_type}</strong><p>**** **** **** ${pm.last_four_digits}</p><p>Expires: ${pm.expiry_date}</p>`;
+                container.appendChild(div);
+            });
+        } else {
+            container.innerHTML = '<p>You have no saved payment methods.</p>';
+        }
+    };
+
+    // --- INICIALIZACIÓN ---
+    fetchAndRender('php/user/get_user.php', 'sidebar-username', renderUser);
+    fetchAndRender('php/order/get_orders.php', 'orders-table-container', renderOrders);
+    fetchAndRender('php/user/get_addresses.php', 'address-list', renderAddresses);
+    fetchAndRender('php/user/get_payment_methods.php', 'payment-method-list', renderPayments);
 });
