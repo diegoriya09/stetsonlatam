@@ -21,7 +21,7 @@ try {
   $stmt_user->close();
 
   // 2. Obtener las últimas órdenes del usuario
-  $stmt_orders = $conn->prepare("SELECT id, order_date, total, status FROM orders WHERE user_id = ? ORDER BY order_date DESC LIMIT 10");
+  $stmt_orders = $conn->prepare("SELECT id, fecha, total, estado FROM pedidos WHERE user_id = ? ORDER BY fecha DESC LIMIT 5");
   $stmt_orders->bind_param("i", $user_id);
   $stmt_orders->execute();
   $result_orders = $stmt_orders->get_result();
@@ -99,8 +99,8 @@ $conn->close();
                     <?php foreach ($orders as $order): ?>
                       <tr>
                         <td>#<?php echo htmlspecialchars($order['id']); ?></td>
-                        <td><?php echo date("F j, Y", strtotime($order['order_date'])); ?></td>
-                        <td><span class="status-badge status-<?php echo strtolower(htmlspecialchars($order['status'])); ?>"><?php echo htmlspecialchars($order['status']); ?></span></td>
+                        <td><?php echo date("F j, Y", strtotime($order['fecha'])); ?></td>
+                        <td><span class="status-badge status-<?php echo strtolower(htmlspecialchars($order['estado'])); ?>"><?php echo htmlspecialchars($order['estado']); ?></span></td>
                         <td>$<?php echo number_format($order['total'], 2); ?></td>
                       </tr>
                     <?php endforeach; ?>
