@@ -320,9 +320,9 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
                     <form method='POST' action='update_order_status.php'>
                         <input type='hidden' name='order_id' value='{$row['id']}'>
                         <select name='estado'>
-                            <option value='Pendiente' " . ($row['estado'] == 'Pendiente' ? 'selected' : '') . ">Pendiente</option>
-                            <option value='Enviado' " . ($row['estado'] == 'Enviado' ? 'selected' : '') . ">Enviado</option>
-                            <option value='Cancelado' " . ($row['estado'] == 'Cancelado' ? 'selected' : '') . ">Cancelado</option>
+                            <option value='Pending' " . ($row['estado'] == 'Pending' ? 'selected' : '') . ">Pending</option>
+                            <option value='Shipped' " . ($row['estado'] == 'Shipped' ? 'selected' : '') . ">Shipped</option>
+                            <option value='Cancelled' " . ($row['estado'] == 'Cancelled' ? 'selected' : '') . ">Cancelled</option>
                         </select>
                 </td>";
             echo "<td>

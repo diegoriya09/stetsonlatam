@@ -117,7 +117,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     echo json_encode([
         "success" => true,
-        "message" => "¡Pago procesado y pedido creado exitosamente!",
+        "message" => "¡Payment processed and order successfully created!",
         "pedido_id" => $pedido_id
     ]);
     exit;
