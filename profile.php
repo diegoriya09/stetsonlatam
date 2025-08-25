@@ -50,9 +50,8 @@ $conn->close();
 </head>
 
 <body>
+  <?php include "header.php"; ?>
   <div class="page-wrapper">
-    <?php include "header.php"; ?>
-
     <main class="profile-main">
       <div class="profile-container">
         <aside class="profile-sidebar">
@@ -116,9 +115,9 @@ $conn->close();
         </section>
       </div>
     </main>
-
-    <?php include 'footer.php'; ?>
   </div>
+
+  <?php include 'footer.php'; ?>
 
   <?php include 'modal.php'; ?>
   <script src="js/auth.js?v=<?php echo time(); ?>"></script>
