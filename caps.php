@@ -89,6 +89,7 @@ while ($row = $result_rec->fetch_assoc()) {
   $recomendados[] = $row;
 }
 
+$num_productos = count($productos); 
 $conn->close();
 ?>
 
@@ -182,7 +183,7 @@ $conn->close();
               </button>
             </div>
           </div>
-          <div id="productos-container" class="product-grid">
+          <div id="productos-container" class="product-grid <?php if ($num_productos === 1) echo 'single-item-grid'; ?>">
             <?php foreach ($productos as $producto): ?>
               <a href="producto.php?id=<?php echo $producto['id']; ?>" class="product-card producto-item"
                 data-price="<?php echo $producto['price']; ?>">
