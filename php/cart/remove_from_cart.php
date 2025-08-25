@@ -10,12 +10,12 @@ header('Content-Type: application/json');
 // Obtener JWT
 $headers = getallheaders();
 if (!isset($headers['Authorization'])) {
-    echo json_encode(['success' => false, 'message' => 'No autorizado']);
+    echo json_encode(['success' => false, 'message' => 'Unauthorized']);
     exit;
 }
 list($jwt) = sscanf($headers['Authorization'], 'Bearer %s');
 if (!$jwt) {
-    echo json_encode(['success' => false, 'message' => 'Token inválido']);
+    echo json_encode(['success' => false, 'message' => 'Invalid token']);
     exit;
 }
 
@@ -24,7 +24,7 @@ try {
     $decoded = JWT::decode($jwt, new Key($secret_key, 'HS256'));
     $user_id = $decoded->data->id;
 } catch (Exception $e) {
-    echo json_encode(['success' => false, 'message' => 'Token inválido']);
+    echo json_encode(['success' => false, 'message' => 'Invalid token']);
     exit;
 }
 
@@ -34,7 +34,7 @@ $color_id = isset($data['color_id']) ? (int)$data['color_id'] : null;
 $size_id = isset($data['size_id']) ? (int)$data['size_id'] : null;
 
 if (!$producto_id || !$color_id || !$size_id) {
-    echo json_encode(['success' => false, 'message' => 'Datos faltantes']);
+    echo json_encode(['success' => false, 'message' => 'Missing data']);
     exit;
 }
 
@@ -45,12 +45,12 @@ $stmt->bind_param("ii", $cart_item_id, $user_id);
 
 if ($stmt->execute()) {
     if ($stmt->affected_rows > 0) {
-        echo json_encode(['success' => true, 'message' => 'Artículo eliminado']);
+        echo json_encode(['success' => true, 'message' => 'Item deleted']);
     } else {
-        echo json_encode(['success' => false, 'message' => 'El artículo no se encontró o no te pertenece']);
+        echo json_encode(['success' => false, 'message' => 'The item was not found or does not belong to you.']);
     }
 } else {
-    echo json_encode(['success' => false, 'message' => 'Error al eliminar']);
+    echo json_encode(['success' => false, 'message' => 'Error deleting']);
 }
 
 $stmt->close();
