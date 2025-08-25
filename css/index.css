@@ -129,13 +129,14 @@ header {
 }
 .hero-title {
     font-family: 'Lora', serif;
-    color: #3c3737;
+    color: #f1eeea;
     font-size: 3rem;
     font-weight: 900;
 }
 .hero-subtitle {
     font-size: 1.125rem;
     margin-top: 1rem;
+    color: #f1eeea;
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
@@ -143,7 +144,7 @@ header {
 .hero-button {
     display: inline-block;
     margin-top: 2rem;
-    background-color: white;
+    background-color: #f1eeea;
     color: #3c3737;
     padding: 0.75rem 2rem;
     border-radius: 0.5rem;
