@@ -100,6 +100,8 @@ $conn->close();
   <link href="css/index.css?v=<?php echo time(); ?>" rel="stylesheet">
   <link href="css/categoria.css?v=<?php echo time(); ?>" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap"
+    rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
