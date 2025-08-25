@@ -116,7 +116,7 @@ $conn->close();
             <p>Discover our collection of modern and classic caps, perfect for any occasion and style.</p>
           </div>
           <div class="category-image">
-            <img src="img/caps-banner.jpg" alt="Stetson Caps Collection">
+            <img src="img/caps.jpg" alt="Stetson Caps Collection">
           </div>
         </section>
         <section class="product-section">

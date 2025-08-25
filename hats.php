@@ -116,7 +116,7 @@ $conn->close();
             <p>Explore our complete collection of premium hats, crafted with the spirit of the American West.</p>
           </div>
           <div class="category-image">
-            <img src="img/hats-banner.jpg" alt="Stetson Hats Collection">
+            <img src="img/hats.jpg" alt="Stetson Hats Collection">
           </div>
         </section>
         <section class="product-section">
