@@ -31,7 +31,7 @@
                         class="bg-cover bg-center flex flex-col justify-end overflow-hidden bg-white @[480px]:rounded-lg min-h-80"
                         style='background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0) 25%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuAvLgkprb9dTyGQma3k3PTcIwodh8WN8uGLl4kWTKaddSkv6NT5zUTitvtRo8oFC5faE99l_ODUn6WfaGEXCvmvnF2BAFD-7n2LL9rgc5WmpAY2TYJn0P9OdpvoQ0ILJdg_uf5mX0y2_FudphUj4lnv8XqDIZz5nre2wgdwp8j1ULAGhE6qjoX2VnYQ9zkZHtUWHo9dsLLGDD44BM083WLIn_kYWhSU4So_Zr2O84vymOSP7PJN5oI2xmcY4QofhX-ehgEjbdEEEsMv");'>
                         <div class="flex p-4">
-                           <p class="text-[#f1eeea] tracking-light text-[28px] font-bold leading-tight">Our Legacy</p>
+                           <p class="text-[#f1eeea] tracking-light text-[28px] font-bold leading-tight">Nuestro legado</p>
                         </div>
                      </div>
                   </div>
@@ -45,7 +45,7 @@
                         class="bg-cover bg-center flex flex-col justify-end overflow-hidden bg-white @[480px]:rounded-lg min-h-80"
                         style='background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0) 25%), url("img/aboutUs.webp");'>
                         <div class="flex p-4">
-                           <p class="text-[#f1eeea] tracking-light text-[28px] font-bold leading-tight">Our Mission</p>
+                           <p class="text-[#f1eeea] tracking-light text-[28px] font-bold leading-tight">Nuestra misión</p>
                         </div>
                      </div>
                   </div>
@@ -59,7 +59,7 @@
                         class="bg-cover bg-center flex flex-col justify-end overflow-hidden bg-white @[480px]:rounded-lg min-h-80"
                         style='background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0) 25%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuBcVIzDl0dV8-vJLf1TD2m-FAtYlNXYpRbOyKeiaINLzcPXJWBx63yC5ApdqsXrX9V_Zzc-e5VjYdD-LrG8d2IuQ1HFBDRhO2w5QILiRuqDuGEW_I1mEHXnnd0FI-4_c__Y7zPQBdJMDu7AXaeStamvYLqTsqPUTBd4CzyZXm8SkthcwGVGzNzYFtNgHMFySW-e0btBxiu1PH4wTGn9316Q4EBkyvBppoaGMikWHYxm24dITRZxJ1ODouEPs48jArBlixK3kDHb7syC");'>
                         <div class="flex p-4">
-                           <p class="text-[#f1eeea] tracking-light text-[28px] font-bold leading-tight">Our Values</p>
+                           <p class="text-[#f1eeea] tracking-light text-[28px] font-bold leading-tight">Nuestros valores</p>
                         </div>
                      </div>
                   </div>
