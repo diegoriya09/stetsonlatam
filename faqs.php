@@ -81,7 +81,7 @@
                      <p class="text-[#3c3737] text-sm font-normal leading-normal pb-2"></p>
                   </details>
                </div>
-               <h2 class="text-[#151514] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Envíos</h2>
+               <h2 class="text-[#3c3737] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Envíos</h2>
                <div class="flex flex-col p-4">
                   <details class="flex flex-col border-t border-t-[#e2e1df] py-2 group">
                      <summary class="flex cursor-pointer items-center justify-between gap-6 py-2">
