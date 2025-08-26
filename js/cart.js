@@ -2,18 +2,15 @@
 document.addEventListener("DOMContentLoaded", () => {
   const jwt = localStorage.getItem("jwt");
 
-  // Si estamos en la página del carrito, cargamos los datos.
   if (document.getElementById('cart-items-container')) {
     if (jwt) {
       loadCart();
     } else {
-      // Si no hay JWT, muestra el carrito como vacío.
       renderCart([]);
     }
   }
 });
 
-// Función global para que producto.php pueda llamarla
 function addToCart(productData) {
   const jwt = localStorage.getItem("jwt");
   if (!jwt) {
@@ -22,6 +19,7 @@ function addToCart(productData) {
     return;
   }
 
+  // RUTA CORREGIDA
   fetch('php/cart/add_to_cart.php', {
     method: 'POST',
     headers: {
@@ -45,13 +43,13 @@ function addToCart(productData) {
     });
 }
 
-// Carga los datos del carrito desde el backend
 async function loadCart() {
   const jwt = localStorage.getItem("jwt");
   const container = document.getElementById('cart-items-container');
-  if (!container) return; // Salir si no estamos en la página del carrito
+  if (!container) return;
 
   try {
+    // RUTA CORREGIDA
     const res = await fetch('php/cart/get_cart.php', { headers: { 'Authorization': 'Bearer ' + jwt } });
     const data = await res.json();
     if (data.success) {
@@ -109,7 +107,7 @@ function renderCart(items) {
 // Envía datos (POST) a la API del carrito
 async function postToCartAPI(endpoint, body) {
   const jwt = localStorage.getItem("jwt");
-  if (!jwt) return;
+  if (!jwt) return { success: false, message: 'Not logged in' };
 
   try {
     const res = await fetch(endpoint, {
@@ -117,29 +115,60 @@ async function postToCartAPI(endpoint, body) {
       headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + jwt },
       body: JSON.stringify(body)
     });
-    return await res.json();
+    const contentType = res.headers.get("content-type");
+    if (contentType && contentType.indexOf("application/json") !== -1) {
+      return await res.json();
+    } else {
+      const textResponse = await res.text();
+      throw new Error(`Server returned non-JSON response: ${textResponse}`);
+    }
   } catch (error) {
     console.error(`Error al publicar en ${endpoint}:`, error);
   }
 }
 
-// Maneja los clics para actualizar o eliminar
 document.getElementById('cart-items-container')?.addEventListener('click', async e => {
-  const target = e.target.closest('.qty-btn, .item-remove');
-  if (!target) return;
+  const jwt = localStorage.getItem("jwt");
+  if (!jwt) return; // No hacer nada si no hay sesión
 
-  const cart_item_id = target.dataset.id;
+  // --- LÓGICA PARA BOTONES DE CANTIDAD (+ y -) ---
+  if (e.target.matches('.qty-btn')) {
+    const cart_item_id = e.target.dataset.id;
+    const currentQty = parseInt(e.target.parentElement.querySelector('input').value);
+    let newQty;
 
-  if (target.matches('.qty-btn')) {
-    const cantidad = parseInt(target.dataset.qty);
-    if (cantidad > 0) {
-      await postToCartAPI('php/cart/update_cart.php', { cart_item_id, cantidad });
+    if (e.target.textContent === '+') {
+      newQty = currentQty + 1;
     } else {
-      await postToCartAPI('php/cart/remove_from_cart.php', { cart_item_id });
+      newQty = currentQty - 1;
     }
-  } else if (target.matches('.item-remove')) {
-    await postToCartAPI('php/cart/remove_from_cart.php', { cart_item_id });
+
+    if (newQty < 1) { // No permitir que baje de 1
+      return;
+    }
+
+    await postToCartAPI('php/cart/update_cart.php', { cart_item_id: cart_item_id, cantidad: newQty });
+    loadCart(); // Recarga el carrito para mostrar el cambio
   }
 
-  loadCart(); // Recarga el carrito después de cualquier acción
+  // --- LÓGICA PARA BOTÓN DE ELIMINAR ---
+  if (e.target.closest('.item-remove')) {
+    const cart_item_id = e.target.closest('.item-remove').dataset.id;
+
+    // Opcional: Alerta de confirmación
+    Swal.fire({
+      title: 'Remove item?',
+      text: "Are you sure you want to remove this item from your cart?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3f1e1f',
+      cancelButtonColor: '#6b7280',
+      confirmButtonText: 'Yes, remove it!'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        await postToCartAPI('php/cart/remove_from_cart.php', { cart_item_id: cart_item_id });
+        loadCart(); // Recarga el carrito
+      }
+    });
+  }
 });

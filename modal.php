@@ -1,5 +1,6 @@
 <?php
-if (session_status() !== PHP_SESSION_ACTIVE) session_start();
+if (session_status() !== PHP_SESSION_ACTIVE)
+    session_start();
 if (empty($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
@@ -8,22 +9,20 @@ if (empty($_SESSION['csrf_token'])) {
 
 <head>
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
-    <link
-        rel="stylesheet"
-        as="style"
-        onload="this.rel='stylesheet'"
+    <link rel="stylesheet" as="style" onload="this.rel='stylesheet'"
         href="https://fonts.googleapis.com/css2?display=swap&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900&amp;family=Work+Sans%3Awght%40400%3B500%3B700%3B900" />
 
     <title>Iniciar sesión / Registrarse</title>
     <link rel="icon" href="img/logo.webp" type="image/x-icon" loading="lazy">
     <link href="css/index.css?v=<?php echo time(); ?>" rel="stylesheet">
-    
+
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 </head>
 
 
 
-<div id="user-modal" style="display:none; position:fixed; z-index:1050; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.35);">
+<div id="user-modal"
+    style="display:none; position:fixed; z-index:1050; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.35);">
     <div class="flex items-center justify-center min-h-screen">
         <div class="relative w-full max-w-md mx-auto bg-white rounded-2xl shadow-2xl p-8 animate-fade-in">
             <button type="button" class="close absolute top-4 right-4 text-3xl text-[#b0a99f] hover:text-[#e68019] transition-colors" style="background:none;border:none;cursor:pointer;z-index:10001;">&times;</button>
