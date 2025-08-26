@@ -68,7 +68,7 @@ if (!empty($categorias_flat)) {
     <div class="flex items-center gap-9">
 
       <div class="nav-item">
-        <a href="hats.php" class="text-[#3c3737] text-sm font-bold uppercase leading-normal">Hats</a>
+        <a href="hats.php" class="text-[#3c3737] text-sm font-bold uppercase leading-normal">Sombreros</a>
         <?php if (!empty($hat_collections)): ?>
           <div class="mega-menu">
             <div class="mega-menu-content">
@@ -93,7 +93,7 @@ if (!empty($categorias_flat)) {
       </div>
 
       <div class="nav-item">
-        <a href="caps.php" class="text-[#3c3737] text-sm font-bold uppercase leading-normal">Caps</a>
+        <a href="caps.php" class="text-[#3c3737] text-sm font-bold uppercase leading-normal">Cachuchas</a>
         <?php if (!empty($cap_collections)): ?>
           <div class="mega-menu">
             <div class="mega-menu-content">
@@ -167,11 +167,11 @@ if (!empty($categorias_flat)) {
             const data = await res.json();
 
             if (!data.productos.length && !data.categorias.length) {
-              resultsBox.innerHTML = "<p class='p-2 text-gray-500'>No results found</p>";
+              resultsBox.innerHTML = "<p class='p-2 text-gray-500'>No se han encontrado resultados.</p>";
             } else {
               let html = "";
               if (data.productos.length) {
-                html += "<h4 class='px-2 py-1 font-bold text-sm text-gray-600'>Products</h4>";
+                html += "<h4 class='px-2 py-1 font-bold text-sm text-gray-600'>Productos</h4>";
                 data.productos.forEach(p => {
                   html += `
                                 <a href="${p.url}" class="flex items-center gap-2 p-2 hover:bg-gray-100">

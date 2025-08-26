@@ -10,7 +10,7 @@ if (!isset($_SESSION['user_id'])) {
 <html lang="es">
 
 <head>
-  <title>Profile | Stetson LATAM</title>
+  <title>Perfil | Stetson LATAM</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="img/logo.webp" type="image/x-icon">
@@ -29,66 +29,66 @@ if (!isset($_SESSION['user_id'])) {
       <aside class="profile-sidebar">
         <div class="sidebar-user">
           <div id="sidebar-avatar" class="sidebar-avatar"></div>
-          <h2 id="sidebar-username" class="sidebar-username">Loading...</h2>
+          <h2 id="sidebar-username" class="sidebar-username">Cargando...</h2>
         </div>
         <nav class="sidebar-nav">
-          <a href="#" class="nav-link active" data-target="overview-panel"><span>Overview</span></a>
-          <a href="#" class="nav-link" data-target="orders-panel"><span>Orders</span></a>
-          <a href="#" class="nav-link" data-target="addresses-panel"><span>Addresses</span></a>
-          <a href="#" class="nav-link" data-target="payment-panel"><span>Payment Methods</span></a>
-          <a href="#" class="nav-link" data-target="settings-panel"><span>Settings</span></a>
+          <a href="#" class="nav-link active" data-target="overview-panel"><span>Resumen</span></a>
+          <a href="#" class="nav-link" data-target="orders-panel"><span>Pedidos</span></a>
+          <a href="#" class="nav-link" data-target="addresses-panel"><span>Direcciones</span></a>
+          <a href="#" class="nav-link" data-target="payment-panel"><span>Métodos de Pago</span></a>
+          <a href="#" class="nav-link" data-target="settings-panel"><span>Configuración</span></a>
         </nav>
       </aside>
 
       <section id="profile-content" class="profile-content">
         <div id="overview-panel" class="content-panel active">
-          <h1 class="content-title">Overview</h1>
-          <p>Welcome back, <span id="overview-username">user</span>. From here you can manage your orders, addresses, and account details.</p>
+          <h1 class="content-title">Resumen</h1>
+          <p>Bienvenido de nuevo, <span id="overview-username">usuario</span>. Desde aquí puedes gestionar tus pedidos, direcciones y detalles de la cuenta.</p>
         </div>
 
         <div id="orders-panel" class="content-panel">
-          <h1 class="content-title">Recent Orders</h1>
+          <h1 class="content-title">Pedidos Recientes</h1>
           <div id="orders-table-container" class="orders-table-container">
             <table>
               <thead>
                 <tr>
-                  <th>Order</th>
-                  <th>Date</th>
-                  <th>Status</th>
+                  <th>Pedido</th>
+                  <th>Fecha</th>
+                  <th>Estado</th>
                   <th>Total</th>
                 </tr>
               </thead>
               <tbody id="orders-tbody">
                 <tr>
-                  <td colspan="4" style="text-align: center; padding: 2rem;">Loading orders...</td>
+                  <td colspan="4" style="text-align: center; padding: 2rem;">Cargando pedidos...</td>
                 </tr>
               </tbody>
             </table>
           </div>
           <div class="mt-6 text-center">
-            <a href="myorders.php" class="view-all-btn">View All Orders</a>
+            <a href="myorders.php" class="view-all-btn">Ver Todos los Pedidos</a>
           </div>
         </div>
 
         <div id="addresses-panel" class="content-panel">
-          <h1 class="content-title">Addresses</h1>
+          <h1 class="content-title">Direcciones</h1>
           <div id="address-list" class="content-grid">
-            <p>Loading addresses...</p>
+            <p>Cargando direcciones...</p>
           </div>
-          <button class="add-new-btn">Add New Address</button>
+          <button class="add-new-btn">Agregar Nueva Dirección</button>
         </div>
 
         <div id="payment-panel" class="content-panel">
-          <h1 class="content-title">Payment Methods</h1>
+          <h1 class="content-title">Métodos de Pago</h1>
           <div id="payment-method-list" class="content-grid">
-            <p>Loading payment methods...</p>
+            <p>Cargando métodos de pago...</p>
           </div>
-          <button class="add-new-btn">Add New Payment Method</button>
+          <button class="add-new-btn">Agregar Nuevo Método de Pago</button>
         </div>
 
         <div id="settings-panel" class="content-panel">
-          <h1 class="content-title">Settings</h1>
-          <p>Manage your account settings here.</p>
+          <h1 class="content-title">Configuración</h1>
+          <p>Gestiona la configuración de tu cuenta aquí.</p>
         </div>
       </section>
     </div>
@@ -100,31 +100,31 @@ if (!isset($_SESSION['user_id'])) {
     <div class="modal-backdrop"></div>
     <div class="modal-content">
       <div class="modal-header">
-        <h2>New Address</h2>
+        <h2>Nueva Dirección</h2>
         <button class="modal-close-btn">&times;</button>
       </div>
       <form id="add-address-form">
         <div class="form-group">
-          <label for="street_address">Street Address</label>
+          <label for="street_address">Dirección</label>
           <input type="text" id="street_address" name="street_address" required>
         </div>
         <div class="form-group">
-          <label for="city">City</label>
+          <label for="city">Ciudad</label>
           <input type="text" id="city" name="city" required>
         </div>
         <div class="form-group">
-          <label for="state">State / Province</label>
+          <label for="state">Estado / Provincia</label>
           <input type="text" id="state" name="state">
         </div>
         <div class="form-group">
-          <label for="postal_code">Postal Code</label>
+          <label for="postal_code">Código Postal</label>
           <input type="text" id="postal_code" name="postal_code" required>
         </div>
         <div class="form-group">
-          <label for="country">Country</label>
+          <label for="country">País</label>
           <input type="text" id="country" name="country" required>
         </div>
-        <button type="submit" class="form-submit-btn">Save Address</button>
+        <button type="submit" class="form-submit-btn">Guardar Dirección</button>
       </form>
     </div>
   </div>
@@ -133,27 +133,27 @@ if (!isset($_SESSION['user_id'])) {
     <div class="modal-backdrop"></div>
     <div class="modal-content">
       <div class="modal-header">
-        <h2>New Payment Method</h2>
+        <h2>Nuevo Método de Pago</h2>
         <button class="modal-close-btn">&times;</button>
       </div>
       <form id="add-payment-form">
         <p class="form-warning">ADVERTENCIA: Esto es una simulación. Nunca ingreses datos de tarjeta reales.</p>
         <div class="form-group">
-          <label for="card_type">Card Type</label>
+          <label for="card_type">Tipo de Tarjeta</label>
           <select id="card_type" name="card_type">
             <option value="Visa">Visa</option>
             <option value="MasterCard">MasterCard</option>
           </select>
         </div>
         <div class="form-group">
-          <label for="card_number">Card Number</label>
+          <label for="card_number">Número de Tarjeta</label>
           <input type="text" id="card_number" placeholder="xxxx xxxx xxxx 1234" maxlength="19" required>
         </div>
         <div class="form-group">
-          <label for="expiry_date">Expiry Date</label>
+          <label for="expiry_date">Fecha de Expiración</label>
           <input type="text" id="expiry_date" name="expiry_date" placeholder="MM/YY" required>
         </div>
-        <button type="submit" class="form-submit-btn">Save Payment Method</button>
+        <button type="submit" class="form-submit-btn">Guardar Método de Pago</button>
       </form>
     </div>
   </div>

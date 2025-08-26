@@ -3,7 +3,7 @@
 
 <head>
    <meta charset="UTF-8">
-   <title>My Orders</title>
+   <title>Mis pedidos</title>
    <link rel="icon" href="img/logo.webp" type="image/x-icon" loading="lazy">
    <link href="css/index.css?v=<?php echo time(); ?>" rel="stylesheet">
 
@@ -18,25 +18,25 @@
          <div class="px-40 flex flex-1 justify-center py-5">
             <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
                <div class="flex flex-wrap gap-2 p-4">
-                  <a class="text-[#887563] text-base font-medium leading-normal" href="profile.php">Profile</a>
-                  <span class="text-[#887563] text-base font-medium leading-normal">/</span>
-                  <span class="text-[#181411] text-base font-medium leading-normal">My Orders</span>
+                  <a class="text-[#887563] text-base font-medium leading-normal" href="profile.php">Perfil</a>
+                  <span class="text-[#3c3737] text-base font-medium leading-normal">/</span>
+                  <span class="text-[#3c3737] text-base font-medium leading-normal">Mis pedidos</span>
                </div>
                <div class="flex flex-wrap justify-between gap-3 p-4">
-                  <p class="text-[#181411] tracking-light text-[32px] font-bold leading-tight min-w-72">My Orders</p>
+                  <p class="text-[#3c3737] tracking-light text-[32px] font-bold leading-tight min-w-72">Mis pedidos</p>
                </div>
                <div class="px-4 py-3 @container">
                   <div class="flex overflow-hidden rounded-lg border border-[#e5e0dc] bg-white">
                      <table class="flex-1">
                         <thead>
                            <tr class="bg-white">
-                              <th class="px-4 py-3 text-left text-[#181411] w-14 text-sm font-medium leading-normal">Order
+                              <th class="px-4 py-3 text-left text-[#3c3737] w-14 text-sm font-medium leading-normal">Pedido
                               </th>
-                              <th class="px-4 py-3 text-left text-[#181411] w-[400px] text-sm font-medium leading-normal">Date
+                              <th class="px-4 py-3 text-left text-[#3c3737] w-[400px] text-sm font-medium leading-normal">Fecha
                               </th>
-                              <th class="px-4 py-3 text-left text-[#181411] w-[400px] text-sm font-medium leading-normal">Status
+                              <th class="px-4 py-3 text-left text-[#3c3737] w-[400px] text-sm font-medium leading-normal">Estado
                               </th>
-                              <th class="px-4 py-3 text-left text-[#181411] w-[400px] text-sm font-medium leading-normal">Total
+                              <th class="px-4 py-3 text-left text-[#3c3737] w-[400px] text-sm font-medium leading-normal">Total
                               </th>
                            </tr>
                         </thead>

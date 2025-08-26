@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $category = trim(strip_tags($_POST['category'] ?? ''));
 
     if (!$id || !$name || !$description || !$price || !$category) {
-        die("All fields are required.");
+        die("Todos los campos son obligatorios.");
     }
 
     // Procesar imagen si se subió
@@ -42,21 +42,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header("Location: admin.php?msg=Producto+editado");
         exit;
     } else {
-        die("Error while editing product: " . $stmt->error);
+        die("Error al editar el producto: " . $stmt->error);
     }
 }
 
 // Si llega por GET, mostrar el formulario con los datos actuales
 $id = intval($_GET['id'] ?? 0);
 if (!$id) {
-    die("ID invalid.");
+    die("ID invalido.");
 }
 $stmt = $conn->prepare("SELECT name, description, price, category, image FROM productos WHERE id=?");
 $stmt->bind_param("i", $id);
 $stmt->execute();
 $stmt->bind_result($name, $description, $price, $category, $image);
 if (!$stmt->fetch()) {
-    die("Product not found.");
+    die("Producto no encontrado.");
 }
 $stmt->close();
 ?>
@@ -124,24 +124,24 @@ body {
 }
 </style>
 <div class="edit-container">
-    <h2>Edit Product</h2>
+    <h2>Editar Producto</h2>
     <form action="edit_product.php" method="POST" enctype="multipart/form-data">
         <input type="hidden" name="id" value="<?php echo $id; ?>">
-        <label>Name: <input type="text" name="name" value="<?php echo htmlspecialchars($name); ?>" required></label><br>
-        <label>Description: <input type="text" name="description" value="<?php echo htmlspecialchars($description); ?>" required></label><br>
-        <label>Price: <input type="number" name="price" value="<?php echo $price; ?>" required></label><br>
-        <label>Category:
+        <label>Nombre: <input type="text" name="name" value="<?php echo htmlspecialchars($name); ?>" required></label><br>
+        <label>Descripción: <input type="text" name="description" value="<?php echo htmlspecialchars($description); ?>" required></label><br>
+        <label>Precio: <input type="number" name="price" value="<?php echo $price; ?>" required></label><br>
+        <label>Categoría:
             <select name="category" required>
-                <option value="">Select</option>
-                <option value="hats" <?php if($category=='hats') echo 'selected'; ?>>hats</option>
+                <option value="">Seleccionar</option>
+                <option value="hats" <?php if($category=='hats') echo 'selected'; ?>>Sombreros</option>
             </select>
         </label><br>
-        <label>Current image:
+        <label>Imagen actual:
             <?php if ($image) { ?>
                 <img src="../<?php echo $image; ?>" style="max-width:60px;max-height:60px;">
             <?php } else { echo "-"; } ?>
         </label><br>
-        <label>New image: <input type="file" name="image"></label><br>
-        <button type="submit">Save changes</button>
+        <label>Nueva imagen: <input type="file" name="image"></label><br>
+        <button type="submit">Guardar cambios</button>
     </form>
 </div>

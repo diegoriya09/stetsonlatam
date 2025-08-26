@@ -18,7 +18,7 @@ function addToCart(productData) {
   const jwt = localStorage.getItem("jwt");
   if (!jwt) {
     // Podrías redirigir al login o mostrar un mensaje
-    Swal.fire('Error', 'You must be logged in to add items to the cart.', 'error');
+    Swal.fire('Error', 'Debes iniciar sesión para añadir artículos al carrito.', 'error');
     return;
   }
 
@@ -38,7 +38,7 @@ function addToCart(productData) {
     .then(res => res.json())
     .then(data => {
       if (data.success) {
-        Swal.fire({ icon: 'success', title: 'Added to cart!', showConfirmButton: false, timer: 1500 });
+        Swal.fire({ icon: 'success', title: '¡Añadido al carrito!', showConfirmButton: false, timer: 1500 });
       } else {
         Swal.fire({ icon: 'error', title: 'Error', text: data.message });
       }
@@ -57,11 +57,11 @@ async function loadCart() {
     if (data.success) {
       renderCart(data.cart);
     } else {
-      container.innerHTML = `<p class="empty-cart">${data.message || 'Could not load cart.'}</p>`;
+      container.innerHTML = `<p class="empty-cart">${data.message || 'No se pudo cargar el carrito.'}</p>`;
     }
   } catch (error) {
-    console.error('Error loading cart:', error);
-    container.innerHTML = `<p class="empty-cart">Error loading cart.</p>`;
+    console.error('Error al cargar el carrito:', error);
+    container.innerHTML = `<p class="empty-cart">Error al cargar el carrito.</p>`;
   }
 }
 
@@ -75,7 +75,7 @@ function renderCart(items) {
   let subtotal = 0;
 
   if (!items || items.length === 0) {
-    container.innerHTML = '<p class="empty-cart">Your cart is empty.</p>';
+    container.innerHTML = '<p class="empty-cart">Tu carrito está vacío.</p>';
   } else {
     items.forEach(item => {
       const itemTotal = item.price * item.quantity;
@@ -119,7 +119,7 @@ async function postToCartAPI(endpoint, body) {
     });
     return await res.json();
   } catch (error) {
-    console.error(`Error posting to ${endpoint}:`, error);
+    console.error(`Error al publicar en ${endpoint}:`, error);
   }
 }
 

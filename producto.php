@@ -107,7 +107,7 @@ $conn->close();
 
             <?php if (!empty($sizes)): ?>
               <div class="options-group">
-                <h3 class="options-label">Size</h3>
+                <h3 class="options-label">Talla</h3>
                 <div class="options-selector">
                   <?php foreach ($sizes as $size): ?>
                     <button class="size-btn" data-size-id="<?php echo $size['id']; ?>"><?php echo $size['name']; ?></button>
@@ -117,7 +117,7 @@ $conn->close();
             <?php endif; ?>
 
             <div class="options-group">
-              <h3 class="options-label">Quantity</h3>
+              <h3 class="options-label">Cantidad</h3>
               <div class="quantity-selector">
                 <button type="button" class="qty-btn minus">-</button>
                 <input type="text" id="cantidad" value="1" readonly>
@@ -125,7 +125,7 @@ $conn->close();
               </div>
             </div>
 
-            <button class="add-to-cart-btn">Add to Cart</button>
+            <button class="add-to-cart-btn">Agregar al carrito</button>
 
             <div class="description-group">
               <div class="description-content">
@@ -181,11 +181,11 @@ $conn->close();
       if (addToCartBtn) {
         addToCartBtn.addEventListener('click', function () {
           if (colorBtns.length > 0 && !selectedColorId) {
-            Swal.fire({ icon: 'warning', text: 'Please select a color.' });
+            Swal.fire({ icon: 'warning', text: 'Seleccione un color.' });
             return;
           }
           if (sizeBtns.length > 0 && !selectedSizeId) {
-            Swal.fire({ icon: 'warning', text: 'Please select a size.' });
+            Swal.fire({ icon: 'warning', text: 'Seleccione una talla.' });
             return;
           }
 

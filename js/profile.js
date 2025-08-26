@@ -47,12 +47,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                     localStorage.removeItem('jwt');
                     window.location.href = 'index.php';
                 }
-                throw new Error(`Server responded with status: ${res.status}`);
+                throw new Error(`El servidor respondió con el estado: ${res.status}`);
             }
             return await res.json();
         } catch (error) {
-            console.error(`Network error fetching from ${endpoint}:`, error);
-            return { success: false, message: 'Network error' };
+            console.error(`Error de red al obtener ${endpoint}:`, error);
+            return { success: false, message: 'Error de red' };
         }
     };
 
@@ -65,8 +65,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
             return await res.json();
         } catch (error) {
-            console.error(`Network error posting to ${endpoint}:`, error);
-            return { success: false, message: 'Network error' };
+            console.error(`Error de red al publicar en ${endpoint}:`, error);
+            return { success: false, message: 'Error de red' };
         }
     };
 
@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 ordersTbody.appendChild(tr);
             });
         } else {
-            ordersTbody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 2rem;">You have not placed any orders yet.</td></tr>`;
+            ordersTbody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 2rem;">Aún no ha realizado ningún pedido.</td></tr>`;
         }
     };
 
@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 container.appendChild(div);
             });
         } else {
-            container.innerHTML = '<p>You have no saved addresses.</p>';
+            container.innerHTML = '<p>No tienes direcciones guardadas.</p>';
         }
     };
 
@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 container.appendChild(div);
             });
         } else {
-            container.innerHTML = '<p>You have no saved payment methods.</p>';
+            container.innerHTML = '<p>No tienes métodos de pago guardados.</p>';
         }
     };
 
@@ -142,7 +142,17 @@ document.addEventListener('DOMContentLoaded', async () => {
         } else { Swal.fire('Error', result.message, 'error'); }
     });
 
-    document.getElementById('add-payment-form')?.addEventListener('submit', async function (e) { /* ... lógica para añadir pago ... */ });
+    document.getElementById('add-payment-form')?.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        const data = Object.fromEntries(new FormData(this).entries());
+        const result = await postData('../php/user/add_payment_method.php', data);
+        if (result.success) {
+            Swal.fire('¡Éxito!', result.message, 'success');
+            closeModal(paymentModal);
+            this.reset();
+            loadPaymentsData();
+        } else { Swal.fire('Error', result.message, 'error'); }
+    });
 
     document.getElementById('profile-content')?.addEventListener('click', async function (e) {
         const target = e.target;

@@ -46,9 +46,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const loginFormSection = document.getElementById('login-form');
         const registerFormSection = document.getElementById('register-form');
         if (loginTab && registerTab && loginFormSection && registerFormSection) {
-          registerTab.classList.add('border-[#181411]', 'text-[#181411]');
+          registerTab.classList.add('border-[#3c3737]', 'text-[#3c3737]');
           registerTab.classList.remove('border-transparent', 'text-[#7a7671]');
-          loginTab.classList.remove('border-[#181411]', 'text-[#181411]');
+          loginTab.classList.remove('border-[#3c3737]', 'text-[#3c3737]');
           loginTab.classList.add('border-transparent', 'text-[#7a7671]');
           loginFormSection.style.display = 'none';
           registerFormSection.style.display = 'block';

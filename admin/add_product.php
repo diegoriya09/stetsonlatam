@@ -15,7 +15,7 @@ $categoria = trim(strip_tags($_POST['categoria'] ?? ''));
 
 // Validar campos obligatorios
 if (!$nombre || !$descripcion || !$precio || !$categoria) {
-    die("All fields are required. Please fill in all fields.");
+    die("Todos los campos son obligatorios. Rellene todos los campos.");
 }
 
 // Procesar imagen si se subió
@@ -36,6 +36,6 @@ if ($stmt->execute()) {
     header("Location: admin.php?msg=added+product");
     exit;
 } else {
-    die("Error adding product: " . $stmt->error);
+    die("Error al añadir el producto: " . $stmt->error);
 }
 ?>

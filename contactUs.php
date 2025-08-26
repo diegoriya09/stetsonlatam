@@ -8,7 +8,7 @@
       onload="this.rel='stylesheet'"
       href="https://fonts.googleapis.com/css2?display=swap&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900&amp;family=Work+Sans%3Awght%40400%3B500%3B700%3B900" />
 
-   <title>Contact Us | Stetson LATAM</title>
+   <title>Contáctenos | Stetson LATAM</title>
    <link rel="icon" href="img/logo.webp" type="image/x-icon" loading="lazy">
    <link href="css/index.css?v=<?php echo time(); ?>" rel="stylesheet">
 
@@ -24,54 +24,54 @@
             <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
                <div class="flex flex-wrap justify-between gap-3 p-4">
                   <div class="flex min-w-72 flex-col gap-3">
-                     <p class="text-[#151514] tracking-light text-[32px] font-bold leading-tight">Contact Us</p>
-                     <p class="text-[#7a7671] text-sm font-normal leading-normal">We're here to help. Reach out to us with any questions or concerns.</p>
+                     <p class="text-[#3c3737] tracking-light text-[32px] font-bold leading-tight">Contáctenos</p>
+                     <p class="text-[#3c3737] text-sm font-normal leading-normal">Estamos aquí para ayudar. Contáctenos si tiene alguna pregunta o inquietud.</p>
                   </div>
                </div>
                <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
                   <label class="flex flex-col min-w-40 flex-1">
-                     <p class="text-[#151514] text-base font-medium leading-normal pb-2">Name</p>
+                     <p class="text-[#3c3737] text-base font-medium leading-normal pb-2">Nombre</p>
                      <input
-                        placeholder="Enter your name"
-                        class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#151514] focus:outline-0 focus:ring-0 border border-[#e2e1df] bg-white focus:border-[#e2e1df] h-14 placeholder:text-[#7a7671] p-[15px] text-base font-normal leading-normal"
+                        placeholder="Ingresa tu nombre"
+                        class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#3c3737] focus:outline-0 focus:ring-0 border border-[#3f1e1f] bg-white focus:border-[#3f1e1f] h-14 placeholder:text-[#3c3737] p-[15px] text-base font-normal leading-normal"
                         value="" />
                   </label>
                </div>
                <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
                   <label class="flex flex-col min-w-40 flex-1">
-                     <p class="text-[#151514] text-base font-medium leading-normal pb-2">Email</p>
+                     <p class="text-[#3c3737] text-base font-medium leading-normal pb-2">Email</p>
                      <input
-                        placeholder="Enter your email"
-                        class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#151514] focus:outline-0 focus:ring-0 border border-[#e2e1df] bg-white focus:border-[#e2e1df] h-14 placeholder:text-[#7a7671] p-[15px] text-base font-normal leading-normal"
+                        placeholder="Ingresa tu email"
+                        class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#3c3737] focus:outline-0 focus:ring-0 border border-[#3f1e1f] bg-white focus:border-[#3f1e1f] h-14 placeholder:text-[#3c3737] p-[15px] text-base font-normal leading-normal"
                         value="" />
                   </label>
                </div>
                <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
                   <label class="flex flex-col min-w-40 flex-1">
-                     <p class="text-[#151514] text-base font-medium leading-normal pb-2">Subject</p>
+                     <p class="text-[#3c3737] text-base font-medium leading-normal pb-2">Asunto</p>
                      <input
-                        placeholder="Enter the subject"
-                        class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#151514] focus:outline-0 focus:ring-0 border border-[#e2e1df] bg-white focus:border-[#e2e1df] h-14 placeholder:text-[#7a7671] p-[15px] text-base font-normal leading-normal"
+                        placeholder="Ingresa el asunto"
+                        class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#3c3737] focus:outline-0 focus:ring-0 border border-[#3f1e1f] bg-white focus:border-[#3f1e1f] h-14 placeholder:text-[#3c3737] p-[15px] text-base font-normal leading-normal"
                         value="" />
                   </label>
                </div>
                <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
                   <label class="flex flex-col min-w-40 flex-1">
-                     <p class="text-[#151514] text-base font-medium leading-normal pb-2">Message</p>
+                     <p class="text-[#3c3737] text-base font-medium leading-normal pb-2">Mensaje</p>
                      <textarea
-                        placeholder="Enter your message"
-                        class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#151514] focus:outline-0 focus:ring-0 border border-[#e2e1df] bg-white focus:border-[#e2e1df] min-h-36 placeholder:text-[#7a7671] p-[15px] text-base font-normal leading-normal"></textarea>
+                        placeholder="Ingresa tu mensaje"
+                        class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#3c3737] focus:outline-0 focus:ring-0 border border-[#3f1e1f] bg-white focus:border-[#3f1e1f] min-h-36 placeholder:text-[#3c3737] p-[15px] text-base font-normal leading-normal"></textarea>
                   </label>
                </div>
                <div class="flex px-4 py-3 justify-start">
                   <button
-                     class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#f1eeea] text-[#151514] text-sm font-bold leading-normal tracking-[0.015em]">
-                     <span class="truncate">Submit</span>
+                     class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#f1eeea] text-[#3c3737] text-sm font-bold leading-normal tracking-[0.015em]">
+                     <span class="truncate">Enviar</span>
                   </button>
                </div>
-               <h3 class="text-[#151514] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">Additional Contact Information</h3>
-               <p class="text-[#151514] text-base font-normal leading-normal pb-3 pt-1 px-4">Phone: +1 (555) 123-4567</p>
-               <p class="text-[#151514] text-base font-normal leading-normal pb-3 pt-1 px-4">Address: 123 Main Street, Anytown, USA</p>
+               <h3 class="text-[#3c3737] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">Información de contacto adicional</h3>
+               <p class="text-[#3c3737] text-base font-normal leading-normal pb-3 pt-1 px-4">Teléfono: +1 (555) 123-4567</p>
+               <p class="text-[#3c3737] text-base font-normal leading-normal pb-3 pt-1 px-4">Dirección: 123 Main Street, Anytown, USA</p>
                <div class="flex px-4 py-3">
                   <div
                      class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-lg object-cover">

@@ -28,7 +28,7 @@ if (empty($email) || empty($password)) {
 }
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     http_response_code(400);
-    echo json_encode(["error" => "Invalid email"]);
+    echo json_encode(["error" => "Email no válido"]);
     exit;
 }
 
@@ -36,7 +36,7 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 if (isset($_POST['csrf_token'])) {
     if (!isset($_SESSION['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
         http_response_code(403);
-        echo json_encode(["error" => "CSRF token invalid"]);
+        echo json_encode(["error" => "Token CSRF no válido"]);
         exit;
     }
 }
@@ -76,11 +76,11 @@ if ($stmt->num_rows > 0) {
         exit;
     } else {
         http_response_code(401);
-        echo json_encode(["error" => "Incorrect password"]);
+        echo json_encode(["error" => "Contraseña incorrecta"]);
         exit;
     }
 } else {
     http_response_code(404);
-    echo json_encode(["error" => "User not found"]);
+    echo json_encode(["error" => "Usuario no encontrado"]);
 }
 ?>

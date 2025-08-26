@@ -9,9 +9,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bind_param("si", $estado, $order_id);
 
     if ($stmt->execute()) {
-        header("Location: admin.php?msg=Status updated");
+        header("Location: admin.php?msg=Estado actualizado");
     } else {
-        echo "Error updating status.";
+        echo "Error al actualizar el estado.";
     }
 
     $stmt->close();

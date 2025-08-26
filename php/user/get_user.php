@@ -26,7 +26,7 @@ function getAuthorizationHeader()
 
 $authHeader = getAuthorizationHeader();
 if (!$authHeader || !preg_match('/Bearer\\s(\\S+)/', $authHeader, $matches)) {
-    echo json_encode(['success' => false, 'message' => 'Token not provided']);
+    echo json_encode(['success' => false, 'message' => 'Token no proporcionado']);
     exit;
 }
 $jwt = $matches[1];
@@ -43,5 +43,5 @@ try {
     $user = $result->fetch_assoc();
     echo json_encode(['success' => true, 'user' => $user]);
 } catch (Exception $e) {
-    echo json_encode(['success' => false, 'message' => 'Invalid token', 'error' => $e->getMessage()]);
+    echo json_encode(['success' => false, 'message' => 'Token no válido', 'error' => $e->getMessage()]);
 }

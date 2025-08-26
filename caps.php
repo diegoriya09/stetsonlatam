@@ -96,7 +96,7 @@ $conn->close();
 <html>
 
 <head>
-  <title>Caps | Stetson Latam</title>
+  <title>Cachuchas | Stetson Latam</title>
   <link rel="icon" href="img/logo.webp" type="image/x-icon" loading="lazy">
   <link href="css/index.css?v=<?php echo time(); ?>" rel="stylesheet">
   <link href="css/categoria.css?v=<?php echo time(); ?>" rel="stylesheet">
@@ -113,8 +113,8 @@ $conn->close();
       <main>
         <section class="category-banner">
           <div class="category-info">
-            <h1>Caps</h1>
-            <p>Discover our collection of modern and classic caps, perfect for any occasion and style.</p>
+            <h1>Cachuchas</h1>
+            <p>Descubre nuestra colección de gorras modernas y clásicas, perfectas para cualquier ocasión y estilo.</p>
           </div>
           <div class="category-image">
             <img src="img/caps.jpg" alt="Stetson Caps Collection">
@@ -129,7 +129,7 @@ $conn->close();
             <div class="flex gap-4">
               <div class="relative">
                 <button id="size-filter-btn" type="button" class="flex items-center gap-x-1 text-sm font-semibold text-[#3c3737]">
-                  <span>SIZE</span>
+                  <span>TALLA</span>
                   <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" fill="currentColor" viewBox="0 0 256 256">
                     <path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path>
                   </svg>
@@ -152,7 +152,7 @@ $conn->close();
 
             <div class="flex items-center gap-2">
               <button id="sort-btn" class="flex items-center gap-x-1 text-sm font-semibold text-[#3c3737]">
-                <span>SORT BY PRICE</span>
+                <span>ORDENAR POR PRECIO</span>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" fill="currentColor" viewBox="0 0 256 256">
                   <path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path>
                 </svg>

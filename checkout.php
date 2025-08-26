@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         href="https://fonts.googleapis.com/css2?display=swap&amp;family=Noto+Serif%3Awght%40400%3B500%3B700%3B900&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <title>Checkout</title>
+    <title>Finalizar compra | Stetson LATAM</title>
     <link rel="icon" href="img/logo.webp" type="image/x-icon" loading="lazy">
     <link href="css/index.css?v=<?php echo time(); ?>" rel="stylesheet">
 
@@ -85,77 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <div class="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden">
         <div class="layout-container flex h-full grow flex-col">
-            <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f4f2f0] px-10 py-3">
-                <div class="flex items-center gap-8">
-                    <div class="flex items-center gap-4 text-[#181411]">
-                        <div class="size-4">
-                            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M24 4H42V17.3333V30.6667H24V44H6V30.6667V17.3333H24V4Z" fill="currentColor"></path>
-                            </svg>
-                        </div>
-                        <h2 class="text-[#181411] text-lg font-bold leading-tight tracking-[-0.015em]"><a href="index.php">Stetson Latam</a></h2>
-                    </div>
-                    <div class="flex items-center gap-9">
-                        <a class="text-[#181411] text-sm font-medium leading-normal" href="customerService.php">Help</a>
-                        <a class="text-[#181411] text-sm font-medium leading-normal" href="myorders.php">Orders</a>
-                    </div>
-                </div>
-                <div class="flex flex-1 justify-end gap-8">
-                    <label class="flex flex-col min-w-40 !h-10 max-w-64">
-                        <div class="flex w-full flex-1 items-stretch rounded-lg h-full">
-                            <div
-                                class="text-[#887563] flex border-none bg-[#f4f2f0] items-center justify-center pl-4 rounded-l-lg border-r-0"
-                                data-icon="MagnifyingGlass"
-                                data-size="24px"
-                                data-weight="regular">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
-                                    <path
-                                        d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path>
-                                </svg>
-                            </div>
-                            <input
-                                placeholder="Search"
-                                class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#181411] focus:outline-0 focus:ring-0 border-none bg-[#f4f2f0] focus:border-none h-full placeholder:text-[#887563] px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal"
-                                value="" />
-                        </div>
-                    </label>
-                    <div class="flex gap-2">
-                        <button
-                            id="logout-btn"
-                            style="display:none;"
-                            class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-[#f4f2f0] text-[#181411] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
-                            <div class="text-[#181411]" data-icon="SignOut" data-size="20px" data-weight="regular">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256">
-                                    <path d="M216,128a8,8,0,0,1-8,8H104v16a8,8,0,0,1-13.66,5.66l-32-32a8,8,0,0,1,0-11.32l32-32A8,8,0,0,1,104,104v16h104A8,8,0,0,1,216,128ZM128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Z"></path>
-                                </svg>
-                            </div>
-                        </button>
-                        <button
-                            id="user-btn"
-                            class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-[#f4f2f0] text-[#181411] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
-                            <div class="text-[#181411]" data-icon="User" data-size="20px" data-weight="regular">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256">
-                                    <path
-                                        d="M230.92,212c-15.23-26.33-38.7-45.21-66.09-54.16a72,72,0,1,0-73.66,0C63.78,166.78,40.31,185.66,25.08,212a8,8,0,1,0,13.85,8c18.84-32.56,52.14-52,89.07-52s70.23,19.44,89.07,52a8,8,0,1,0,13.85-8ZM72,96a56,56,0,1,1,56,56A56.06,56.06,0,0,1,72,96Z"></path>
-                                </svg>
-                            </div>
-                        </button>
-                        <button
-                            id="cart-btn"
-                            class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-[#f4f2f0] text-[#181411] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
-                            <div class="text-[#181411]" data-icon="ShoppingBag" data-size="20px" data-weight="regular">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256">
-                                    <path
-                                        d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40Zm0,160H40V56H216V200ZM176,88a48,48,0,0,1-96,0,8,8,0,0,1,16,0,32,32,0,0,0,64,0,8,8,0,0,1,16,0Z"></path>
-                                </svg>
-                            </div>
-                        </button>
-                        <div
-                            class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
-                            style='background-image: url("img/logo.webp");'></div>
-                    </div>
-                </div>
-            </header>
+            <?php include 'header.php'; ?>
             <div class="px-40 flex flex-1 justify-center py-5">
                 <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
                     <form id="checkout-form" method="POST" action="php/checkout.php" class="flex flex-col">
@@ -164,72 +94,72 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
 
                         <div class="flex flex-wrap gap-2 p-4">
-                            <a class="text-[#887563] text-base font-medium" href="cart.php">Cart</a>
-                            <span class="text-[#887563] text-base font-medium">/</span>
-                            <span class="text-[#181411] text-base font-medium">Checkout</span>
+                            <a class="text-[#887563] text-base font-medium" href="cart.php">Carrito</a>
+                            <span class="text-[#3c3737] text-base font-medium">/</span>
+                            <span class="text-[#3c3737] text-base font-medium">Finalizar compra</span>
                         </div>
 
                         <div class="flex max-w-[480px] gap-4 px-4 py-3">
                             <label class="flex flex-col flex-1">
-                                <p>Full Name</p>
-                                <input name="nombre" placeholder="Enter your full name" class="form-input h-14" required />
+                                <p>Nombre completo</p>
+                                <input name="nombre" placeholder="Ingresa tu nombre completo" class="form-input h-14" required />
                             </label>
                         </div>
 
                         <div class="flex max-w-[480px] gap-4 px-4 py-3">
                             <label class="flex flex-col flex-1">
                                 <p>Email</p>
-                                <input type="email" name="email" placeholder="Enter your email" class="form-input h-14" required />
+                                <input type="email" name="email" placeholder="Ingresa tu email" class="form-input h-14" required />
                             </label>
                         </div>
 
                         <div class="flex max-w-[480px] gap-4 px-4 py-3">
                             <label class="flex flex-col flex-1">
-                                <p>Address</p>
-                                <input name="direccion" placeholder="Enter your address" class="form-input h-14" required />
+                                <p>Dirección</p>
+                                <input name="direccion" placeholder="Ingresa tu dirección" class="form-input h-14" required />
                             </label>
                         </div>
 
                         <div class="flex max-w-[480px] gap-4 px-4 py-3">
                             <label class="flex flex-col flex-1">
-                                <p>City</p>
-                                <input name="ciudad" placeholder="Enter your city" class="form-input h-14" required />
+                                <p>Ciudad</p>
+                                <input name="ciudad" placeholder="Ingresa tu ciudad" class="form-input h-14" required />
                             </label>
                         </div>
 
                         <div class="flex max-w-[480px] gap-4 px-4 py-3">
                             <label class="flex flex-col flex-1">
-                                <p>State</p>
-                                <input name="estado" placeholder="Enter your state" class="form-input h-14" />
+                                <p>Departamento</p>
+                                <input name="estado" placeholder="Ingresa tu departamento" class="form-input h-14" />
                             </label>
                         </div>
 
                         <div class="flex max-w-[480px] gap-4 px-4 py-3">
                             <label class="flex flex-col flex-1">
-                                <p>Zip Code</p>
-                                <input name="zip" placeholder="Enter your zip code" class="form-input h-14" />
+                                <p>Código Postal</p>
+                                <input name="zip" placeholder="Ingresa tu código postal" class="form-input h-14" />
                             </label>
                         </div>
 
                         <div class="flex max-w-[480px] gap-4 px-4 py-3">
                             <label class="flex flex-col flex-1">
-                                <p>Country</p>
-                                <input name="pais" placeholder="Enter your country" class="form-input h-14" required />
+                                <p>País</p>
+                                <input name="pais" placeholder="Ingresa tu país" class="form-input h-14" required />
                             </label>
                         </div>
 
                         <div class="flex max-w-[480px] gap-4 px-4 py-3">
                             <label class="flex flex-col flex-1">
-                                <p>Phone Number</p>
-                                <input name="telefono" placeholder="Enter your phone number" class="form-input h-14" required />
+                                <p>Número de Teléfono</p>
+                                <input name="telefono" placeholder="Ingresa tu número de teléfono" class="form-input h-14" required />
                             </label>
                         </div>
                         <div class="flex max-w-[480px] gap-4 px-4 py-3">
                             <label class="flex flex-col flex-1">
-                                <p>Payment Method</p>
+                                <p>Método de Pago</p>
                                 <select name="metodo" class="form-input h-14" required>
-                                    <option value="">Select a payment method</option>
-                                    <option value="tarjeta">Credit/Debit Card</option>
+                                    <option value="">Selecciona un método de pago</option>
+                                    <option value="tarjeta">Tarjeta de Crédito/Débito</option>
                                     <option value="pse">PSE</option>
                                 </select>
                             </label>
@@ -238,19 +168,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div id="tarjeta-fields" class="hidden">
                             <div class="flex max-w-[480px] gap-4 px-4 py-3">
                                 <label class="flex flex-col flex-1">
-                                    <p>Card Number</p>
+                                    <p>Número de Tarjeta</p>
                                     <input name="numero_tarjeta" placeholder="1234 5678 9012 3456" class="form-input h-14" />
                                 </label>
                             </div>
                             <div class="flex max-w-[480px] gap-4 px-4 py-3">
                                 <label class="flex flex-col flex-1">
-                                    <p>Name on Card</p>
+                                    <p>Nombre en la Tarjeta</p>
                                     <input name="nombre_tarjeta" placeholder="John Doe" class="form-input h-14" />
                                 </label>
                             </div>
                             <div class="flex max-w-[480px] gap-4 px-4 py-3">
                                 <label class="flex flex-col flex-1">
-                                    <p>Expiration Date</p>
+                                    <p>Fecha de Expiración</p>
                                     <input name="expiracion" placeholder="MM/YY" class="form-input h-14" />
                                 </label>
                                 <label class="flex flex-col flex-1">
@@ -264,20 +194,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div id="pse-fields" class="hidden">
                             <div class="flex max-w-[480px] gap-4 px-4 py-3">
                                 <label class="flex flex-col flex-1">
-                                    <p>Bank</p>
-                                    <input name="banco_pse" placeholder="Enter bank name" class="form-input h-14" />
+                                    <p>Banco</p>
+                                    <input name="banco_pse" placeholder="Ingresa el nombre del banco" class="form-input h-14" />
                                 </label>
                             </div>
                             <div class="flex max-w-[480px] gap-4 px-4 py-3">
                                 <label class="flex flex-col flex-1">
-                                    <p>Account Type</p>
-                                    <input name="tipo_cuenta_pse" placeholder="Savings/Checking" class="form-input h-14" />
+                                    <p>Tipo de Cuenta</p>
+                                    <input name="tipo_cuenta_pse" placeholder="Ahorros/Corriente" class="form-input h-14" />
                                 </label>
                             </div>
                             <div class="flex max-w-[480px] gap-4 px-4 py-3">
                                 <label class="flex flex-col flex-1">
-                                    <p>Document</p>
-                                    <input name="documento_pse" placeholder="Enter your document" class="form-input h-14" />
+                                    <p>Documento</p>
+                                    <input name="documento_pse" placeholder="Ingresa tu documento" class="form-input h-14" />
                                 </label>
                             </div>
                         </div>
@@ -299,7 +229,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="flex px-4 py-3">
                             <button type="submit"
                                 class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center rounded-lg h-12 px-5 flex-1 bg-[#e68019] text-[#181411] font-bold">
-                                Continue to Payment
+                                Continuar al Pago
                             </button>
                         </div>
                     </form>
@@ -318,8 +248,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     if (data.success) {
                                         Swal.fire({
                                             icon: 'success',
-                                            title: 'Order Placed',
-                                            html: `<p>Your order number is <strong>#${data.pedido_id}</strong></p>`,
+                                            title: 'Pedido Realizado',
+                                            html: `<p>Tu número de pedido es <strong>#${data.pedido_id}</strong></p>`,
                                             confirmButtonText: 'OK'
                                         }).then(() => {
                                             window.location.href = 'index.php';
@@ -336,7 +266,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     Swal.fire({
                                         icon: 'error',
                                         title: 'Error',
-                                        text: 'Something went wrong.'
+                                        text: 'Algo salió mal.'
                                     });
                                 });
                         });

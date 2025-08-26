@@ -79,16 +79,16 @@ try {
                 <section class="home-section story-section">
                     <div class="story-image"></div>
                     <div class="story-content">
-                        <h2 class="section-title">A Legacy of Craftsmanship</h2>
-                        <p>For over 160 years, Stetson has been synonymous with quality and authenticity. Our products are crafted with meticulous attention to detail, using the finest materials to ensure lasting style and durability.</p>
-                        <a href="aboutUs.php" class="story-button">OUR STORY</a>
+                        <h2 class="section-title">Un legado de artesanía</h2>
+                        <p>Fundada en 1865, Stetson nació del espíritu del Oeste y creció hasta convertirse en un icono estadounidense. El gesto amistoso de John B. Stetson hacia un viajero descarriado en la nueva frontera dio lugar al primer «sombrero de vaquero» del mundo. Desde entonces, Stetson ha sido líder mundial en sombreros, una marca de confianza en todo el mundo, y se ha convertido en un accesorio imprescindible para los aficionados al Oeste de todo el mundo.</p>
+                        <a href="aboutUs.php" class="story-button">NUESTRA HISTORIA</a>
                     </div>
                 </section>
 
                 <section id="signup-section" class="home-section signup-section">
-                    <h2 class="section-title">Join the Stetson Community</h2>
-                    <p>Stay up-to-date on the latest news, exclusive offers, and new product releases.</p>
-                    <button id="open-user-modal" class="signup-button">SIGN UP</button>
+                    <h2 class="section-title">Únete a la comunidad de Stetson</h2>
+                    <p>Mantente al día con las últimas noticias, ofertas exclusivas y lanzamientos de nuevos productos.</p>
+                    <button id="open-user-modal" class="signup-button">REGÍSTRATE</button>
                 </section>
             </main>
             

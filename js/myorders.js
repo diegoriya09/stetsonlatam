@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Oculta la sección de órdenes si no hay JWT
   const ordersSection = document.getElementById("orders-section");
   if (!jwt) {
-    ordersSection.innerHTML = "<p>Log in to view your orders.</p>";
+    ordersSection.innerHTML = "<p>Inicie sesión para ver sus pedidos.</p>";
     return;
   }
 
@@ -32,22 +32,22 @@ document.addEventListener("DOMContentLoaded", () => {
               renderOrders(ordersData.orders);
             } else {
               ordersSection.innerHTML =
-                "<p>No orders found for this user.</p>";
+                "<p>No se encontraron pedidos para este usuario.</p>";
             }
           })
           .catch((error) => {
-            console.error("Error getting orders:", error);
+            console.error("Error al obtener pedidos:", error);
             ordersSection.innerHTML =
-              "<p>Error getting your orders. Please try again later.</p>";
+              "<p>Error al obtener tus pedidos. Por favor, intenta nuevamente más tarde.</p>";
           });
       } else {
         ordersSection.innerHTML = `<p>${data.message}</p>`;
       }
     })
     .catch((err) => {
-      console.error("Error verifying session:", err);
+      console.error("Error al verificar sesión:", err);
       ordersSection.innerHTML =
-        "<p>Could not verify your session. Please try again later.</p>";
+        "<p>No se pudo verificar tu sesión. Por favor, intenta nuevamente más tarde.</p>";
     });
 
   // Cierra el modal de order
@@ -76,7 +76,7 @@ function openModalWithOrderDetails(orderId) {
     .then((data) => {
       if (data.success) {
         if (data.details.length === 0) {
-          detailsContainer.innerHTML = "<p>No details found for this order.</p>";
+          detailsContainer.innerHTML = "<p>No se encontraron detalles para este pedido.</p>";
           ordermodal.classList.remove("hidden");
           return;
         }
@@ -86,9 +86,9 @@ function openModalWithOrderDetails(orderId) {
           html += `
             <li>
               <strong>${item.name}</strong><br>
-              Quantity: ${item.cantidad}<br>
-              Price: $${item.price}<br>
-              Size: ${item.size_nombre || "N/A"}<br>
+              Cantidad: ${item.cantidad}<br>
+              Precio: $${item.price}<br>
+              Talla: ${item.size_nombre || "N/A"}<br>
               ${item.color_nombre ? `Color: ${item.color_nombre}` : ""}
             </li>
           `;
@@ -97,13 +97,13 @@ function openModalWithOrderDetails(orderId) {
         detailsContainer.innerHTML = html;
         ordermodal.classList.remove("hidden");
       } else {
-        detailsContainer.innerHTML = "<p>Error loading details.</p>";
+        detailsContainer.innerHTML = "<p>Error al cargar los detalles.</p>";
         ordermodal.classList.remove("hidden");
       }
     })
     .catch((err) => {
       console.error(err);
-      detailsContainer.innerHTML = "<p>Network error.</p>";
+      detailsContainer.innerHTML = "<p>Error de red.</p>";
       ordermodal.classList.remove("hidden");
     });
 }

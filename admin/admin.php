@@ -208,24 +208,24 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
 
 <!-- Formulario para agregar producto -->
 <form id="add-product-form" action="add_product.php" method="POST" enctype="multipart/form-data">
-    <input type="text" name="nombre" placeholder="Product's Name" required>
-    <input type="number" name="precio" placeholder="Price" required>
-    <input type="text" name="descripcion" placeholder="Description" required>
+    <input type="text" name="nombre" placeholder="Nombre del producto" required>
+    <input type="number" name="precio" placeholder="Precio" required>
+    <input type="text" name="descripcion" placeholder="Descripción" required>
     <select name="categoria" required>
-        <option value="">Categories</option>
-        <option value="hats">Hats</option>
-        <option value="caps">Caps</option>
+        <option value="">Categorías</option>
+        <option value="hats">Sombreros</option>
+        <option value="caps">Cachuchas</option>
     </select>
     <input type="file" name="imagen" accept="image/*">
-    <button type="submit">Add product</button>
+    <button type="submit">Añadir producto</button>
 </form>
 
 <!-- Filtro por categoría -->
 <form method="GET" style="margin-top:20px;">
     <select name="category" onchange="this.form.submit()">
-        <option value="" <?php if (!isset($_GET['category']) || trim($_GET['category']) == '') echo 'selected'; ?>>All categories</option>
-        <option value="hats" <?php if (isset($_GET['category']) && $_GET['category'] == 'hats') echo 'selected'; ?>>Hats</option>
-        <option value="caps" <?php if (isset($_GET['category']) && $_GET['category'] == 'caps') echo 'selected'; ?>>Caps</option>
+        <option value="" <?php if (!isset($_GET['category']) || trim($_GET['category']) == '') echo 'selected'; ?>>Todas las categorías</option>
+        <option value="hats" <?php if (isset($_GET['category']) && $_GET['category'] == 'hats') echo 'selected'; ?>>Sombreros</option>
+        <option value="caps" <?php if (isset($_GET['category']) && $_GET['category'] == 'caps') echo 'selected'; ?>>Cachuchas</option>
     </select>
 </form>
 
@@ -234,12 +234,12 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
     <thead>
         <tr>
             <th>ID</th>
-            <th>Name</th>
-            <th class="description-header">Description</th>
-            <th>Price</th>
-            <th>Category</th>
-            <th>Image</th>
-            <th>Actions</th>
+            <th>Nombre</th>
+            <th class="description-header">Descripción</th>
+            <th>Precio</th>
+            <th>Categoría</th>
+            <th>Imagen</th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
@@ -284,19 +284,19 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
 </table>
 <hr style="margin: 40px 0;">
 
-<h2 style="text-align:center; color:#3c3737;">Order Management</h2>
+<h2 style="text-align:center; color:#3c3737;">Gestión de pedidos</h2>
 
 <table border="1" cellpadding="8" style="margin: 30px auto; width: 95%; background:#fff;">
     <thead>
         <tr>
-            <th>Order ID</th>
-            <th>Client</th>
+            <th>ID de pedido</th>
+            <th>Cliente</th>
             <th>Email</th>
             <th>Total</th>
-            <th>Date</th>
-            <th>Status</th>
-            <th>Update</th>
-            <th>Details</th>
+            <th>Fecha</th>
+            <th>Estado</th>
+            <th>Actualizar</th>
+            <th>Detalles</th>
         </tr>
     </thead>
     <tbody>
@@ -320,9 +320,9 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
                     <form method='POST' action='update_order_status.php'>
                         <input type='hidden' name='order_id' value='{$row['id']}'>
                         <select name='estado'>
-                            <option value='Pending' " . ($row['estado'] == 'Pending' ? 'selected' : '') . ">Pending</option>
-                            <option value='Shipped' " . ($row['estado'] == 'Shipped' ? 'selected' : '') . ">Shipped</option>
-                            <option value='Cancelled' " . ($row['estado'] == 'Cancelled' ? 'selected' : '') . ">Cancelled</option>
+                            <option value='Pending' " . ($row['estado'] == 'Pendiente' ? 'selected' : '') . ">Pendiente</option>
+                            <option value='Enviado' " . ($row['estado'] == 'Enviado' ? 'selected' : '') . ">Enviado</option>
+                            <option value='Cancelado' " . ($row['estado'] == 'Cancelado' ? 'selected' : '') . ">Cancelado</option>
                         </select>
                 </td>";
             echo "<td>
@@ -347,7 +347,7 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
 <div class="ordermodal hidden">
     <div class="modal-content-order">
         <span class="close-modal-order">&times;</span>
-        <h2>Order products</h2>
+        <h2>Detalles de los productos del pedido</h2>
         <div id="admin-order-details"></div>
     </div>
 </div>
@@ -362,7 +362,7 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
         logoutBtn.addEventListener('click', () => {
             localStorage.removeItem('jwt');
             Swal.fire({
-                title: 'Closed session',
+                title: 'Sesión cerrada',
                 icon: 'info',
                 confirmButtonText: 'OK'
             }).then(() => {
@@ -383,19 +383,19 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
                     let html = "<ul>";
                     data.details.forEach(item => {
                         html += `<li>
-                        ${item.name} - Quantity: ${item.cantidad} - Price: $${item.price} - Size: ${item.size_nombre || "N/A"} - Color: ${item.color_nombre || "N/A"}
+                        ${item.name} - Cantidad: ${item.cantidad} - Precio: $${item.price} - Talla: ${item.size_nombre || "N/A"} - Color: ${item.color_nombre || "N/A"}
                     </li>`;
                     });
                     html += "</ul>";
                     detailsDiv.innerHTML = html;
                 } else {
-                    detailsDiv.innerHTML = "<p>No products found for this order.</p>";
+                    detailsDiv.innerHTML = "<p>No se encontraron productos para este pedido.</p>";
                 }
 
                 modal.classList.remove("hidden");
             })
             .catch(() => {
-                detailsDiv.innerHTML = "<p>Error loading details.</p>";
+                detailsDiv.innerHTML = "<p>Error al cargar los detalles.</p>";
                 modal.classList.remove("hidden");
             });
     }

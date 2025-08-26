@@ -11,8 +11,8 @@ document.addEventListener("DOMContentLoaded", () => {
             e.preventDefault();
             loginFormSection.style.display = 'none';
             registerFormSection.style.display = 'block';
-            switchToRegister.classList.add('border-b-[#151514]', 'text-[#151514]');
-            switchToLogin.classList.remove('border-b-[#151514]', 'text-[#151514]');
+            switchToRegister.classList.add('border-b-[#3c3737]', 'text-[#3c3737]');
+            switchToLogin.classList.remove('border-b-[#3c3737]', 'text-[#3c3737]');
         });
     }
     if (switchToLogin && loginFormSection && registerFormSection) {
@@ -20,8 +20,8 @@ document.addEventListener("DOMContentLoaded", () => {
             e.preventDefault();
             registerFormSection.style.display = 'none';
             loginFormSection.style.display = 'block';
-            switchToLogin.classList.add('border-b-[#151514]', 'text-[#151514]');
-            switchToRegister.classList.remove('border-b-[#151514]', 'text-[#151514]');
+            switchToLogin.classList.add('border-b-[#3c3737]', 'text-[#3c3737]');
+            switchToRegister.classList.remove('border-b-[#3c3737]', 'text-[#3c3737]');
         });
     }
 
@@ -60,8 +60,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     // ✅ Alerta y redirección
                     Swal.fire({
-                        title: 'Welcome back!',
-                        text: 'Successful login',
+                        title: 'Bienvenido de nuevo!',
+                        text: 'Inicio de sesión exitoso',
                         icon: 'success',
                         confirmButtonText: 'OK'
                     }).then(() => {
@@ -72,11 +72,11 @@ document.addEventListener("DOMContentLoaded", () => {
                         }
                     });
                 } else {
-                    Swal.fire("Error", result.error || "Could not log in", "error");
+                    Swal.fire("Error", result.error || "No se pudo iniciar sesión", "error");
                 }
 
             } catch (error) {
-                Swal.fire("Error", "Server connection error", "error");
+                Swal.fire("Error", "Error de conexión con el servidor", "error");
             }
         });
     }
@@ -100,10 +100,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (result.status === 'success') {
                     // Mostrar Swal para registro exitoso y redirigir a login
                     Swal.fire({
-                        title: 'Registration successful!',
-                        text: 'You can now log in with your account.',
+                        title: '¡Registro exitoso!',
+                        text: 'Ahora puedes iniciar sesión con tu cuenta.',
                         icon: 'success',
-                        confirmButtonText: 'Log in',
+                        confirmButtonText: 'Iniciar sesión',
                         allowOutsideClick: false
                     }).then(() => {
                         // Cambiar a la pestaña de login y limpiar el form de registro
@@ -112,10 +112,10 @@ document.addEventListener("DOMContentLoaded", () => {
                         const loginFormSection = document.getElementById('login-form');
                         const registerFormSection = document.getElementById('register-form');
                         if (loginTab && registerTab && loginFormSection && registerFormSection) {
-                            loginTab.classList.add('border-[#181411]', 'text-[#181411]');
+                            loginTab.classList.add('border-[#3c3737]', 'text-[#3c3737]');
                             loginTab.classList.remove('border-transparent', 'text-[#7a7671]');
-                            registerTab.classList.remove('border-[#181411]', 'text-[#181411]');
-                            registerTab.classList.add('border-transparent', 'text-[#7a7671]');
+                            registerTab.classList.remove('border-[#3c3737]', 'text-[#3c3737]');
+                            registerTab.classList.add('border-transparent', 'text-[#f1eeea]');
                             loginFormSection.style.display = 'block';
                             registerFormSection.style.display = 'none';
                         }
@@ -135,10 +135,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                     setupCloseModal();
                 } else {
-                    Swal.fire("Error", result.message || "Could not register", "error");
+                    Swal.fire("Error", result.message || "No se pudo registrar", "error");
                 }
             } catch (error) {
-                Swal.fire("Error", "Server connection error", "error");
+                Swal.fire("Error", "Error de conexión con el servidor", "error");
             }
         });
     }
@@ -157,8 +157,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (logoutBtn) {
         logoutBtn.addEventListener('click', () => {
             Swal.fire({
-                title: 'Closed session',
-                text: 'You have successfully logged out',
+                title: 'Sesión cerrada',
+                text: 'Has cerrado sesión exitosamente',
                 icon: 'success',
                 showConfirmButton: false,
                 timer: 1000,
@@ -192,7 +192,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const currentTime = Math.floor(Date.now() / 1000);
             return payload.exp < currentTime;
         } catch (error) {
-            console.error('Error decoding token:', error);
+            console.error('Error al decodificar el token:', error);
             return true; // Si hay un error, asumimos que el token está expirado
         }
     }
@@ -202,10 +202,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (token && isTokenExpired(token)) {
             Swal.fire({
-                title: 'Session expired',
-                text: 'Please log in again to continue.',
+                title: 'Sesión expirada',
+                text: 'Por favor, inicia sesión nuevamente para continuar.',
                 icon: 'warning',
-                confirmButtonText: 'Log in'
+                confirmButtonText: 'Iniciar sesión'
             }).then(() => {
                 localStorage.removeItem('jwt');
                 window.location.href = 'index.php';

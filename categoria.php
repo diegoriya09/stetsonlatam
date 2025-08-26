@@ -195,7 +195,7 @@ $num_productos = count($productos);
                         <div class="flex gap-4">
                             <div class="relative">
                                 <button id="size-filter-btn" type="button" class="flex items-center gap-x-1 text-sm font-semibold text-[#3c3737]">
-                                    <span>SIZE</span>
+                                    <span>TALLA</span>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" fill="currentColor" viewBox="0 0 256 256">
                                         <path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path>
                                     </svg>
@@ -218,7 +218,7 @@ $num_productos = count($productos);
 
                         <div class="flex items-center gap-2">
                             <button id="sort-btn" class="flex items-center gap-x-1 text-sm font-semibold text-[#3c3737]">
-                                <span>SORT BY PRICE</span>
+                                <span>ORDENAR POR PRECIO</span>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" fill="currentColor" viewBox="0 0 256 256">
                                     <path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path>
                                 </svg>
@@ -238,7 +238,7 @@ $num_productos = count($productos);
                                 </a>
                             <?php endforeach; ?>
                         <?php else: ?>
-                            <p class="no-products">No products were found in this collection matching your criteria.</p>
+                            <p class="no-products">No se encontraron productos en esta colección que coincidan con tus criterios.</p>
                         <?php endif; ?>
                     </div>
                 </section>

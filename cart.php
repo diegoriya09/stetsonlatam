@@ -8,7 +8,7 @@ $user_id = $_SESSION['user_id'] ?? null;
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <title>Shopping Cart | Stetson LATAM</title>
+    <title>Carrito de compras | Stetson LATAM</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="img/logo.webp" type="image/x-icon">
@@ -22,26 +22,26 @@ $user_id = $_SESSION['user_id'] ?? null;
     <main class="cart-main">
         <div class="cart-container">
             <div class="cart-items-column">
-                <h1>Shopping Cart</h1>
+                <h1>Carrito de compras</h1>
                 <div id="cart-items-container">
-                    <p class="loading-cart">Loading your cart...</p>
+                    <p class="loading-cart">Cargando tu carrito...</p>
                 </div>
             </div>
             <aside class="order-summary-column">
-                <h2>Order Summary</h2>
+                <h2>Resumen del pedido</h2>
                 <div class="summary-row">
                     <span>Subtotal</span>
                     <span id="summary-subtotal">$0.00</span>
                 </div>
                 <div class="summary-row">
-                    <span>Shipping</span>
-                    <span>Calculated at next step</span>
+                    <span>Envío</span>
+                    <span>Calculado en el siguiente paso</span>
                 </div>
                 <div class="summary-total">
                     <span>Total</span>
                     <span id="summary-total">$0.00</span>
                 </div>
-                <a href="checkout.php" id="checkout-btn" class="checkout-button">Proceed to Checkout</a>
+                <a href="checkout.php" id="checkout-btn" class="checkout-button">Proceder al pago</a>
             </aside>
         </div>
     </main>
