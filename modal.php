@@ -43,13 +43,13 @@ if (empty($_SESSION['csrf_token'])) {
                                     loginTab.classList.add('border-[#3c3737]', 'text-[#3c3737]');
                                     loginTab.classList.remove('border-transparent', 'text-[#3c3737]');
                                     registerTab.classList.remove('border-[#3c3737]', 'text-[#3c3737]');
-                                    registerTab.classList.add('border-transparent', 'text-[#7a7671]');
+                                    registerTab.classList.add('border-transparent', 'text-[#3c3737]');
                                 });
                                 registerTab.addEventListener('click', function() {
                                     registerTab.classList.add('border-[#3c3737]', 'text-[#3c3737]');
-                                    registerTab.classList.remove('border-transparent', 'text-[#7a7671]');
+                                    registerTab.classList.remove('border-transparent', 'text-[#3c3737]');
                                     loginTab.classList.remove('border-[#3c3737]', 'text-[#3c3737]');
-                                    loginTab.classList.add('border-transparent', 'text-[#7a7671]');
+                                    loginTab.classList.add('border-transparent', 'text-[#3c3737]');
                                 });
                             }
                         });
@@ -57,18 +57,18 @@ if (empty($_SESSION['csrf_token'])) {
             <!-- Login Form -->
             <div id="login-form" style="display:block;">
                 <form id="login-form-inner" autocomplete="on" class="space-y-4">
-                    <input name="email" type="email" placeholder="Email" required class="w-full rounded-lg border border-[#e2e1df] bg-white px-4 py-3 text-base text-[#3c3737] placeholder-[#3c3737] focus:border-[#e68019] focus:ring-2 focus:ring-[#e68019] transition" />
-                    <input name="password" type="password" placeholder="Contraseña" required class="w-full rounded-lg border border-[#e2e1df] bg-white px-4 py-3 text-base text-[#3c3737] placeholder-[#3c3737] focus:border-[#e68019] focus:ring-2 focus:ring-[#e68019] transition" />
-                    <button type="submit" class="w-full rounded-lg bg-[#e68019] text-white font-bold py-3 mt-2 hover:bg-[#ff9d3c] transition">Iniciar sesión</button>
+                    <input name="email" type="email" placeholder="Email" required class="w-full rounded-lg border border-[#e2e1df] bg-white px-4 py-3 text-base text-[#3c3737] placeholder-[#3c3737] focus:border-[#3f1e1f] focus:ring-2 focus:ring-[#3f1e1f] transition" />
+                    <input name="password" type="password" placeholder="Contraseña" required class="w-full rounded-lg border border-[#e2e1df] bg-white px-4 py-3 text-base text-[#3c3737] placeholder-[#3c3737] focus:border-[#3f1e1f] focus:ring-2 focus:ring-[#3f1e1f] transition" />
+                    <button type="submit" class="w-full rounded-lg bg-[#3f1e1f] text-white font-bold py-3 mt-2 hover:bg-[#2c1516] transition">Iniciar sesión</button>
                 </form>
             </div>
             <!-- Register Form -->
             <div id="register-form" style="display:none;">
                 <form id="register-form-inner" autocomplete="on" class="space-y-4">
-                    <input name="name" type="text" placeholder="Name" required class="w-full rounded-lg border border-[#e2e1df] bg-white px-4 py-3 text-base text-[#181411] placeholder-[#b0a99f] focus:border-[#e68019] focus:ring-2 focus:ring-[#e68019] transition" />
-                    <input name="email" type="email" placeholder="Email" required class="w-full rounded-lg border border-[#e2e1df] bg-white px-4 py-3 text-base text-[#3c3737] placeholder-[#3c3737] focus:border-[#e68019] focus:ring-2 focus:ring-[#e68019] transition" />
-                    <input name="password" type="password" placeholder="Contraseña" required class="w-full rounded-lg border border-[#e2e1df] bg-white px-4 py-3 text-base text-[#3c3737] placeholder-[#3c3737] focus:border-[#e68019] focus:ring-2 focus:ring-[#e68019] transition" />
-                    <button type="submit" class="w-full rounded-lg bg-[#e68019] text-white font-bold py-3 mt-2 hover:bg-[#ff9d3c] transition">Registrar</button>
+                    <input name="name" type="text" placeholder="Nombre" required class="w-full rounded-lg border border-[#e2e1df] bg-white px-4 py-3 text-base text-[#3c3737] placeholder-[#3c3737] focus:border-[#3f1e1f] focus:ring-2 focus:ring-[#3f1e1f] transition" />
+                    <input name="email" type="email" placeholder="Email" required class="w-full rounded-lg border border-[#e2e1df] bg-white px-4 py-3 text-base text-[#3c3737] placeholder-[#3c3737] focus:border-[#3f1e1f] focus:ring-2 focus:ring-[#3f1e1f] transition" />
+                    <input name="password" type="password" placeholder="Contraseña" required class="w-full rounded-lg border border-[#e2e1df] bg-white px-4 py-3 text-base text-[#3c3737] placeholder-[#3c3737] focus:border-[#3f1e1f] focus:ring-2 focus:ring-[#3f1e1f] transition" />
+                    <button type="submit" class="w-full rounded-lg bg-[#3f1e1f] text-white font-bold py-3 mt-2 hover:bg-[#2c1516] transition">Registrar</button>
                 </form>
             </div>
         </div>

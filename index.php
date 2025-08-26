@@ -41,14 +41,14 @@ try {
             <main>
                 <section class="hero-section">
                     <div class="hero-content">
-                        <h1 class="hero-title">Authentic Style, Timeless Legacy</h1>
-                        <h2 class="hero-subtitle">Explore our curated collection of premium hats, crafted with the spirit of the American West.</h2>
-                        <a href="hats.php" class="hero-button">SHOP NOW</a>
+                        <h1 class="hero-title">Estilo auténtico, legado atemporal</h1>
+                        <h2 class="hero-subtitle">Explora nuestra colección curada de sombreros premium, elaborados con el espíritu del Oeste Americano.</h2>
+                        <a href="hats.php" class="hero-button">COMPRA AHORA</a>
                     </div>
                 </section>
 
                 <section class="home-section">
-                    <h2 class="section-title">Shop by Category</h2>
+                    <h2 class="section-title">Compra por Categoría</h2>
                     <div class="collections-grid">
                         <?php foreach ($collections as $collection): ?>
                             <a href="categoria.php?id=<?php echo $collection['id']; ?>" class="collection-card">
@@ -62,7 +62,7 @@ try {
                 </section>
 
                 <section class="home-section">
-                    <h2 class="section-title">Featured Products</h2>
+                    <h2 class="section-title">Productos Destacados</h2>
                     <div class="product-grid">
                         <?php foreach ($featured_products as $producto): ?>
                             <a href="producto.php?id=<?php echo $producto['id']; ?>" class="product-card">
