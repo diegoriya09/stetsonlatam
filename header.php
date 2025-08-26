@@ -125,7 +125,7 @@ if (!empty($categorias_flat)) {
           </svg>
         </div>
         <input id="search-input" name="q" placeholder="Search..." autocomplete="off"
-          class="w-full h-10 pl-10 pr-4 bg-[#f1eeea] rounded-lg focus:outline-none" />
+          class="w-full h-10 pl-10 pr-4 bg-[#f1eeea] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3f1e1f]" />
         <div id="search-results"
           class="absolute top-full mt-1 left-0 w-full bg-white border rounded-lg shadow-lg hidden z-50 max-h-80 overflow-y-auto">
         </div>
