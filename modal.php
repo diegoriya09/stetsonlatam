@@ -65,7 +65,7 @@ if (empty($_SESSION['csrf_token'])) {
                     <input name="password" type="password" placeholder="Password" required
                         class="w-full rounded-lg border border-[#e2e1df] bg-white px-4 py-3 text-base text-[#3c3737] placeholder-[#b0a99f] focus:border-[#3f1e1f] focus:ring-2 focus:ring-[#3f1e1f] transition" />
                     <button type="submit"
-                        class="w-full rounded-lg bg-[#3f1e1f] text-white font-bold py-3 mt-2 hover:bg-[#ff9d3c] transition">Login</button>
+                        class="w-full rounded-lg bg-[#3f1e1f] text-[#f1eeea] font-bold py-3 mt-2 hover:bg-[#2c1516] transition">Login</button>
                 </form>
             </div>
             <!-- Register Form -->
@@ -78,7 +78,7 @@ if (empty($_SESSION['csrf_token'])) {
                     <input name="password" type="password" placeholder="Password" required
                         class="w-full rounded-lg border border-[#e2e1df] bg-white px-4 py-3 text-base text-[#3c3737] placeholder-[#b0a99f] focus:border-[#3f1e1f] focus:ring-2 focus:ring-[#3f1e1f] transition" />
                     <button type="submit"
-                        class="w-full rounded-lg bg-[#3f1e1f] text-white font-bold py-3 mt-2 hover:bg-[#2c1516] transition">Register</button>
+                        class="w-full rounded-lg bg-[#3f1e1f] text-[#f1eeea] font-bold py-3 mt-2 hover:bg-[#2c1516] transition">Register</button>
                 </form>
             </div>
         </div>

@@ -95,8 +95,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                         <div class="flex flex-wrap gap-2 p-4">
                             <a class="text-[#887563] text-base font-medium" href="cart.php">Cart</a>
-                            <span class="text-[#887563] text-base font-medium">/</span>
-                            <span class="text-[#181411] text-base font-medium">Checkout</span>
+                            <span class="text-[#3c3737] text-base font-medium">/</span>
+                            <span class="text-[#3c3737] text-base font-medium">Checkout</span>
                         </div>
 
                         <div class="flex max-w-[480px] gap-4 px-4 py-3">
@@ -228,7 +228,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                         <div class="flex px-4 py-3">
                             <button type="submit"
-                                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center rounded-lg h-12 px-5 flex-1 bg-[#e68019] text-[#181411] font-bold">
+                                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center rounded-lg h-12 px-5 flex-1 bg-[#3f1e1f] text-[#f1eeea] font-bold">
                                 Continue to Payment
                             </button>
                         </div>
