@@ -115,7 +115,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             loginTab.classList.add('border-[#3c3737]', 'text-[#3c3737]');
                             loginTab.classList.remove('border-transparent', 'text-[#7a7671]');
                             registerTab.classList.remove('border-[#3c3737]', 'text-[#3c3737]');
-                            registerTab.classList.add('border-transparent', 'text-[#f1eeea]');
+                            registerTab.classList.add('border-transparent', 'text-[#7a7671]');
                             loginFormSection.style.display = 'block';
                             registerFormSection.style.display = 'none';
                         }

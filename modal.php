@@ -25,7 +25,7 @@ if (empty($_SESSION['csrf_token'])) {
     style="display:none; position:fixed; z-index:1050; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.35);">
     <div class="flex items-center justify-center min-h-screen">
         <div class="relative w-full max-w-md mx-auto bg-white rounded-2xl shadow-2xl p-8 animate-fade-in">
-            <button type="button" class="close absolute top-4 right-4 text-3xl text-[#b0a99f] hover:text-[#e68019] transition-colors" style="background:none;border:none;cursor:pointer;z-index:10001;">&times;</button>
+            <button type="button" class="close absolute top-4 right-4 text-3xl text-[#b0a99f] hover:text-[#3f1e1f] transition-colors" style="background:none;border:none;cursor:pointer;z-index:10001;">&times;</button>
             <h1 class="text-[#3c3737] text-2xl font-extrabold text-center mb-2">Bienvenido a Stetson Latam</h1>
                     <div class="flex justify-center mb-6">
                         <button id="switch-to-login" class="px-4 py-2 font-bold border-b-2 border-[#3c3737] text-[#3c3737] focus:outline-none transition-colors">Iniciar sesión</button>
