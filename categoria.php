@@ -181,7 +181,8 @@ $num_productos = count($productos);
                         // Determinamos qué imagen mostrar: la de la categoría o una por defecto
                         $imagen_a_mostrar = !empty($categoria['imagen_banner']) ? $categoria['imagen_banner'] : 'img/default.jpg';
                         ?>
-                        <img src="<?php echo htmlspecialchars($imagen_a_mostrar); ?>" alt="<?php echo htmlspecialchars($categoria['nombre']); ?>">
+                        <img src="<?php echo htmlspecialchars($imagen_a_mostrar); ?>"
+                            alt="<?php echo htmlspecialchars($categoria['nombre']); ?>">
                     </div>
                 </section>
 
@@ -189,38 +190,71 @@ $num_productos = count($productos);
 
                     <div class="flex justify-between items-center p-4">
                         <div>
-                            <span class="font-bold text-sm text-[#3c3737] uppercase">ITEMS (<?php echo count($productos); ?>)</span>
+                            <span class="font-bold text-sm text-[#3c3737] uppercase">ITEMS
+                                (<?php echo count($productos); ?>)</span>
                         </div>
 
                         <div class="flex gap-4">
                             <div class="relative">
-                                <button id="size-filter-btn" type="button" class="flex items-center gap-x-1 text-sm font-semibold text-[#3c3737]">
+                                <button id="size-filter-btn" type="button"
+                                    class="flex items-center gap-x-1 text-sm font-semibold text-[#3c3737]">
                                     <span>SIZE</span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" fill="currentColor" viewBox="0 0 256 256">
-                                        <path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px"
+                                        fill="currentColor" viewBox="0 0 256 256">
+                                        <path
+                                            d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z">
+                                        </path>
                                     </svg>
                                 </button>
-                                <div id="size-dropdown" class="absolute hidden mt-2 w-40 bg-white shadow-lg rounded-lg p-2 z-10 border border-gray-200">
+                                <div id="size-dropdown"
+                                    class="absolute hidden mt-2 w-40 bg-white shadow-lg rounded-lg p-2 z-10 border border-gray-200">
+                                    <?php foreach ($tallas as $talla): ?>
+                                        <label
+                                            class="flex items-center gap-2 p-1 text-sm cursor-pointer hover:bg-gray-100 rounded">
+                                            <input type="checkbox" class="size-check" value="<?php echo $talla['id']; ?>"
+                                                <?php echo in_array($talla['id'], $_GET['sizes'] ?? []) ? 'checked' : ''; ?>>
+                                            <?php echo htmlspecialchars($talla['name']); ?>
+                                        </label>
+                                    <?php endforeach; ?>
                                 </div>
                             </div>
 
                             <div class="relative">
-                                <button id="color-filter-btn" type="button" class="flex items-center gap-x-1 text-sm font-semibold text-[#3c3737]">
+                                <button id="color-filter-btn" type="button"
+                                    class="flex items-center gap-x-1 text-sm font-semibold text-[#3c3737]">
                                     <span>COLOR</span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" fill="currentColor" viewBox="0 0 256 256">
-                                        <path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px"
+                                        fill="currentColor" viewBox="0 0 256 256">
+                                        <path
+                                            d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z">
+                                        </path>
                                     </svg>
                                 </button>
-                                <div id="color-dropdown" class="absolute hidden mt-2 w-48 bg-white shadow-lg rounded-lg p-2 z-10 border border-gray-200">
+                                <div id="color-dropdown"
+                                    class="absolute hidden mt-2 w-48 bg-white shadow-lg rounded-lg p-2 z-10 border border-gray-200">
+                                    <?php foreach ($colores as $color): ?>
+                                        <label
+                                            class="flex items-center gap-2 p-1 text-sm cursor-pointer hover:bg-gray-100 rounded">
+                                            <input type="checkbox" class="color-check" value="<?php echo $color['id']; ?>"
+                                                <?php echo in_array($color['id'], $_GET['colors'] ?? []) ? 'checked' : ''; ?>>
+                                            <span class="w-4 h-4 rounded-full border"
+                                                style="background-color: <?php echo htmlspecialchars($color['hex']); ?>"></span>
+                                            <?php echo htmlspecialchars($color['name']); ?>
+                                        </label>
+                                    <?php endforeach; ?>
                                 </div>
                             </div>
                         </div>
 
                         <div class="flex items-center gap-2">
-                            <button id="sort-btn" class="flex items-center gap-x-1 text-sm font-semibold text-[#3c3737]">
+                            <button id="sort-btn"
+                                class="flex items-center gap-x-1 text-sm font-semibold text-[#3c3737]">
                                 <span>SORT BY PRICE</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" fill="currentColor" viewBox="0 0 256 256">
-                                    <path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" fill="currentColor"
+                                    viewBox="0 0 256 256">
+                                    <path
+                                        d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z">
+                                    </path>
                                 </svg>
                             </button>
                         </div>
@@ -229,8 +263,11 @@ $num_productos = count($productos);
                     <div id="productos-container" class="product-grid">
                         <?php if (!empty($productos)): ?>
                             <?php foreach ($productos as $producto): ?>
-                                <a href="producto.php?id=<?php echo $producto['id']; ?>" class="product-card producto-item" data-price="<?php echo $producto['price']; ?>">
-                                    <div class="product-card-image" style="background-image: url('<?php echo htmlspecialchars($producto['image']); ?>');"></div>
+                                <a href="producto.php?id=<?php echo $producto['id']; ?>" class="product-card producto-item"
+                                    data-price="<?php echo $producto['price']; ?>">
+                                    <div class="product-card-image"
+                                        style="background-image: url('<?php echo htmlspecialchars($producto['image']); ?>');">
+                                    </div>
                                     <div class="product-card-info">
                                         <h3 class="product-name"><?php echo htmlspecialchars($producto['name']); ?></h3>
                                         <p class="product-price">$<?php echo number_format($producto['price'], 2); ?></p>
