@@ -9,6 +9,7 @@
             <a class="text-[#3c3737] text-base font-normal leading-normal min-w-40" href="termsOfService.php">Términos de Servicio</a>
             <a class="text-[#3c3737] text-base font-normal leading-normal min-w-40" href="faqs.php">Preguntas Frecuentes</a>
             <a class="text-[#3c3737] text-base font-normal leading-normal min-w-40" href="shippingReturns.php">Envíos y Devoluciones</a>
+            <a class="text-[#3c3737] text-base font-normal leading-normal min-w-40" href="store_locator.php">Localizador de tiendas</a>
          </div>
          <div class="flex flex-wrap justify-center gap-4">
             <a href="https://www.facebook.com/distribuidora.nacionaldesombreros">

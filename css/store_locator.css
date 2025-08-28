@@ -1,0 +1,100 @@
+/* css/store_locator.css */
+.locator-main {
+   padding: 2rem 5%;
+   background-color: #f9fafb;
+}
+
+.locator-container {
+   display: grid;
+   grid-template-columns: 1fr;
+   gap: 2rem;
+   max-width: 1400px;
+   margin: 0 auto;
+}
+
+@media(min-width: 1024px) {
+   .locator-container {
+      grid-template-columns: 350px 1fr;
+   }
+}
+
+.locator-sidebar {
+   background-color: #fff;
+   padding: 1.5rem;
+   border: 1px solid #e5e7eb;
+   height: fit-content;
+}
+
+.locator-sidebar h2 {
+   font-family: 'Lora', serif;
+   font-size: 1.5rem;
+   font-weight: bold;
+}
+
+.locator-sidebar p {
+   color: #6b7280;
+   margin-top: 0.5rem;
+}
+
+.map-placeholder {
+   width: 100%;
+   height: 400px;
+   background-color: #e5e7eb;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   color: #9ca3af;
+   border: 1px solid #d1d5db;
+}
+
+.store-results-list {
+   margin-top: 2rem;
+}
+
+.store-card {
+   display: grid;
+   grid-template-columns: 1fr;
+   grid-template-columns: 150px 1fr auto;
+   gap: 1.5rem;
+   align-items: center;
+   background-color: #fff;
+   padding: 1.5rem;
+   border: 1px solid #e5e7eb;
+   margin-bottom: 1rem;
+}
+
+.store-image {
+   width: 100%;
+   height: 120px;
+   object-fit: cover;
+   border-radius: 0.25rem;
+}
+
+.store-info h3 {
+   font-weight: 600;
+   font-size: 1.125rem;
+}
+
+.store-info p {
+   color: #6b7280;
+   font-size: 0.875rem;
+}
+
+.store-hours h4 {
+   font-weight: 600;
+}
+
+.store-hours p {
+   font-size: 0.875rem;
+}
+
+@media(min-width: 768px) {
+   .store-card {
+      grid-template-columns: 150px 1fr auto;
+   }
+
+   .store-image {
+      width: 150px;
+      height: 100px;
+   }
+}
