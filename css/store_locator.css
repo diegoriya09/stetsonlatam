@@ -29,10 +29,11 @@
    font-family: 'Lora', serif;
    font-size: 1.5rem;
    font-weight: bold;
+   color: #3c3737;
 }
 
 .locator-sidebar p {
-   color: #6b7280;
+   color: #3c3737;
    margin-top: 0.5rem;
 }
 
@@ -43,7 +44,7 @@
    display: flex;
    align-items: center;
    justify-content: center;
-   color: #9ca3af;
+   color: #3c3737;
    border: 1px solid #d1d5db;
 }
 
@@ -73,19 +74,22 @@
 .store-info h3 {
    font-weight: 600;
    font-size: 1.125rem;
+   color: #3c3737;
 }
 
 .store-info p {
-   color: #6b7280;
+   color: #3c3737;
    font-size: 0.875rem;
 }
 
 .store-hours h4 {
    font-weight: 600;
+   color: #3c3737;
 }
 
 .store-hours p {
    font-size: 0.875rem;
+   color: #3c3737;
 }
 
 @media(min-width: 768px) {
