@@ -65,7 +65,7 @@ try {
             <h2 class="section-title">Productos Destacados</h2>
             <div class="product-grid">
                 <?php foreach ($featured_products as $producto): ?>
-                    <a href="producto/<?php echo $producto['id']; ?>" class="product-card">
+                    <a href="producto<?php echo $producto['id']; ?>" class="product-card">
                         <div class="product-card-image" style="background-image: url('<?php echo htmlspecialchars($producto['image']); ?>');"></div>
                         <div class="product-card-info">
                             <h3 class="product-name"><?php echo htmlspecialchars($producto['name']); ?></h3>
