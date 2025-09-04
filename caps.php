@@ -181,7 +181,7 @@ $conn->close();
           </div>
           <div id="productos-container" class="product-grid">
             <?php foreach ($productos as $producto): ?>
-              <a href="producto/<?php echo $producto['id']; ?>" class="product-card producto-item"
+              <a href="producto<?php echo $producto['id']; ?>" class="product-card producto-item"
                 data-price="<?php echo $producto['price']; ?>">
                 <div class="product-card-image"
                   style="background-image: url('<?php echo htmlspecialchars($producto["image"]); ?>');"></div>
