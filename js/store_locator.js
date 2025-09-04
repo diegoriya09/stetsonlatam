@@ -202,7 +202,7 @@ function setupSearch() {
       const country = document.getElementById('country-select').value;
       const city = document.getElementById('city-select').value;
 
-      const url = new URL('php/get_stores.php', window.location.origin);
+      const url = new URL('php/get_stores', window.location.origin);
       if (country) url.searchParams.append('country', country);
       if (city) url.searchParams.append('city', city);
 
