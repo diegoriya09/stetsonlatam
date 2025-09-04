@@ -20,7 +20,7 @@ RewriteRule ^(.*?)/?$ $1.php [L]
 # --- REGLA 2: URLs amigables para categorías y productos ---
 
 # Regla para /categoria/ID (ej: /categoria/8)
-RewriteRule ^categoria/([0-9]+)$ categoria.php?id=$1 [NC,L]
+RewriteRule ^categoria([0-9]+)$ categoria.php?id=$1 [NC,L]
 
 # Regla para /producto/ID (ej: /producto/15)
-RewriteRule ^producto/([0-9]+)$ producto.php?id=$1 [NC,L]
+RewriteRule ^producto([0-9]+)$ producto.php?id=$1 [NC,L]

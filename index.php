@@ -51,7 +51,7 @@ try {
             <h2 class="section-title">Compra por Categoría</h2>
             <div class="collections-grid">
                 <?php foreach ($collections as $collection): ?>
-                    <a href="categoria/<?php echo $collection['id']; ?>" class="collection-card">
+                    <a href="categoria<?php echo $collection['id']; ?>" class="collection-card">
                         <img src="<?php echo htmlspecialchars(!empty($collection['imagen_banner']) ? $collection['imagen_banner'] : 'img/default.jpg'); ?>" alt="<?php echo htmlspecialchars($collection['nombre']); ?>">
                         <div class="collection-card-overlay">
                             <h3><?php echo htmlspecialchars($collection['nombre']); ?></h3>
