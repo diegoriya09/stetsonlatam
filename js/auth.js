@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const formData = new FormData(loginForm);
 
             try {
-                const response = await fetch('../php/login', {
+                const response = await fetch('../php/login.php', {
                     method: 'POST',
                     body: formData,
                     credentials: 'same-origin'
@@ -89,7 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const formData = new FormData(registerForm);
 
             try {
-                const response = await fetch('php/register', {
+                const response = await fetch('php/register.php', {
                     method: 'POST',
                     body: formData,
                     credentials: 'same-origin'
