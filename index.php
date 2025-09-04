@@ -1,5 +1,5 @@
 <?php
-require_once 'php/conexion.php';
+require_once 'php/conexion';
 session_start();
 
 try {
