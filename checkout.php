@@ -252,7 +252,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                             html: `<p>Tu número de pedido es <strong>#${data.pedido_id}</strong></p>`,
                                             confirmButtonText: 'OK'
                                         }).then(() => {
-                                            window.location.href = 'index.php';
+                                            window.location.href = 'https://stetsonlatam.com/';
                                         });
                                     } else {
                                         Swal.fire({

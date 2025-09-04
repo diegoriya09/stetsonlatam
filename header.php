@@ -63,7 +63,7 @@ if (!empty($categorias_flat)) {
   <nav class="hidden md:flex flex-1 justify-center desktop-nav">
     <div class="flex items-center gap-9">
       <div class="nav-item">
-        <a href="hats.php" class="text-[#3c3737] text-sm font-bold uppercase leading-normal">Sombreros</a>
+        <a href="hats" class="text-[#3c3737] text-sm font-bold uppercase leading-normal">Sombreros</a>
         <?php if (!empty($hat_collections)): ?>
           <div class="mega-menu">
             <div class="mega-menu-content">
@@ -88,7 +88,7 @@ if (!empty($categorias_flat)) {
       </div>
 
       <div class="nav-item">
-        <a href="caps.php" class="text-[#3c3737] text-sm font-bold uppercase leading-normal">Cachuchas</a>
+        <a href="caps" class="text-[#3c3737] text-sm font-bold uppercase leading-normal">Cachuchas</a>
         <?php if (!empty($cap_collections)): ?>
           <div class="mega-menu">
             <div class="mega-menu-content">

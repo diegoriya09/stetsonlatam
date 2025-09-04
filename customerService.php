@@ -47,7 +47,7 @@
                </div>
                <h2 class="text-[#3c3737] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Temas de ayuda</h2>
                <div class="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-3 p-4">
-                  <a href="faqs.php">
+                  <a href="faqs">
                      <div class="flex flex-1 gap-3 rounded-lg border border-[#e2e1df] bg-white p-4 flex-col">
                         <div class="text-[#3c3737]" data-icon="Question" data-size="24px" data-weight="regular">
                            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
@@ -61,7 +61,7 @@
                         </div>
                      </div>
                   </a>
-                  <a href="contactUs.php">
+                  <a href="contactUs">
                      <div class="flex flex-1 gap-3 rounded-lg border border-[#e2e1df] bg-white p-4 flex-col">
                         <div class="text-[#3c3737]" data-icon="Envelope" data-size="24px" data-weight="regular">
                            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
@@ -75,7 +75,7 @@
                         </div>
                      </div>
                   </a>
-                  <a href="shippingReturns.php">
+                  <a href="shippingReturns">
                      <div class="flex flex-1 gap-3 rounded-lg border border-[#e2e1df] bg-white p-4 flex-col">
                         <div class="text-[#3c3737]" data-icon="Truck" data-size="24px" data-weight="regular">
                            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
@@ -89,7 +89,7 @@
                         </div>
                      </div>
                   </a>
-                  <a href="privacyPolicy.php">
+                  <a href="privacyPolicy">
                      <div class="flex flex-1 gap-3 rounded-lg border border-[#e2e1df] bg-white p-4 flex-col">
                         <div class="text-[#3c3737]" data-icon="ShieldCheck" data-size="24px" data-weight="regular">
                            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
@@ -103,7 +103,7 @@
                         </div>
                      </div>
                   </a>
-                  <a href="termsOfService.php">
+                  <a href="termsOfService">
                      <div class="flex flex-1 gap-3 rounded-lg border border-[#e2e1df] bg-white p-4 flex-col">
                         <div class="text-[#3c3737]" data-icon="FileText" data-size="24px" data-weight="regular">
                            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">

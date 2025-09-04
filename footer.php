@@ -2,14 +2,14 @@
    <div class="flex max-w-[960px] flex-1 flex-col">
       <footer class="flex flex-col gap-6 px-5 py-10 text-center @container">
          <div class="flex flex-wrap items-center justify-center gap-6 @[480px]:flex-row @[480px]:justify-around">
-            <a class="text-[#3c3737] text-base font-normal leading-normal min-w-40" href="aboutUs.php">Acerca de nosotros</a>
-            <a class="text-[#3c3737] text-base font-normal leading-normal min-w-40" href="contactUs.php">Contáctanos</a>
-            <a class="text-[#3c3737] text-base font-normal leading-normal min-w-40" href="customerService.php">Servicio al Cliente</a>
-            <a class="text-[#3c3737] text-base font-normal leading-normal min-w-40" href="privacyPolicy.php">Política de Privacidad</a>
-            <a class="text-[#3c3737] text-base font-normal leading-normal min-w-40" href="termsOfService.php">Términos de Servicio</a>
-            <a class="text-[#3c3737] text-base font-normal leading-normal min-w-40" href="faqs.php">Preguntas Frecuentes</a>
-            <a class="text-[#3c3737] text-base font-normal leading-normal min-w-40" href="shippingReturns.php">Envíos y Devoluciones</a>
-            <a class="text-[#3c3737] text-base font-normal leading-normal min-w-40" href="store_locator.php">Localizador de tiendas</a>
+            <a class="text-[#3c3737] text-base font-normal leading-normal min-w-40" href="aboutUs">Acerca de nosotros</a>
+            <a class="text-[#3c3737] text-base font-normal leading-normal min-w-40" href="contactUs">Contáctanos</a>
+            <a class="text-[#3c3737] text-base font-normal leading-normal min-w-40" href="customerService">Servicio al Cliente</a>
+            <a class="text-[#3c3737] text-base font-normal leading-normal min-w-40" href="privacyPolicy">Política de Privacidad</a>
+            <a class="text-[#3c3737] text-base font-normal leading-normal min-w-40" href="termsOfService">Términos de Servicio</a>
+            <a class="text-[#3c3737] text-base font-normal leading-normal min-w-40" href="faqs">Preguntas Frecuentes</a>
+            <a class="text-[#3c3737] text-base font-normal leading-normal min-w-40" href="shippingReturns">Envíos y Devoluciones</a>
+            <a class="text-[#3c3737] text-base font-normal leading-normal min-w-40" href="store_locator">Localizador de tiendas</a>
          </div>
          <div class="flex flex-wrap justify-center gap-4">
             <a href="https://www.facebook.com/distribuidora.nacionaldesombreros">

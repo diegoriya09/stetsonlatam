@@ -41,7 +41,7 @@ $user_id = $_SESSION['user_id'] ?? null;
                     <span>Total</span>
                     <span id="summary-total">$0.00</span>
                 </div>
-                <a href="checkout.php" id="checkout-btn" class="checkout-button">Proceder al pago</a>
+                <a id="checkout-btn" class="checkout-button">Proceder al pago</a>
             </aside>
         </div>
     </main>

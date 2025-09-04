@@ -255,7 +255,7 @@ $num_productos = count($productos);
                     <div id="productos-container" class="product-grid">
                         <?php if (!empty($productos)): ?>
                             <?php foreach ($productos as $producto): ?>
-                                <a href="producto.php?id=<?php echo $producto['id']; ?>" class="product-card producto-item"
+                                <a href="producto/<?php echo $producto['id']; ?>" class="product-card producto-item"
                                     data-price="<?php echo $producto['price']; ?>">
                                     <div class="product-card-image"
                                         style="background-image: url('<?php echo htmlspecialchars($producto['image']); ?>');">
