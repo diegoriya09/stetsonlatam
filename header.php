@@ -179,8 +179,8 @@ if (!empty($categorias_flat)) {
     <button id="close-nav-btn" class="text-3xl font-bold">&times;</button>
   </div>
   <nav class="mobile-nav-links">
-    <a href="hats.php">Hats</a>
-    <a href="caps.php">Caps</a>
+    <a href="hats">Hats</a>
+    <a href="caps">Caps</a>
   </nav>
 </div>
 
