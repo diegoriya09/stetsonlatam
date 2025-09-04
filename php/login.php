@@ -9,8 +9,8 @@ session_start();
 error_log("POST token: " . ($_POST['csrf_token'] ?? ''));
 error_log("SESSION token: " . ($_SESSION['csrf_token'] ?? ''));
 
-require 'conexion';
-require '../vendor/autoload';
+require 'conexion.php';
+require '../vendor/autoload.php';
 
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
