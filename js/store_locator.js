@@ -2,6 +2,7 @@
 let map;
 let allStores = [];
 let currentMarkers = [];
+let locations = {}; // Para guardar la lista de países y ciudades
 
 // 1. El script se inicia al cargar la página
 document.addEventListener('DOMContentLoaded', () => {
@@ -28,7 +29,6 @@ const loadGoogleMaps = async () => {
    }
 };
 
-// 4. Esta función es llamada por el script de Google Maps una vez que está listo
 async function initMap() {
    const defaultPosition = { lat: 4.710, lng: -74.072 }; // Centro de Colombia
    map = new google.maps.Map(document.getElementById("map"), {
@@ -36,10 +36,56 @@ async function initMap() {
       zoom: 5,
    });
 
-   await loadAllStores();
+   await initializeLocator();
    setupSearch();
    getUserLocation();
 }
+
+// NUEVA FUNCIÓN de inicialización
+const initializeLocator = async () => {
+   try {
+      const response = await fetch('php/get_locations.php');
+      const data = await response.json();
+      if (data.success) {
+         locations = data.locations;
+         populateCountrySelect();
+      }
+   } catch (error) { console.error('Error fetching locations:', error); }
+};
+
+// NUEVA FUNCIÓN para poblar el dropdown de países
+const populateCountrySelect = () => {
+   const countrySelect = document.getElementById('country-select');
+   countrySelect.innerHTML = '<option value="">Todos los países</option>'; // Opción por defecto
+   for (const country in locations) {
+      const option = document.createElement('option');
+      option.value = country;
+      option.textContent = country;
+      countrySelect.appendChild(option);
+   }
+
+   countrySelect.addEventListener('change', () => {
+      populateCitySelect(countrySelect.value);
+   });
+};
+
+const populateCitySelect = (selectedCountry) => {
+   const citySelect = document.getElementById('city-select');
+   citySelect.innerHTML = '<option value="">Todas las ciudades</option>';
+
+   if (selectedCountry && locations[selectedCountry]) {
+      citySelect.disabled = false;
+      locations[selectedCountry].forEach(city => {
+         const option = document.createElement('option');
+         option.value = city;
+         option.textContent = city;
+         citySelect.appendChild(option);
+      });
+   } else {
+      citySelect.disabled = true;
+      citySelect.innerHTML = '<option value="">Selecciona un país primero</option>';
+   }
+};
 
 // Carga TODAS las tiendas al iniciar
 const loadAllStores = async () => {
@@ -144,28 +190,22 @@ const renderMapMarkers = (storesToRender) => {
 // Configura la búsqueda
 function setupSearch() {
    const searchBtn = document.getElementById('search-btn');
-   const countryInput = document.getElementById('country-search');
-   const cityInput = document.getElementById('city-search');
 
    searchBtn.addEventListener('click', async () => {
-      const country = countryInput.value;
-      const city = cityInput.value;
+      const country = document.getElementById('country-select').value;
+      const city = document.getElementById('city-select').value;
 
-      // Construimos la URL con los parámetros de búsqueda
       const url = new URL('php/get_stores.php', window.location.origin);
       if (country) url.searchParams.append('country', country);
       if (city) url.searchParams.append('city', city);
 
-      // Hacemos la petición con los filtros
       try {
          const response = await fetch(url);
          const data = await response.json();
          if (data.success) {
-            processStores(null, data.stores); // Procesamos solo las tiendas filtradas
+            processStores(null, data.stores);
          }
-      } catch (error) {
-         console.error('Error during search:', error);
-      }
+      } catch (error) { console.error('Error durante la búsqueda:', error); }
    });
 }
 
