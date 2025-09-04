@@ -6,28 +6,38 @@ use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
 ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-
 
 header('Content-Type: application/json');
 
-// Obtener JWT desde el header
-$headers = getallheaders();
-if (!isset($headers['Authorization'])) {
+// --- INICIO: Bloque de Autenticación CORREGIDO ---
+function getAuthorizationHeader()
+{
+    if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
+        return trim($_SERVER["HTTP_AUTHORIZATION"]);
+    }
+    if (isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION'])) {
+        return trim($_SERVER["REDIRECT_HTTP_AUTHORIZATION"]);
+    }
+    if (function_exists('apache_request_headers')) {
+        $requestHeaders = apache_request_headers();
+        if (isset($requestHeaders['Authorization'])) {
+            return trim($requestHeaders['Authorization']);
+        }
+    }
+    return null;
+}
+
+$authHeader = getAuthorizationHeader();
+if (!$authHeader || !preg_match('/Bearer\s(\S+)/', $authHeader, $matches)) {
     http_response_code(401);
-    echo json_encode(['success' => false, 'message' => 'No autorizado']);
+    echo json_encode(['success' => false, 'message' => 'No autorizado: Token no proporcionado o en formato incorrecto.']);
     exit;
 }
 
-list($jwt) = sscanf($headers['Authorization'], 'Bearer %s');
-if (!$jwt) {
-    http_response_code(401);
-    echo json_encode(['success' => false, 'message' => 'Token inválido']);
-    exit;
-}
-
+$jwt = $matches[1];
 $secret_key = "StetsonLatam1977";
+
 try {
     $decoded = JWT::decode($jwt, new Key($secret_key, 'HS256'));
     $user_id = $decoded->data->id;
@@ -36,10 +46,11 @@ try {
     echo json_encode(['success' => false, 'message' => 'Token inválido', 'error' => $e->getMessage()]);
     exit;
 }
+// --- FIN: Bloque de Autenticación ---
 
 // Obtener datos del body
 $data = json_decode(file_get_contents('php://input'), true);
-error_log(print_r($data, true)); 
+error_log(print_r($data, true));
 $producto_id = $data['producto_id'] ?? null;
 $quantity = $data['quantity'] ?? 1;
 $color_id = isset($data['color_id']) ? intval($data['color_id']) : null;
