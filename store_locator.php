@@ -20,6 +20,17 @@
          <aside class="locator-sidebar">
             <h2>UBICACIONES DE LAS TIENDAS</h2>
             <p>Encuentra productos seleccionados de Stetson en un minorista cerca de ti.</p>
+            <div class="search-form">
+               <div class="form-group">
+                  <label for="country-search">País</label>
+                  <input type="text" id="country-search" placeholder="Ej: Colombia">
+               </div>
+               <div class="form-group">
+                  <label for="city-search">Ciudad</label>
+                  <input type="text" id="city-search" placeholder="Ej: Medellín">
+               </div>
+               <button id="search-btn" class="search-button">Buscar</button>
+            </div>
          </aside>
          <div class="locator-content">
             <div id="map" style="width: 100%; height: 500px;" class="map-placeholder">

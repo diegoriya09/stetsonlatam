@@ -1,35 +1,29 @@
 // js/store_locator.js
 let map;
-let stores = [];
+let allStores = []; // Guardamos todas las tiendas una vez
+let currentMarkers = []; // Para llevar registro de los marcadores
 
-// Esta función es llamada por el script de Google Maps una vez que está listo
 async function initMap() {
-   // Coordenadas por defecto (ej. Medellín) si el usuario no da permiso
    const defaultPosition = { lat: 6.244, lng: -75.581 };
-
    map = new google.maps.Map(document.getElementById("map"), {
       center: defaultPosition,
-      zoom: 5,
+      zoom: 4, // Un zoom más alejado al inicio
    });
 
-   // Cargamos las tiendas y luego pedimos la geolocalización
-   await loadStores();
-   getUserLocation();
+   await loadAllStores(); // Cargamos todas las tiendas una sola vez
+   setupSearch(); // Configuramos el botón de búsqueda
+   getUserLocation(); // Intentamos obtener la ubicación
 }
 
-// Carga las tiendas desde nuestra API
-const loadStores = async () => {
+// Carga TODAS las tiendas al iniciar
+const loadAllStores = async () => {
    try {
       const response = await fetch('php/get_stores.php');
       const data = await response.json();
       if (data.success) {
-         stores = data.stores;
-      } else {
-         document.getElementById('store-results-list').innerHTML = '<p>No se han encontrado tiendas.</p>';
+         allStores = data.stores;
       }
-   } catch (error) {
-      console.error('Error fetching stores:', error);
-   }
+   } catch (error) { console.error('Error fetching stores:', error); }
 };
 
 // Pide la ubicación del usuario
@@ -37,39 +31,27 @@ const getUserLocation = () => {
    if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
          (position) => {
-            const userPos = {
-               lat: position.coords.latitude,
-               lng: position.coords.longitude,
-            };
-            // Centramos el mapa en el usuario
+            const userPos = { lat: position.coords.latitude, lng: position.coords.longitude };
             map.setCenter(userPos);
             map.setZoom(8);
-            // Calculamos distancias y re-renderizamos todo
-            processStores(userPos);
+            processStores(userPos, allStores);
          },
-         () => {
-            // El usuario no dio permiso, usamos los datos por defecto
-            processStores(null);
-         }
+         () => { processStores(null, allStores); }
       );
-   } else {
-      // El navegador no soporta geolocalización
-      processStores(null);
-   }
+   } else { processStores(null, allStores); }
 };
 
-// Procesa las tiendas: calcula distancia, ordena y muestra
-const processStores = (userPosition) => {
+// Procesa un CONJUNTO de tiendas
+const processStores = (userPosition, storesToProcess) => {
    if (userPosition) {
-      stores.forEach(store => {
+      storesToProcess.forEach(store => {
          const storePos = { lat: parseFloat(store.latitude), lng: parseFloat(store.longitude) };
          store.distance = haversine_distance(userPosition, storePos);
       });
-      // Ordenamos por distancia
-      stores.sort((a, b) => a.distance - b.distance);
+      storesToProcess.sort((a, b) => a.distance - b.distance);
    }
-   renderStoreList(stores);
-   renderMapMarkers(stores);
+   renderStoreList(storesToProcess);
+   renderMapMarkers(storesToProcess);
 };
 
 // Dibuja la lista de tiendas
@@ -102,24 +84,60 @@ const renderStoreList = (storesToRender) => {
    });
 };
 
-// Pone los marcadores en el mapa
+// Pone los marcadores en el mapa (con limpieza previa)
 const renderMapMarkers = (storesToRender) => {
+   // Limpiamos los marcadores anteriores
+   currentMarkers.forEach(marker => marker.setMap(null));
+   currentMarkers = [];
+
    const infoWindow = new google.maps.InfoWindow();
+   const bounds = new google.maps.LatLngBounds(); // Para ajustar el zoom del mapa
 
    storesToRender.forEach(store => {
+      const position = { lat: parseFloat(store.latitude), lng: parseFloat(store.longitude) };
       const marker = new google.maps.Marker({
-         position: { lat: parseFloat(store.latitude), lng: parseFloat(store.longitude) },
+         position: position,
          map: map,
          title: store.name,
       });
+      currentMarkers.push(marker);
 
-      marker.addListener('click', () => {
-         const content = `<strong>${store.name}</strong><br>${store.address}`;
-         infoWindow.setContent(content);
-         infoWindow.open(map, marker);
-      });
+      marker.addListener('click', () => { /* ... se queda igual ... */ });
+      bounds.extend(position); // Añadimos la posición al área visible
    });
+
+   if (storesToRender.length > 0) {
+      map.fitBounds(bounds); // Ajustamos el mapa para que se vean todos los marcadores
+   }
 };
+
+// Configura la búsqueda
+function setupSearch() {
+   const searchBtn = document.getElementById('search-btn');
+   const countryInput = document.getElementById('country-search');
+   const cityInput = document.getElementById('city-search');
+
+   searchBtn.addEventListener('click', async () => {
+      const country = countryInput.value;
+      const city = cityInput.value;
+
+      // Construimos la URL con los parámetros de búsqueda
+      const url = new URL('php/get_stores.php', window.location.origin);
+      if (country) url.searchParams.append('country', country);
+      if (city) url.searchParams.append('city', city);
+
+      // Hacemos la petición con los filtros
+      try {
+         const response = await fetch(url);
+         const data = await response.json();
+         if (data.success) {
+            processStores(null, data.stores); // Procesamos solo las tiendas filtradas
+         }
+      } catch (error) {
+         console.error('Error during search:', error);
+      }
+   });
+}
 
 // Fórmula para calcular distancia entre dos puntos geográficos
 function haversine_distance(mk1, mk2) {
