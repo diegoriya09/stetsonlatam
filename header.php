@@ -165,7 +165,7 @@ if (!empty($categorias_flat)) {
           </svg>
         </button>
       </div>
-      <a href="index.php">
+      <a href="https://stetsonlatam.com/">
         <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
           style='background-image: url("img/logo.webp");'></div>
       </a>

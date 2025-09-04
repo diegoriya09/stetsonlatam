@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const formData = new FormData(loginForm);
 
             try {
-                const response = await fetch('php/login.php', {
+                const response = await fetch('../php/login.php', {
                     method: 'POST',
                     body: formData,
                     credentials: 'same-origin'
@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         confirmButtonText: 'OK'
                     }).then(() => {
                         if (userRole === 'admin') {
-                            window.location.href = '../admin/admin.php'; // 👈 admin redirigido
+                            window.location.href = '../admin/admin'; // 👈 admin redirigido
                         } else {
                             location.reload(); // 👈 usuario normal se queda en index
                         }
@@ -171,7 +171,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 localStorage.removeItem('jwt');
 
                 // Redirigir
-                window.location.href = 'index.php';
+                window.location.href = 'https://stetsonlatam.com/';
             });
         });
     }
@@ -208,7 +208,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 confirmButtonText: 'Iniciar sesión'
             }).then(() => {
                 localStorage.removeItem('jwt');
-                window.location.href = 'index.php';
+                window.location.href = 'https://stetsonlatam.com/';
             });
         }
     });
