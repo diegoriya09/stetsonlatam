@@ -25,8 +25,8 @@ try {
 <html lang="es">
 
 <head>
-    <title>Stetson LATAM - Original Stetson Hats for All Latin America</title>
-    <meta name="description" content="In Stetson LATAM, in alliance with DINALSOM, find legendary hats with shipments to all Latin America. Shop online with confidence." />
+    <title>Stetson LATAM - Sombreros Stetson originales para toda Latinoamérica</title>
+    <meta name="description" content="En Stetson LATAM, en alianza con DINALSOM, encuentra sombreros legendarios con envíos a toda Latinoamérica. Compra en línea con confianza." />
     <link rel="icon" href="img/logo.webp" type="image/x-icon">
     <link href="css/index.css?v=<?php echo time(); ?>" rel="stylesheet">
     <link href="css/categoria.css?v=<?php echo time(); ?>" rel="stylesheet">
@@ -36,71 +36,68 @@ try {
 </head>
 
 <body>
-    <div class="page-wrapper">
-        <div class="content-container">
-            <?php include "header.php"; ?>
+    <?php include "header.php"; ?>
 
-            <main>
-                <section class="hero-section">
-                    <div class="hero-content">
-                        <h1 class="hero-title">Estilo auténtico, legado atemporal</h1>
-                        <h2 class="hero-subtitle">Explora nuestra colección curada de sombreros premium, elaborados con el espíritu del Oeste Americano.</h2>
-                        <a href="hats" class="hero-button">COMPRA AHORA</a>
-                    </div>
-                </section>
+    <main>
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title">Estilo auténtico, legado atemporal</h1>
+                <h2 class="hero-subtitle">Explora nuestra colección curada de sombreros premium, elaborados con el espíritu del Oeste Americano.</h2>
+                <a href="hats" class="hero-button">COMPRA AHORA</a>
+            </div>
+        </section>
 
-                <section class="home-section">
-                    <h2 class="section-title">Compra por Categoría</h2>
-                    <div class="collections-grid">
-                        <?php foreach ($collections as $collection): ?>
-                            <a href="categoria/<?php echo $collection['id']; ?>" class="collection-card">
-                                <img src="<?php echo htmlspecialchars(!empty($collection['imagen_banner']) ? $collection['imagen_banner'] : 'img/default.jpg'); ?>" alt="<?php echo htmlspecialchars($collection['nombre']); ?>">
-                                <div class="collection-card-overlay">
-                                    <h3><?php echo htmlspecialchars($collection['nombre']); ?></h3>
-                                </div>
-                            </a>
-                        <?php endforeach; ?>
-                    </div>
-                </section>
+        <section class="home-section">
+            <h2 class="section-title">Compra por Categoría</h2>
+            <div class="collections-grid">
+                <?php foreach ($collections as $collection): ?>
+                    <a href="categoria/<?php echo $collection['id']; ?>" class="collection-card">
+                        <img src="<?php echo htmlspecialchars(!empty($collection['imagen_banner']) ? $collection['imagen_banner'] : 'img/default.jpg'); ?>" alt="<?php echo htmlspecialchars($collection['nombre']); ?>">
+                        <div class="collection-card-overlay">
+                            <h3><?php echo htmlspecialchars($collection['nombre']); ?></h3>
+                        </div>
+                    </a>
+                <?php endforeach; ?>
+            </div>
+        </section>
 
-                <section class="home-section">
-                    <h2 class="section-title">Productos Destacados</h2>
-                    <div class="product-grid">
-                        <?php foreach ($featured_products as $producto): ?>
-                            <a href="producto/<?php echo $producto['id']; ?>" class="product-card">
-                                <div class="product-card-image" style="background-image: url('<?php echo htmlspecialchars($producto['image']); ?>');"></div>
-                                <div class="product-card-info">
-                                    <h3 class="product-name"><?php echo htmlspecialchars($producto['name']); ?></h3>
-                                    <p class="product-price">$<?php echo number_format($producto['price'], 2); ?></p>
-                                </div>
-                            </a>
-                        <?php endforeach; ?>
-                    </div>
-                </section>
+        <section class="home-section">
+            <h2 class="section-title">Productos Destacados</h2>
+            <div class="product-grid">
+                <?php foreach ($featured_products as $producto): ?>
+                    <a href="producto/<?php echo $producto['id']; ?>" class="product-card">
+                        <div class="product-card-image" style="background-image: url('<?php echo htmlspecialchars($producto['image']); ?>');"></div>
+                        <div class="product-card-info">
+                            <h3 class="product-name"><?php echo htmlspecialchars($producto['name']); ?></h3>
+                            <p class="product-price">$<?php echo number_format($producto['price'], 2); ?></p>
+                        </div>
+                    </a>
+                <?php endforeach; ?>
+            </div>
+        </section>
 
-                <section class="home-section story-section">
-                    <div class="story-image"></div>
-                    <div class="story-content">
-                        <h2 class="section-title">Un legado de artesanía</h2>
-                        <p>Fundada en 1865, Stetson nació del espíritu del Oeste y creció hasta convertirse en un icono estadounidense. El gesto amistoso de John B. Stetson hacia un viajero descarriado en la nueva frontera dio lugar al primer «sombrero de vaquero» del mundo. Desde entonces, Stetson ha sido líder mundial en sombreros, una marca de confianza en todo el mundo, y se ha convertido en un accesorio imprescindible para los aficionados al Oeste de todo el mundo.</p>
-                        <a href="aboutUs" class="story-button">NUESTRA HISTORIA</a>
-                    </div>
-                </section>
+        <section class="home-section story-section">
+            <div class="story-image"></div>
+            <div class="story-content">
+                <h2 class="section-title">Un legado de artesanía</h2>
+                <p>Fundada en 1865, Stetson nació del espíritu del Oeste y creció para convertirse en un ícono americano. El gesto amistoso de John B. Stetson hacia un viajero extraviado en la nueva frontera dio origen al primer "sombrero de vaquero" del mundo. Desde entonces, Stetson ha sido un líder global en sombreros, una marca de confianza en todo el mundo, y se ha convertido en un accesorio esencial para los entusiastas del Oeste en todas partes.</p>
+                <a href="aboutUs" class="story-button">NUESTRA HISTORIA</a>
+            </div>
+        </section>
 
-                <section id="signup-section" class="home-section signup-section">
-                    <h2 class="section-title">Únete a la comunidad de Stetson</h2>
-                    <p>Mantente al día con las últimas noticias, ofertas exclusivas y lanzamientos de nuevos productos.</p>
-                    <button id="open-user-modal" class="signup-button">REGÍSTRATE</button>
-                </section>
-            </main>
+        <section id="signup-section" class="home-section signup-section">
+            <h2 class="section-title">Únete a la comunidad Stetson</h2>
+            <p>Mantente al día con las últimas noticias, ofertas exclusivas y lanzamientos de nuevos productos.</p>
+            <button id="open-user-modal" class="signup-button">REGÍSTRATE</button>
+        </section>
+    </main>
 
-            <?php include 'footer.php'; ?>
-        </div>
-    </div>
-
+    <?php include 'footer.php'; ?>
     <?php include 'modal.php'; ?>
     <script src="js/index.js?v=<?php echo time(); ?>"></script>
     <script src="js/auth.js?v=<?php echo time(); ?>"></script>
 </body>
+
+</html>
 
 </html>
