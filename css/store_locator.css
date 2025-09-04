@@ -54,14 +54,13 @@
 
 .store-card {
    display: grid;
-   grid-template-columns: 1fr;
-   grid-template-columns: 150px 1fr auto;
+   grid-template-columns: 150px minmax(0, 1fr) 150px;    
    gap: 1.5rem;
    align-items: center;
    background-color: #fff;
    padding: 1.5rem;
    border: 1px solid #e5e7eb;
-   margin-bottom: 1rem;
+   margin-bottom: 0;
 }
 
 .store-image {
@@ -82,9 +81,17 @@
    font-size: 0.875rem;
 }
 
+.store-hours {
+    /* Le damos un ancho fijo y alineamos el texto a la derecha */
+    width: 150px; 
+    text-align: right;
+    flex-shrink: 0; /* Evita que se encoja */
+}
+
 .store-hours h4 {
    font-weight: 600;
    color: #3c3737;
+   text-transform: uppercase;
 }
 
 .store-hours p {
