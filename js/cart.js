@@ -166,7 +166,7 @@ document.getElementById('cart-items-container')?.addEventListener('click', async
       confirmButtonText: 'Yes, remove it!'
     }).then(async (result) => {
       if (result.isConfirmed) {
-        await postToCartAPI('php/cart/remove_from_cart.php', { cart_item_id: cart_item_id });
+        await postToCartAPI('php/cart/remove_from_cart', { cart_item_id: cart_item_id });
         loadCart(); // Recarga el carrito
       }
     });
