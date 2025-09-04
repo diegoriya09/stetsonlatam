@@ -1,10 +1,5 @@
 <?php
-require_once 'php/conexion';
-
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
+require_once 'php/conexion.php';
 session_start();
 
 try {
@@ -50,7 +45,7 @@ try {
                     <div class="hero-content">
                         <h1 class="hero-title">Estilo auténtico, legado atemporal</h1>
                         <h2 class="hero-subtitle">Explora nuestra colección curada de sombreros premium, elaborados con el espíritu del Oeste Americano.</h2>
-                        <a href="hats.php" class="hero-button">COMPRA AHORA</a>
+                        <a href="hats" class="hero-button">COMPRA AHORA</a>
                     </div>
                 </section>
 
