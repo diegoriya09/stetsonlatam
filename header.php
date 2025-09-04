@@ -1,6 +1,6 @@
 <?php
 // --- 1. CONFIGURACIÓN DE LA BASE DE DATOS ---
-require 'php/conexion';
+require 'php/conexion.php';
 
 try {
   // Esta es la consulta que ya tienes
