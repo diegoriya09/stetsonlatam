@@ -1,6 +1,6 @@
 <?php
 // --- 1. CONFIGURACIÓN DE LA BASE DE DATOS ---
-require 'php/conexion.php';
+require 'php/conexion';
 
 try {
   // Esta es la consulta que ya tienes
@@ -216,7 +216,7 @@ if (!empty($categorias_flat)) {
       }
 
       try {
-        const res = await fetch("php/search.php?q=" + encodeURIComponent(q), {
+        const res = await fetch("php/search?q=" + encodeURIComponent(q), {
           signal: controller.signal
         });
         if (!res.ok) throw new Error("HTTP " + res.status);

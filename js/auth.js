@@ -89,7 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const formData = new FormData(registerForm);
 
             try {
-                const response = await fetch('php/register.php', {
+                const response = await fetch('php/register', {
                     method: 'POST',
                     body: formData,
                     credentials: 'same-origin'
@@ -165,7 +165,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 timerProgressBar: true
             }).then(async () => {
                 // Llamada al backend para destruir la sesión
-                await fetch('php/logout.php', { method: 'POST' });
+                await fetch('php/logout', { method: 'POST' });
 
                 // Limpiar JWT del localStorage
                 localStorage.removeItem('jwt');

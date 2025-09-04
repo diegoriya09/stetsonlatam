@@ -20,7 +20,7 @@ function addToCart(productData) {
   }
 
   // RUTA CORREGIDA
-  fetch('php/cart/add_to_cart.php', {
+  fetch('php/cart/add_to_cart', {
     method: 'POST',
     headers: {
       'Authorization': 'Bearer ' + jwt,
@@ -50,7 +50,7 @@ async function loadCart() {
 
   try {
     // RUTA CORREGIDA
-    const res = await fetch('php/cart/get_cart.php', { headers: { 'Authorization': 'Bearer ' + jwt } });
+    const res = await fetch('php/cart/get_cart', { headers: { 'Authorization': 'Bearer ' + jwt } });
     const data = await res.json();
     if (data.success) {
       renderCart(data.cart);
@@ -147,7 +147,7 @@ document.getElementById('cart-items-container')?.addEventListener('click', async
       return;
     }
 
-    await postToCartAPI('php/cart/update_cart.php', { cart_item_id: cart_item_id, cantidad: newQty });
+    await postToCartAPI('php/cart/update_cart', { cart_item_id: cart_item_id, cantidad: newQty });
     loadCart(); // Recarga el carrito para mostrar el cambio
   }
 

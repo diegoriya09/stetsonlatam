@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // 2. Pide nuestra clave de API segura a nuestro propio servidor
 const loadGoogleMaps = async () => {
    try {
-      const response = await fetch('php/api/get_maps_key.php');
+      const response = await fetch('php/api/get_maps_key');
       const data = await response.json();
       const apiKey = data.apiKey;
 
@@ -44,7 +44,7 @@ async function initMap() {
 // NUEVA FUNCIÓN de inicialización
 const initializeLocator = async () => {
    try {
-      const response = await fetch('php/get_locations.php');
+      const response = await fetch('php/get_locations');
       const data = await response.json();
       if (data.success) {
          locations = data.locations;
@@ -90,7 +90,7 @@ const populateCitySelect = (selectedCountry) => {
 // Carga TODAS las tiendas al iniciar
 const loadAllStores = async () => {
    try {
-      const response = await fetch('php/get_stores.php');
+      const response = await fetch('php/get_stores');
       const data = await response.json();
       if (data.success) {
          allStores = data.stores;
