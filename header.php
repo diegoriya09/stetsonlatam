@@ -69,13 +69,13 @@ if (!empty($categorias_flat)) {
             <div class="mega-menu-content">
               <?php foreach ($hat_collections as $collection): ?>
                 <div class="mega-menu-column">
-                  <a href="categoria/<?php echo $collection['id']; ?>"
+                  <a href="categoria<?php echo $collection['id']; ?>"
                     class="column-title"><?php echo htmlspecialchars($collection['nombre']); ?></a>
                   <?php if (!empty($collection['children'])): ?>
                     <ul>
                       <?php foreach ($collection['children'] as $subcat): ?>
                         <li><a
-                            href="categoria/<?php echo $subcat['id']; ?>"><?php echo htmlspecialchars($subcat['nombre']); ?></a>
+                            href="categoria<?php echo $subcat['id']; ?>"><?php echo htmlspecialchars($subcat['nombre']); ?></a>
                         </li>
                       <?php endforeach; ?>
                     </ul>
@@ -94,13 +94,13 @@ if (!empty($categorias_flat)) {
             <div class="mega-menu-content">
               <?php foreach ($cap_collections as $collection): ?>
                 <div class="mega-menu-column">
-                  <a href="categoria/<?php echo $collection['id']; ?>"
+                  <a href="categoria<?php echo $collection['id']; ?>"
                     class="column-title"><?php echo htmlspecialchars($collection['nombre']); ?></a>
                   <?php if (!empty($collection['children'])): ?>
                     <ul>
                       <?php foreach ($collection['children'] as $subcat): ?>
                         <li><a
-                            href="categoria/<?php echo $subcat['id']; ?>"><?php echo htmlspecialchars($subcat['nombre']); ?></a>
+                            href="categoria<?php echo $subcat['id']; ?>"><?php echo htmlspecialchars($subcat['nombre']); ?></a>
                         </li>
                       <?php endforeach; ?>
                     </ul>

@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', async () => {
     const jwt = localStorage.getItem('jwt');
     if (!jwt) {
-        window.location.href = '../index.php';
+        window.location.href = '../index';
         return;
     }
 
