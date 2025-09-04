@@ -10,7 +10,6 @@
    <link href="css/index.css?v=<?php echo time(); ?>" rel="stylesheet">
    <link href="css/store_locator.css?v=<?php echo time(); ?>" rel="stylesheet">
    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPSq8CXdUoLWOi6CPkmF49eLBdgW8mrAo&callback=initMap" async defer></script>
 </head>
 
 <body>

@@ -1,18 +1,44 @@
 // js/store_locator.js
 let map;
-let allStores = []; // Guardamos todas las tiendas una vez
-let currentMarkers = []; // Para llevar registro de los marcadores
+let allStores = [];
+let currentMarkers = [];
 
+// 1. El script se inicia al cargar la página
+document.addEventListener('DOMContentLoaded', () => {
+   loadGoogleMaps();
+});
+
+// 2. Pide nuestra clave de API segura a nuestro propio servidor
+const loadGoogleMaps = async () => {
+   try {
+      const response = await fetch('php/api/get_maps_key.php');
+      const data = await response.json();
+      const apiKey = data.apiKey;
+
+      // 3. Crea la etiqueta <script> de Google Maps y la añade al HTML
+      const script = document.createElement('script');
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&callback=initMap`;
+      script.async = true;
+      script.defer = true;
+      document.head.appendChild(script);
+
+   } catch (error) {
+      console.error("No se pudo cargar la clave API de Google Maps.", error);
+      document.getElementById('map').innerHTML = '<p>Error al cargar el mapa.</p>';
+   }
+};
+
+// 4. Esta función es llamada por el script de Google Maps una vez que está listo
 async function initMap() {
-   const defaultPosition = { lat: 6.244, lng: -75.581 };
+   const defaultPosition = { lat: 4.710, lng: -74.072 }; // Centro de Colombia
    map = new google.maps.Map(document.getElementById("map"), {
       center: defaultPosition,
-      zoom: 4, // Un zoom más alejado al inicio
+      zoom: 5,
    });
 
-   await loadAllStores(); // Cargamos todas las tiendas una sola vez
-   setupSearch(); // Configuramos el botón de búsqueda
-   getUserLocation(); // Intentamos obtener la ubicación
+   await loadAllStores();
+   setupSearch();
+   getUserLocation();
 }
 
 // Carga TODAS las tiendas al iniciar
@@ -23,7 +49,7 @@ const loadAllStores = async () => {
       if (data.success) {
          allStores = data.stores;
       }
-   } catch (error) { console.error('Error fetching stores:', error); }
+   } catch (error) { console.error('Error al obtener las tiendas:', error); }
 };
 
 // Pide la ubicación del usuario
@@ -102,7 +128,11 @@ const renderMapMarkers = (storesToRender) => {
       });
       currentMarkers.push(marker);
 
-      marker.addListener('click', () => { /* ... se queda igual ... */ });
+      marker.addListener('click', () => {
+         const content = `<strong>${store.name}</strong><br>${store.address}`;
+         infoWindow.setContent(content);
+         infoWindow.open(map, marker);
+      });
       bounds.extend(position); // Añadimos la posición al área visible
    });
 
