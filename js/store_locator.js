@@ -128,19 +128,26 @@ const processStores = (userPosition, storesToProcess) => {
 
 // Dibuja la lista de tiendas
 const renderStoreList = (storesToRender) => {
-   const storeListContainer = document.getElementById('store-results-list');
-   storeListContainer.innerHTML = '';
+    const storeListContainer = document.getElementById('store-results-list');
+    storeListContainer.innerHTML = '';
 
-   storesToRender.forEach(store => {
-      const storeCard = document.createElement('div');
-      storeCard.className = 'store-card';
+    storesToRender.forEach(store => {
+        const storeCard = document.createElement('div');
+        storeCard.className = 'store-card';
 
-      let distanceHTML = '';
-      if (store.distance !== undefined) {
-         distanceHTML = `<p class="store-distance">${store.distance.toFixed(1)} km away</p>`;
-      }
+        // --- LÓGICA PARA PROCESAR EL HORARIO ---
+        let hoursHTML = '<p>N/A</p>'; // Valor por defecto
+        if (store.hours) {
+            // 1. Separamos el texto por cada punto y coma (;)
+            const hoursArray = store.hours.split(';').map(line => line.trim());
+            
+            // 2. Creamos un elemento <li> por cada línea
+            hoursHTML = '<ul>' + hoursArray.map(line => `<li>${line}</li>`).join('') + '</ul>';
+        }
 
-      storeCard.innerHTML = `
+        let distanceHTML = store.distance ? `<p class="store-distance">${store.distance.toFixed(1)} km away</p>` : '';
+
+        storeCard.innerHTML = `
             <img src="${store.image_url || 'img/default.jpg'}" alt="${store.name}" class="store-image">
             <div class="store-info">
                 <h3>${store.name}</h3>
@@ -149,11 +156,11 @@ const renderStoreList = (storesToRender) => {
             </div>
             <div class="store-hours">
                 <h4>HORARIO</h4>
-                <p>${store.hours || 'N/A'}</p>
+                ${hoursHTML}
             </div>
         `;
-      storeListContainer.appendChild(storeCard);
-   });
+        storeListContainer.appendChild(storeCard);
+    });
 };
 
 // Pone los marcadores en el mapa (con limpieza previa)
