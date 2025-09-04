@@ -1,5 +1,25 @@
 <IfModule mod_rewrite.c>
+  # Activa el motor de reescritura de URLs
   RewriteEngine On
-  RewriteCond %{HTTP:Authorization} ^(.*)
-  RewriteRule .* - [E=HTTP_AUTHORIZATION:%1]
+
+  # --- REGLA 1: Quitar la extensión .php de los archivos ---
+
+  # Redirige peticiones a "archivo.php" hacia "archivo"
+  RewriteCond %{THE_REQUEST} \s/+(.+?)\.php[\s?] [NC]
+  RewriteRule ^ %1 [R=301,L]
+
+  # Maneja internamente las peticiones a "archivo" como si fueran a "archivo.php"
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{DOCUMENT_ROOT}/%{REQUEST_URI}.php -f
+  RewriteRule ^(.*?)/?$ $1.php [L]
+
+  # --- REGLA 2: Permitir parámetros en URLs amigables (ej. /categoria/4) ---
+  # Esto es para tus páginas de categoría y producto
+
+  # Regla para /categoria/ID
+  RewriteRule ^categoria/([0-9]+)$ categoria.php?id=$1 [NC,L]
+
+  # Regla para /producto/ID
+  RewriteRule ^producto/([0-9]+)$ producto.php?id=$1 [NC,L]
 </IfModule>
