@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     userBtn.addEventListener('click', () => {
       const jwt = localStorage.getItem('jwt');
       if (jwt) {
-        window.location.href = 'profile.php';
+        window.location.href = 'profile';
       } else {
         // Mostrar modal login/register si existe
         const modal = document.getElementById('user-modal');
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (cartBtn) {
     cartBtn.addEventListener('click', () => {
-      window.location.href = 'cart.php';
+      window.location.href = 'cart';
     });
   }
 

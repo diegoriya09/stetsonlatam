@@ -66,7 +66,7 @@ if (!isset($_SESSION['user_id'])) {
             </table>
           </div>
           <div class="mt-6 text-center">
-            <a href="myorders.php" class="view-all-btn">Ver Todos los Pedidos</a>
+            <a href="myorders" class="view-all-btn">Ver Todos los Pedidos</a>
           </div>
         </div>
 

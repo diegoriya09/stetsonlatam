@@ -1,25 +1,26 @@
-<IfModule mod_rewrite.c>
-  # Activa el motor de reescritura de URLs
-  RewriteEngine On
+# Activa el motor de reescritura de URLs
+RewriteEngine On
 
-  # --- REGLA 1: Quitar la extensión .php de los archivos ---
+# Redirige a HTTPS si no se está usando
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
-  # Redirige peticiones a "archivo.php" hacia "archivo"
-  RewriteCond %{THE_REQUEST} \s/+(.+?)\.php[\s?] [NC]
-  RewriteRule ^ %1 [R=301,L]
+# --- REGLA 1: Quitar la extensión .php de los archivos ---
 
-  # Maneja internamente las peticiones a "archivo" como si fueran a "archivo.php"
-  RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{DOCUMENT_ROOT}/%{REQUEST_URI}.php -f
-  RewriteRule ^(.*?)/?$ $1.php [L]
+# Redirige peticiones a "archivo.php" hacia "archivo" (para los usuarios)
+RewriteCond %{THE_REQUEST} \s/+(.+?)\.php[\s?] [NC]
+RewriteRule ^ %1 [R=301,L]
 
-  # --- REGLA 2: Permitir parámetros en URLs amigables (ej. /categoria/4) ---
-  # Esto es para tus páginas de categoría y producto
+# Maneja internamente las peticiones a "archivo" como si fueran a "archivo.php" (para el servidor)
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{DOCUMENT_ROOT}/%{REQUEST_URI}.php -f
+RewriteRule ^(.*?)/?$ $1.php [L]
 
-  # Regla para /categoria/ID
-  RewriteRule ^categoria/([0-9]+)$ categoria.php?id=$1 [NC,L]
+# --- REGLA 2: URLs amigables para categorías y productos ---
 
-  # Regla para /producto/ID
-  RewriteRule ^producto/([0-9]+)$ producto.php?id=$1 [NC,L]
-</IfModule>
+# Regla para /categoria/ID (ej: /categoria/8)
+RewriteRule ^categoria/([0-9]+)$ categoria.php?id=$1 [NC,L]
+
+# Regla para /producto/ID (ej: /producto/15)
+RewriteRule ^producto/([0-9]+)$ producto.php?id=$1 [NC,L]
