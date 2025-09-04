@@ -99,6 +99,17 @@
    color: #3c3737;
 }
 
+.store-hours ul {
+    list-style: none; /* Quitamos las viñetas por defecto */
+    padding: 0;
+    margin: 0;
+}
+
+.store-hours li {
+    font-size: 0.875rem;
+    color: #3c3737;
+}
+
 @media(min-width: 768px) {
    .store-card {
       grid-template-columns: 150px 1fr auto;
