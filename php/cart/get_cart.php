@@ -13,6 +13,12 @@ use Firebase\JWT\Key;
 
 header('Content-Type: application/json');
 
+// Verifica conexión
+if (!$conn) {
+    echo json_encode(['success' => false, 'message' => 'Error de conexión a la base de datos']);
+    exit;
+}
+
 // Obtener token JWT desde el header
 function getAuthorizationHeader()
 {
@@ -21,28 +27,33 @@ function getAuthorizationHeader()
     } elseif (isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION'])) {
         return trim($_SERVER["REDIRECT_HTTP_AUTHORIZATION"]);
     } elseif (function_exists('apache_request_headers')) {
-        $headers = apache_request_headers();
-        if (isset($headers['Authorization'])) {
-            return trim($headers['Authorization']);
+        $requestHeaders = apache_request_headers();
+        foreach ($requestHeaders as $key => $value) {
+            if (strtolower($key) === 'authorization') {
+                return trim($value);
+            }
         }
     }
     return null;
 }
 
 $authHeader = getAuthorizationHeader();
-if (!$authHeader || !preg_match('/Bearer\s(\S+)/i', $authHeader, $matches)) {
-    http_response_code(401);
-    echo json_encode(['success' => false, 'message' => 'Token no proporcionado o en formato incorrecto.']);
+if (!$authHeader || !str_starts_with($authHeader, 'Bearer ')) {
+    echo json_encode(['success' => false, 'message' => 'Token no proporcionado']);
     exit;
 }
 
-$jwt = $matches[1];
+$jwt = trim(str_replace('Bearer', '', $authHeader));
+$jwt = ltrim($jwt);
 $secret_key = "StetsonLatam1977";
 
 try {
-    $decoded_array = (array) JWT::decode($jwt, new Key($secret_key, 'HS256'));
-    $user_data = (array) $decoded_array['data'];
-    $user_id = $user_data['id'];
+    // 1. Decodificamos el token. El resultado es un objeto.
+    $decoded = JWT::decode($jwt, new Key($secret_key, 'HS256'));
+    
+    // 2. Accedemos a los datos como propiedades de un objeto.
+    // Esta es la forma correcta y recomendada.
+    $user_id = $decoded->data->id;
 
     $stmt = $conn->prepare("
         SELECT  
