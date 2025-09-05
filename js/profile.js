@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', async () => {
     const jwt = localStorage.getItem('jwt');
     if (!jwt) {
-        window.location.href = 'index';
+        window.location.href = '/index';
         return;
     }
 
@@ -41,11 +41,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     // --- FUNCIONES GENÉRICAS PARA COMUNICACIÓN CON API ---
     const fetchData = async (endpoint) => {
         try {
-            const res = await fetch(endpoint, { headers: { 'Authorization': 'Bearer ' + jwt } });
+            const res = await fetch('/' + endpoint, { headers: { 'Authorization': 'Bearer ' + jwt } });
             if (!res.ok) {
                 if (res.status === 401) {
                     localStorage.removeItem('jwt');
-                    window.location.href = 'index';
+                    window.location.href = '/index';
                 }
                 throw new Error(`El servidor respondió con el estado: ${res.status}`);
             }
@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const postData = async (endpoint, data) => {
         try {
-            const res = await fetch(endpoint, {
+            const res = await fetch('/' + endpoint, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + jwt },
                 body: JSON.stringify(data)
