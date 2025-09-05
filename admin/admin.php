@@ -1,18 +1,17 @@
 <?php
-// admin.php (CÓDIGO COMPLETO Y CORREGIDO)
+// admin/admin.php (CÓDIGO COMPLETO Y SINCRONIZADO)
 
 session_start();
-// Si usas JWT, decodifica y verifica el rol aquí
 if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
-    header('Location: /'); // Redirige si no es admin
+    header('Location: /');
     exit;
 }
 
-// --- Conexión a la Base de Datos (una sola vez al principio) ---
+// --- Conexión a la Base de Datos (la ruta ahora sube un nivel) ---
 require '../php/conexion.php';
 
 // --- Lógica para determinar la vista actual ---
-$view = $_GET['view'] ?? 'products'; // Vista por defecto: productos
+$view = $_GET['view'] ?? 'products';
 
 // --- Lógica de Stock Manager ---
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'update_stock') {
@@ -25,7 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             VALUES (?, ?, ?, ?) 
             ON DUPLICATE KEY UPDATE stock = VALUES(stock)
         ");
-
         foreach ($stocks as $color_id => $sizes) {
             foreach ($sizes as $size_id => $stock) {
                 $stock_value = (int)$stock;
@@ -75,7 +73,6 @@ if ($view === 'stock') {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 
@@ -85,7 +82,6 @@ if ($view === 'stock') {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
-        /* Tus estilos CSS van aquí (sin cambios) */
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
             background: #f1eeea;
@@ -290,9 +286,9 @@ if ($view === 'stock') {
         <h1>Management Panel</h1>
 
         <nav class="admin-nav">
-            <a href="?view=products" class="<?php if ($view === 'products') echo 'active'; ?>">Gestionar Productos</a>
-            <a href="?view=orders" class="<?php if ($view === 'orders') echo 'active'; ?>">Gestionar Pedidos</a>
-            <a href="?view=stock" class="<?php if ($view === 'stock') echo 'active'; ?>">Gestionar Stock</a>
+            <a href="/admin?view=products" class="<?php if ($view === 'products') echo 'active'; ?>">Gestionar Productos</a>
+            <a href="/admin?view=orders" class="<?php if ($view === 'orders') echo 'active'; ?>">Gestionar Pedidos</a>
+            <a href="/admin?view=stock" class="<?php if ($view === 'stock') echo 'active'; ?>">Gestionar Stock</a>
         </nav>
 
         <?php if (isset($success_message)): ?>
@@ -300,7 +296,7 @@ if ($view === 'stock') {
         <?php endif; ?>
 
         <?php if ($view === 'products'): ?>
-            <form id="add-product-form" action="add_product.php" method="POST" enctype="multipart/form-data">
+            <form id="add-product-form" action="add_product" method="POST" enctype="multipart/form-data">
                 <input type="text" name="nombre" placeholder="Nombre del producto" required>
                 <input type="number" name="precio" placeholder="Precio" step="0.01" required>
                 <input type="text" name="descripcion" placeholder="Descripción" required>
@@ -349,10 +345,10 @@ if ($view === 'stock') {
                         echo "<td class='description-cell'>" . htmlspecialchars($row['description']) . "</td>";
                         echo "<td>$" . number_format($row['price'], 2) . "</td>";
                         echo "<td>" . htmlspecialchars($row['category']) . "</td>";
-                        echo "<td><img src='../{$row['image']}' alt='img' style='max-width:60px;max-height:60px;'></td>";
+                        echo "<td><img src='../{$row['image']}' alt='" . htmlspecialchars($row['name']) . "' style='max-width:60px;max-height:60px;'></td>";
                         echo "<td>
-                                <a href='edit_product.php?id={$row['id']}' title='Edit'><i class='fa-solid fa-pen-to-square' style='color:#1a73e8; font-size:20px;'></i></a>
-                                <a href='delete_product.php?id={$row['id']}' title='Delete' onclick=\"return confirm('¿Eliminar este producto?');\"><i class='fa-solid fa-trash' style='color:#b33a3a; font-size:20px; margin-left:10px;'></i></a>
+                                <a href='/admin/product/edit/{$row['id']}' title='Edit'><i class='fa-solid fa-pen-to-square' style='color:#1a73e8; font-size:20px;'></i></a>
+                                <a href='/admin/product/delete/{$row['id']}' title='Delete' onclick=\"return confirm('¿Eliminar este producto?');\"><i class='fa-solid fa-trash' style='color:#b33a3a; font-size:20px; margin-left:10px;'></i></a>
                               </td>";
                         echo "</tr>";
                     }
@@ -389,7 +385,7 @@ if ($view === 'stock') {
                                 <td>$" . number_format($row['total'], 2) . "</td>
                                 <td>{$row['fecha']}</td>
                                 <td>
-                                    <form method='POST' action='update_order_status.php' style='margin:0;padding:0;background:none;box-shadow:none;'>
+                                    <form method='POST' action='update_order_status' style='margin:0;padding:0;background:none;box-shadow:none;'>
                                         <input type='hidden' name='order_id' value='{$row['id']}'>
                                         <select name='estado'>
                                             <option value='Pending' " . ($row['estado'] == 'Pending' ? 'selected' : '') . ">Pendiente</option>
@@ -414,7 +410,7 @@ if ($view === 'stock') {
         <?php if ($view === 'stock'): ?>
             <h2>Gestión de Stock por Variante</h2>
             <div style="text-align:center; margin-bottom: 20px;">
-                <form action="admin.php" method="GET" style="display:inline-block; max-width:600px; background:none; box-shadow:none;">
+                <form action="/admin" method="GET" style="display:inline-block; max-width:600px; background:none; box-shadow:none;">
                     <input type="hidden" name="view" value="stock">
                     <label for="product_id">Selecciona un producto para editar su stock:</label>
                     <select name="product_id" id="product_id" onchange="this.form.submit()">
@@ -430,7 +426,7 @@ if ($view === 'stock') {
             </div>
 
             <?php if ($selected_product_stock): ?>
-                <form action="admin.php?view=stock&product_id=<?php echo $selected_product_id; ?>" method="POST" style="max-width:none; background:none; box-shadow:none;">
+                <form action="/admin?view=stock&product_id=<?php echo $selected_product_id; ?>" method="POST" style="max-width:none; background:none; box-shadow:none;">
                     <input type="hidden" name="action" value="update_stock">
                     <input type="hidden" name="product_id" value="<?php echo $selected_product_id; ?>">
                     <table class="stock-table">
@@ -485,7 +481,6 @@ if ($view === 'stock') {
                         confirmButtonText: 'OK'
                     })
                     .then(() => {
-                        // CORREGIDO: Redirige a la raíz del sitio
                         window.location.href = '/';
                     });
             });
@@ -494,8 +489,8 @@ if ($view === 'stock') {
         function showOrderDetails(orderId) {
             const modal = document.querySelector('.ordermodal');
             const detailsDiv = document.getElementById('admin-order-details');
-            // CORREGIDO: fetch apunta al archivo .php explícitamente
-            fetch(`../php/order/get_detail_order.php?id=${orderId}`)
+            // En fetch, es más seguro y claro usar la ruta completa al archivo .php
+            fetch(`/php/order/get_detail_order.php?id=${orderId}`)
                 .then(res => res.json())
                 .then(data => {
                     if (data.success && data.details.length > 0) {
