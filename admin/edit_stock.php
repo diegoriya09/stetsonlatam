@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       }
       $stmt->close();
 
-      header("Location: /admin?view=products&msg=Stock+actualizado+correctamente");
+      header("Location: admin?view=products&msg=Stock+actualizado+correctamente");
       exit;
    }
 }
