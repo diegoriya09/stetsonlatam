@@ -1,30 +1,3 @@
-Claro que sí. He revisado tu código y tu archivo `.htaccess`. La configuración para URLs amigables es buena, pero hay varias inconsistencias en el código del dashboard que pueden causar que los formularios y los enlaces no funcionen como esperas.
-
-Vamos a adecuarlo para que sea más **robusto, consistente y aproveche correctamente tu configuración**.
-
------
-
------
-
-### \#\# Puntos Clave a Corregir
-
-1. **Acciones de Formularios (`action`)**: Aunque tu `.htaccess` elimina la extensión `.php` para los visitantes, es una mejor práctica y más seguro ser explícito en los atributos `action` de los formularios. En lugar de `action="add_product"`, usaremos `action="add_product.php"`. Esto evita cualquier ambigüedad sobre a qué script se están enviando los datos.
-
-2. **Enlaces (`href`)**: De la misma manera, los enlaces a otras páginas de edición o eliminación (`edit_product`, `delete_product`) deben apuntar al archivo `.php` real para asegurar que funcionen correctamente.
-
-3. **Rutas en JavaScript (`fetch`)**: La llamada `fetch` para obtener los detalles del pedido es la que tiene más probabilidades de fallar. Debes incluir la extensión `.php` en la URL, ya que las reglas de reescritura del `.htaccess` no siempre se aplican de la misma manera a las peticiones AJAX hechas desde JavaScript.
-
-4. **Redirección de Logout**: Para que sea consistente con el resto de tu sitio, la redirección al cerrar sesión debería apuntar a la raíz (`/`) en lugar de a `/index`.
-
------
-
------
-
-### \#\# Código Corregido y Adecuado
-
-Aquí tienes el archivo completo con todas las correcciones aplicadas. He añadido comentarios \`\` en las líneas más importantes para que veas exactamente qué cambió.
-
-```php
 <?php
 // admin.php (CÓDIGO COMPLETO Y CORREGIDO)
 
