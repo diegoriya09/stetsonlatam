@@ -423,7 +423,7 @@ if ($view === 'stock') {
             </div>
 
             <?php if ($selected_product_stock): ?>
-                <form action="admin?section=stock&pid=<?php echo $selected_product_id; ?>" method="POST" style="max-width:none; background:none; box-shadow:none;">
+                <form action="/admin?section=stock&pid=<?php echo $selected_product_id; ?>" method="POST" style="max-width:none; background:none; box-shadow:none;">
                     <input type="hidden" name="action" value="update_stock">
                     <input type="hidden" name="pid" value="<?php echo $selected_product_id; ?>">
                     <table class="stock-table">
