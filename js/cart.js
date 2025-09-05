@@ -157,13 +157,13 @@ document.getElementById('cart-items-container')?.addEventListener('click', async
 
     // Opcional: Alerta de confirmación
     Swal.fire({
-      title: 'Remove item?',
-      text: "Are you sure you want to remove this item from your cart?",
+      title: '¿Eliminar Artículo?',
+      text: "¿Estás seguro de que deseas eliminar este artículo de tu carrito?",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3f1e1f',
       cancelButtonColor: '#6b7280',
-      confirmButtonText: 'Yes, remove it!'
+      confirmButtonText: 'Sí, eliminarlo!'
     }).then(async (result) => {
       if (result.isConfirmed) {
         await postToCartAPI('/php/cart/remove_from_cart', { cart_item_id: cart_item_id });
