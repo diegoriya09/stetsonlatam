@@ -54,7 +54,7 @@ if ($stmt->num_rows > 0) {
     if (password_verify($password, $hashed_password)) {
         $_SESSION['user_role'] = $user_role;
         $_SESSION['user_id'] = $user_id;
-        
+
         $secret_key = "StetsonLatam1977";
 
         $payload = [
@@ -71,8 +71,9 @@ if ($stmt->num_rows > 0) {
 
         $jwt = JWT::encode($payload, $secret_key, 'HS256');
         echo json_encode([
-        "token" => $jwt
-    ]);
+            "success" => true,
+            "token" => $jwt
+        ]);
         exit;
     } else {
         http_response_code(401);
@@ -83,4 +84,3 @@ if ($stmt->num_rows > 0) {
     http_response_code(404);
     echo json_encode(["error" => "Usuario no encontrado"]);
 }
-?>
