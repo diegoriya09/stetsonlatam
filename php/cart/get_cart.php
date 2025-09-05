@@ -1,4 +1,5 @@
 <?php
+// get_cart.php (COMPLETO Y MODIFICADO)
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -11,13 +12,11 @@ use Firebase\JWT\Key;
 
 header('Content-Type: application/json');
 
-// Verifica conexión
 if (!$conn) {
     echo json_encode(['success' => false, 'message' => 'Error de conexión a la base de datos']);
     exit;
 }
 
-// Obtener token JWT desde el header
 function getAuthorizationHeader()
 {
     if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
@@ -49,8 +48,9 @@ try {
     $decoded = JWT::decode($jwt, new Key($secret_key, 'HS256'));
     $user_id = $decoded->data->id;
 
+    // --- MODIFICACIÓN: Se añade LEFT JOIN con product_variants y se selecciona el stock ---
     $stmt = $conn->prepare("
-        SELECT  
+        SELECT 
             c.id as cart_item_id,
             c.producto_id, 
             p.name, 
@@ -62,12 +62,12 @@ try {
             co.hex, 
             c.size_id, 
             s.name AS size_name,
-            pv.stock 
+            pv.stock  -- <-- NUEVO: Obtenemos el stock de la variante
         FROM cart c 
         JOIN productos p ON c.producto_id = p.id 
         LEFT JOIN colors co ON co.id = c.color_id 
-        LEFT JOIN sizes s ON s.id = c.size_id
-        LEFT JOIN product_variants pv ON pv.product_id = c.producto_id AND pv.color_id = c.color_id AND pv.size_id = c.size_id 
+        LEFT JOIN sizes s ON s.id = c.size_id 
+        LEFT JOIN product_variants pv ON pv.product_id = c.producto_id AND pv.color_id = c.color_id AND pv.size_id = c.size_id
         WHERE c.users_id = ?
     ");
     $stmt->bind_param("i", $user_id);
