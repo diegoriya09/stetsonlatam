@@ -168,7 +168,7 @@ $conn->close();
         });
       });
 
-      const qtyInput = document.getElementById('cantidad');
+      const qtyInput = document.getElementById('quantity');
       document.querySelector('.qty-btn.plus').addEventListener('click', () => {
         qtyInput.value = parseInt(qtyInput.value) + 1;
       });
