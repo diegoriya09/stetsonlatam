@@ -1,6 +1,6 @@
 <?php
 require_once '../conexion.php';
-require_once '../../vendor/autoload.php';
+require_once '../../vendor/autoload';
 
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
