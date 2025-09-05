@@ -95,7 +95,7 @@ if ($result->num_rows > 0) {
     // Ya existe, actualizar cantidad
     $row = $result->fetch_assoc();
     $cantidad_existente = $row['quantity'];
-    $new_quantity = $row['quantity'] + $quantity;
+    $new_quantity = $row['cantidad'] + $quantity;
 
     $sql_update = "UPDATE cart SET quantity = ? WHERE users_id = ? AND producto_id = ? AND color_id = ? AND size_id = ?";
     $stmt_update = $conn->prepare($sql_update);
