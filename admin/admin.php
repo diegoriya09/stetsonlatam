@@ -347,8 +347,8 @@ if ($view === 'stock') {
                         echo "<td>" . htmlspecialchars($row['category']) . "</td>";
                         echo "<td><img src='../{$row['image']}' alt='" . htmlspecialchars($row['name']) . "' style='max-width:60px;max-height:60px;'></td>";
                         echo "<td>
-                                <a href='/admin/product/edit/{$row['id']}' title='Edit'><i class='fa-solid fa-pen-to-square' style='color:#1a73e8; font-size:20px;'></i></a>
-                                <a href='/admin/product/delete/{$row['id']}' title='Delete' onclick=\"return confirm('¿Eliminar este producto?');\"><i class='fa-solid fa-trash' style='color:#b33a3a; font-size:20px; margin-left:10px;'></i></a>
+                                <a href='/admin/product/edit{$row['id']}' title='Edit'><i class='fa-solid fa-pen-to-square' style='color:#1a73e8; font-size:20px;'></i></a>
+                                <a href='/admin/product/delete{$row['id']}' title='Delete' onclick=\"return confirm('¿Eliminar este producto?');\"><i class='fa-solid fa-trash' style='color:#b33a3a; font-size:20px; margin-left:10px;'></i></a>
                               </td>";
                         echo "</tr>";
                     }
@@ -411,9 +411,9 @@ if ($view === 'stock') {
             <h2>Gestión de Stock por Variante</h2>
             <div style="text-align:center; margin-bottom: 20px;">
                 <form action="/admin" method="GET" style="display:inline-block; max-width:600px; background:none; box-shadow:none;">
-                    <input type="hidden" name="view" value="stock">
-                    <label for="product_id">Selecciona un producto para editar su stock:</label>
-                    <select name="product_id" id="product_id" onchange="this.form.submit()">
+                    <input type="hidden" name="section" value="stock">
+                    <label for="pid">Selecciona un producto para editar su stock:</label>
+                    <select name="pid" id="pid" onchange="this.form.submit()">
                         <option value="">-- Elige un producto --</option>
                         <?php mysqli_data_seek($products_for_stock_result, 0);
                         while ($product = $products_for_stock_result->fetch_assoc()): ?>
@@ -426,32 +426,10 @@ if ($view === 'stock') {
             </div>
 
             <?php if ($selected_product_stock): ?>
-                <form action="/admin?view=stock&product_id=<?php echo $selected_product_id; ?>" method="POST" style="max-width:none; background:none; box-shadow:none;">
+                <form action="/admin?section=stock&pid=<?php echo $selected_product_id; ?>" method="POST" style="max-width:none; background:none; box-shadow:none;">
                     <input type="hidden" name="action" value="update_stock">
-                    <input type="hidden" name="product_id" value="<?php echo $selected_product_id; ?>">
+                    <input type="hidden" name="pid" value="<?php echo $selected_product_id; ?>">
                     <table class="stock-table">
-                        <thead>
-                            <tr>
-                                <th>Talla / Color</th>
-                                <?php foreach ($colors as $color): ?>
-                                    <th><?php echo htmlspecialchars($color['name']); ?></th>
-                                <?php endforeach; ?>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($sizes as $size): ?>
-                                <tr>
-                                    <td><strong><?php echo htmlspecialchars($size['name']); ?></strong></td>
-                                    <?php foreach ($colors as $color): ?>
-                                        <td>
-                                            <input type="number" class="stock-input"
-                                                name="stock[<?php echo $color['id']; ?>][<?php echo $size['id']; ?>]"
-                                                value="<?php echo $stock_map[$color['id']][$size['id']] ?? 0; ?>" min="0">
-                                        </td>
-                                    <?php endforeach; ?>
-                                </tr>
-                            <?php endforeach; ?>
-                        </tbody>
                     </table>
                     <div style="text-align:center; margin-top:20px;">
                         <button type="submit">Guardar Cambios de Stock</button>
