@@ -50,7 +50,7 @@ async function loadCart() {
 
   try {
     // RUTA CORREGIDA
-    const res = await fetch('php/cart/get_cart', { headers: { 'Authorization': 'Bearer' + jwt } });
+    const res = await fetch('php/cart/get_cart', { headers: { 'Authorization': 'Bearer ' + jwt } });
     const data = await res.json();
     if (data.success) {
       renderCart(data.cart);
