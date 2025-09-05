@@ -285,7 +285,6 @@ if ($view === 'stock') {
         <nav class="admin-nav">
             <a href="?section=products" class="<?php if ($view === 'products') echo 'active'; ?>">Gestionar Productos</a>
             <a href="?section=orders" class="<?php if ($view === 'orders') echo 'active'; ?>">Gestionar Pedidos</a>
-            <a href="?section=stock" class="<?php if ($view === 'stock') echo 'active'; ?>">Gestionar Stock</a>
         </nav>
 
         <?php if (isset($success_message)): ?>
@@ -403,63 +402,6 @@ if ($view === 'stock') {
                     ?>
                 </tbody>
             </table>
-        <?php endif; ?>
-
-        <?php if ($view === 'stock'): ?>
-            <h2>Gestión de Stock por Variante</h2>
-            <div style="text-align:center; margin-bottom: 20px;">
-                <form action="/admin" method="GET" style="display:inline-block; max-width:600px; background:none; box-shadow:none;">
-                    <input type="hidden" name="section" value="stock">
-                    <label for="pid">Selecciona un producto para editar su stock:</label>
-                    <select name="pid" id="pid" onchange="this.form.submit()">
-                        <option value="">-- Elige un producto --</option>
-                        <?php
-                        // Aseguramos que el puntero del resultado esté al inicio
-                        if ($products_for_stock_result->num_rows > 0) {
-                            mysqli_data_seek($products_for_stock_result, 0);
-                        }
-                        while ($product = $products_for_stock_result->fetch_assoc()): ?>
-                            <option value="<?php echo $product['id']; ?>" <?php echo ($selected_product_id == $product['id']) ? 'selected' : ''; ?>>
-                                <?php echo htmlspecialchars($product['name']); ?>
-                            </option>
-                        <?php endwhile; ?>
-                    </select>
-                </form>
-            </div>
-
-            <?php if ($selected_product_stock): ?>
-                <form action="/admin?section=stock&pid=<?php echo $selected_product_id; ?>" method="POST" style="max-width:none; background:none; box-shadow:none;">
-                    <input type="hidden" name="action" value="update_stock">
-                    <input type="hidden" name="pid" value="<?php echo $selected_product_id; ?>">
-                    <table class="stock-table">
-                        <thead>
-                            <tr>
-                                <th>Talla / Color</th>
-                                <?php foreach ($colors as $color): ?>
-                                    <th><?php echo htmlspecialchars($color['name']); ?></th>
-                                <?php endforeach; ?>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($sizes as $size): ?>
-                                <tr>
-                                    <td><strong><?php echo htmlspecialchars($size['name']); ?></strong></td>
-                                    <?php foreach ($colors as $color): ?>
-                                        <td>
-                                            <input type="number" class="stock-input"
-                                                name="stock[<?php echo $color['id']; ?>][<?php echo $size['id']; ?>]"
-                                                value="<?php echo $stock_map[$color['id']][$size['id']] ?? 0; ?>" min="0">
-                                        </td>
-                                    <?php endforeach; ?>
-                                </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                    <div style="text-align:center; margin-top:20px;">
-                        <button type="submit">Guardar Cambios de Stock</button>
-                    </div>
-                </form>
-            <?php endif; ?>
         <?php endif; ?>
     </div>
 
