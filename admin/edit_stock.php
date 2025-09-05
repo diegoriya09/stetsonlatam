@@ -207,7 +207,7 @@ $stock_stmt->close();
       <h2>Gestionar Stock para: <strong><?php echo htmlspecialchars($product_name); ?></strong></h2>
 
       <?php if (!empty($colors) && !empty($sizes)): ?>
-         <form action="/admin/edit_stock<?php echo $product_id; ?>" method="POST">
+         <form action="edit_stock" method="POST">
             <input type="hidden" name="product_id" value="<?php echo $product_id; ?>">
 
             <table>
