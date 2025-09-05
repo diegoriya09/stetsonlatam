@@ -40,8 +40,9 @@ $jwt = $matches[1];
 $secret_key = "StetsonLatam1977";
 
 try {
-    $decoded = JWT::decode($jwt, new Key($secret_key, 'HS256'));
-    $user_id = $decoded->data->id;
+    $decoded_array = (array) JWT::decode($jwt, new Key($secret_key, 'HS256'));
+    $user_data = (array) $decoded_array['data'];
+    $user_id = $user_data['id'];
 
     $stmt = $conn->prepare("
         SELECT  
