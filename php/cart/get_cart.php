@@ -21,11 +21,9 @@ function getAuthorizationHeader()
     } elseif (isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION'])) {
         return trim($_SERVER["REDIRECT_HTTP_AUTHORIZATION"]);
     } elseif (function_exists('apache_request_headers')) {
-        $requestHeaders = apache_request_headers();
-        foreach ($requestHeaders as $key => $value) {
-            if (strtolower($key) === 'authorization') {
-                return trim($value);
-            }
+        $headers = apache_request_headers();
+        if (isset($headers['Authorization'])) {
+            return trim($headers['Authorization']);
         }
     }
     return null;
@@ -38,9 +36,7 @@ if (!$authHeader || !preg_match('/Bearer\s(\S+)/i', $authHeader, $matches)) {
     exit;
 }
 
-// Decodificar JWT
-$jwt = trim(str_replace('Bearer', '', $authHeader));
-$jwt = ltrim($jwt);
+$jwt = $matches[1];
 $secret_key = "StetsonLatam1977";
 
 try {
@@ -82,7 +78,7 @@ try {
     echo json_encode(['success' => true, 'cart' => $carrito]);
     exit;
 } catch (Exception $e) {
-    http_response_code(500);
-    echo json_encode(['success' => false, 'message' => 'Error del servidor', 'error' => $e->getMessage()]);
+    http_response_code(401);
+    echo json_encode(['success' => false, 'message' => 'Token inválido.', 'error' => $e->getMessage()]);
     exit;
 }
