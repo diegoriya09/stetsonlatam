@@ -8,6 +8,67 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
 }
 
 require '../php/conexion.php';
+
+// ADAPTADO: Usamos 'section' para evitar problemas con ModSecurity
+$view = $_GET['section'] ?? 'products';
+
+// Lógica de Stock Manager 
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'update_stock') {
+    // ADAPTADO: Usamos 'pid' para evitar problemas con ModSecurity
+    $product_id = isset($_POST['pid']) ? (int)$_POST['pid'] : 0;
+    $stocks = $_POST['stock'] ?? [];
+
+    if ($product_id > 0 && !empty($stocks)) {
+        $stmt = $conn->prepare("INSERT INTO product_variants (product_id, color_id, size_id, stock) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE stock = VALUES(stock)");
+        foreach ($stocks as $color_id => $sizes) {
+            foreach ($sizes as $size_id => $stock) {
+                $stock_value = (int)$stock;
+                $stmt->bind_param("iiii", $product_id, $color_id, $size_id, $stock_value);
+                $stmt->execute();
+            }
+        }
+        $stmt->close();
+        $success_message = "¡Stock actualizado correctamente para el producto ID: $product_id!";
+    }
+}
+
+// Lógica para la vista de STOCK
+if ($view === 'stock') {
+    $products_for_stock_result = $conn->query("SELECT id, name FROM productos ORDER BY name ASC");
+    // ADAPTADO: Usamos 'pid'
+    $selected_product_id = isset($_GET['pid']) ? (int)$_GET['pid'] : 0;
+    $selected_product_stock = null;
+    $colors = [];
+    $sizes = [];
+    $stock_map = [];
+
+    if ($selected_product_id > 0) {
+        $product_stmt = $conn->prepare("SELECT id, name FROM productos WHERE id = ?");
+        $product_stmt->bind_param("i", $selected_product_id);
+        $product_stmt->execute();
+        $selected_product_stock = $product_stmt->get_result()->fetch_assoc();
+        $product_stmt->close();
+
+        $colors_result = $conn->query("SELECT id, name FROM colors ORDER BY name ASC");
+        while ($row = $colors_result->fetch_assoc()) {
+            $colors[] = $row;
+        }
+
+        $sizes_result = $conn->query("SELECT id, name FROM sizes ORDER BY id ASC");
+        while ($row = $sizes_result->fetch_assoc()) {
+            $sizes[] = $row;
+        }
+
+        $stock_stmt = $conn->prepare("SELECT color_id, size_id, stock FROM product_variants WHERE product_id = ?");
+        $stock_stmt->bind_param("i", $selected_product_id);
+        $stock_stmt->execute();
+        $stock_result = $stock_stmt->get_result();
+        while ($row = $stock_result->fetch_assoc()) {
+            $stock_map[$row['color_id']][$row['size_id']] = $row['stock'];
+        }
+        $stock_stmt->close();
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
