@@ -1,5 +1,5 @@
 <?php
-// admin/edit_stock.php (ARCHIVO NUEVO Y COMPLETO)
+// admin/edit_stock.php (CÓDIGO COMPLETO Y ADAPTADO A TUS TABLAS DE RELACIÓN)
 
 session_start();
 if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
@@ -9,7 +9,7 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
 
 require '../php/conexion.php';
 
-// --- LÓGICA POST: Guardar los cambios de stock ---
+// --- LÓGICA POST: Guardar los cambios de stock (SIN CAMBIOS) ---
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
    $product_id = isset($_POST['product_id']) ? (int)$_POST['product_id'] : 0;
    $stocks = $_POST['stock'] ?? [];
@@ -23,14 +23,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
       foreach ($stocks as $color_id => $sizes) {
          foreach ($sizes as $size_id => $stock) {
-            $stock_value = (int)$stock >= 0 ? (int)$stock : 0; // Asegurar que no sea negativo
+            $stock_value = (int)$stock >= 0 ? (int)$stock : 0;
             $stmt->bind_param("iiii", $product_id, $color_id, $size_id, $stock_value);
             $stmt->execute();
          }
       }
       $stmt->close();
 
-      // Redirigir de vuelta al panel principal con un mensaje de éxito
       header("Location: /admin?view=products&msg=Stock+actualizado+correctamente");
       exit;
    }
@@ -43,7 +42,7 @@ if ($product_id <= 0) {
    die("ID de producto inválido.");
 }
 
-// Obtener datos del producto, colores, tallas y el stock actual
+// Obtener nombre del producto
 $product_stmt = $conn->prepare("SELECT name FROM productos WHERE id = ?");
 $product_stmt->bind_param("i", $product_id);
 $product_stmt->execute();
@@ -55,18 +54,42 @@ $product = $product_result->fetch_assoc();
 $product_name = $product['name'];
 $product_stmt->close();
 
+// --- MODIFICADO: Obtener solo los colores ASIGNADOS a este producto ---
 $colors = [];
-$colors_result = $conn->query("SELECT id, name FROM colors ORDER BY name ASC");
+$colors_stmt = $conn->prepare("
+    SELECT c.id, c.name 
+    FROM colors c
+    JOIN product_colors pc ON c.id = pc.color_id
+    WHERE pc.product_id = ?
+    ORDER BY c.name ASC
+");
+$colors_stmt->bind_param("i", $product_id);
+$colors_stmt->execute();
+$colors_result = $colors_stmt->get_result();
 while ($row = $colors_result->fetch_assoc()) {
    $colors[] = $row;
 }
+$colors_stmt->close();
 
+// --- MODIFICADO: Obtener solo las tallas ASIGNADAS a este producto ---
 $sizes = [];
-$sizes_result = $conn->query("SELECT id, name FROM sizes ORDER BY id ASC");
+$sizes_stmt = $conn->prepare("
+    SELECT s.id, s.name 
+    FROM sizes s
+    JOIN product_sizes ps ON s.id = ps.size_id
+    WHERE ps.product_id = ?
+    ORDER BY s.id ASC
+");
+$sizes_stmt->bind_param("i", $product_id);
+$sizes_stmt->execute();
+$sizes_result = $sizes_stmt->get_result();
 while ($row = $sizes_result->fetch_assoc()) {
    $sizes[] = $row;
 }
+$sizes_stmt->close();
 
+
+// --- Lógica para obtener el stock existente (SIN CAMBIOS) ---
 $stock_map = [];
 $stock_stmt = $conn->prepare("SELECT color_id, size_id, stock FROM product_variants WHERE product_id = ?");
 $stock_stmt->bind_param("i", $product_id);
@@ -84,6 +107,7 @@ $stock_stmt->close();
    <meta charset="UTF-8">
    <title>Gestionar Stock de <?php echo htmlspecialchars($product_name); ?></title>
    <style>
+      /* Tus estilos (sin cambios) */
       body {
          font-family: 'Segoe UI', Arial, sans-serif;
          background: #f1eeea;
@@ -168,6 +192,13 @@ $stock_stmt->close();
       a.back-link:hover {
          background: #5a6268;
       }
+
+      .no-variants {
+         text-align: center;
+         font-size: 1.1em;
+         color: #777;
+         margin: 30px;
+      }
    </style>
 </head>
 
@@ -175,40 +206,47 @@ $stock_stmt->close();
    <div class="stock-container">
       <h2>Gestionar Stock para: <strong><?php echo htmlspecialchars($product_name); ?></strong></h2>
 
-      <form action="/admin/stockedit<?php echo $product_id; ?>" method="POST">
-         <input type="hidden" name="product_id" value="<?php echo $product_id; ?>">
+      <?php if (!empty($colors) && !empty($sizes)): ?>
+         <form action="/admin/stock/edit/<?php echo $product_id; ?>" method="POST">
+            <input type="hidden" name="product_id" value="<?php echo $product_id; ?>">
 
-         <table>
-            <thead>
-               <tr>
-                  <th>Talla / Color</th>
-                  <?php foreach ($colors as $color): ?>
-                     <th><?php echo htmlspecialchars($color['name']); ?></th>
-                  <?php endforeach; ?>
-               </tr>
-            </thead>
-            <tbody>
-               <?php foreach ($sizes as $size): ?>
+            <table>
+               <thead>
                   <tr>
-                     <td><strong><?php echo htmlspecialchars($size['name']); ?></strong></td>
+                     <th>Talla / Color</th>
                      <?php foreach ($colors as $color): ?>
-                        <td>
-                           <input type="number" class="stock-input"
-                              name="stock[<?php echo $color['id']; ?>][<?php echo $size['id']; ?>]"
-                              value="<?php echo $stock_map[$color['id']][$size['id']] ?? 0; ?>"
-                              min="0">
-                        </td>
+                        <th><?php echo htmlspecialchars($color['name']); ?></th>
                      <?php endforeach; ?>
                   </tr>
-               <?php endforeach; ?>
-            </tbody>
-         </table>
+               </thead>
+               <tbody>
+                  <?php foreach ($sizes as $size): ?>
+                     <tr>
+                        <td><strong><?php echo htmlspecialchars($size['name']); ?></strong></td>
+                        <?php foreach ($colors as $color): ?>
+                           <td>
+                              <input type="number" class="stock-input"
+                                 name="stock[<?php echo $color['id']; ?>][<?php echo $size['id']; ?>]"
+                                 value="<?php echo $stock_map[$color['id']][$size['id']] ?? 0; ?>"
+                                 min="0">
+                           </td>
+                        <?php endforeach; ?>
+                     </tr>
+                  <?php endforeach; ?>
+               </tbody>
+            </table>
 
+            <div class="action-buttons">
+               <a href="/admin" class="back-link">Volver al Panel</a>
+               <button type="submit">Guardar Cambios de Stock</button>
+            </div>
+         </form>
+      <?php else: ?>
+         <p class="no-variants">Este producto no tiene colores o tallas asignadas. Por favor, asígnalas antes de gestionar el stock.</p>
          <div class="action-buttons">
             <a href="/admin" class="back-link">Volver al Panel</a>
-            <button type="submit">Guardar Cambios de Stock</button>
          </div>
-      </form>
+      <?php endif; ?>
    </div>
 </body>
 
