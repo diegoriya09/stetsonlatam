@@ -88,7 +88,7 @@ function renderCart(items) {
                     ${item.size_name ? `<p>Size: ${item.size_name}</p>` : ''}
                     ${item.color_name ? `<p>Color: ${item.color_name}</p>` : ''}
                 </div>
-                <div class="item-quantity">
+                <div class="item-quantity" data-stock="${item.stock}">
                     <button class="qty-btn" data-id="${item.cart_item_id}" data-qty="${item.quantity - 1}">-</button>
                     <input type="text" value="${item.quantity}" readonly>
                     <button class="qty-btn" data-id="${item.cart_item_id}" data-qty="${item.quantity + 1}">+</button>
@@ -134,16 +134,26 @@ document.getElementById('cart-items-container')?.addEventListener('click', async
   // --- LÓGICA PARA BOTONES DE CANTIDAD (+ y -) ---
   if (e.target.matches('.qty-btn')) {
     const cart_item_id = e.target.dataset.id;
-    const currentQty = parseInt(e.target.parentElement.querySelector('input').value);
+    const quantityContainer = e.target.parentElement;
+    const input = quantityContainer.querySelector('input');
+    const stock = parseInt(quantityContainer.dataset.stock); // Leemos el stock del data-attribute
+    const currentQty = parseInt(input.value);
     let newQty;
 
     if (e.target.textContent === '+') {
+      // ¡VERIFICACIÓN DE STOCK!
+      if (currentQty >= stock) {
+        Swal.fire({ icon: 'warning', title: 'Stock máximo alcanzado', text: `Solo hay ${stock} unidades disponibles.` });
+        return; // Detenemos la ejecución si se excede el stock
+      }
       newQty = currentQty + 1;
     } else {
       newQty = currentQty - 1;
     }
 
-    if (newQty < 1) { // No permitir que baje de 1
+    if (newQty < 1) {
+      // Lógica para eliminar el producto si la cantidad es 0
+      e.target.closest('.item-remove').click(); // Simula un click en el botón de eliminar
       return;
     }
 

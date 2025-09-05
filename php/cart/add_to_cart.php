@@ -62,59 +62,58 @@ if (!$producto_id || $quantity < 1 || !$color_id || !$size_id) {
     exit;
 }
 
-// Validar que color exista
-$stmt = $conn->prepare("SELECT id FROM colors WHERE id = ?");
-$stmt->bind_param("i", $color_id);
-$stmt->execute();
-$result = $stmt->get_result();
-if ($result->num_rows === 0) {
-    echo json_encode(['success' => false, 'message' => 'Color inválido']);
+// 1. Obtener el stock actual de la variante específica
+$stmt_stock = $conn->prepare("SELECT stock FROM product_variants WHERE product_id = ? AND color_id = ? AND size_id = ?");
+$stmt_stock->bind_param("iii", $producto_id, $color_id, $size_id);
+$stmt_stock->execute();
+$result_stock = $stmt_stock->get_result();
+
+if ($result_stock->num_rows === 0) {
+    echo json_encode(['success' => false, 'message' => 'Esta variante del producto no existe o está fuera de stock.']);
     exit;
 }
-$stmt->close();
+$variant = $result_stock->fetch_assoc();
+$available_stock = $variant['stock'];
+$stmt_stock->close();
 
-// Validar que talla exista
-$stmt = $conn->prepare("SELECT id FROM sizes WHERE id = ?");
-$stmt->bind_param("i", $size_id);
-$stmt->execute();
-$result = $stmt->get_result();
-if ($result->num_rows === 0) {
-    echo json_encode(['success' => false, 'message' => 'Talla inválida']);
-    exit;
-}
-$stmt->close();
-
-// Verificar si el producto ya está en el carrito considerando color y talla
-$sql_check = "SELECT quantity FROM cart WHERE users_id = ? AND producto_id = ? AND color_id = ? AND size_id = ?";
-$stmt_check = $conn->prepare($sql_check);
+// 2. Obtener la cantidad que el usuario ya tiene en el carrito (si la tiene)
+$quantity_in_cart = 0;
+$stmt_check = $conn->prepare("SELECT quantity FROM cart WHERE users_id = ? AND producto_id = ? AND color_id = ? AND size_id = ?");
 $stmt_check->bind_param("iiii", $user_id, $producto_id, $color_id, $size_id);
 $stmt_check->execute();
-$result = $stmt_check->get_result();
+$result_check = $stmt_check->get_result();
+if ($result_check->num_rows > 0) {
+    $cart_item = $result_check->fetch_assoc();
+    $quantity_in_cart = $cart_item['quantity'];
+}
+$stmt_check->close();
 
-if ($result->num_rows > 0) {
+// 3. Validar si la cantidad total deseada supera el stock
+$total_desired_quantity = $quantity_in_cart + $quantity;
+if ($total_desired_quantity > $available_stock) {
+    $remaining_stock = $available_stock - $quantity_in_cart;
+    $message = $available_stock > 0 ? "No hay suficiente stock. Solo puedes añadir {$remaining_stock} unidad(es) más de este producto." : "Producto agotado.";
+    echo json_encode(['success' => false, 'message' => $message]);
+    exit;
+}
+
+// Si la validación de stock es exitosa, procedemos a insertar o actualizar
+if ($quantity_in_cart > 0) {
     // Ya existe, actualizar cantidad
-    $row = $result->fetch_assoc();
-    $cantidad_existente = $row['quantity'];
-    $new_quantity = $row['quantity'] + $quantity;
-
     $sql_update = "UPDATE cart SET quantity = ? WHERE users_id = ? AND producto_id = ? AND color_id = ? AND size_id = ?";
     $stmt_update = $conn->prepare($sql_update);
-    $stmt_update->bind_param("iiiii", $new_quantity, $user_id, $producto_id, $color_id, $size_id);
+    $stmt_update->bind_param("iiiii", $total_desired_quantity, $user_id, $producto_id, $color_id, $size_id);
     $stmt_update->execute();
     $stmt_update->close();
-
     echo json_encode(['success' => true, 'message' => 'Cantidad actualizada']);
 } else {
-
     // No existe, insertar
     $sql_insert = "INSERT INTO cart (users_id, producto_id, quantity, color_id, size_id) VALUES (?, ?, ?, ?, ?)";
     $stmt_insert = $conn->prepare($sql_insert);
     $stmt_insert->bind_param("iiiii", $user_id, $producto_id, $quantity, $color_id, $size_id);
     $stmt_insert->execute();
     $stmt_insert->close();
-
     echo json_encode(['success' => true, 'message' => 'Producto añadido']);
 }
 
-$stmt_check->close();
 $conn->close();

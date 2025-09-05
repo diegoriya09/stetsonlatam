@@ -40,6 +40,14 @@ try {
   $colors = $result_colors->fetch_all(MYSQLI_ASSOC);
   $stmt_colors->close();
 
+  // OBTENER VARIANTES DE STOCK
+  $stmt_variants = $conn->prepare("SELECT color_id, size_id, stock FROM product_variants WHERE product_id = ?");
+  $stmt_variants->bind_param("i", $product_id);
+  $stmt_variants->execute();
+  $result_variants = $stmt_variants->get_result();
+  $variants_stock = $result_variants->fetch_all(MYSQLI_ASSOC);
+  $stmt_variants->close();
+
   // Registrar visita de usuario
   $user_id = $_SESSION['user_id'] ?? null;
   if ($user_id !== null) {
@@ -51,7 +59,6 @@ try {
   }
   $stmt_visit->execute();
   $stmt_visit->close();
-
 } catch (Exception $e) {
   error_log("Error al cargar producto: " . $e->getMessage());
   exit('Error al cargar la página del producto.');
@@ -145,63 +152,122 @@ $conn->close();
   <script src="js/auth.js?v=<?php echo time(); ?>"></script>
   <script src="js/index.js?v=<?php echo time(); ?>"></script>
   <script>
+    // Creamos una variable global con el "mapa" de stock de las variantes
+    const productVariants = <?php echo json_encode($variants_stock); ?>;
+  </script>
+  <script>
     // Tu JavaScript se mantiene igual, ya que se basa en las clases de los botones que hemos conservado.
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
       let selectedColorId = null;
       let selectedSizeId = null;
+      let availableStock = 0; // Nueva variable para guardar el stock de la variante seleccionada
+
       const colorBtns = document.querySelectorAll('.color-btn');
       const sizeBtns = document.querySelectorAll('.size-btn');
+      const qtyInput = document.getElementById('quantity');
+      const plusBtn = document.querySelector('.qty-btn.plus');
+      const minusBtn = document.querySelector('.qty-btn.minus');
+      const addToCartBtn = document.querySelector('.add-to-cart-btn');
+
+      function updateStock() {
+        // Solo buscamos stock si se ha seleccionado color Y talla
+        if (selectedColorId && selectedSizeId) {
+          const variant = productVariants.find(v =>
+            v.color_id == selectedColorId && v.size_id == selectedSizeId
+          );
+
+          if (variant) {
+            availableStock = variant.stock;
+            // Si la cantidad actual supera el stock, la ajustamos
+            if (parseInt(qtyInput.value) > availableStock) {
+              qtyInput.value = availableStock > 0 ? availableStock : 1;
+            }
+          } else {
+            availableStock = 0; // No se encontró variante, no hay stock
+            qtyInput.value = 1; // Reseteamos la cantidad
+          }
+        }
+        // Habilitar/deshabilitar el botón de "Agregar al carrito" si no hay stock
+        addToCartBtn.disabled = availableStock <= 0;
+        addToCartBtn.textContent = availableStock <= 0 ? "Sin Stock" : "Agregar al carrito";
+      }
 
       colorBtns.forEach(btn => {
-        btn.addEventListener('click', function () {
+        btn.addEventListener('click', function() {
           colorBtns.forEach(b => b.classList.remove('selected'));
           this.classList.add('selected');
           selectedColorId = this.dataset.colorId;
+          updateStock();
         });
       });
 
       sizeBtns.forEach(btn => {
-        btn.addEventListener('click', function () {
+        btn.addEventListener('click', function() {
           sizeBtns.forEach(b => b.classList.remove('selected'));
           this.classList.add('selected');
           selectedSizeId = this.dataset.sizeId;
+          updateStock();
         });
       });
 
-      const qtyInput = document.getElementById('quantity');
-      document.querySelector('.qty-btn.plus').addEventListener('click', () => {
-        qtyInput.value = parseInt(qtyInput.value) + 1;
+      plusBtn.addEventListener('click', () => {
+        let currentValue = parseInt(qtyInput.value);
+        // Solo permitir aumentar si la cantidad es menor al stock disponible
+        if (availableStock > 0 && currentValue < availableStock) {
+          qtyInput.value = currentValue + 1;
+        }
       });
-      document.querySelector('.qty-btn.minus').addEventListener('click', () => {
+
+      minusBtn.addEventListener('click', () => {
         let value = parseInt(qtyInput.value);
         if (value > 1) qtyInput.value = value - 1;
       });
 
-      const addToCartBtn = document.querySelector('.add-to-cart-btn');
-      if (addToCartBtn) {
-        addToCartBtn.addEventListener('click', function () {
-          if (colorBtns.length > 0 && !selectedColorId) {
-            Swal.fire({ icon: 'warning', text: 'Seleccione un color.' });
-            return;
-          }
-          if (sizeBtns.length > 0 && !selectedSizeId) {
-            Swal.fire({ icon: 'warning', text: 'Seleccione una talla.' });
-            return;
-          }
+      addToCartBtn.addEventListener('click', function() {
+        if (colorBtns.length > 0 && !selectedColorId) {
+          Swal.fire({
+            icon: 'warning',
+            text: 'Seleccione un color.'
+          });
+          return;
+        }
+        if (sizeBtns.length > 0 && !selectedSizeId) {
+          Swal.fire({
+            icon: 'warning',
+            text: 'Seleccione una talla.'
+          });
+          return;
+        }
 
-          const cartData = {
-            id: <?php echo $producto['id']; ?>,
-            name: '<?php echo addslashes($producto['name']); ?>',
-            price: <?php echo $producto['price']; ?>,
-            image: '<?php echo htmlspecialchars($producto['image']); ?>',
-            color: selectedColorId,
-            size: selectedSizeId,
-            quantity: parseInt(qtyInput.value)
-          };
+        // Verificación final antes de añadir
+        if (parseInt(qtyInput.value) > availableStock) {
+          Swal.fire({
+            icon: 'error',
+            text: `Solo quedan ${availableStock} unidades en stock.`
+          });
+          return;
+        }
 
-          addToCart(cartData);
-        });
-      }
+        if (availableStock <= 0) {
+          Swal.fire({
+            icon: 'error',
+            text: 'Este producto no tiene stock disponible.'
+          });
+          return;
+        }
+
+        const cartData = {
+          id: <?php echo $producto['id']; ?>,
+          name: '<?php echo addslashes($producto['name']); ?>',
+          price: <?php echo $producto['price']; ?>,
+          image: '<?php echo htmlspecialchars($producto['image']); ?>',
+          color: selectedColorId,
+          size: selectedSizeId,
+          quantity: parseInt(qtyInput.value)
+        };
+
+        addToCart(cartData);
+      });
     });
   </script>
 </body>
