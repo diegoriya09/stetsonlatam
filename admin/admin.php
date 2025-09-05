@@ -412,7 +412,11 @@ if ($view === 'stock') {
                     <label for="pid">Selecciona un producto para editar su stock:</label>
                     <select name="pid" id="pid" onchange="this.form.submit()">
                         <option value="">-- Elige un producto --</option>
-                        <?php mysqli_data_seek($products_for_stock_result, 0);
+                        <?php
+                        // Aseguramos que el puntero del resultado esté al inicio
+                        if ($products_for_stock_result->num_rows > 0) {
+                            mysqli_data_seek($products_for_stock_result, 0);
+                        }
                         while ($product = $products_for_stock_result->fetch_assoc()): ?>
                             <option value="<?php echo $product['id']; ?>" <?php echo ($selected_product_id == $product['id']) ? 'selected' : ''; ?>>
                                 <?php echo htmlspecialchars($product['name']); ?>
