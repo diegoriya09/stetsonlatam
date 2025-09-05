@@ -27,6 +27,7 @@ try {
 <head>
     <title>Stetson LATAM - Sombreros Stetson originales para toda Latinoamérica</title>
     <meta name="description" content="En Stetson LATAM, en alianza con DINALSOM, encuentra sombreros legendarios con envíos a toda Latinoamérica. Compra en línea con confianza." />
+    <meta charset="UTF-8">
     <link rel="icon" href="img/logo.webp" type="image/x-icon">
     <link href="css/index.css?v=<?php echo time(); ?>" rel="stylesheet">
     <link href="css/categoria.css?v=<?php echo time(); ?>" rel="stylesheet">
