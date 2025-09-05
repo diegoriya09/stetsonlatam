@@ -29,7 +29,7 @@ function getAuthorizationHeader()
     } elseif (function_exists('apache_request_headers')) {
         $requestHeaders = apache_request_headers();
         foreach ($requestHeaders as $key => $value) {
-            if (strtolower($key) === 'authorization') {
+            if (strtolower($key) === 'Authorization') {
                 return trim($value);
             }
         }
