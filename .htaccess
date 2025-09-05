@@ -24,3 +24,6 @@ RewriteRule ^categoria([0-9]+)$ categoria.php?id=$1 [NC,L]
 
 # Regla para /producto/ID (ej: /producto/15)
 RewriteRule ^producto([0-9]+)$ producto.php?id=$1 [NC,L]
+
+RewriteCond %{HTTP:Authorization} .
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
