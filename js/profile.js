@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', async () => {
     const jwt = localStorage.getItem('jwt');
     if (!jwt) {
-        window.location.href = '/index';
+        window.location.href = 'index';
         return;
     }
 
@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (!res.ok) {
                 if (res.status === 401) {
                     localStorage.removeItem('jwt');
-                    window.location.href = '/index';
+                    window.location.href = 'index';
                 }
                 throw new Error(`El servidor respondió con el estado: ${res.status}`);
             }
