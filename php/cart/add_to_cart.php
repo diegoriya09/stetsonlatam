@@ -29,13 +29,13 @@ function getAuthorizationHeader()
 }
 
 $authHeader = getAuthorizationHeader();
-if (!$authHeader || !preg_match('/Bearer\s(\S+)/', $authHeader, $matches)) {
-    http_response_code(401);
-    echo json_encode(['success' => false, 'message' => 'No autorizado: Token no proporcionado o en formato incorrecto.']);
+if (!$authHeader || !str_starts_with($authHeader, 'Bearer ')) {
+    echo json_encode(['success' => false, 'message' => 'Token no proporcionado']);
     exit;
 }
 
-$jwt = $matches[1];
+$jwt = trim(str_replace('Bearer', '', $authHeader));
+$jwt = ltrim($jwt);
 $secret_key = "StetsonLatam1977";
 
 try {

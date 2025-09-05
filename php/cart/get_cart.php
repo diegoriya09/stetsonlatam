@@ -1,12 +1,10 @@
 <?php
-// Mostrar errores (muy útil para depurar)
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 require_once '../conexion.php';
 require_once '../../vendor/autoload.php';
-
 
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
@@ -29,7 +27,7 @@ function getAuthorizationHeader()
     } elseif (function_exists('apache_request_headers')) {
         $requestHeaders = apache_request_headers();
         foreach ($requestHeaders as $key => $value) {
-            if (strtolower($key) === 'Authorization') {
+            if (strtolower($key) === 'authorization') {
                 return trim($value);
             }
         }
@@ -48,16 +46,12 @@ $jwt = ltrim($jwt);
 $secret_key = "StetsonLatam1977";
 
 try {
-    // 1. Decodificamos el token. El resultado es un objeto.
     $decoded = JWT::decode($jwt, new Key($secret_key, 'HS256'));
-    
-    // 2. Accedemos a los datos como propiedades de un objeto.
-    // Esta es la forma correcta y recomendada.
     $user_id = $decoded->data->id;
 
     $stmt = $conn->prepare("
         SELECT  
-            c.id as cart_item_id, -- Es buena práctica darle un alias claro
+            c.id as cart_item_id,
             c.producto_id, 
             p.name, 
             p.price, 
@@ -85,8 +79,6 @@ try {
 
     $stmt->close();
     $conn->close();
-
-    // ¡ESTA ES LA LÍNEA CORREGIDA!
     echo json_encode(['success' => true, 'cart' => $carrito]);
     exit;
 } catch (Exception $e) {
