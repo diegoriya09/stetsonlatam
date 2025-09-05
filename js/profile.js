@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', async () => {
     const jwt = localStorage.getItem('jwt');
     if (!jwt) {
-        window.location.href = '../index';
+        window.location.href = 'index';
         return;
     }
 
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // --- FUNCIONES GENÉRICAS PARA COMUNICACIÓN CON API ---
     const fetchData = async (endpoint) => {
         try {
-            const res = await fetch(endpoint + '.php', { headers: { 'Authorization': 'Bearer ' + jwt } });
+            const res = await fetch(endpoint, { headers: { 'Authorization': 'Bearer ' + jwt } });
             if (!res.ok) {
                 if (res.status === 401) {
                     localStorage.removeItem('jwt');
@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const postData = async (endpoint, data) => {
         try {
-            const res = await fetch(endpoint + '.php', {
+            const res = await fetch(endpoint, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + jwt },
                 body: JSON.stringify(data)
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // --- FUNCIONES PARA CARGAR Y RENDERIZAR DATOS ---
     const loadUserData = async () => {
-        const userData = await fetchData('../php/user/get_user.php');
+        const userData = await fetchData('php/user/get_user');
         if (userData.success && userData.user) {
             const user = userData.user;
             document.getElementById('sidebar-username').textContent = user.name;
@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     };
     const loadOrdersData = async () => {
-        const ordersData = await fetchData('../php/order/get_orders.php');
+        const ordersData = await fetchData('php/order/get_orders.php');
         const ordersTbody = document.getElementById('orders-tbody');
         ordersTbody.innerHTML = '';
         if (ordersData.success && ordersData.orders.length > 0) {
@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     };
 
     const loadAddressesData = async () => {
-        const addrData = await fetchData('../php/user/get_addresses.php');
+        const addrData = await fetchData('php/user/get_addresses.php');
         const container = document.getElementById('address-list');
         container.innerHTML = '';
         if (addrData.success && addrData.addresses.length > 0) {
@@ -114,7 +114,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     };
 
     const loadPaymentsData = async () => {
-        const paymentData = await fetchData('../php/user/get_payment_methods.php');
+        const paymentData = await fetchData('php/user/get_payment_methods.php');
         const container = document.getElementById('payment-method-list');
         container.innerHTML = '';
         if (paymentData.success && paymentData.payment_methods.length > 0) {
@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('add-address-form')?.addEventListener('submit', async function (e) {
         e.preventDefault();
         const data = Object.fromEntries(new FormData(this).entries());
-        const result = await postData('../php/user/add_address.php', data);
+        const result = await postData('php/user/add_address.php', data);
         if (result.success) {
             Swal.fire('¡Éxito!', result.message, 'success');
             closeModal(addressModal);
@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('add-payment-form')?.addEventListener('submit', async function (e) {
         e.preventDefault();
         const data = Object.fromEntries(new FormData(this).entries());
-        const result = await postData('../php/user/add_payment_method.php', data);
+        const result = await postData('php/user/add_payment_method.php', data);
         if (result.success) {
             Swal.fire('¡Éxito!', result.message, 'success');
             closeModal(paymentModal);
@@ -160,11 +160,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         if (target.matches('.delete-address-btn')) {
             id = target.dataset.id;
-            endpoint = '../php/user/delete_address.php';
+            endpoint = 'php/user/delete_address.php';
             callback = loadAddressesData;
         } else if (target.matches('.delete-payment-btn')) {
             id = target.dataset.id;
-            endpoint = '../php/user/delete_payment_method.php';
+            endpoint = 'php/user/delete_payment_method.php';
             callback = loadPaymentsData;
         } else {
             return;
