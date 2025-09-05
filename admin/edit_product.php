@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if ($stmt->execute()) {
-        header("Location: admin.php?msg=Producto+editado");
+        header("Location: admin?msg=Producto+editado");
         exit;
     } else {
         die("Error al editar el producto: " . $stmt->error);

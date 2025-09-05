@@ -33,7 +33,7 @@ if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
 $stmt = $conn->prepare("INSERT INTO productos (name, description, price, category, image) VALUES (?, ?, ?, ?, ?)");
 $stmt->bind_param("ssdss", $nombre, $descripcion, $precio, $categoria, $imagen);
 if ($stmt->execute()) {
-    header("Location: admin.php?msg=added+product");
+    header("Location: admin?msg=added+product");
     exit;
 } else {
     die("Error al añadir el producto: " . $stmt->error);

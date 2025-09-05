@@ -16,7 +16,7 @@ $stmt = $conn->prepare("DELETE FROM productos WHERE id=?");
 $stmt->bind_param("i", $id);
 
 if ($stmt->execute()) {
-    header("Location: admin.php?msg=Producto+eliminado");
+    header("Location: admin?msg=Producto+eliminado");
     exit;
 } else {
     die("Error al eliminar producto: " . $stmt->error);
