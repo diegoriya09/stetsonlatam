@@ -25,6 +25,9 @@ RewriteRule ^admin/delete([0-9]+)$ /admin/delete_product.php?id=$1 [NC,L]
 RewriteRule ^admin/update_order_status$ /admin/update_order_status.php [NC,L]
 RewriteRule ^admin/add_product$ /admin/add_product.php [NC,L]
 
+# --- NUEVA REGLA PARA EL STOCK ---
+RewriteRule ^admin/stockedit([0-9]+)$ /admin/edit_stock.php?id=$1 [NC,L]
+
 # --- REGLA 4: URLs amigables para APIs ---
 RewriteRule ^php/order/get_detail_order([0-9]+)$ /php/order/get_detail_order.php?id=$1 [NC,L]
 
