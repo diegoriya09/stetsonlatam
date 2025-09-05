@@ -34,4 +34,4 @@ RewriteRule ^php/order/get_detail_order([0-9]+)$ /php/order/get_detail_order.php
 
 # Regla para pasar el Header de Autorización a PHP
 RewriteCond %{HTTP:Authorization} .
-RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP_Authorization}]
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
