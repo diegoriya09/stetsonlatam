@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Verifica el token con el servidor
-  fetch("php/check_session.php", {
+  fetch("php/check_session", {
     method: "GET",
     headers: {
       Authorization: "Bearer " + jwt,
