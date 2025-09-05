@@ -107,7 +107,7 @@ try {
         echo json_encode(['success' => true, 'message' => 'Producto añadido al carrito.']);
     }
 } catch (Exception $e) {
-    http_response_code(400); // Bad Request, ya que usualmente es un error del cliente (ej. sin stock)
+    http_response_code(400);
     echo json_encode(['success' => false, 'message' => $e->getMessage()]);
 }
 
