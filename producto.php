@@ -120,7 +120,7 @@ $conn->close();
               <h3 class="options-label">Cantidad</h3>
               <div class="quantity-selector">
                 <button type="button" class="qty-btn minus">-</button>
-                <input type="text" id="cantidad" value="1" readonly>
+                <input type="text" id="quantity" value="1" readonly>
                 <button type="button" class="qty-btn plus">+</button>
               </div>
             </div>
