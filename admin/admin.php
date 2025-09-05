@@ -1,5 +1,5 @@
 <?php
-// admin/index.php (CÓDIGO COMPLETO Y ADAPTADO)
+// admin/admin.php (CÓDIGO COMPLETO Y SINCRONIZADO)
 
 session_start();
 if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
@@ -7,19 +7,23 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
     exit;
 }
 
+// --- Conexión a la Base de Datos (la ruta ahora sube un nivel) ---
 require '../php/conexion.php';
 
-// ADAPTADO: Usamos 'section' para evitar problemas con ModSecurity
-$view = $_GET['section'] ?? 'products';
+// --- Lógica para determinar la vista actual ---
+$view = $_GET['view'] ?? 'products';
 
-// Lógica de Stock Manager 
+// --- Lógica de Stock Manager ---
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'update_stock') {
-    // ADAPTADO: Usamos 'pid' para evitar problemas con ModSecurity
-    $product_id = isset($_POST['pid']) ? (int)$_POST['pid'] : 0;
+    $product_id = isset($_POST['product_id']) ? (int)$_POST['product_id'] : 0;
     $stocks = $_POST['stock'] ?? [];
 
     if ($product_id > 0 && !empty($stocks)) {
-        $stmt = $conn->prepare("INSERT INTO product_variants (product_id, color_id, size_id, stock) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE stock = VALUES(stock)");
+        $stmt = $conn->prepare("
+            INSERT INTO product_variants (product_id, color_id, size_id, stock) 
+            VALUES (?, ?, ?, ?) 
+            ON DUPLICATE KEY UPDATE stock = VALUES(stock)
+        ");
         foreach ($stocks as $color_id => $sizes) {
             foreach ($sizes as $size_id => $stock) {
                 $stock_value = (int)$stock;
@@ -32,11 +36,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     }
 }
 
-// Lógica para la vista de STOCK
+// --- Lógica para la vista de STOCK ---
 if ($view === 'stock') {
     $products_for_stock_result = $conn->query("SELECT id, name FROM productos ORDER BY name ASC");
-    // ADAPTADO: Usamos 'pid'
-    $selected_product_id = isset($_GET['pid']) ? (int)$_GET['pid'] : 0;
+    $selected_product_id = isset($_GET['product_id']) ? (int)$_GET['product_id'] : 0;
     $selected_product_stock = null;
     $colors = [];
     $sizes = [];
@@ -79,7 +82,201 @@ if ($view === 'stock') {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
-        /* Tus estilos CSS (sin cambios) */
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f1eeea;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 95%;
+            margin: auto;
+        }
+
+        h1,
+        h2 {
+            text-align: center;
+            color: #3c3737;
+            margin-top: 30px;
+        }
+
+        form {
+            background: #fff;
+            padding: 20px 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(60, 55, 55, 0.08);
+            max-width: 500px;
+            margin: 30px auto 10px auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+        }
+
+        form input[type="text"],
+        form input[type="number"],
+        form select,
+        form input[type="file"] {
+            flex: 1 1 180px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        form button {
+            background: #3c3737;
+            color: #fff;
+            border: none;
+            padding: 10px 22px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        form button:hover {
+            background: #5a2323;
+        }
+
+        table {
+            width: 90%;
+            margin: 30px auto;
+            border-collapse: collapse;
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(60, 55, 55, 0.08);
+        }
+
+        th,
+        td {
+            padding: 12px 10px;
+            border-bottom: 1px solid #eee;
+            text-align: center;
+        }
+
+        th {
+            background: #3c3737;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        td.description-cell {
+            max-width: 320px;
+            white-space: normal;
+            overflow-wrap: break-word;
+            text-align: left;
+        }
+
+        .admin-nav {
+            text-align: center;
+            background-color: #fff;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .admin-nav a {
+            text-decoration: none;
+            color: #3c3737;
+            font-size: 1.2em;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.2s;
+        }
+
+        .admin-nav a:hover {
+            background-color: #f1eeea;
+        }
+
+        .admin-nav a.active {
+            background-color: #3c3737;
+            color: #fff;
+        }
+
+        #logout-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            z-index: 10;
+            background: #b33a3a;
+            color: #fff;
+            border: none;
+            padding: 10px 22px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        .stock-table {
+            width: 100%;
+            max-width: 1200px;
+            margin: 20px auto;
+        }
+
+        .stock-table th,
+        .stock-table td {
+            border: 1px solid #ccc;
+        }
+
+        .stock-input {
+            width: 60px;
+            padding: 5px;
+            text-align: center;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .success-message {
+            text-align: center;
+            background-color: #d4edda;
+            color: #155724;
+            padding: 10px;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+            margin: 20px auto;
+            max-width: 800px;
+        }
+
+        .ordermodal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .modal-content-order {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .close-modal-order {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 
@@ -318,5 +515,6 @@ if ($view === 'stock') {
 
 </html>
 <?php
+// Cerrar la conexión a la base de datos una sola vez al final
 $conn->close();
 ?>
