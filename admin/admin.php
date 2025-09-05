@@ -1,5 +1,5 @@
 <?php
-// admin/admin.php (CÓDIGO COMPLETO Y SINCRONIZADO)
+// admin/index.php (CÓDIGO COMPLETO Y FINAL)
 
 session_start();
 if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
@@ -7,23 +7,19 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
     exit;
 }
 
-// --- Conexión a la Base de Datos (la ruta ahora sube un nivel) ---
 require '../php/conexion.php';
 
-// --- Lógica para determinar la vista actual ---
-$view = $_GET['view'] ?? 'products';
+// ADAPTADO: Usamos 'section' para evitar problemas con ModSecurity
+$view = $_GET['section'] ?? 'products';
 
-// --- Lógica de Stock Manager ---
+// Lógica de Stock Manager 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'update_stock') {
-    $product_id = isset($_POST['product_id']) ? (int)$_POST['product_id'] : 0;
+    // ADAPTADO: Usamos 'pid' para evitar problemas con ModSecurity
+    $product_id = isset($_POST['pid']) ? (int)$_POST['pid'] : 0;
     $stocks = $_POST['stock'] ?? [];
 
     if ($product_id > 0 && !empty($stocks)) {
-        $stmt = $conn->prepare("
-            INSERT INTO product_variants (product_id, color_id, size_id, stock) 
-            VALUES (?, ?, ?, ?) 
-            ON DUPLICATE KEY UPDATE stock = VALUES(stock)
-        ");
+        $stmt = $conn->prepare("INSERT INTO product_variants (product_id, color_id, size_id, stock) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE stock = VALUES(stock)");
         foreach ($stocks as $color_id => $sizes) {
             foreach ($sizes as $size_id => $stock) {
                 $stock_value = (int)$stock;
@@ -36,10 +32,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     }
 }
 
-// --- Lógica para la vista de STOCK ---
+// Lógica para la vista de STOCK
 if ($view === 'stock') {
     $products_for_stock_result = $conn->query("SELECT id, name FROM productos ORDER BY name ASC");
-    $selected_product_id = isset($_GET['product_id']) ? (int)$_GET['product_id'] : 0;
+    // ADAPTADO: Usamos 'pid'
+    $selected_product_id = isset($_GET['pid']) ? (int)$_GET['pid'] : 0;
     $selected_product_stock = null;
     $colors = [];
     $sizes = [];
@@ -297,12 +294,24 @@ if ($view === 'stock') {
 
         <?php if ($view === 'products'): ?>
             <form id="add-product-form" action="add_product" method="POST" enctype="multipart/form-data">
+                <input type="text" name="nombre" placeholder="Nombre del producto" required>
+                <input type="number" name="precio" placeholder="Precio" step="0.01" required>
+                <input type="text" name="descripcion" placeholder="Descripción" required>
+                <select name="categoria" required>
+                    <option value="">Categorías</option>
+                    <option value="hats">Sombreros</option>
+                    <option value="caps">Cachuchas</option>
+                </select>
+                <input type="file" name="imagen" accept="image/*">
                 <button type="submit">Añadir producto</button>
             </form>
 
             <form method="GET" style="margin-top:20px;">
                 <input type="hidden" name="section" value="products">
                 <select name="category" onchange="this.form.submit()">
+                    <option value="" <?php if (!isset($_GET['category']) || trim($_GET['category']) == '') echo 'selected'; ?>>Todas las categorías</option>
+                    <option value="hats" <?php if (isset($_GET['category']) && $_GET['category'] == 'hats') echo 'selected'; ?>>Sombreros</option>
+                    <option value="caps" <?php if (isset($_GET['category']) && $_GET['category'] == 'caps') echo 'selected'; ?>>Cachuchas</option>
                 </select>
             </form>
 
@@ -335,8 +344,8 @@ if ($view === 'stock') {
                         echo "<td>" . htmlspecialchars($row['category']) . "</td>";
                         echo "<td><img src='../{$row['image']}' alt='" . htmlspecialchars($row['name']) . "' style='max-width:60px;max-height:60px;'></td>";
                         echo "<td>
-                                <a href='/admin/edit/{$row['id']}' title='Edit'><i class='fa-solid fa-pen-to-square' style='color:#1a73e8; font-size:20px;'></i></a>
-                                <a href='/admin/delete/{$row['id']}' title='Delete' onclick=\"return confirm('¿Eliminar este producto?');\"><i class='fa-solid fa-trash' style='color:#b33a3a; font-size:20px; margin-left:10px;'></i></a>
+                                <a href='/admin/edit{$row['id']}' title='Edit'><i class='fa-solid fa-pen-to-square' style='color:#1a73e8; font-size:20px;'></i></a>
+                                <a href='/admin/delete{$row['id']}' title='Delete' onclick=\"return confirm('¿Eliminar este producto?');\"><i class='fa-solid fa-trash' style='color:#b33a3a; font-size:20px; margin-left:10px;'></i></a>
                               </td>";
                         echo "</tr>";
                     }
@@ -414,7 +423,7 @@ if ($view === 'stock') {
             </div>
 
             <?php if ($selected_product_stock): ?>
-                <form action="/admin?section=stock&pid=<?php echo $selected_product_id; ?>" method="POST" style="max-width:none; background:none; box-shadow:none;">
+                <form action="?section=stock&pid=<?php echo $selected_product_id; ?>" method="POST" style="max-width:none; background:none; box-shadow:none;">
                     <input type="hidden" name="action" value="update_stock">
                     <input type="hidden" name="pid" value="<?php echo $selected_product_id; ?>">
                     <table class="stock-table">
@@ -478,8 +487,7 @@ if ($view === 'stock') {
             const modal = document.querySelector('.ordermodal');
             const detailsDiv = document.getElementById('admin-order-details');
 
-            // ADAPTADO: fetch coincide con la nueva REGLA 4 del .htaccess
-            fetch(`/php/order/get_detail_order/${orderId}`)
+            fetch(`/php/order/get_detail_order${orderId}`)
                 .then(res => res.json())
                 .then(data => {
                     if (data.success && data.details.length > 0) {
