@@ -207,7 +207,7 @@ $stock_stmt->close();
       <h2>Gestionar Stock para: <strong><?php echo htmlspecialchars($product_name); ?></strong></h2>
 
       <?php if (!empty($colors) && !empty($sizes)): ?>
-         <form action="/admin/stock/edit/<?php echo $product_id; ?>" method="POST">
+         <form action="/admin/edit_stock<?php echo $product_id; ?>" method="POST">
             <input type="hidden" name="product_id" value="<?php echo $product_id; ?>">
 
             <table>
@@ -237,14 +237,14 @@ $stock_stmt->close();
             </table>
 
             <div class="action-buttons">
-               <a href="/admin" class="back-link">Volver al Panel</a>
+               <a href="admin" class="back-link">Volver al Panel</a>
                <button type="submit">Guardar Cambios de Stock</button>
             </div>
          </form>
       <?php else: ?>
          <p class="no-variants">Este producto no tiene colores o tallas asignadas. Por favor, asígnalas antes de gestionar el stock.</p>
          <div class="action-buttons">
-            <a href="/admin" class="back-link">Volver al Panel</a>
+            <a href="admin" class="back-link">Volver al Panel</a>
          </div>
       <?php endif; ?>
    </div>
