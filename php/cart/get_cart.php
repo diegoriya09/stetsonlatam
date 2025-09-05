@@ -32,8 +32,9 @@ function getAuthorizationHeader()
 }
 
 $authHeader = getAuthorizationHeader();
-if (!$authHeader || !str_starts_with($authHeader, 'Bearer ')) {
-    echo json_encode(['success' => false, 'message' => 'Token no proporcionado']);
+if (!$authHeader || !preg_match('/Bearer\s(\S+)/i', $authHeader, $matches)) {
+    http_response_code(401);
+    echo json_encode(['success' => false, 'message' => 'Token no proporcionado o en formato incorrecto.']);
     exit;
 }
 
