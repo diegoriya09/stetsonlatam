@@ -28,7 +28,7 @@ function addToCart(productData) {
     },
     body: JSON.stringify({
       producto_id: productData.id,
-      cantidad: productData.quantity,
+      quantity: productData.quantity,
       color_id: productData.color,
       size_id: productData.size
     })
