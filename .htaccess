@@ -24,6 +24,7 @@ RewriteRule ^producto([0-9]+)$ producto.php?id=$1 [NC,L]
 # Asume que tus archivos de admin están en una carpeta /admin/
 RewriteRule ^admin/product/edit([0-9]+)$ /admin/edit_product.php?id=$1 [NC,L]
 RewriteRule ^admin/product/delete([0-9]+)$ /admin/delete_product.php?id=$1 [NC,L]
+RewriteRule ^php/order/get_detail_order([0-9]+)$ /php/order/get_detail_order.php?id=$1 [NC,L]
 
 # Regla para pasar el Header de Autorización a PHP
 RewriteCond %{HTTP:Authorization} .

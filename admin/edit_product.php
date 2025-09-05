@@ -125,7 +125,7 @@ body {
 </style>
 <div class="edit-container">
     <h2>Editar Producto</h2>
-    <form action="edit_product.php" method="POST" enctype="multipart/form-data">
+    <form action="edit_product" method="POST" enctype="multipart/form-data">
         <input type="hidden" name="id" value="<?php echo $id; ?>">
         <label>Nombre: <input type="text" name="name" value="<?php echo htmlspecialchars($name); ?>" required></label><br>
         <label>Descripción: <input type="text" name="description" value="<?php echo htmlspecialchars($description); ?>" required></label><br>
@@ -134,11 +134,12 @@ body {
             <select name="category" required>
                 <option value="">Seleccionar</option>
                 <option value="hats" <?php if($category=='hats') echo 'selected'; ?>>Sombreros</option>
+                <option value="caps" <?php if($category=='caps') echo 'selected'; ?>>Cachuchas</option>
             </select>
         </label><br>
         <label>Imagen actual:
             <?php if ($image) { ?>
-                <img src="../<?php echo $image; ?>" style="max-width:60px;max-height:60px;">
+                <img src="/<?php echo $image; ?>" style="max-width:60px;max-height:60px;">
             <?php } else { echo "-"; } ?>
         </label><br>
         <label>Nueva imagen: <input type="file" name="image"></label><br>

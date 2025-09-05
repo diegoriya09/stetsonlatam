@@ -426,7 +426,7 @@ if ($view === 'stock') {
             </div>
 
             <?php if ($selected_product_stock): ?>
-                <form action="/admin?section=stock&pid=<?php echo $selected_product_id; ?>" method="POST" style="max-width:none; background:none; box-shadow:none;">
+                <form action="/?section=stock&pid=<?php echo $selected_product_id; ?>" method="POST" style="max-width:none; background:none; box-shadow:none;">
                     <input type="hidden" name="action" value="update_stock">
                     <input type="hidden" name="pid" value="<?php echo $selected_product_id; ?>">
                     <table class="stock-table">
@@ -468,7 +468,7 @@ if ($view === 'stock') {
             const modal = document.querySelector('.ordermodal');
             const detailsDiv = document.getElementById('admin-order-details');
             // En fetch, es más seguro y claro usar la ruta completa al archivo .php
-            fetch(`/php/order/get_detail_order.php?id=${orderId}`)
+            fetch(`/php/order/get_detail_order?id=${orderId}`)
                 .then(res => res.json())
                 .then(data => {
                     if (data.success && data.details.length > 0) {
