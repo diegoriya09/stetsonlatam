@@ -6,25 +6,28 @@ RewriteCond %{HTTPS} off
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
 # --- REGLA 1: Quitar la extensión .php de los archivos ---
-# Redirige externamente peticiones a "archivo.php" hacia "archivo"
 RewriteCond %{THE_REQUEST} \s/+(.+?)\.php[\s?] [NC]
 RewriteRule ^ %1 [R=301,L]
 
-# Reescritura interna: maneja "archivo" como si fuera "archivo.php"
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{DOCUMENT_ROOT}/%{REQUEST_URI}.php -f
 RewriteRule ^(.*?)/?$ $1.php [L]
 
 # --- REGLA 2: URLs amigables para la tienda ---
-RewriteRule ^categoria([0-9]+)$ categoria.php?id=$1 [NC,L]
-RewriteRule ^producto([0-9]+)$ producto.php?id=$1 [NC,L]
+RewriteRule ^categoria/([0-9]+)$ /categoria.php?id=$1 [NC,L]
+RewriteRule ^producto/([0-9]+)$ /producto.php?id=$1 [NC,L]
 
-# --- NUEVO: REGLA 3: URLs amigables para el Panel de Administración ---
+# --- REGLA 3: URLs amigables para el Panel de Administración ---
 # Asume que tus archivos de admin están en una carpeta /admin/
-RewriteRule ^admin/edit([0-9]+)$ /admin/edit_product.php?id=$1 [NC,L]
-RewriteRule ^admin/delete([0-9]+)$ /admin/delete_product.php?id=$1 [NC,L]
-RewriteRule ^php/order/get_detail_order([0-9]+)$ /php/order/get_detail_order.php?id=$1 [NC,L]
+RewriteRule ^admin/edit/([0-9]+)$ /admin/edit_product.php?id=$1 [NC,L]
+RewriteRule ^admin/delete/([0-9]+)$ /admin/delete_product.php?id=$1 [NC,L]
+RewriteRule ^admin/update_order_status$ /admin/update_order_status.php [NC,L]
+RewriteRule ^admin/add_product$ /admin/add_product.php [NC,L]
+
+# --- REGLA 4: URLs amigables para APIs ---
+RewriteRule ^php/order/get_detail_order/([0-9]+)$ /php/order/get_detail_order.php?id=$1 [NC,L]
+
 
 # Regla para pasar el Header de Autorización a PHP
 RewriteCond %{HTTP:Authorization} .
