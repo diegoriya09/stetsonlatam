@@ -286,9 +286,9 @@ if ($view === 'stock') {
         <h1>Management Panel</h1>
 
         <nav class="admin-nav">
-            <a href="/admin?view=products" class="<?php if ($view === 'products') echo 'active'; ?>">Gestionar Productos</a>
-            <a href="/admin?view=orders" class="<?php if ($view === 'orders') echo 'active'; ?>">Gestionar Pedidos</a>
-            <a href="/admin?view=stock" class="<?php if ($view === 'stock') echo 'active'; ?>">Gestionar Stock</a>
+            <a href="admin/admin?view=products" class="<?php if ($view === 'products') echo 'active'; ?>">Gestionar Productos</a>
+            <a href="admin/admin?view=orders" class="<?php if ($view === 'orders') echo 'active'; ?>">Gestionar Pedidos</a>
+            <a href="admin/admin?view=stock" class="<?php if ($view === 'stock') echo 'active'; ?>">Gestionar Stock</a>
         </nav>
 
         <?php if (isset($success_message)): ?>
