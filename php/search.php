@@ -32,7 +32,7 @@ while ($row = $res->fetch_assoc()) {
         "title" => $row['name'],
         "price" => $row['price'],
         "image" => $row['image'],
-        "url" => "producto.php?id=" . $row['id']
+        "url" => "producto" . $row['id']
     ];
 }
 
