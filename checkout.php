@@ -178,6 +178,14 @@ if (session_status() !== PHP_SESSION_ACTIVE) session_start();
 
                             const formData = new FormData(this);
 
+                            const jwt = localStorage.getItem('jwt');
+
+                            // Validación: Si no hay token, no se puede pagar
+                            if (!jwt) {
+                                Swal.fire('Error', 'Debes iniciar sesión para completar la compra.', 'error');
+                                return;
+                            }
+
                             fetch('php/cart/checkout', {
                                     method: 'POST',
                                     headers: {
