@@ -31,7 +31,6 @@ function getAuthorizationHeader()
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    // NUEVO: Bandera para controlar la transacción
     $transaction_started = false;
 
     try {
@@ -97,7 +96,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $direccion = $_POST['direccion'] ?? '';
         $telefono = $_POST['telefono'] ?? '';
         $metodo = $_POST['metodo'] ?? '';
-        $stmt_order = $conn->prepare("INSERT INTO pedidos (user_id, total, estado, nombre_cliente, email_cliente, pais, ciudad, direccion, telefono, metodo_pago) VALUES (?, ?, 'Pending', ?, ?, ?, ?, ?, ?, ?)");
+
+        // CORRECCIÓN: Usar el valor en inglés 'Pending' para consistencia con el admin panel
+        $stmt_order = $conn->prepare("INSERT INTO pedidos (user_id, total, estado, nombre_cliente, email_cliente, pais, ciudad, direccion, telefono, metodo_pago) VALUES (?, ?, 'Pendiente', ?, ?, ?, ?, ?, ?, ?)");
         $stmt_order->bind_param("idssssssss", $user_id, $total, $nombre, $email, $pais, $ciudad, $direccion, $telefono, $metodo);
         $stmt_order->execute();
         $pedido_id = $conn->insert_id;
@@ -122,7 +123,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         echo json_encode(["success" => true, "message" => "¡Pedido creado correctamente!", "pedido_id" => $pedido_id]);
     } catch (Exception $e) {
-        // CORRECCIÓN FINAL: Usamos nuestra bandera, que funciona en cualquier versión de PHP
         if ($transaction_started) {
             $conn->rollback();
         }
