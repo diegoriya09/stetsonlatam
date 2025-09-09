@@ -239,7 +239,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                             const formData = new FormData(this);
 
-                            fetch('php/cart/checkout.php', {
+                            fetch('php/cart/checkout', {
                                     method: 'POST',
                                     body: formData
                                 })
