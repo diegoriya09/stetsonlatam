@@ -1,66 +1,5 @@
 <?php
 if (session_status() !== PHP_SESSION_ACTIVE) session_start();
-if (empty($_SESSION['csrf_token'])) {
-    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-}
-
-// Procesar el formulario si es POST
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Validar CSRF
-    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
-        die("Token CSRF inválido.");
-    }
-
-    // Sanitizar y validar campos
-    $nombre = trim(strip_tags($_POST['nombre']));
-    $email = trim(filter_var($_POST['email'], FILTER_SANITIZE_EMAIL));
-    $pais = $_POST['pais'];
-    $ciudad = trim(strip_tags($_POST['ciudad']));
-    $direccion = trim(strip_tags($_POST['direccion']));
-    $telefono = trim(strip_tags($_POST['telefono']));
-    $metodo = $_POST['metodo'];
-
-    // Validaciones básicas
-    if (!preg_match('/^[a-zA-Z\s]{3,40}$/', $nombre)) {
-        $error = "Nombre inválido.";
-    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $error = "Email inválido.";
-    } elseif (empty($pais) || empty($ciudad) || empty($direccion) || empty($telefono)) {
-        $error = "Todos los campos son obligatorios.";
-    } elseif ($metodo === 'tarjeta') {
-        // Validar campos de tarjeta
-        $numero_tarjeta = preg_replace('/\D/', '', $_POST['numero_tarjeta']);
-        $nombre_tarjeta = trim($_POST['nombre_tarjeta']);
-        $expiracion = trim($_POST['expiracion']);
-        $cvv = trim($_POST['cvv']);
-        if (strlen($numero_tarjeta) < 13 || strlen($numero_tarjeta) > 19) {
-            $error = "Número de tarjeta inválido.";
-        } elseif (empty($nombre_tarjeta) || !preg_match('/^[a-zA-Z\s]+$/', $nombre_tarjeta)) {
-            $error = "Nombre en la tarjeta inválido.";
-        } elseif (!preg_match('/^(0[1-9]|1[0-2])\/\d{2}$/', $expiracion)) {
-            $error = "Fecha de expiración inválida.";
-        } elseif (!preg_match('/^\d{3,4}$/', $cvv)) {
-            $error = "CVV inválido.";
-        }
-    } elseif ($metodo === 'pse') {
-        // Validar campos de PSE
-        $banco = $_POST['banco_pse'];
-        $tipo_cuenta = $_POST['tipo_cuenta_pse'];
-        $documento = trim($_POST['documento_pse']);
-        if (empty($banco) || empty($tipo_cuenta) || empty($documento)) {
-            $error = "Completa todos los datos de PSE.";
-        }
-    }
-
-    // Si hay error, puedes mostrarlo en el HTML
-    if (isset($error)) {
-        echo "<div style='color:red; text-align:center;'>$error</div>";
-    } else {
-        // Aquí procesas el pago simulado, guardas la orden, etc.
-        echo "<div style='color:green; text-align:center;'>¡Pago procesado correctamente!</div>";
-        // Limpia el formulario, redirige, etc.
-    }
-}
 ?>
 
 <html>
@@ -241,6 +180,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                             fetch('php/cart/checkout', {
                                     method: 'POST',
+                                    headers: {
+                                        'Authorization': 'Bearer ' + jwt
+                                    },
                                     body: formData
                                 })
                                 .then(res => res.json())
