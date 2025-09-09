@@ -88,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php include 'header.php'; ?>
             <div class="px-40 flex flex-1 justify-center py-5">
                 <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
-                    <form id="checkout-form" method="POST" action="php/checkout.php" class="flex flex-col">
+                    <form id="checkout-form" method="POST" action="php/cart/checkout" class="flex flex-col">
 
                         <!-- Token CSRF (lo generas en PHP antes) -->
                         <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
