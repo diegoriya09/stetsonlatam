@@ -271,8 +271,6 @@ $num_productos = count($productos);
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-
-            // --- LÓGICA PARA FILTROS ---
             const sizeBtn = document.getElementById("size-filter-btn");
             const sizeDropdown = document.getElementById("size-dropdown");
             const colorBtn = document.getElementById("color-filter-btn");
@@ -283,33 +281,27 @@ $num_productos = count($productos);
 
             document.querySelectorAll(".size-check, .color-check").forEach(input => {
                 input.addEventListener("change", () => {
-                    const currentParams = new URLSearchParams(window.location.search);
-                    currentParams.delete('sizes[]');
-                    currentParams.delete('colors[]');
-                    document.querySelectorAll(".size-check:checked").forEach(cb => currentParams.append("sizes[]", cb.value));
-                    document.querySelectorAll(".color-check:checked").forEach(cb => currentParams.append("colors[]", cb.value));
-                    window.location.href = window.location.pathname + "?" + currentParams.toString();
+                    const params = new URLSearchParams();
+                    document.querySelectorAll(".size-check:checked").forEach(cb => params.append("sizes[]", cb.value));
+                    document.querySelectorAll(".color-check:checked").forEach(cb => params.append("colors[]", cb.value));
+                    window.location.href = "?" + params.toString();
                 });
             });
 
-            // --- LÓGICA PARA ORDENAR POR PRECIO ---
             const sortBtn = document.getElementById("sort-btn");
             const productosContainer = document.getElementById("productos-container");
-            let ascending = true; // estado inicial del orden
+            let ascending = true;
 
             if (sortBtn) {
                 sortBtn.addEventListener("click", () => {
                     let productos = Array.from(productosContainer.querySelectorAll(".producto-item"));
-
                     productos.sort((a, b) => {
                         let priceA = parseFloat(a.dataset.price);
                         let priceB = parseFloat(b.dataset.price);
                         return ascending ? priceA - priceB : priceB - priceA;
                     });
-
                     productosContainer.innerHTML = "";
                     productos.forEach(p => productosContainer.appendChild(p));
-
                     ascending = !ascending;
                 });
             }
