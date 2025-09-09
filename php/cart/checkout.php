@@ -99,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // CORRECCIÓN: Usar el valor en inglés 'Pending' para consistencia con el admin panel
         $stmt_order = $conn->prepare("INSERT INTO pedidos (user_id, total, estado, nombre_cliente, email_cliente, pais, ciudad, direccion, telefono, metodo_pago) VALUES (?, ?, 'Pendiente', ?, ?, ?, ?, ?, ?, ?)");
-        $stmt_order->bind_param("idssssssss", $user_id, $total, $nombre, $email, $pais, $ciudad, $direccion, $telefono, $metodo);
+        $stmt_order->bind_param("idsssssss", $user_id, $total, $nombre, $email, $pais, $ciudad, $direccion, $telefono, $metodo);
         $stmt_order->execute();
         $pedido_id = $conn->insert_id;
         $stmt_order->close();
