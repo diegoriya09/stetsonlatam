@@ -121,7 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $telefono = $_POST['telefono'] ?? '';
         $metodo = $_POST['metodo'] ?? '';
 
-        $stmt_order = $conn->prepare("INSERT INTO pedidos (user_id, total, estado, nombre_cliente, email_cliente, pais, ciudad, direccion, telefono, metodo_pago) VALUES (?, ?, 'Pending', ?, ?, ?, ?, ?, ?, ?)");
+        $stmt_order = $conn->prepare("INSERT INTO pedidos (user_id, total, estado, nombre_cliente, email_cliente, pais, ciudad, direccion, telefono, metodo_pago) VALUES (?, ?, 'Pendiente', ?, ?, ?, ?, ?, ?, ?)");
         $stmt_order->bind_param("idsssssss", $user_id, $total, $nombre, $email, $pais, $ciudad, $direccion, $telefono, $metodo);
         $stmt_order->execute();
         $pedido_id = $conn->insert_id;
