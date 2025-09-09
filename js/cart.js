@@ -1,4 +1,6 @@
-// js/cart.js (Versión final para usuarios logueados)
+//Variable para mantener el estado actual del carrito
+let currentCartItems = [];
+
 document.addEventListener("DOMContentLoaded", () => {
   const jwt = localStorage.getItem("jwt");
 
@@ -8,6 +10,26 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       renderCart([]);
     }
+  }
+
+  //Listener para el botón de proceder al pago
+  const checkoutBtn = document.getElementById('checkout-btn');
+  if (checkoutBtn) {
+    checkoutBtn.addEventListener('click', (e) => {
+      e.preventDefault(); // Prevenimos la navegación por defecto del enlace
+
+      // Validación: ¿Hay items en el carrito?
+      if (currentCartItems.length === 0) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Carrito Vacío',
+          text: 'Debes añadir al menos un artículo para proceder al pago.'
+        });
+      } else {
+        // Si la validación pasa, redirigimos al checkout
+        window.location.href = checkoutBtn.href;
+      }
+    });
   }
 });
 
@@ -69,13 +91,16 @@ function renderCart(items) {
   const summarySubtotal = document.getElementById('summary-subtotal');
   const summaryTotal = document.getElementById('summary-total');
 
+  // NUEVO: Actualizamos nuestra variable global con los items
+  currentCartItems = items || [];
+
   container.innerHTML = '';
   let subtotal = 0;
 
-  if (!items || items.length === 0) {
+  if (currentCartItems.length === 0) {
     container.innerHTML = '<p class="empty-cart">Tu carrito está vacío.</p>';
   } else {
-    items.forEach(item => {
+    currentCartItems.forEach(item => {
       const itemTotal = item.price * item.quantity;
       subtotal += itemTotal;
 
@@ -89,9 +114,9 @@ function renderCart(items) {
                     ${item.color_name ? `<p>Color: ${item.color_name}</p>` : ''}
                 </div>
                 <div class="item-quantity" data-stock="${item.stock}">
-                    <button class="qty-btn" data-id="${item.cart_item_id}" data-qty="${item.quantity - 1}">-</button>
+                    <button class="qty-btn" data-id="${item.cart_item_id}">-</button>
                     <input type="text" value="${item.quantity}" readonly>
-                    <button class="qty-btn" data-id="${item.cart_item_id}" data-qty="${item.quantity + 1}">+</button>
+                    <button class="qty-btn" data-id="${item.cart_item_id}">+</button>
                 </div>
                 <div class="item-total">$${itemTotal.toFixed(2)}</div>
                 <button class="item-remove" data-id="${item.cart_item_id}"><i class="fas fa-trash-alt"></i></button>
