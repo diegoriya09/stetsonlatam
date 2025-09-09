@@ -1,71 +1,66 @@
 <?php
+// php/cart/checkout.php (VERSIÓN FINAL Y COMPATIBLE)
+
 ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 require_once '../conexion.php';
 require_once '../../vendor/autoload.php';
 
-if (session_status() !== PHP_SESSION_ACTIVE) session_start();
-if (empty($_SESSION['csrf_token'])) {
-    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
+
+header('Content-Type: application/json');
+
+function getAuthorizationHeader()
+{
+    if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
+        return trim($_SERVER["HTTP_AUTHORIZATION"]);
+    }
+    if (isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION'])) {
+        return trim($_SERVER["REDIRECT_HTTP_AUTHORIZATION"]);
+    }
+    if (function_exists('apache_request_headers')) {
+        $requestHeaders = apache_request_headers();
+        if (isset($requestHeaders['Authorization'])) {
+            return trim($requestHeaders['Authorization']);
+        }
+    }
+    return null;
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    header('Content-Type: application/json');
+    // NUEVO: Bandera para controlar la transacción
+    $transaction_started = false;
 
-    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
-        echo json_encode(["success" => false, "message" => "Token CSRF inválido"]);
-        exit;
-    }
-
-    $nombre = $_POST['nombre'] ?? '';
-    $email = $_POST['email'] ?? '';
-    $pais = $_POST['pais'] ?? '';
-    $ciudad = $_POST['ciudad'] ?? '';
-    $direccion = $_POST['direccion'] ?? '';
-    $telefono = $_POST['telefono'] ?? '';
-    $metodo = $_POST['metodo'] ?? '';
-    $numero_tarjeta = $_POST['numero_tarjeta'] ?? '';
-    $nombre_tarjeta = $_POST['nombre_tarjeta'] ?? '';
-    $expiracion = $_POST['expiracion'] ?? '';
-    $cvv = $_POST['cvv'] ?? '';
-    $banco_pse = $_POST['banco_pse'] ?? '';
-    $tipo_cuenta_pse = $_POST['tipo_cuenta_pse'] ?? '';
-    $documento_pse = $_POST['documento_pse'] ?? '';
-    $csrf_token = $_POST['csrf_token'] ?? '';
-
-    $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
-    if (!$user_id) {
-        echo json_encode(["success" => false, "message" => "You must be logged in to checkout"]);
-        exit;
-    }
-
-
-    $conn->begin_transaction();
-    // Leer carrito desde DB si logueado (sino usar localStorage y enviarlo desde JS)
     try {
-        // 1. Leer el carrito del usuario
-        $stmt_cart = $conn->prepare("
-            SELECT c.*, p.name AS nombre, p.price AS precio, col.name AS color_nombre, s.name AS size_nombre
-            FROM cart c
-            JOIN productos p ON c.producto_id = p.id
-            LEFT JOIN colors col ON c.color_id = col.id
-            LEFT JOIN sizes s ON c.size_id = s.id
-            WHERE c.users_id = ? FOR UPDATE; -- Bloquear las filas para evitar concurrencia
-        ");
+        // --- Bloque de Autenticación JWT ---
+        $authHeader = getAuthorizationHeader();
+        if (!$authHeader || !str_starts_with($authHeader, 'Bearer ')) {
+            throw new Exception('Token no proporcionado o formato inválido.');
+        }
+
+        $jwt = trim(str_replace('Bearer', '', $authHeader));
+        $secret_key = "StetsonLatam1977";
+        $decoded = JWT::decode($jwt, new Key($secret_key, 'HS256'));
+        $user_id = $decoded->data->id;
+
+        $conn->begin_transaction();
+        $transaction_started = true; // La transacción ha comenzado
+
+        // 1. Leer el carrito
+        $stmt_cart = $conn->prepare("SELECT c.*, p.name AS nombre, p.price AS precio, col.name AS color_nombre, s.name AS size_nombre FROM cart c JOIN productos p ON c.producto_id = p.id LEFT JOIN colors col ON c.color_id = col.id LEFT JOIN sizes s ON c.size_id = s.id WHERE c.users_id = ? FOR UPDATE");
         $stmt_cart->bind_param("i", $user_id);
         $stmt_cart->execute();
-        $result = $stmt_cart->get_result();
-        $items = $result->fetch_all(MYSQLI_ASSOC);
+        $items = $stmt_cart->get_result()->fetch_all(MYSQLI_ASSOC);
         $stmt_cart->close();
 
         if (count($items) === 0) {
-            throw new Exception("No hay productos en el carrito");
+            throw new Exception("Tu carrito está vacío.");
         }
 
-        // 2. NUEVO: Verificación final de stock y preparación para descontar
+        // 2. Verificación de stock y total
         $total = 0;
         $productos_sin_stock = [];
         foreach ($items as $item) {
@@ -83,10 +78,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (!empty($productos_sin_stock)) {
             $nombres = implode(', ', $productos_sin_stock);
-            throw new Exception("Lo sentimos, no hay suficiente stock para los siguientes productos: {$nombres}. Por favor, ajusta tu carrito.");
+            throw new Exception("Lo sentimos, no hay suficiente stock para los siguientes productos: {$nombres}.");
         }
 
-        // 3. NUEVO: Descontar el stock
+        // 3. Descontar stock
         $stmt_decrement = $conn->prepare("UPDATE product_variants SET stock = stock - ? WHERE product_id = ? AND color_id = ? AND size_id = ?");
         foreach ($items as $item) {
             $stmt_decrement->bind_param("iiii", $item['quantity'], $item['producto_id'], $item['color_id'], $item['size_id']);
@@ -94,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         $stmt_decrement->close();
 
-        // 4. Guardar pedido en la tabla 'pedidos' (tu código existente)
+        // 4. Guardar pedido
         $nombre = $_POST['nombre'] ?? '';
         $email = $_POST['email'] ?? '';
         $pais = $_POST['pais'] ?? '';
@@ -108,7 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $pedido_id = $conn->insert_id;
         $stmt_order->close();
 
-        // 5. Guardar detalle de pedido (tu código existente)
+        // 5. Guardar detalle de pedido
         $stmt_detail = $conn->prepare("INSERT INTO pedido_detalle (pedido_id, producto_id, nombre_producto, precio, cantidad, color_id, color_nombre, size_id, size_nombre) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
         foreach ($items as $item) {
             $stmt_detail->bind_param("iisdiisis", $pedido_id, $item['producto_id'], $item['nombre'], $item['precio'], $item['quantity'], $item['color_id'], $item['color_nombre'], $item['size_id'], $item['size_nombre']);
@@ -122,15 +117,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt_clear->execute();
         $stmt_clear->close();
 
-        // Si todo fue exitoso, confirmar la transacción
         $conn->commit();
+        $transaction_started = false; // La transacción terminó exitosamente
 
         echo json_encode(["success" => true, "message" => "¡Pedido creado correctamente!", "pedido_id" => $pedido_id]);
     } catch (Exception $e) {
-        // Si algo falla, revertir todos los cambios
-        $conn->rollback();
+        // CORRECCIÓN FINAL: Usamos nuestra bandera, que funciona en cualquier versión de PHP
+        if ($transaction_started) {
+            $conn->rollback();
+        }
+        http_response_code(400);
         echo json_encode(["success" => false, "message" => $e->getMessage()]);
+    } finally {
+        if (isset($conn) && $conn->ping()) {
+            $conn->close();
+        }
     }
-    $conn->close();
     exit;
 }
