@@ -63,8 +63,6 @@ try {
   error_log("Error al cargar producto: " . $e->getMessage());
   exit('Error al cargar la página del producto.');
 }
-$conn->close();
-
 // --- NUEVO: Preparar variables para SEO ---
 $page_title = htmlspecialchars($producto['name']) . ' | Stetson LATAM';
 $meta_description = htmlspecialchars(substr(strip_tags($producto['description']), 0, 155)) . '...';
@@ -468,3 +466,10 @@ $canonical_url = "https://www.stetsonlatam.com/producto" . $product_id;
 </body>
 
 </html>
+
+<?php
+// --- AÑADIDO: Cerramos la conexión aquí, al final de todo ---
+if (isset($conn) && $conn->ping()) {
+    $conn->close();
+}
+?>
