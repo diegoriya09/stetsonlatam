@@ -9,6 +9,22 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
 
 require '../php/conexion.php';
 
+$view = $_GET['view'] ?? 'products';
+
+// Lógica para la vista de Reseñas
+if ($view === 'reviews') {
+    $reviews_result = $conn->query("
+        SELECT 
+            r.id, r.rating, r.comment, r.created_at, r.reply_text,
+            p.name as product_name,
+            u.name as user_name
+        FROM product_reviews r
+        JOIN productos p ON r.product_id = p.id
+        JOIN users u ON r.user_id = u.id
+        ORDER BY r.created_at DESC
+    ");
+}
+
 // ADAPTADO: Usamos 'section' para evitar problemas con ModSecurity
 $view = $_GET['section'] ?? 'products';
 
@@ -274,6 +290,33 @@ if ($view === 'stock') {
         .hidden {
             display: none;
         }
+
+        .review-comment {
+            text-align: left;
+            max-width: 400px;
+            white-space: normal;
+        }
+
+        .reply-form textarea {
+            width: 100%;
+            min-height: 60px;
+            padding: 5px;
+            margin-bottom: 5px;
+        }
+
+        .reply-form button {
+            width: 100%;
+            padding: 8px;
+            font-size: 0.9em;
+        }
+
+        .existing-reply {
+            background-color: #f0fdf4;
+            border-left: 3px solid #22c55e;
+            padding: 10px;
+            text-align: left;
+            font-style: italic;
+        }
     </style>
 </head>
 
@@ -285,6 +328,7 @@ if ($view === 'stock') {
         <nav class="admin-nav">
             <a href="?section=products" class="<?php if ($view === 'products') echo 'active'; ?>">Gestionar Productos</a>
             <a href="?section=orders" class="<?php if ($view === 'orders') echo 'active'; ?>">Gestionar Pedidos</a>
+            <a href="?view=reviews" class="<?php if ($view === 'reviews') echo 'active'; ?>">Gestionar Reseñas</a>
         </nav>
 
         <?php if (isset($success_message)): ?>
@@ -403,6 +447,44 @@ if ($view === 'stock') {
                 </tbody>
             </table>
         <?php endif; ?>
+        <?php if ($view === 'reviews'): ?>
+            <h2>Gestionar Reseñas</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Usuario</th>
+                        <th>Calificación</th>
+                        <th style="width: 35%;">Comentario</th>
+                        <th>Fecha</th>
+                        <th style="width: 25%;">Respuesta</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php while ($review = $reviews_result->fetch_assoc()): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($review['product_name']); ?></td>
+                            <td><?php echo htmlspecialchars($review['user_name']); ?></td>
+                            <td><?php echo str_repeat('★', $review['rating']) . str_repeat('☆', 5 - $review['rating']); ?></td>
+                            <td class="review-comment"><?php echo htmlspecialchars($review['comment']); ?></td>
+                            <td><?php echo date("d/m/Y", strtotime($review['created_at'])); ?></td>
+                            <td id="reply-cell-<?php echo $review['id']; ?>">
+                                <?php if (empty($review['reply_text'])): ?>
+                                    <form class="reply-form" data-review-id="<?php echo $review['id']; ?>">
+                                        <textarea name="reply_text" rows="3" placeholder="Escribe tu respuesta..." required></textarea>
+                                        <button type="submit">Responder</button>
+                                    </form>
+                                <?php else: ?>
+                                    <div class="existing-reply">
+                                        <p><?php echo htmlspecialchars($review['reply_text']); ?></p>
+                                    </div>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                    <?php endwhile; ?>
+                </tbody>
+            </table>
+        <?php endif; ?>
     </div>
 
     <div class="ordermodal hidden">
@@ -465,6 +547,48 @@ if ($view === 'stock') {
                 }
             });
         }
+
+        document.addEventListener('submit', function(e) {
+            if (e.target.matches('.reply-form')) {
+                e.preventDefault();
+                const form = e.target;
+                const reviewId = form.dataset.reviewId;
+                const replyText = form.querySelector('textarea[name="reply_text"]').value;
+                const jwt = localStorage.getItem('jwt'); // O usa la sesión de admin si es necesario
+
+                fetch('reply_to_review', { // Asume que reply_to_review.php está en la misma carpeta /admin/
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            // Si tu script de respuesta usa JWT, descomenta la siguiente línea
+                            // 'Authorization': 'Bearer ' + jwt 
+                        },
+                        body: JSON.stringify({
+                            review_id: reviewId,
+                            reply_text: replyText
+                        })
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            Swal.fire('¡Éxito!', 'Respuesta enviada correctamente.', 'success');
+                            // Actualizar la UI sin recargar la página
+                            const replyCell = document.getElementById(`reply-cell-${reviewId}`);
+                            replyCell.innerHTML = `
+                            <div class="existing-reply">
+                                <p>${replyText}</p>
+                            </div>
+                        `;
+                        } else {
+                            Swal.fire('Error', data.message || 'No se pudo enviar la respuesta.', 'error');
+                        }
+                    })
+                    .catch(err => {
+                        console.error('Error:', err);
+                        Swal.fire('Error', 'Ocurrió un problema de conexión.', 'error');
+                    });
+            }
+        });
     </script>
 </body>
 

@@ -189,10 +189,48 @@ $canonical_url = "https://www.stetsonlatam.com/producto" . $product_id;
           max-width: 800px;
           margin: 40px auto;
           padding: 20px;
+          border-top: 1px solid #eee;
+        }
+
+        .review-item {
+          border-bottom: 1px solid #eee;
+          padding: 15px 0;
+        }
+
+        .review-item:last-child {
+          border-bottom: none;
+        }
+
+        .admin-reply {
+          background-color: #f8f9fa;
+          border-left: 3px solid #3c3737;
+          padding: 10px;
+          margin-top: 10px;
+          font-style: italic;
+        }
+
+        #review-form {
+          margin-top: 20px;
+        }
+
+        #review-form textarea {
+          width: 100%;
+          min-height: 100px;
+          margin: 10px 0;
+          padding: 10px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+        }
+
+        #review-form button {
+          padding: 10px 20px;
+          cursor: pointer;
         }
 
         .star-rating {
-          display: inline-block;
+          display: flex;
+          flex-direction: row-reverse;
+          justify-content: flex-end;
         }
 
         .star-rating input {
@@ -203,7 +241,11 @@ $canonical_url = "https://www.stetsonlatam.com/producto" . $product_id;
           font-size: 2em;
           color: #ddd;
           cursor: pointer;
-          float: right;
+          transition: color 0.2s;
+        }
+
+        .star-rating label:before {
+          content: '★';
         }
 
         .star-rating input:checked~label,
@@ -212,17 +254,23 @@ $canonical_url = "https://www.stetsonlatam.com/producto" . $product_id;
           color: #f2b600;
         }
 
-        #review-form textarea {
-          width: 100%;
-          min-height: 100px;
-          margin-top: 10px;
-          padding: 10px;
+        /* Estadísticas */
+        #ratings-summary {
+          margin-bottom: 20px;
         }
 
         #ratings-summary .bar-container {
           display: flex;
           align-items: center;
           margin-bottom: 5px;
+          gap: 10px;
+          font-size: 0.9em;
+        }
+
+        #ratings-summary .bar-wrapper {
+          flex-grow: 1;
+          background-color: #e9ecef;
+          border-radius: 5px;
         }
 
         #ratings-summary .bar {
@@ -245,12 +293,15 @@ $canonical_url = "https://www.stetsonlatam.com/producto" . $product_id;
     const productVariants = <?php echo json_encode($variants_stock); ?>;
   </script>
   <script>
-    // Tu JavaScript se mantiene igual, ya que se basa en las clases de los botones que hemos conservado.
+    const productVariants = <?php echo json_encode($variants_stock); ?>;
+    const productId = <?php echo $producto['id']; ?>;
+
+    // Un solo listener para toda la lógica de la página
     document.addEventListener('DOMContentLoaded', function() {
+      // --- Lógica para seleccionar talla, color y cantidad ---
       let selectedColorId = null;
       let selectedSizeId = null;
-      let availableStock = 0; // Nueva variable para guardar el stock de la variante seleccionada
-
+      let availableStock = 0;
       const colorBtns = document.querySelectorAll('.color-btn');
       const sizeBtns = document.querySelectorAll('.size-btn');
       const qtyInput = document.getElementById('quantity');
@@ -259,28 +310,16 @@ $canonical_url = "https://www.stetsonlatam.com/producto" . $product_id;
       const addToCartBtn = document.querySelector('.add-to-cart-btn');
 
       function updateStock() {
-        // Solo buscamos stock si se ha seleccionado color Y talla
         if (selectedColorId && selectedSizeId) {
-          const variant = productVariants.find(v =>
-            v.color_id == selectedColorId && v.size_id == selectedSizeId
-          );
-
-          if (variant) {
-            availableStock = variant.stock;
-            // Si la cantidad actual supera el stock, la ajustamos
-            if (parseInt(qtyInput.value) > availableStock) {
-              qtyInput.value = availableStock > 0 ? availableStock : 1;
-            }
-          } else {
-            availableStock = 0; // No se encontró variante, no hay stock
-            qtyInput.value = 1; // Reseteamos la cantidad
+          const variant = productVariants.find(v => v.color_id == selectedColorId && v.size_id == selectedSizeId);
+          availableStock = variant ? variant.stock : 0;
+          if (parseInt(qtyInput.value) > availableStock) {
+            qtyInput.value = availableStock > 0 ? availableStock : 1;
           }
         }
-        // Habilitar/deshabilitar el botón de "Agregar al carrito" si no hay stock
         addToCartBtn.disabled = availableStock <= 0;
         addToCartBtn.textContent = availableStock <= 0 ? "Sin Stock" : "Agregar al carrito";
       }
-
       colorBtns.forEach(btn => {
         btn.addEventListener('click', function() {
           colorBtns.forEach(b => b.classList.remove('selected'));
@@ -289,7 +328,6 @@ $canonical_url = "https://www.stetsonlatam.com/producto" . $product_id;
           updateStock();
         });
       });
-
       sizeBtns.forEach(btn => {
         btn.addEventListener('click', function() {
           sizeBtns.forEach(b => b.classList.remove('selected'));
@@ -298,37 +336,24 @@ $canonical_url = "https://www.stetsonlatam.com/producto" . $product_id;
           updateStock();
         });
       });
-
       plusBtn.addEventListener('click', () => {
         let currentValue = parseInt(qtyInput.value);
-        // Solo permitir aumentar si la cantidad es menor al stock disponible
         if (availableStock > 0 && currentValue < availableStock) {
           qtyInput.value = currentValue + 1;
         }
       });
-
       minusBtn.addEventListener('click', () => {
         let value = parseInt(qtyInput.value);
         if (value > 1) qtyInput.value = value - 1;
       });
-
       addToCartBtn.addEventListener('click', function() {
-        if (colorBtns.length > 0 && !selectedColorId) {
+        if ((colorBtns.length > 0 && !selectedColorId) || (sizeBtns.length > 0 && !selectedSizeId)) {
           Swal.fire({
             icon: 'warning',
-            text: 'Seleccione un color.'
+            text: 'Seleccione color y talla.'
           });
           return;
         }
-        if (sizeBtns.length > 0 && !selectedSizeId) {
-          Swal.fire({
-            icon: 'warning',
-            text: 'Seleccione una talla.'
-          });
-          return;
-        }
-
-        // Verificación final antes de añadir
         if (parseInt(qtyInput.value) > availableStock) {
           Swal.fire({
             icon: 'error',
@@ -336,7 +361,6 @@ $canonical_url = "https://www.stetsonlatam.com/producto" . $product_id;
           });
           return;
         }
-
         if (availableStock <= 0) {
           Swal.fire({
             icon: 'error',
@@ -344,52 +368,34 @@ $canonical_url = "https://www.stetsonlatam.com/producto" . $product_id;
           });
           return;
         }
-
         const cartData = {
-          id: <?php echo $producto['id']; ?>,
-          name: '<?php echo addslashes($producto['name']); ?>',
-          price: <?php echo $producto['price']; ?>,
-          image: '<?php echo htmlspecialchars($producto['image']); ?>',
+          id: productId,
+          quantity: parseInt(qtyInput.value),
           color: selectedColorId,
-          size: selectedSizeId,
-          quantity: parseInt(qtyInput.value)
+          size: selectedSizeId
         };
-
         addToCart(cartData);
       });
-    });
-  </script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const productId = <?php echo $producto['id']; ?>;
-      const jwt = localStorage.getItem('jwt');
 
-      // Si el usuario está logueado, mostrar el formulario de reseña
+      // --- Lógica para el sistema de reseñas ---
+      const jwt = localStorage.getItem('jwt');
       if (jwt) {
         document.getElementById('review-form-container').style.display = 'block';
       }
-
-      // Cargar las reseñas al iniciar
       fetchReviews(productId);
-
-      // Manejar envío del formulario de reseña
       document.getElementById('review-form').addEventListener('submit', function(e) {
         e.preventDefault();
-
         const rating = this.querySelector('input[name="rating"]:checked');
         const comment = this.querySelector('textarea[name="comment"]').value;
-
         if (!rating) {
           Swal.fire('Error', 'Por favor, selecciona una calificación de estrellas.', 'error');
           return;
         }
-
         const reviewData = {
           product_id: productId,
           rating: parseInt(rating.value),
           comment: comment
         };
-
         fetch('/php/reviews/add_review', {
             method: 'POST',
             headers: {
@@ -402,7 +408,7 @@ $canonical_url = "https://www.stetsonlatam.com/producto" . $product_id;
           .then(data => {
             if (data.success) {
               Swal.fire('¡Éxito!', data.message, 'success');
-              fetchReviews(productId); // Recargar reseñas
+              fetchReviews(productId);
               this.reset();
             } else {
               Swal.fire('Error', data.message, 'error');
@@ -413,10 +419,14 @@ $canonical_url = "https://www.stetsonlatam.com/producto" . $product_id;
     });
 
     async function fetchReviews(productId) {
-      const res = await fetch(`/php/reviews/get_reviews?id=${productId}`);
-      const data = await res.json();
-      if (data.success) {
-        renderReviews(data.reviews);
+      try {
+        const res = await fetch(`/php/reviews/get_reviews?id=${productId}`);
+        const data = await res.json();
+        if (data.success) {
+          renderReviews(data.reviews);
+        }
+      } catch (error) {
+        console.error("Error al cargar reseñas:", error);
       }
     }
 
@@ -425,13 +435,10 @@ $canonical_url = "https://www.stetsonlatam.com/producto" . $product_id;
       const summaryContainer = document.getElementById('ratings-summary');
       container.innerHTML = '';
       summaryContainer.innerHTML = '';
-
       if (reviews.length === 0) {
         container.innerHTML = '<p>Este producto aún no tiene reseñas. ¡Sé el primero!</p>';
         return;
       }
-
-      // Calcular estadísticas de calificaciones
       const ratingCounts = {
         5: 0,
         4: 0,
@@ -440,35 +447,25 @@ $canonical_url = "https://www.stetsonlatam.com/producto" . $product_id;
         1: 0
       };
       reviews.forEach(review => ratingCounts[review.rating]++);
-
-      // Renderizar barras de estadísticas
       for (let i = 5; i >= 1; i--) {
         const percentage = (reviews.length > 0) ? (ratingCounts[i] / reviews.length) * 100 : 0;
         summaryContainer.innerHTML += `
-            <div class="bar-container">
-                <span>${i} estrellas</span>
-                <div class="bar" style="width: ${percentage}%;"></div>
-                <span>(${ratingCounts[i]})</span>
-            </div>
-        `;
+                    <div class="bar-container">
+                        <span>${i} ★</span>
+                        <div class="bar-wrapper"><div class="bar" style="width: ${percentage}%;"></div></div>
+                        <span>(${ratingCounts[i]})</span>
+                    </div>`;
       }
-
-      // Renderizar cada reseña
       reviews.forEach(review => {
         const reviewElement = document.createElement('div');
         reviewElement.className = 'review-item';
         reviewElement.innerHTML = `
-            <h4>${review.user_name}</h4>
-            <p>Calificación: ${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</p>
-            <p>${review.comment}</p>
-            <small>${new Date(review.created_at).toLocaleDateString()}</small>
-            ${review.reply_text ? `
-                <div class="admin-reply">
-                    <strong>Respuesta de la tienda:</strong>
-                    <p>${review.reply_text}</p>
-                </div>
-            ` : ''}
-        `;
+                    <h4>${review.user_name}</h4>
+                    <p style="color: #f2b600;">${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</p>
+                    <p>${review.comment}</p>
+                    <small>${new Date(review.created_at).toLocaleDateString()}</small>
+                    ${review.reply_text ? `<div class="admin-reply"><strong>Respuesta de la tienda:</strong><p>${review.reply_text}</p></div>` : ''}
+                `;
         container.appendChild(reviewElement);
       });
     }
