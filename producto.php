@@ -64,6 +64,12 @@ try {
   exit('Error al cargar la página del producto.');
 }
 $conn->close();
+
+// --- NUEVO: Preparar variables para SEO ---
+$page_title = htmlspecialchars($producto['name']) . ' | Stetson LATAM';
+$meta_description = htmlspecialchars(substr(strip_tags($producto['description']), 0, 155)) . '...';
+// Construir la URL canónica completa
+$canonical_url = "https://www.stetsonlatam.com/producto" . $product_id;
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -79,6 +85,15 @@ $conn->close();
     rel="stylesheet">
   <link href="css/producto.css?v=<?php echo time(); ?>" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <meta name="description" content="<?php echo $meta_description; ?>">
+
+  <link rel="canonical" href="<?php echo $canonical_url; ?>" />
+
+  <meta property="og:title" content="<?php echo $page_title; ?>" />
+  <meta property="og:description" content="<?php echo $meta_description; ?>" />
+  <meta property="og:url" content="<?php echo $canonical_url; ?>" />
+  <meta property="og:image" content="https://www.stetsonlatam.com/<?php echo htmlspecialchars($producto['image']); ?>" />
+  <meta property="og:type" content="product" />
 </head>
 
 <body>

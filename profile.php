@@ -1,4 +1,5 @@
 <?php
+require_once 'php/minifier.php';
 session_start();
 // Solo necesitamos verificar la sesión. Los datos los traerá el JavaScript.
 if (!isset($_SESSION['user_id'])) {

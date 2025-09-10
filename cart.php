@@ -1,4 +1,5 @@
 <?php
+require_once 'php/minifier.php';
 session_start();
 // El PHP solo obtiene los productos recomendados.
 // El carrito se manejará 100% con JavaScript.

@@ -1,6 +1,8 @@
 <?php
 // Incluimos la conexión a la base de datos (que ya usa MySQLi)
 require 'php/conexion.php';
+require_once 'php/minifier.php';
+session_start();
 
 // 1. OBTENER Y VALIDAR EL ID DE LA CATEGORÍA
 if (!isset($_GET['id']) || !filter_var($_GET['id'], FILTER_VALIDATE_INT)) {

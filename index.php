@@ -1,5 +1,6 @@
 <?php
 require_once 'php/conexion.php';
+require_once 'php/minifier.php';
 session_start();
 
 try {
