@@ -156,6 +156,11 @@ if (!empty($categorias_flat)) {
           </path>
         </svg>
       </button>
+      <a id="wishlist-link" href="/wishlist" title="Mi Lista de Deseos" class="p-2 h-10 w-10 flex items-center justify-center bg-[#f1eeea] rounded-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256">
+                    <path d="M128,216S28,160,28,92A52,52,0,0,1,80,40a52,52,0,0,1,48,48,52,52,0,0,1,48-48,52,52,0,0,1,52,52C228,160,128,216,128,216ZM80,56A36,36,0,0,0,44,92c0,42.59,62.26,90.46,84,103.41,21.74-12.95,84-60.82,84-103.41A36,36,0,0,0,176,56a35.82,35.82,0,0,0-30.33,18.49,8,8,0,0,1-13.34,0A35.82,35.82,0,0,0,80,56Z"></path>
+                </svg>
+            </a>
       <div class="md:hidden mobile-menu">
         <button id="hamburger-btn" class="p-2">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256">
