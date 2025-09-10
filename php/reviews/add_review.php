@@ -43,6 +43,16 @@ try {
    $decoded = JWT::decode($jwt, new Key($secret_key, 'HS256'));
    $user_id = $decoded->data->id;
 
+   //VERIFICACIÓN DE EXISTENCIA DEL USUARIO ---
+   $user_check_stmt = $conn->prepare("SELECT id FROM users WHERE id = ?");
+   $user_check_stmt->bind_param("i", $user_id);
+   $user_check_stmt->execute();
+   if ($user_check_stmt->get_result()->num_rows === 0) {
+      http_response_code(404); // Not Found
+      throw new Exception("El usuario especificado en el token no existe.");
+   }
+   $user_check_stmt->close();
+
    // 2. Obtener datos de la reseña
    $product_id = isset($_POST['product_id']) ? (int)$_POST['product_id'] : 0;
    $rating = isset($_POST['rating']) ? (int)$_POST['rating'] : 0;
