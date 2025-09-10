@@ -387,18 +387,17 @@ $canonical_url = "https://www.stetsonlatam.com/producto" . $product_id;
           Swal.fire('Error', 'Por favor, selecciona una calificación de estrellas.', 'error');
           return;
         }
-        const reviewData = {
-          product_id: productId,
-          rating: parseInt(rating.value),
-          comment: comment
-        };
+        const formData = new FormData();
+        formData.append('product_id', productId);
+        formData.append('rating', rating.value);
+        formData.append('comment', comment);
+
         fetch('/php/reviews/add_review', {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json',
               'Authorization': 'Bearer ' + jwt
             },
-            body: JSON.stringify(reviewData)
+            body: formData
           })
           .then(res => res.json())
           .then(data => {

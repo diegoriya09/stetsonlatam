@@ -31,8 +31,8 @@ function getAuthorizationHeader()
 try {
 
    if (!$conn || $conn->connect_error) {
-        throw new Exception("Error de conexión a la base de datos.");
-    }
+      throw new Exception("Error de conexión a la base de datos.");
+   }
    // 1. Autenticación con JWT
    $authHeader = getAuthorizationHeader();
    if (!$authHeader || !str_starts_with($authHeader, 'Bearer ')) {
@@ -44,10 +44,9 @@ try {
    $user_id = $decoded->data->id;
 
    // 2. Obtener datos de la reseña
-   $data = json_decode(file_get_contents("php://input"), true);
-   $product_id = $data['product_id'] ?? 0;
-   $rating = $data['rating'] ?? 0;
-   $comment = trim(strip_tags($data['comment'] ?? ''));
+   $product_id = isset($_POST['product_id']) ? (int)$_POST['product_id'] : 0;
+   $rating = isset($_POST['rating']) ? (int)$_POST['rating'] : 0;
+   $comment = trim(strip_tags($_POST['comment'] ?? ''));
 
    if ($product_id <= 0 || $rating < 1 || $rating > 5 || empty($comment)) {
       throw new Exception('Por favor, completa todos los campos.');
