@@ -291,11 +291,10 @@ $canonical_url = "https://www.stetsonlatam.com/producto" . $product_id;
   <script>
     const productVariants = <?php echo json_encode($variants_stock); ?>;
     const productId = <?php echo $producto['id']; ?>;
-
+    const jwt = localStorage.getItem('jwt');
     // Un solo listener para toda la lógica de la página
     document.addEventListener('DOMContentLoaded', function() {
       // --- Lógica para seleccionar talla, color y cantidad ---
-      const jwt = localStorage.getItem('jwt');
       let selectedColorId = null;
       let selectedSizeId = null;
       let availableStock = 0;
