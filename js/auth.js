@@ -24,12 +24,26 @@ function openAuthModal(showRegister = false) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+    const modal = document.getElementById('user-modal');
+    if (!modal) return; // Si no hay modal en la página, no hacer nada
 
+    const closeBtn = modal.querySelector('.close');
     // Alternar entre login y registro
     const loginFormSection = document.getElementById('login-form');
     const registerFormSection = document.getElementById('register-form');
     const switchToRegister = document.getElementById('switch-to-register');
     const switchToLogin = document.getElementById('switch-to-login');
+
+    if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+    }
+    window.addEventListener('click', (e) => {
+        if (e.target == modal) {
+            modal.style.display = 'none';
+        }
+    });
 
     if (switchToRegister && loginFormSection && registerFormSection) {
         switchToRegister.addEventListener('click', (e) => {
