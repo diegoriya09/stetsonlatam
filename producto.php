@@ -289,10 +289,6 @@ $canonical_url = "https://www.stetsonlatam.com/producto" . $product_id;
   <script src="js/auth.js?v=<?php echo time(); ?>"></script>
   <script src="js/index.js?v=<?php echo time(); ?>"></script>
   <script>
-    // Creamos una variable global con el "mapa" de stock de las variantes
-    const productVariants = <?php echo json_encode($variants_stock); ?>;
-  </script>
-  <script>
     const productVariants = <?php echo json_encode($variants_stock); ?>;
     const productId = <?php echo $producto['id']; ?>;
 
