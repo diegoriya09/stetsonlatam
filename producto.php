@@ -469,7 +469,7 @@ $canonical_url = "https://www.stetsonlatam.com/producto" . $product_id;
 
 <?php
 // --- AÑADIDO: Cerramos la conexión aquí, al final de todo ---
-if (isset($conn) && $conn->ping()) {
-    $conn->close();
-}
+
+$conn->close();
+
 ?>
