@@ -291,9 +291,11 @@ $canonical_url = "https://www.stetsonlatam.com/producto" . $product_id;
   <script>
     const productVariants = <?php echo json_encode($variants_stock); ?>;
     const productId = <?php echo $producto['id']; ?>;
-    const jwt = localStorage.getItem('jwt');
     // Un solo listener para toda la lógica de la página
     document.addEventListener('DOMContentLoaded', function() {
+      // Se define UNA SOLA VEZ para que esté disponible para toda la lógica
+      const jwt = localStorage.getItem('jwt');
+
       // --- Lógica para seleccionar talla, color y cantidad ---
       let selectedColorId = null;
       let selectedSizeId = null;
@@ -410,6 +412,69 @@ $canonical_url = "https://www.stetsonlatam.com/producto" . $product_id;
           })
           .catch(err => Swal.fire('Error', 'Ocurrió un problema de conexión.', 'error'));
       });
+
+      const wishlistBtn = document.getElementById('wishlist-btn');
+      const heartIcon = wishlistBtn.querySelector('i');
+
+      // Función para actualizar el ícono del corazón
+      function updateWishlistIcon(inWishlist) {
+        if (inWishlist) {
+          heartIcon.classList.remove('far'); // Quita clase de corazón vacío
+          heartIcon.classList.add('fas'); // Añade clase de corazón lleno
+          heartIcon.style.color = '#d9534f'; // Color rojo
+        } else {
+          heartIcon.classList.remove('fas');
+          heartIcon.classList.add('far');
+          heartIcon.style.color = '#3c3737'; // Color original
+        }
+      }
+
+      // Comprobar el estado inicial si el usuario está logueado
+      if (jwt) {
+        wishlistBtn.style.display = 'inline-block';
+        fetch(`/php/user/get_wishlist_status?product_id=${productId}`, {
+            headers: {
+              'Authorization': 'Bearer ' + jwt
+            }
+          })
+          .then(res => res.json())
+          .then(data => {
+            if (data.success) {
+              updateWishlistIcon(data.inWishlist);
+            }
+          });
+      } else {
+        wishlistBtn.style.display = 'none';
+      }
+
+      // Manejar el clic en el botón de wishlist
+      wishlistBtn.addEventListener('click', () => {
+        fetch('/php/user/toggle_wishlist', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + jwt
+            },
+            body: JSON.stringify({
+              product_id: productId
+            })
+          })
+          .then(res => res.json())
+          .then(data => {
+            if (data.success) {
+              const message = data.status === 'added' ? 'Producto añadido a tu wishlist.' : 'Producto eliminado de tu wishlist.';
+              const icon = data.status === 'added' ? 'success' : 'info';
+              updateWishlistIcon(data.status === 'added');
+              Swal.fire({
+                icon: icon,
+                title: data.status === 'added' ? '¡Añadido!' : 'Eliminado',
+                text: message,
+                timer: 1500,
+                showConfirmButton: false
+              });
+            }
+          });
+      });
     });
 
     async function fetchReviews(productId) {
@@ -463,66 +528,6 @@ $canonical_url = "https://www.stetsonlatam.com/producto" . $product_id;
         container.appendChild(reviewElement);
       });
     }
-
-    const wishlistBtn = document.getElementById('wishlist-btn');
-    const heartIcon = wishlistBtn.querySelector('i');
-
-    // Función para actualizar el ícono del corazón
-    function updateWishlistIcon(inWishlist) {
-      if (inWishlist) {
-        heartIcon.classList.remove('far'); // Quita clase de corazón vacío
-        heartIcon.classList.add('fas'); // Añade clase de corazón lleno
-        heartIcon.style.color = '#d9534f'; // Color rojo
-      } else {
-        heartIcon.classList.remove('fas');
-        heartIcon.classList.add('far');
-        heartIcon.style.color = '#3c3737'; // Color original
-      }
-    }
-
-    // Comprobar el estado inicial si el usuario está logueado
-    if (jwt) {
-      wishlistBtn.style.display = 'inline-block';
-      fetch(`/php/user/get_wishlist_status?product_id=${productId}`, {
-          headers: {
-            'Authorization': 'Bearer ' + jwt
-          }
-        })
-        .then(res => res.json())
-        .then(data => {
-          if (data.success) {
-            updateWishlistIcon(data.inWishlist);
-          }
-        });
-    } else {
-      wishlistBtn.style.display = 'none';
-    } 
-
-    // Manejar el clic en el botón de wishlist
-    wishlistBtn.addEventListener('click', () => {
-      fetch('/php/user/toggle_wishlist', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + jwt
-          },
-          body: JSON.stringify({
-            product_id: productId
-          })
-        })
-        .then(res => res.json())
-        .then(data => {
-          if (data.success) {
-            if (data.status === 'added') {
-              updateWishlistIcon(true);
-              Swal.fire('¡Añadido!', 'Producto añadido a tu wishlist.', 'success');
-            } else {
-              updateWishlistIcon(false);
-              Swal.fire('Eliminado', 'Producto eliminado de tu wishlist.', 'info');
-            }
-          }
-        });
-    });
   </script>
 </body>
 
