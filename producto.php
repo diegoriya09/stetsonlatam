@@ -295,6 +295,7 @@ $canonical_url = "https://www.stetsonlatam.com/producto" . $product_id;
     // Un solo listener para toda la lógica de la página
     document.addEventListener('DOMContentLoaded', function() {
       // --- Lógica para seleccionar talla, color y cantidad ---
+      const jwt = localStorage.getItem('jwt');
       let selectedColorId = null;
       let selectedSizeId = null;
       let availableStock = 0;
@@ -374,7 +375,6 @@ $canonical_url = "https://www.stetsonlatam.com/producto" . $product_id;
       });
 
       // --- Lógica para el sistema de reseñas ---
-      const jwt = localStorage.getItem('jwt');
       if (jwt) {
         document.getElementById('review-form-container').style.display = 'block';
       }
@@ -495,7 +495,9 @@ $canonical_url = "https://www.stetsonlatam.com/producto" . $product_id;
             updateWishlistIcon(data.inWishlist);
           }
         });
-    }
+    } else {
+      wishlistBtn.style.display = 'none';
+    } 
 
     // Manejar el clic en el botón de wishlist
     wishlistBtn.addEventListener('click', () => {
