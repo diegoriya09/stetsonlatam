@@ -328,7 +328,7 @@ if ($view === 'stock') {
         <nav class="admin-nav">
             <a href="?section=products" class="<?php if ($view === 'products') echo 'active'; ?>">Gestionar Productos</a>
             <a href="?section=orders" class="<?php if ($view === 'orders') echo 'active'; ?>">Gestionar Pedidos</a>
-            <a href="?view=reviews" class="<?php if ($view === 'reviews') echo 'active'; ?>">Gestionar Reseñas</a>
+            <a href="?section=reviews" class="<?php if ($view === 'reviews') echo 'active'; ?>">Gestionar Reseñas</a>
         </nav>
 
         <?php if (isset($success_message)): ?>
