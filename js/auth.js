@@ -1,3 +1,28 @@
+function openAuthModal(showRegister = false) {
+    const modal = document.getElementById('user-modal');
+    if (!modal) return;
+
+    modal.style.display = 'block';
+
+    const loginTab = document.getElementById('switch-to-login');
+    const registerTab = document.getElementById('switch-to-register');
+    const loginForm = document.getElementById('login-form');
+    const registerForm = document.getElementById('register-form');
+
+    // Lógica para mostrar la pestaña correcta (login o registro)
+    if (showRegister) {
+        loginForm.style.display = 'none';
+        registerForm.style.display = 'block';
+        registerTab.classList.add('border-b-[#3c3737]', 'text-[#3c3737]');
+        loginTab.classList.remove('border-b-[#3c3737]', 'text-[#3c3737]');
+    } else {
+        loginForm.style.display = 'block';
+        registerForm.style.display = 'none';
+        loginTab.classList.add('border-b-[#3c3737]', 'text-[#3c3737]');
+        registerTab.classList.remove('border-b-[#3c3737]', 'text-[#3c3737]');
+    }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
 
     // Alternar entre login y registro

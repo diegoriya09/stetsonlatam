@@ -1,25 +1,44 @@
-// js/wishlist.js
+// js/wishlist.js (CÓDIGO COMPLETO Y ADAPTADO AL MODAL)
 
 document.addEventListener('DOMContentLoaded', () => {
    loadWishlist();
 
-   // Usamos delegación de eventos para manejar los clics en los botones de eliminar
    const container = document.getElementById('wishlist-container');
-   container.addEventListener('click', (e) => {
-      if (e.target.classList.contains('remove-wishlist-btn') || e.target.closest('.remove-wishlist-btn')) {
-         const button = e.target.closest('.remove-wishlist-btn');
-         const productId = button.dataset.productId;
-         removeFromWishlist(productId);
-      }
-   });
+   if (container) {
+      container.addEventListener('click', (e) => {
+         // Manejar clics en el botón de eliminar
+         if (e.target.classList.contains('remove-wishlist-btn') || e.target.closest('.remove-wishlist-btn')) {
+            const button = e.target.closest('.remove-wishlist-btn');
+            const productId = button.dataset.productId;
+            removeFromWishlist(productId);
+         }
+
+         // Manejar clics en el enlace para iniciar sesión
+         if (e.target.id === 'login-from-wishlist') {
+            e.preventDefault(); // Prevenir navegación a otra página
+
+            // Llamar a la función global que abre el modal
+            if (typeof openAuthModal === 'function') {
+               openAuthModal();
+            } else {
+               console.error('La función openAuthModal() no está definida. Revisa tu archivo auth.js.');
+               // Fallback por si acaso: redirigir
+               window.location.href = '/login';
+            }
+         }
+      });
+   }
 });
 
 async function loadWishlist() {
    const container = document.getElementById('wishlist-container');
+   if (!container) return;
+
    const jwt = localStorage.getItem('jwt');
 
    if (!jwt) {
-      container.innerHTML = '<p class="wishlist-empty">Debes <a href="/login" class="login-link">iniciar sesión</a> para ver tu lista de deseos.</p>';
+      // El enlace ahora tiene un ID para que el listener de arriba lo pueda capturar
+      container.innerHTML = '<p class="wishlist-empty">Debes <a href="/login" id="login-from-wishlist" class="login-link">iniciar sesión</a> para ver tu lista de deseos.</p>';
       return;
    }
 
@@ -61,7 +80,7 @@ function renderWishlist(items) {
                 <h3>${item.name}</h3>
                 <p class="price">$${parseFloat(item.price).toFixed(2)}</p>
                 <div class="item-actions">
-                    <a href="/producto${item.id}" class="view-product-btn">Ver Producto</a>
+                    <a href="/producto/${item.id}" class="view-product-btn">Ver Producto</a>
                     <button class="remove-wishlist-btn" data-product-id="${item.id}">
                         <i class="fas fa-trash-alt"></i> Eliminar
                     </button>
@@ -76,7 +95,6 @@ function removeFromWishlist(productId) {
    const jwt = localStorage.getItem('jwt');
    if (!jwt) return;
 
-   // Reutilizamos el endpoint toggle_wishlist, que ya sabe cómo eliminar
    fetch('/php/user/toggle_wishlist', {
       method: 'POST',
       headers: {
@@ -95,7 +113,6 @@ function removeFromWishlist(productId) {
                timer: 1500,
                showConfirmButton: false
             });
-            // Recargar la lista para mostrar el cambio
             loadWishlist();
          } else {
             Swal.fire('Error', 'No se pudo eliminar el producto.', 'error');
