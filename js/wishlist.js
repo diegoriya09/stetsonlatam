@@ -61,7 +61,7 @@ function renderWishlist(items) {
                 <h3>${item.name}</h3>
                 <p class="price">$${parseFloat(item.price).toFixed(2)}</p>
                 <div class="item-actions">
-                    <a href="/producto/${item.id}" class="view-product-btn">Ver Producto</a>
+                    <a href="/producto${item.id}" class="view-product-btn">Ver Producto</a>
                     <button class="remove-wishlist-btn" data-product-id="${item.id}">
                         <i class="fas fa-trash-alt"></i> Eliminar
                     </button>
