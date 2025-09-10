@@ -1,67 +1,39 @@
+// js/index.js (CÓDIGO LIMPIO Y COMPLETO)
+
 document.addEventListener('DOMContentLoaded', () => {
-  // Redirección para los botones del navbar
-  const userBtn = document.getElementById('user-btn');
-  const cartBtn = document.getElementById('cart-btn');
+    // Este archivo ahora solo se encarga de los botones del header
+    const userBtn = document.getElementById('user-btn');
+    const cartBtn = document.getElementById('cart-btn');
 
-  if (userBtn) {
-    userBtn.addEventListener('click', () => {
-      const jwt = localStorage.getItem('jwt');
-      if (jwt) {
-        window.location.href = 'profile';
-      } else {
-        // Mostrar modal login/register si existe
-        const modal = document.getElementById('user-modal');
-        if (modal) {
-          modal.style.display = 'block';
-          // Asignar evento a la X para cerrar el modal
-          const closeBtn = modal.querySelector('.close');
-          if (closeBtn) {
-            closeBtn.onclick = function() {
-              modal.style.display = 'none';
-            };
-          }
-        } else {
-          alert('Por favor inicia sesión o regístrate.');
-        }
-      }
-    });
-  }
+    // El botón de usuario ahora simplemente llama a la función global para abrir el modal
+    if (userBtn) {
+        userBtn.addEventListener('click', () => {
+            const jwt = localStorage.getItem('jwt');
+            if (jwt) {
+                window.location.href = 'profile'; // O a la página de perfil del usuario
+            } else {
+                // Llama a la función global que definiremos en auth.js
+                if (typeof openAuthModal === 'function') {
+                    openAuthModal(); 
+                }
+            }
+        });
+    }
 
-  if (cartBtn) {
-    cartBtn.addEventListener('click', () => {
-      window.location.href = 'cart';
-    });
-  }
-
-  // Botón Sign Up (Join Stetson Community)
-  const signUpBtn = document.getElementById('open-user-modal');
-  if (signUpBtn) {
-    signUpBtn.addEventListener('click', () => {
-      const modal = document.getElementById('user-modal');
-      if (modal) {
-        modal.style.display = 'block';
-        // Mostrar pestaña de registro
-        const loginTab = document.getElementById('switch-to-login');
-        const registerTab = document.getElementById('switch-to-register');
-        const loginFormSection = document.getElementById('login-form');
-        const registerFormSection = document.getElementById('register-form');
-        if (loginTab && registerTab && loginFormSection && registerFormSection) {
-          registerTab.classList.add('border-[#3c3737]', 'text-[#3c3737]');
-          registerTab.classList.remove('border-transparent', 'text-[#7a7671]');
-          loginTab.classList.remove('border-[#3c3737]', 'text-[#3c3737]');
-          loginTab.classList.add('border-transparent', 'text-[#7a7671]');
-          loginFormSection.style.display = 'none';
-          registerFormSection.style.display = 'block';
-        }
-        // Asignar evento a la X para cerrar el modal
-        const closeBtn = modal.querySelector('.close');
-        if (closeBtn) {
-          closeBtn.onclick = function() {
-            modal.style.display = 'none';
-          };
-        }
-      }
-    });
-  }
+    if (cartBtn) {
+        cartBtn.addEventListener('click', () => {
+            window.location.href = 'cart';
+        });
+    }
+    
+    // Botón Sign Up (Join Stetson Community) también llama a la función global
+    const signUpBtn = document.getElementById('open-user-modal');
+    if (signUpBtn) {
+        signUpBtn.addEventListener('click', () => {
+            if (typeof openAuthModal === 'function') {
+                // El 'true' le indica a la función que muestre la pestaña de registro
+                openAuthModal(true); 
+            }
+        });
+    }
 });
-
