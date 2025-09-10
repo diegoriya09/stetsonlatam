@@ -157,6 +157,80 @@ $canonical_url = "https://www.stetsonlatam.com/producto" . $product_id;
           </div>
         </div>
       </main>
+      <section class="reviews-section">
+        <h2>Opiniones de Clientes</h2>
+
+        <div id="ratings-summary">
+        </div>
+
+        <div id="reviews-container">
+          <p>Cargando reseñas...</p>
+        </div>
+
+        <div id="review-form-container" style="display: none;">
+          <h3>Deja tu opinión</h3>
+          <form id="review-form">
+            <div class="star-rating">
+              <span>Calificación:</span>
+              <input type="radio" id="star5" name="rating" value="5" /><label for="star5" title="5 estrellas"></label>
+              <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="4 estrellas"></label>
+              <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="3 estrellas"></label>
+              <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="2 estrellas"></label>
+              <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="1 estrella"></label>
+            </div>
+            <textarea name="comment" placeholder="Escribe tu reseña aquí..." required></textarea>
+            <button type="submit">Enviar Reseña</button>
+          </form>
+        </div>
+      </section>
+
+      <style>
+        .reviews-section {
+          max-width: 800px;
+          margin: 40px auto;
+          padding: 20px;
+        }
+
+        .star-rating {
+          display: inline-block;
+        }
+
+        .star-rating input {
+          display: none;
+        }
+
+        .star-rating label {
+          font-size: 2em;
+          color: #ddd;
+          cursor: pointer;
+          float: right;
+        }
+
+        .star-rating input:checked~label,
+        .star-rating label:hover,
+        .star-rating label:hover~label {
+          color: #f2b600;
+        }
+
+        #review-form textarea {
+          width: 100%;
+          min-height: 100px;
+          margin-top: 10px;
+          padding: 10px;
+        }
+
+        #ratings-summary .bar-container {
+          display: flex;
+          align-items: center;
+          margin-bottom: 5px;
+        }
+
+        #ratings-summary .bar {
+          background-color: #f2b600;
+          height: 10px;
+          border-radius: 5px;
+        }
+      </style>
 
       <?php include 'footer.php'; ?>
     </div>
@@ -284,6 +358,120 @@ $canonical_url = "https://www.stetsonlatam.com/producto" . $product_id;
         addToCart(cartData);
       });
     });
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const productId = <?php echo $producto['id']; ?>;
+      const jwt = localStorage.getItem('jwt');
+
+      // Si el usuario está logueado, mostrar el formulario de reseña
+      if (jwt) {
+        document.getElementById('review-form-container').style.display = 'block';
+      }
+
+      // Cargar las reseñas al iniciar
+      fetchReviews(productId);
+
+      // Manejar envío del formulario de reseña
+      document.getElementById('review-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const rating = this.querySelector('input[name="rating"]:checked');
+        const comment = this.querySelector('textarea[name="comment"]').value;
+
+        if (!rating) {
+          Swal.fire('Error', 'Por favor, selecciona una calificación de estrellas.', 'error');
+          return;
+        }
+
+        const reviewData = {
+          product_id: productId,
+          rating: parseInt(rating.value),
+          comment: comment
+        };
+
+        fetch('/php/reviews/add_review', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + jwt
+            },
+            body: JSON.stringify(reviewData)
+          })
+          .then(res => res.json())
+          .then(data => {
+            if (data.success) {
+              Swal.fire('¡Éxito!', data.message, 'success');
+              fetchReviews(productId); // Recargar reseñas
+              this.reset();
+            } else {
+              Swal.fire('Error', data.message, 'error');
+            }
+          })
+          .catch(err => Swal.fire('Error', 'Ocurrió un problema de conexión.', 'error'));
+      });
+    });
+
+    async function fetchReviews(productId) {
+      const res = await fetch(`/php/reviews/get_reviews?id=${productId}`);
+      const data = await res.json();
+      if (data.success) {
+        renderReviews(data.reviews);
+      }
+    }
+
+    function renderReviews(reviews) {
+      const container = document.getElementById('reviews-container');
+      const summaryContainer = document.getElementById('ratings-summary');
+      container.innerHTML = '';
+      summaryContainer.innerHTML = '';
+
+      if (reviews.length === 0) {
+        container.innerHTML = '<p>Este producto aún no tiene reseñas. ¡Sé el primero!</p>';
+        return;
+      }
+
+      // Calcular estadísticas de calificaciones
+      const ratingCounts = {
+        5: 0,
+        4: 0,
+        3: 0,
+        2: 0,
+        1: 0
+      };
+      reviews.forEach(review => ratingCounts[review.rating]++);
+
+      // Renderizar barras de estadísticas
+      for (let i = 5; i >= 1; i--) {
+        const percentage = (reviews.length > 0) ? (ratingCounts[i] / reviews.length) * 100 : 0;
+        summaryContainer.innerHTML += `
+            <div class="bar-container">
+                <span>${i} estrellas</span>
+                <div class="bar" style="width: ${percentage}%;"></div>
+                <span>(${ratingCounts[i]})</span>
+            </div>
+        `;
+      }
+
+      // Renderizar cada reseña
+      reviews.forEach(review => {
+        const reviewElement = document.createElement('div');
+        reviewElement.className = 'review-item';
+        reviewElement.innerHTML = `
+            <h4>${review.user_name}</h4>
+            <p>Calificación: ${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</p>
+            <p>${review.comment}</p>
+            <small>${new Date(review.created_at).toLocaleDateString()}</small>
+            ${review.reply_text ? `
+                <div class="admin-reply">
+                    <strong>Respuesta de la tienda:</strong>
+                    <p>${review.reply_text}</p>
+                </div>
+            ` : ''}
+        `;
+        container.appendChild(reviewElement);
+      });
+    }
   </script>
 </body>
 

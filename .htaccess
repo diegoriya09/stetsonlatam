@@ -31,6 +31,7 @@ RewriteRule ^admin/stockedit([0-9]+)$ /admin/edit_stock.php?id=$1 [NC,L]
 # --- REGLA 4: URLs amigables para APIs ---
 RewriteRule ^php/order/get_detail_order([0-9]+)$ /php/order/get_detail_order.php?id=$1 [NC,L]
 
+RewriteRule ^php/reviews/get_reviews([0-9]+)$ /php/reviews/get_reviews.php?id=$1 [NC,L]
 
 # Regla para pasar el Header de Autorización a PHP
 RewriteCond %{HTTP:Authorization} .
