@@ -29,6 +29,10 @@ function getAuthorizationHeader()
 }
 
 try {
+
+   if (!$conn || $conn->connect_error) {
+        throw new Exception("Error de conexión a la base de datos.");
+    }
    // 1. Autenticación con JWT
    $authHeader = getAuthorizationHeader();
    if (!$authHeader || !str_starts_with($authHeader, 'Bearer ')) {
