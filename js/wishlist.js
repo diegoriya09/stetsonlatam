@@ -74,7 +74,7 @@ function renderWishlist(items) {
       productCard.className = 'wishlist-item';
       productCard.innerHTML = `
             <div class="item-image-container">
-                <a href="/producto/${item.id}"><img src="/${item.image}" alt="${item.name}"></a>
+                <a href="/producto${item.id}"><img src="/${item.image}" alt="${item.name}"></a>
             </div>
             <div class="item-details">
                 <h3>${item.name}</h3>
