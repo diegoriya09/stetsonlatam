@@ -65,7 +65,7 @@ if ($product_id <= 0 || $rating <= 0 || empty($comment)) {
 
 // Punto de control 5: Verificar compra
 try {
-   $stmt_check = $conn->prepare("SELECT COUNT(*) as purchase_count FROM pedidos p JOIN pedido_detalle pd ON p.id = pd.pedido_id WHERE p.user_id = ? AND pd.product_id = ? AND (p.estado = 'Enviado' OR p.estado = 'Completado')");
+   $stmt_check = $conn->prepare("SELECT COUNT(*) as purchase_count FROM pedidos p JOIN pedido_detalle pd ON p.id = pd.pedido_id WHERE p.user_id = ? AND pd.producto_id = ? AND (p.estado = 'Enviado' OR p.estado = 'Completado')");
    if ($stmt_check === false) {
       throw new Exception("Error al preparar la consulta de verificación de compra: " . $conn->error);
    }
