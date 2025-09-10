@@ -9,7 +9,7 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
 
 require '../php/conexion.php';
 
-$view = $_GET['view'] ?? 'products';
+$view = $_GET['section'] ?? 'products';
 
 // Lógica para la vista de Reseñas
 if ($view === 'reviews') {
