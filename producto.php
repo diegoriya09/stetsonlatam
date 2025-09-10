@@ -404,7 +404,7 @@ $canonical_url = "https://www.stetsonlatam.com/producto/" . $product_id;
 
         if (jwt) {
           wishlistBtn.style.display = 'inline-block';
-          fetch(`/php/user/get_wishlist_status.php?product_id=${productId}`, {
+          fetch(`/php/user/get_wishlist_status?product_id=${productId}`, {
               headers: {
                 'Authorization': 'Bearer ' + jwt
               }
@@ -421,7 +421,7 @@ $canonical_url = "https://www.stetsonlatam.com/producto/" . $product_id;
 
         wishlistBtn.addEventListener('click', () => {
           if (!jwt) return;
-          fetch('/php/user/toggle_wishlist.php', {
+          fetch('/php/user/toggle_wishlist', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
