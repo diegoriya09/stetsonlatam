@@ -61,7 +61,7 @@ if (!empty($categorias_flat)) {
   </div>
 
   <nav class="hidden md:flex flex-1 justify-center desktop-nav">
-    <div class="flex items-center gap-9">
+    <div class="flex items-center gap-9 h-full">
       <div class="nav-item">
         <a href="hats" class="text-[#3c3737] text-sm font-bold uppercase leading-normal">Sombreros</a>
         <?php if (!empty($hat_collections)): ?>
