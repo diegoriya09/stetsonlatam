@@ -53,7 +53,7 @@ if (!empty($categorias_flat)) {
 
 
 <header
-  class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f3f2f2] px-10 py-5 h-20">
+  class="flex items-center justify-center whitespace-nowrap border-b border-solid border-b-[#f3f2f2] px-10 py-5 h-20">
   <div class="flex-1 flex justify-start">
     <a href="https://stetsonlatam.com/" aria-label="Stetson Latam">
       <img src="img/logo.svg" alt="Logo de Stetson Latam" class="h-5 w-auto">
