@@ -528,7 +528,7 @@ if ($view === 'stock') {
             async function loadReport(startDate, endDate) {
                 try {
                     // Se usa la ruta limpia que definimos en .htaccess
-                    const response = await fetch(`/php/admin/get_sales_report?start_date=${startDate}&end_date=${endDate}`);
+                    const response = await fetch(`/admin/get_sales_report?start_date=${startDate}&end_date=${endDate}`);
                     if (!response.ok) {
                         throw new Error(`Error HTTP: ${response.status}`);
                     }
@@ -596,7 +596,7 @@ if ($view === 'stock') {
                 const startDate = document.getElementById('start_date').value;
                 const endDate = document.getElementById('end_date').value;
                 // Se usa la ruta limpia que definimos en .htaccess
-                window.location.href = `/php/admin/export_report?format=${format}&start_date=${startDate}&end_date=${endDate}`;
+                window.location.href = `/admin/export_report?format=${format}&start_date=${startDate}&end_date=${endDate}`;
             }
 
             if (exportCsvBtn) {
