@@ -488,25 +488,22 @@ if ($view === 'stock') {
         <?php endif; ?>
         <?php if ($view === 'reports'): ?>
             <h2>Reporte de Ventas</h2>
-            <div class="report-filters">
-                <form id="reports-filter-form">
+            <div class="report-filters" style="max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 8px;">
+                <form id="reports-filter-form" style="display: flex; gap: 15px; align-items: center; justify-content: center; box-shadow: none; padding: 0; background: none;">
                     <label for="start_date">Desde:</label>
                     <input type="date" id="start_date" name="start_date" value="<?php echo date('Y-m-01'); ?>">
                     <label for="end_date">Hasta:</label>
                     <input type="date" id="end_date" name="end_date" value="<?php echo date('Y-m-d'); ?>">
                     <button type="submit">Filtrar</button>
-                    <div class="export-buttons">
-                        <a href="#" id="export-csv" class="export-btn">Exportar a CSV</a>
-                        <a href="#" id="export-pdf" class="export-btn">Exportar a PDF</a>
-                    </div>
                 </form>
-
+                <div class="export-buttons" style="text-align: center; margin-top: 20px;">
+                    <a href="#" id="export-csv" class="export-btn" style="text-decoration: none; background: #1e6e43; color: white; padding: 8px 15px; border-radius: 5px; margin-right: 10px;">Exportar a CSV</a>
+                    <a href="#" id="export-pdf" class="export-btn" style="text-decoration: none; background: #b33a3a; color: white; padding: 8px 15px; border-radius: 5px;">Exportar a PDF</a>
+                </div>
             </div>
-
-            <div class="chart-container">
+            <div class="chart-container" style="max-width: 800px; margin: 30px auto;">
                 <canvas id="salesChart"></canvas>
             </div>
-
             <div id="report-table-container"></div>
         <?php endif; ?>
     </div>
@@ -520,158 +517,191 @@ if ($view === 'stock') {
     </div>
 
     <script>
-        const filterForm = document.getElementById('reports-filter-form');
-        let salesChart = null; // Variable para guardar la instancia del gráfico
+        document.addEventListener('DOMContentLoaded', function() {
 
-        async function loadReport(startDate, endDate) {
-            try {
-                const response = await fetch(`/php/admin/get_sales_report?start_date=${startDate}&end_date=${endDate}`);
-                const data = await response.json();
-                if (data.success) {
-                    renderChart(data.report);
+            // --- LÓGICA PARA REPORTES Y EXPORTACIÓN ---
+            const filterForm = document.getElementById('reports-filter-form');
+            const exportCsvBtn = document.getElementById('export-csv');
+            const exportPdfBtn = document.getElementById('export-pdf');
+            let salesChart = null;
+
+            async function loadReport(startDate, endDate) {
+                try {
+                    // CORRECCIÓN: Asegúrate de que la ruta a tu API sea correcta
+                    const response = await fetch(`/php/admin/get_sales_report?start_date=${startDate}&end_date=${endDate}`);
+                    if (!response.ok) { // Capturar errores como 404
+                        throw new Error(`Error HTTP: ${response.status}`);
+                    }
+                    const data = await response.json();
+                    if (data.success) {
+                        renderChart(data.report);
+                        renderTable(data.report.table_data); // Asegúrate de tener esta función
+                    }
+                } catch (error) {
+                    console.error('Error al cargar el reporte:', error);
+                    document.getElementById('report-table-container').innerHTML = `<p style="text-align:center; color:red;">No se pudo cargar el reporte.</p>`;
                 }
-            } catch (error) {
-                console.error('Error al cargar el reporte:', error);
             }
-        }
 
-        function renderChart(reportData) {
-            const ctx = document.getElementById('salesChart');
-            if (!ctx) return;
-            if (salesChart) {
-                salesChart.destroy();
-            }
-            salesChart = new Chart(ctx.getContext('2d'), {
-                type: 'line',
-                data: {
-                    labels: reportData.labels,
-                    datasets: [{
-                        label: 'Ingresos ($)',
-                        data: reportData.revenue_data,
-                        borderColor: '#3c3737',
-                        tension: 0.1
-                    }]
+            function renderChart(reportData) {
+                const ctx = document.getElementById('salesChart');
+                if (!ctx) return;
+                if (salesChart) {
+                    salesChart.destroy();
                 }
-            });
-        }
+                salesChart = new Chart(ctx.getContext('2d'), {
+                    type: 'line',
+                    data: {
+                        labels: reportData.labels,
+                        datasets: [{
+                            label: 'Ingresos ($)',
+                            data: reportData.revenue_data,
+                            borderColor: '#3c3737',
+                            tension: 0.1
+                        }]
+                    }
+                });
+            }
 
-        if (filterForm) {
-            filterForm.addEventListener('submit', function(e) {
-                e.preventDefault();
+            // Función de ejemplo para renderizar la tabla de datos
+            function renderTable(tableData) {
+                const container = document.getElementById('report-table-container');
+                if (!container) return;
+                let tableHTML = '<table><thead><tr><th>Fecha</th><th>Unidades Vendidas</th><th>Ingresos</th></tr></thead><tbody>';
+                if (tableData.length === 0) {
+                    tableHTML += '<tr><td colspan="3">No hay datos para el rango de fechas seleccionado.</td></tr>';
+                } else {
+                    tableData.forEach(row => {
+                        tableHTML += `<tr><td>${row.sale_date}</td><td>${row.units_sold}</td><td>$${parseFloat(row.total_revenue).toFixed(2)}</td></tr>`;
+                    });
+                }
+                tableHTML += '</tbody></table>';
+                container.innerHTML = tableHTML;
+            }
+
+            if (filterForm) {
+                filterForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const startDate = document.getElementById('start_date').value;
+                    const endDate = document.getElementById('end_date').value;
+                    loadReport(startDate, endDate);
+                });
+                // Cargar el reporte inicial al cargar la página de reportes
+                loadReport(document.getElementById('start_date').value, document.getElementById('end_date').value);
+            }
+
+            function exportData(format) {
                 const startDate = document.getElementById('start_date').value;
                 const endDate = document.getElementById('end_date').value;
-                loadReport(startDate, endDate);
-            });
-            loadReport(document.getElementById('start_date').value, document.getElementById('end_date').value);
-        }
+                window.location.href = `/php/admin/export_report?format=${format}&start_date=${startDate}&end_date=${endDate}`;
+            }
 
-        function exportData(format) {
-            const startDate = document.getElementById('start_date').value;
-            const endDate = document.getElementById('end_date').value;
-            window.location.href = `/php/admin/export_report.php?format=${format}&start_date=${startDate}&end_date=${endDate}`;
-        }
-
-        if (exportCsvBtn) exportCsvBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            exportData('csv');
-        });
-        if (exportPdfBtn) exportPdfBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            exportData('pdf');
-        });
-        
-        const logoutBtn = document.getElementById('logout-btn');
-        if (logoutBtn && localStorage.getItem('jwt')) {
-            logoutBtn.style.display = 'inline-block';
-            logoutBtn.addEventListener('click', () => {
-                localStorage.removeItem('jwt');
-                Swal.fire({
-                        title: 'Sesión cerrada',
-                        icon: 'info',
-                        confirmButtonText: 'OK'
-                    })
-                    .then(() => {
-                        window.location.href = '/';
-                    });
-            });
-        }
-
-        function showOrderDetails(orderId) {
-            const modal = document.querySelector('.ordermodal');
-            const detailsDiv = document.getElementById('admin-order-details');
-
-            fetch(`/php/order/get_detail_order${orderId}`)
-                .then(res => res.json())
-                .then(data => {
-                    if (data.success && data.details.length > 0) {
-                        let html = "<ul>";
-                        data.details.forEach(item => {
-                            html += `<li>${item.name} - Cant: ${item.cantidad} - Precio: $${item.price} - Talla: ${item.size_nombre || "N/A"} - Color: ${item.color_nombre || "N/A"}</li>`;
-                        });
-                        html += "</ul>";
-                        detailsDiv.innerHTML = html;
-                    } else {
-                        detailsDiv.innerHTML = "<p>No se encontraron productos para este pedido.</p>";
-                    }
-                    modal.classList.remove("hidden");
-                })
-                .catch(() => {
-                    detailsDiv.innerHTML = "<p>Error al cargar los detalles.</p>";
-                    modal.classList.remove("hidden");
+            if (exportCsvBtn) {
+                exportCsvBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    exportData('csv');
                 });
-        }
+            }
+            if (exportPdfBtn) {
+                exportPdfBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    exportData('pdf');
+                });
+            }
 
-        const ordermodal = document.querySelector(".ordermodal");
-        if (ordermodal) {
-            const closeBtn = document.querySelector(".close-modal-order");
-            closeBtn.addEventListener("click", () => ordermodal.classList.add("hidden"));
-            ordermodal.addEventListener("click", (e) => {
-                if (e.target === ordermodal) {
-                    ordermodal.classList.add("hidden");
-                }
-            });
-        }
-
-        document.addEventListener('submit', function(e) {
-            if (e.target.matches('.reply-form')) {
-                e.preventDefault();
-                const form = e.target;
-                const reviewId = form.dataset.reviewId;
-                const replyText = form.querySelector('textarea[name="reply_text"]').value;
-                const jwt = localStorage.getItem('jwt'); // O usa la sesión de admin si es necesario
-
-                fetch('reply_to_review', { // Asume que reply_to_review.php está en la misma carpeta /admin/
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            // Si tu script de respuesta usa JWT, descomenta la siguiente línea
-                            // 'Authorization': 'Bearer ' + jwt 
-                        },
-                        body: JSON.stringify({
-                            review_id: reviewId,
-                            reply_text: replyText
+            const logoutBtn = document.getElementById('logout-btn');
+            if (logoutBtn && localStorage.getItem('jwt')) {
+                logoutBtn.style.display = 'inline-block';
+                logoutBtn.addEventListener('click', () => {
+                    localStorage.removeItem('jwt');
+                    Swal.fire({
+                            title: 'Sesión cerrada',
+                            icon: 'info',
+                            confirmButtonText: 'OK'
                         })
-                    })
+                        .then(() => {
+                            window.location.href = '/';
+                        });
+                });
+            }
+
+            function showOrderDetails(orderId) {
+                const modal = document.querySelector('.ordermodal');
+                const detailsDiv = document.getElementById('admin-order-details');
+
+                fetch(`/php/order/get_detail_order${orderId}`)
                     .then(res => res.json())
                     .then(data => {
-                        if (data.success) {
-                            Swal.fire('¡Éxito!', 'Respuesta enviada correctamente.', 'success');
-                            // Actualizar la UI sin recargar la página
-                            const replyCell = document.getElementById(`reply-cell-${reviewId}`);
-                            replyCell.innerHTML = `
+                        if (data.success && data.details.length > 0) {
+                            let html = "<ul>";
+                            data.details.forEach(item => {
+                                html += `<li>${item.name} - Cant: ${item.cantidad} - Precio: $${item.price} - Talla: ${item.size_nombre || "N/A"} - Color: ${item.color_nombre || "N/A"}</li>`;
+                            });
+                            html += "</ul>";
+                            detailsDiv.innerHTML = html;
+                        } else {
+                            detailsDiv.innerHTML = "<p>No se encontraron productos para este pedido.</p>";
+                        }
+                        modal.classList.remove("hidden");
+                    })
+                    .catch(() => {
+                        detailsDiv.innerHTML = "<p>Error al cargar los detalles.</p>";
+                        modal.classList.remove("hidden");
+                    });
+            }
+
+            const ordermodal = document.querySelector(".ordermodal");
+            if (ordermodal) {
+                const closeBtn = document.querySelector(".close-modal-order");
+                closeBtn.addEventListener("click", () => ordermodal.classList.add("hidden"));
+                ordermodal.addEventListener("click", (e) => {
+                    if (e.target === ordermodal) {
+                        ordermodal.classList.add("hidden");
+                    }
+                });
+            }
+
+            document.addEventListener('submit', function(e) {
+                if (e.target.matches('.reply-form')) {
+                    e.preventDefault();
+                    const form = e.target;
+                    const reviewId = form.dataset.reviewId;
+                    const replyText = form.querySelector('textarea[name="reply_text"]').value;
+                    const jwt = localStorage.getItem('jwt'); // O usa la sesión de admin si es necesario
+
+                    fetch('reply_to_review', { // Asume que reply_to_review.php está en la misma carpeta /admin/
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                // Si tu script de respuesta usa JWT, descomenta la siguiente línea
+                                // 'Authorization': 'Bearer ' + jwt 
+                            },
+                            body: JSON.stringify({
+                                review_id: reviewId,
+                                reply_text: replyText
+                            })
+                        })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.success) {
+                                Swal.fire('¡Éxito!', 'Respuesta enviada correctamente.', 'success');
+                                // Actualizar la UI sin recargar la página
+                                const replyCell = document.getElementById(`reply-cell-${reviewId}`);
+                                replyCell.innerHTML = `
                             <div class="existing-reply">
                                 <p>${replyText}</p>
                             </div>
                         `;
-                        } else {
-                            Swal.fire('Error', data.message || 'No se pudo enviar la respuesta.', 'error');
-                        }
-                    })
-                    .catch(err => {
-                        console.error('Error:', err);
-                        Swal.fire('Error', 'Ocurrió un problema de conexión.', 'error');
-                    });
-            }
+                            } else {
+                                Swal.fire('Error', data.message || 'No se pudo enviar la respuesta.', 'error');
+                            }
+                        })
+                        .catch(err => {
+                            console.error('Error:', err);
+                            Swal.fire('Error', 'Ocurrió un problema de conexión.', 'error');
+                        });
+                }
+            });
         });
     </script>
 </body>
