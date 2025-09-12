@@ -325,7 +325,7 @@ if ($view === 'stock') {
 <body>
     <button id="logout-btn" style="display:none;"><i class="fa-solid fa-right-from-bracket" style="margin-right:8px;"></i>Logout</button>
     <div class="container">
-        <h1>Management Panel</h1>
+        <h1>Panel de Administración</h1>
 
         <nav class="admin-nav">
             <a href="?section=products" class="<?php if ($view === 'products') echo 'active'; ?>">Gestionar Productos</a>
