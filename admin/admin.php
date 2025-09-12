@@ -329,6 +329,7 @@ if ($view === 'stock') {
             <a href="?section=products" class="<?php if ($view === 'products') echo 'active'; ?>">Gestionar Productos</a>
             <a href="?section=orders" class="<?php if ($view === 'orders') echo 'active'; ?>">Gestionar Pedidos</a>
             <a href="?section=reviews" class="<?php if ($view === 'reviews') echo 'active'; ?>">Gestionar Reseñas</a>
+            <a href="?section=reports" class="<?php if ($view === 'reports') echo 'active'; ?>">Reportes</a>
         </nav>
 
         <?php if (isset($success_message)): ?>
@@ -485,6 +486,29 @@ if ($view === 'stock') {
                 </tbody>
             </table>
         <?php endif; ?>
+        <?php if ($view === 'reports'): ?>
+            <h2>Reporte de Ventas</h2>
+            <div class="report-filters">
+                <form id="reports-filter-form">
+                    <label for="start_date">Desde:</label>
+                    <input type="date" id="start_date" name="start_date" value="<?php echo date('Y-m-01'); ?>">
+                    <label for="end_date">Hasta:</label>
+                    <input type="date" id="end_date" name="end_date" value="<?php echo date('Y-m-d'); ?>">
+                    <button type="submit">Filtrar</button>
+                    <div class="export-buttons">
+                        <a href="#" id="export-csv" class="export-btn">Exportar a CSV</a>
+                        <a href="#" id="export-pdf" class="export-btn">Exportar a PDF</a>
+                    </div>
+                </form>
+
+            </div>
+
+            <div class="chart-container">
+                <canvas id="salesChart"></canvas>
+            </div>
+
+            <div id="report-table-container"></div>
+        <?php endif; ?>
     </div>
 
     <div class="ordermodal hidden">
@@ -496,6 +520,69 @@ if ($view === 'stock') {
     </div>
 
     <script>
+        const filterForm = document.getElementById('reports-filter-form');
+        let salesChart = null; // Variable para guardar la instancia del gráfico
+
+        async function loadReport(startDate, endDate) {
+            try {
+                const response = await fetch(`/php/admin/get_sales_report?start_date=${startDate}&end_date=${endDate}`);
+                const data = await response.json();
+
+                if (data.success) {
+                    renderChart(data.report);
+                    renderTable(data.report.table_data);
+                }
+            } catch (error) {
+                console.error('Error al cargar el reporte:', error);
+            }
+        }
+
+        function renderChart(reportData) {
+            const ctx = document.getElementById('salesChart').getContext('2d');
+            if (salesChart) {
+                salesChart.destroy(); // Destruir gráfico anterior para redibujar
+            }
+            salesChart = new Chart(ctx, {
+                type: 'line', // Tipo de gráfico
+                data: {
+                    labels: reportData.labels,
+                    datasets: [{
+                        label: 'Ingresos ($)',
+                        data: reportData.revenue_data,
+                        borderColor: '#3c3737',
+                        tension: 0.1
+                    }]
+                }
+            });
+        }
+
+        function renderTable(tableData) {
+            // Lógica para generar una tabla HTML con los datos de 'tableData'
+        }
+
+        if (filterForm) {
+            filterForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const startDate = document.getElementById('start_date').value;
+                const endDate = document.getElementById('end_date').value;
+                loadReport(startDate, endDate);
+            });
+            // Cargar el reporte inicial
+            loadReport(document.getElementById('start_date').value, document.getElementById('end_date').value);
+        }
+
+        document.getElementById('export-csv').addEventListener('click', function(e) {
+            e.preventDefault();
+            const startDate = document.getElementById('start_date').value;
+            const endDate = document.getElementById('end_date').value;
+            window.location.href = `/php/admin/export_report?format=csv&start_date=${startDate}&end_date=${endDate}`;
+        });
+        document.getElementById('export-pdf').addEventListener('click', function(e) {
+            e.preventDefault();
+            const startDate = document.getElementById('start_date').value;
+            const endDate = document.getElementById('end_date').value;
+            window.location.href = `/php/admin/export_report?format=pdf&start_date=${startDate}&end_date=${endDate}`;
+        });
         const logoutBtn = document.getElementById('logout-btn');
         if (logoutBtn && localStorage.getItem('jwt')) {
             logoutBtn.style.display = 'inline-block';
