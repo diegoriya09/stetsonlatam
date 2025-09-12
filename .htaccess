@@ -35,6 +35,10 @@ RewriteRule ^php/reviews/get_reviews([0-9]+)$ /php/reviews/get_reviews.php?id=$1
 
 RewriteRule ^php/user/get_wishlist_status([0-9]+)$ /php/user/get_wishlist_status.php?id=$1 [NC,L]
 
+RewriteRule ^php/admin/get_sales_report$ /php/admin/get_sales_report.php?start_date=${startDate}&end_date=${endDate} [NC,L]
+
+RewriteRule ^php/admin/export_report$ /php/admin/export_report.php?format=${format}&start_date=${startDate}&end_date=${endDate} [NC,L]
+   
 # Regla para pasar el Header de Autorización a PHP
 RewriteCond %{HTTP:Authorization} .
 RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]

@@ -527,10 +527,8 @@ if ($view === 'stock') {
             try {
                 const response = await fetch(`/php/admin/get_sales_report?start_date=${startDate}&end_date=${endDate}`);
                 const data = await response.json();
-
                 if (data.success) {
                     renderChart(data.report);
-                    renderTable(data.report.table_data);
                 }
             } catch (error) {
                 console.error('Error al cargar el reporte:', error);
@@ -538,12 +536,13 @@ if ($view === 'stock') {
         }
 
         function renderChart(reportData) {
-            const ctx = document.getElementById('salesChart').getContext('2d');
+            const ctx = document.getElementById('salesChart');
+            if (!ctx) return;
             if (salesChart) {
-                salesChart.destroy(); // Destruir gráfico anterior para redibujar
+                salesChart.destroy();
             }
-            salesChart = new Chart(ctx, {
-                type: 'line', // Tipo de gráfico
+            salesChart = new Chart(ctx.getContext('2d'), {
+                type: 'line',
                 data: {
                     labels: reportData.labels,
                     datasets: [{
@@ -556,10 +555,6 @@ if ($view === 'stock') {
             });
         }
 
-        function renderTable(tableData) {
-            // Lógica para generar una tabla HTML con los datos de 'tableData'
-        }
-
         if (filterForm) {
             filterForm.addEventListener('submit', function(e) {
                 e.preventDefault();
@@ -567,22 +562,24 @@ if ($view === 'stock') {
                 const endDate = document.getElementById('end_date').value;
                 loadReport(startDate, endDate);
             });
-            // Cargar el reporte inicial
             loadReport(document.getElementById('start_date').value, document.getElementById('end_date').value);
         }
 
-        document.getElementById('export-csv').addEventListener('click', function(e) {
-            e.preventDefault();
+        function exportData(format) {
             const startDate = document.getElementById('start_date').value;
             const endDate = document.getElementById('end_date').value;
-            window.location.href = `/php/admin/export_report?format=csv&start_date=${startDate}&end_date=${endDate}`;
-        });
-        document.getElementById('export-pdf').addEventListener('click', function(e) {
+            window.location.href = `/php/admin/export_report.php?format=${format}&start_date=${startDate}&end_date=${endDate}`;
+        }
+
+        if (exportCsvBtn) exportCsvBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            const startDate = document.getElementById('start_date').value;
-            const endDate = document.getElementById('end_date').value;
-            window.location.href = `/php/admin/export_report?format=pdf&start_date=${startDate}&end_date=${endDate}`;
+            exportData('csv');
         });
+        if (exportPdfBtn) exportPdfBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            exportData('pdf');
+        });
+        
         const logoutBtn = document.getElementById('logout-btn');
         if (logoutBtn && localStorage.getItem('jwt')) {
             logoutBtn.style.display = 'inline-block';
