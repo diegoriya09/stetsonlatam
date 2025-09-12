@@ -49,7 +49,7 @@ try {
 
     } elseif ($format === 'pdf') {
         // Asegúrate de haber descargado FPDF y colocado en una carpeta como 'php/lib/fpdf/'
-        require_once '../../lib/fpdf/fpdf.php';
+        require_once '../php/lib/fpdf186/fpdf.php';
         
         $pdf = new FPDF();
         $pdf->AddPage();
