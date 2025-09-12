@@ -92,6 +92,7 @@ if ($view === 'stock') {
 <head>
     <meta charset="UTF-8">
     <title>Panel de Administración</title>
+    <link rel="icon" href="../img/logo.webp" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
