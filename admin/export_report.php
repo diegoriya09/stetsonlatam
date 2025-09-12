@@ -8,7 +8,7 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
     die("Acceso denegado.");
 }
 
-require_once '../conexion.php';
+require_once '../php/conexion.php';
 
 // Obtener los filtros de la URL
 $start_date = $_GET['start_date'] ?? date('Y-m-01');
@@ -49,7 +49,7 @@ try {
 
     } elseif ($format === 'pdf') {
         // Asegúrate de haber descargado FPDF y colocado en una carpeta como 'php/lib/fpdf/'
-        require_once '../lib/fpdf/fpdf.php';
+        require_once '../php/lib/fpdf.php';
         
         $pdf = new FPDF();
         $pdf->AddPage();
