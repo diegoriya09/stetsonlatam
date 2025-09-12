@@ -527,19 +527,22 @@ if ($view === 'stock') {
 
             async function loadReport(startDate, endDate) {
                 try {
-                    // CORRECCIÓN: Asegúrate de que la ruta a tu API sea correcta
+                    // Se usa la ruta limpia que definimos en .htaccess
                     const response = await fetch(`/php/admin/get_sales_report?start_date=${startDate}&end_date=${endDate}`);
-                    if (!response.ok) { // Capturar errores como 404
+                    if (!response.ok) {
                         throw new Error(`Error HTTP: ${response.status}`);
                     }
                     const data = await response.json();
                     if (data.success) {
                         renderChart(data.report);
-                        renderTable(data.report.table_data); // Asegúrate de tener esta función
+                        renderTable(data.report.table_data);
+                    } else {
+                        throw new Error(data.message || 'La respuesta del servidor no fue exitosa.');
                     }
                 } catch (error) {
                     console.error('Error al cargar el reporte:', error);
-                    document.getElementById('report-table-container').innerHTML = `<p style="text-align:center; color:red;">No se pudo cargar el reporte.</p>`;
+                    const container = document.getElementById('report-table-container');
+                    if (container) container.innerHTML = `<p style="text-align:center; color:red;">No se pudo cargar el reporte. Revisa la consola para más detalles.</p>`;
                 }
             }
 
@@ -586,13 +589,13 @@ if ($view === 'stock') {
                     const endDate = document.getElementById('end_date').value;
                     loadReport(startDate, endDate);
                 });
-                // Cargar el reporte inicial al cargar la página de reportes
                 loadReport(document.getElementById('start_date').value, document.getElementById('end_date').value);
             }
 
             function exportData(format) {
                 const startDate = document.getElementById('start_date').value;
                 const endDate = document.getElementById('end_date').value;
+                // Se usa la ruta limpia que definimos en .htaccess
                 window.location.href = `/php/admin/export_report?format=${format}&start_date=${startDate}&end_date=${endDate}`;
             }
 
