@@ -41,6 +41,18 @@ try {
   $stmt_variants->execute();
   $variants_stock = $stmt_variants->get_result()->fetch_all(MYSQLI_ASSOC);
   $stmt_variants->close();
+
+  $user_id = $_SESSION['user_id'] ?? null;
+  if ($user_id !== null) {
+    $stmt_visit = $conn->prepare("INSERT INTO user_visits (user_id, product_id, visited_at) VALUES (?, ?, NOW()) ON DUPLICATE KEY UPDATE visited_at = NOW()");
+    $stmt_visit->bind_param("ii", $user_id, $product_id);
+  } else {
+    // No se guarda visita para usuarios no logueados en DB, se maneja por JS
+  }
+  if (isset($stmt_visit)) {
+    $stmt_visit->execute();
+    $stmt_visit->close();
+  }
 } catch (Exception $e) {
   error_log("Error al cargar producto: " . $e->getMessage());
   exit('Error al cargar la página del producto.');
