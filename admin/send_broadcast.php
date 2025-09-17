@@ -10,7 +10,7 @@ $message = $_POST['message'] ?? '';
 $link = $_POST['link'] ?? '';
 
 if (empty($message)) {
-    header("Location: /admin?section=notifications&error=Mensaje vacío");
+    header("Location: admin?section=notifications&error=Mensaje vacío");
     exit;
 }
 
