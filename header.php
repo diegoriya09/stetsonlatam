@@ -160,7 +160,7 @@ if (!empty($categorias_flat)) {
           <path d="M128,216S28,160,28,92A52,52,0,0,1,80,40a52,52,0,0,1,48,48,52,52,0,0,1,48-48,52,52,0,0,1,52,52C228,160,128,216,128,216ZM80,56A36,36,0,0,0,44,92c0,42.59,62.26,90.46,84,103.41,21.74-12.95,84-60.82,84-103.41A36,36,0,0,0,176,56a35.82,35.82,0,0,0-30.33,18.49,8,8,0,0,1-13.34,0A35.82,35.82,0,0,0,80,56Z"></path>
         </svg>
       </a>
-      <div class="notification-wrapper">
+      <div id="notification-wrapper" class="notification-wrapper" style="display:none;">
         <button id="notifications-btn" class="p-2 h-10 w-10 flex items-center justify-center bg-[#f1eeea] rounded-lg">
           <i class="far fa-bell"></i>
           <span id="unread-count" class="unread-badge" style="display:none;"></span>

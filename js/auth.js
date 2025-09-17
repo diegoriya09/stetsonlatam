@@ -252,4 +252,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+    const notificationWrapper = document.getElementById('notification-wrapper');
+    if (token && notificationWrapper) { // Reutilizamos la variable 'token' que ya está definida en este archivo
+        notificationWrapper.style.display = 'block';
+    }
+
 });
