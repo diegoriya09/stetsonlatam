@@ -494,7 +494,7 @@ $canonical_url = "https://www.stetsonlatam.com/producto/" . $product_id;
         id: productId, // La variable 'productId' ya la tienes definida
         name: '<?php echo addslashes(htmlspecialchars($producto['name'])); ?>',
         image: '<?php echo htmlspecialchars($producto['image']); ?>',
-        url: `/producto/${productId}`
+        url: `/producto${productId}`
       };
 
       // Obtener el historial actual de localStorage
