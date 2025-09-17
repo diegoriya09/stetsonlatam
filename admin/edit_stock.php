@@ -30,6 +30,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       }
       $stmt->close();
 
+      // --- NUEVO: Lógica de Notificación de Stock Bajo ---
+      define('LOW_STOCK_THRESHOLD', 10); // Define el umbral de stock bajo
+      $admin_user_id = 1; // ID del administrador que recibirá las notificaciones
+
+      $product_name_stmt = $conn->prepare("SELECT name FROM productos WHERE id = ?");
+      $product_name_stmt->bind_param("i", $product_id);
+      $product_name_stmt->execute();
+      $product_name = $product_name_stmt->get_result()->fetch_assoc()['name'];
+      $product_name_stmt->close();
+
+      $stmt_notify = $conn->prepare("INSERT INTO notifications (user_id, message, link) VALUES (?, ?, ?)");
+      $notification_link = "/admin/edit_stock" . $product_id;
+
+      foreach ($stocks as $color_id => $sizes) {
+         foreach ($sizes as $size_id => $stock) {
+            $stock_value = (int)$stock;
+            if ($stock_value > 0 && $stock_value < LOW_STOCK_THRESHOLD) {
+               $message = "Stock bajo para {$product_name}: Solo quedan {$stock_value} unidades.";
+               $stmt_notify->bind_param("iss", $admin_user_id, $message, $notification_link);
+               $stmt_notify->execute();
+            }
+         }
+      }
+      $stmt_notify->close();
+      // --- FIN DE LA LÓGICA DE NOTIFICACIÓN ---
+
+      $conn->commit();
+
       header("Location: admin?msg=Stock+actualizado+correctamente");
       exit;
    }
