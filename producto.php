@@ -515,6 +515,63 @@ $canonical_url = "https://www.stetsonlatam.com/producto/" . $product_id;
       localStorage.setItem('recentlyViewed', JSON.stringify(recentlyViewed));
     });
 
+    async function loadRecentlyViewed() {
+      const container = document.getElementById('recently-viewed-container');
+      if (!container) return;
+
+      const jwt = localStorage.getItem('jwt');
+      let fetchUrl = '/php/user/get_recently_viewed';
+
+      // Si el usuario NO está logueado, obtenemos los IDs de localStorage y los enviamos
+      if (!jwt) {
+        const recentlyViewed = JSON.parse(localStorage.getItem('recentlyViewed')) || [];
+        const productIds = recentlyViewed.map(item => item.id);
+
+        if (productIds.length > 0) {
+          fetchUrl += `?ids=${JSON.stringify(productIds)}`;
+        } else {
+          container.style.display = 'none'; // Ocultar sección si no hay historial
+          return;
+        }
+      }
+
+      try {
+        const res = await fetch(fetchUrl, {
+          headers: jwt ? {
+            'Authorization': 'Bearer ' + jwt
+          } : {}
+        });
+        const data = await res.json();
+
+        if (data.success && data.products.length > 0) {
+          container.innerHTML = ''; // Limpiar
+          data.products.forEach(product => {
+            // No mostrar el producto que ya se está viendo en la página actual
+            if (product.id !== productId) {
+              const productCard = document.createElement('div');
+              productCard.className = 'product-card';
+              productCard.innerHTML = `
+                        <a href="/producto${product.id}">
+                            <img src="/${product.image}" alt="${product.name}">
+                        </a>
+                        <div class="info">
+                            <h3>${product.name}</h3>
+                        </div>
+                    `;
+              container.appendChild(productCard);
+            }
+          });
+        } else {
+          container.style.display = 'none'; // Ocultar si no hay productos que mostrar
+        }
+      } catch (error) {
+        console.error("Error al cargar productos vistos recientemente:", error);
+      }
+    }
+
+    // Llamar a la función cuando el DOM esté listo
+    document.addEventListener('DOMContentLoaded', loadRecentlyViewed);
+
     async function fetchReviews(productId) {
       try {
         const res = await fetch(`/php/reviews/get_reviews?id=${productId}`);
