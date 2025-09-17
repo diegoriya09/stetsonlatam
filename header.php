@@ -9,7 +9,6 @@ try {
 
   $result = $stmt->get_result();
   $categorias_flat = $result->fetch_all(MYSQLI_ASSOC);
-
 } catch (Exception $e) { // Cambiado a Exception general para MySQLi
   error_log("Error al consultar categorías: " . $e->getMessage());
   $categorias_flat = [];
@@ -157,10 +156,18 @@ if (!empty($categorias_flat)) {
         </svg>
       </button>
       <a id="wishlist-link" href="/wishlist" title="Mi Lista de Deseos" class="p-2 h-10 w-10 flex items-center justify-center bg-[#f1eeea] rounded-lg">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256">
-                    <path d="M128,216S28,160,28,92A52,52,0,0,1,80,40a52,52,0,0,1,48,48,52,52,0,0,1,48-48,52,52,0,0,1,52,52C228,160,128,216,128,216ZM80,56A36,36,0,0,0,44,92c0,42.59,62.26,90.46,84,103.41,21.74-12.95,84-60.82,84-103.41A36,36,0,0,0,176,56a35.82,35.82,0,0,0-30.33,18.49,8,8,0,0,1-13.34,0A35.82,35.82,0,0,0,80,56Z"></path>
-                </svg>
-            </a>
+        <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256">
+          <path d="M128,216S28,160,28,92A52,52,0,0,1,80,40a52,52,0,0,1,48,48,52,52,0,0,1,48-48,52,52,0,0,1,52,52C228,160,128,216,128,216ZM80,56A36,36,0,0,0,44,92c0,42.59,62.26,90.46,84,103.41,21.74-12.95,84-60.82,84-103.41A36,36,0,0,0,176,56a35.82,35.82,0,0,0-30.33,18.49,8,8,0,0,1-13.34,0A35.82,35.82,0,0,0,80,56Z"></path>
+        </svg>
+      </a>
+      <div class="notification-wrapper">
+        <button id="notifications-btn" class="p-2 h-10 w-10 flex items-center justify-center bg-[#f1eeea] rounded-lg">
+          <i class="far fa-bell"></i>
+          <span id="unread-count" class="unread-badge" style="display:none;"></span>
+        </button>
+        <div id="notifications-panel" style="display:none;">
+        </div>
+      </div>
       <div class="md:hidden mobile-menu">
         <button id="hamburger-btn" class="p-2">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256">
@@ -188,6 +195,40 @@ if (!empty($categorias_flat)) {
     <a href="caps">Caps</a>
   </nav>
 </div>
+
+<style>
+  .notification-wrapper {
+    position: relative;
+  }
+
+  .unread-badge {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #notifications-panel {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 300px;
+    background: white;
+    border: 1px solid #eee;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    max-height: 400px;
+    overflow-y: auto;
+    z-index: 1000;
+  }
+</style>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
@@ -227,14 +268,14 @@ if (!empty($categorias_flat)) {
         if (!res.ok) throw new Error("HTTP " + res.status);
         const data = await res.json();
 
-            if (!data.productos.length && !data.categorias.length) {
-              resultsBox.innerHTML = "<p class='p-2 text-gray-500'>No se han encontrado resultados.</p>";
-            } else {
-              let html = "";
-              if (data.productos.length) {
-                html += "<h4 class='px-2 py-1 font-bold text-sm text-gray-600'>Productos</h4>";
-                data.productos.forEach(p => {
-                  html += `
+        if (!data.productos.length && !data.categorias.length) {
+          resultsBox.innerHTML = "<p class='p-2 text-gray-500'>No se han encontrado resultados.</p>";
+        } else {
+          let html = "";
+          if (data.productos.length) {
+            html += "<h4 class='px-2 py-1 font-bold text-sm text-gray-600'>Productos</h4>";
+            data.productos.forEach(p => {
+              html += `
                                 <a href="${p.url}" class="flex items-center gap-2 p-2 hover:bg-gray-100">
                                 <img src="${p.image}" class="w-10 h-10 object-contain rounded">
                                 <span>${p.title}</span>

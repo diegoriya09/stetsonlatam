@@ -95,7 +95,7 @@ if ($view === 'stock') {
     <link rel="icon" href="../img/logo.webp" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
@@ -333,6 +333,7 @@ if ($view === 'stock') {
             <a href="?section=orders" class="<?php if ($view === 'orders') echo 'active'; ?>">Gestionar Pedidos</a>
             <a href="?section=reviews" class="<?php if ($view === 'reviews') echo 'active'; ?>">Gestionar Reseñas</a>
             <a href="?section=reports" class="<?php if ($view === 'reports') echo 'active'; ?>">Reportes</a>
+            <a href="?section=notifications" class="<?php if ($view === 'notifications') echo 'active'; ?>">Notificaciones</a>
         </nav>
 
         <?php if (isset($success_message)): ?>
@@ -508,6 +509,16 @@ if ($view === 'stock') {
                 <canvas id="salesChart"></canvas>
             </div>
             <div id="report-table-container"></div>
+        <?php endif; ?>
+        <?php if ($view === 'notifications'): ?>
+            <h2>Enviar Notificación General</h2>
+            <form action="send_broadcast.php" method="POST" style="max-width: 600px;">
+                <label>Mensaje:</label>
+                <textarea name="message" required style="width:100%; min-height:100px;"></textarea>
+                <label>Enlace (Opcional):</label>
+                <input type="text" name="link" style="width:100%;">
+                <button type="submit">Enviar a todos los usuarios</button>
+            </form>
         <?php endif; ?>
     </div>
 
