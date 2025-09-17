@@ -512,7 +512,7 @@ if ($view === 'stock') {
         <?php endif; ?>
         <?php if ($view === 'notifications'): ?>
             <h2>Enviar Notificación General</h2>
-            <form action="send_broadcast.php" method="POST" style="max-width: 600px;">
+            <form action="send_broadcast" method="POST" style="max-width: 600px;">
                 <label>Mensaje:</label>
                 <textarea name="message" required style="width:100%; min-height:100px;"></textarea>
                 <label>Enlace (Opcional):</label>
