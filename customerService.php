@@ -141,8 +141,6 @@
       </div>
    </div>
    <?php include "modal.php" ?>
-   <script src="js/auth.js?v=<? echo time(); ?>"></script>
-   <script src="js/index.js?v=<? echo time(); ?>"></script>
 </body>
 
 </html>

@@ -159,8 +159,6 @@ if (!isset($_SESSION['user_id'])) {
     </div>
   </div>
 
-  <script src="js/auth.js?v=<?php echo time(); ?>"></script>
-  <script src="js/index.js?v=<?php echo time(); ?>"></script>
   <script src="js/profile.js?v=<?php echo time(); ?>"></script>
 </body>
 

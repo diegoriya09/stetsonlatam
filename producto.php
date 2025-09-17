@@ -308,8 +308,6 @@ $canonical_url = "https://www.stetsonlatam.com/producto/" . $product_id;
   </div>
   <?php include 'modal.php'; ?>
   <script src="/js/cart.js?v=<?php echo time(); ?>"></script>
-  <script src="/js/auth.js?v=<?php echo time(); ?>"></script>
-  <script src="/js/index.js?v=<?php echo time(); ?>"></script>
 
   <script>
     const productVariants = <?php echo json_encode($variants_stock); ?>;

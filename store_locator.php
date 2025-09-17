@@ -48,8 +48,6 @@
    </main>
    <?php include 'modal.php'; ?>
    <?php include 'footer.php'; ?>
-   <script src="js/auth.js?v=<?php echo time(); ?>"></script>
-   <script src="js/index.js?v=<?php echo time(); ?>"></script>
    <script src="js/store_locator.js?v=<?php echo time(); ?>"></script>
 </body>
 

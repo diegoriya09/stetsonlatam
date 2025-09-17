@@ -83,8 +83,6 @@
       </div>
    </div>
    <?php include 'modal.php'; ?>
-   <script src="js/auth.js?v=<?php echo time(); ?>"></script>
-   <script src="js/index.js?v=<?php echo time(); ?>"></script>
 </body>
 
 </html>
