@@ -163,6 +163,40 @@ $canonical_url = "https://www.stetsonlatam.com/producto/" . $product_id;
       height: 10px;
       border-radius: 5px
     }
+
+    .recently-viewed-section {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .recently-viewed-section h2 {
+      font-size: 1.5em;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 20px;
+    }
+
+    .product-card {
+      border: 1px solid #eee;
+      text-align: center;
+    }
+
+    .product-card img {
+      width: 100%;
+      aspect-ratio: 1/1;
+      object-fit: cover;
+    }
+
+    .product-card .info {
+      padding: 10px;
+    }
   </style>
 </head>
 
@@ -248,6 +282,12 @@ $canonical_url = "https://www.stetsonlatam.com/producto/" . $product_id;
             <textarea name="comment" placeholder="Escribe tu reseña aquí..." required></textarea>
             <button type="submit">Enviar Reseña</button>
           </form>
+        </div>
+      </section>
+
+      <section class="recently-viewed-section">
+        <h2>Vistos Recientemente</h2>
+        <div id="recently-viewed-container" class="product-grid">
         </div>
       </section>
 
@@ -448,6 +488,31 @@ $canonical_url = "https://www.stetsonlatam.com/producto/" . $product_id;
             });
         });
       }
+
+      // --- NUEVO: Lógica para Productos Recientemente Vistos ---
+      const productDataForHistory = {
+        id: productId, // La variable 'productId' ya la tienes definida
+        name: '<?php echo addslashes(htmlspecialchars($producto['name'])); ?>',
+        image: '<?php echo htmlspecialchars($producto['image']); ?>',
+        url: `/producto/${productId}`
+      };
+
+      // Obtener el historial actual de localStorage
+      let recentlyViewed = JSON.parse(localStorage.getItem('recentlyViewed')) || [];
+
+      // Eliminar si el producto ya está en la lista para moverlo al principio
+      recentlyViewed = recentlyViewed.filter(item => item.id !== productId);
+
+      // Añadir el producto actual al principio de la lista
+      recentlyViewed.unshift(productDataForHistory);
+
+      // Limitar la lista a un máximo de 5 productos
+      if (recentlyViewed.length > 5) {
+        recentlyViewed.pop();
+      }
+
+      // Guardar la lista actualizada en localStorage
+      localStorage.setItem('recentlyViewed', JSON.stringify(recentlyViewed));
     });
 
     async function fetchReviews(productId) {
