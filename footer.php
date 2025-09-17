@@ -45,6 +45,7 @@
 <?php include 'modal.php'; ?>
 <script src="/js/auth.js?v=<?php echo time(); ?>"></script>
 <script src="/js/index.js?v=<?php echo time(); ?>"></script>
+<script src="/js/notifications.js?v=<?php echo time(); ?>"></script>
 
 <!--Start of Tawk.to Script-->
 <script type="text/javascript">
