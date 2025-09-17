@@ -26,7 +26,7 @@ try {
         $stmt->bind_param("iss", $user_id, $message, $link);
         $stmt->execute();
     }
-    header("Location: admin?success=Notificación enviada a " . count($user_ids) . " usuarios.");
+    header("Location: admin?msg=Notificación enviada a " . count($user_ids) . " usuarios.");
 } catch (Exception $e) {
     header("Location: admin?error=" . urlencode($e->getMessage()));
 }
