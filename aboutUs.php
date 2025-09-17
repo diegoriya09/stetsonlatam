@@ -71,6 +71,7 @@
          </div>
       </div>
    </div>
+   <?php include 'footer.php'; ?>
    <?php include 'modal.php'; ?>
 </body>
 
