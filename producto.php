@@ -490,29 +490,24 @@ $canonical_url = "https://www.stetsonlatam.com/producto/" . $product_id;
       }
 
       // --- NUEVO: Lógica para Productos Recientemente Vistos ---
+      // --- LÓGICA PARA PRODUCTOS VISTOS RECIENTEMENTE (AHORA DENTRO DEL LISTENER) ---
+      // 1. Guardar el producto actual en el historial
       const productDataForHistory = {
-        id: productId, // La variable 'productId' ya la tienes definida
+        id: productId,
         name: '<?php echo addslashes(htmlspecialchars($producto['name'])); ?>',
         image: '<?php echo htmlspecialchars($producto['image']); ?>',
         url: `/producto${productId}`
       };
-
-      // Obtener el historial actual de localStorage
       let recentlyViewed = JSON.parse(localStorage.getItem('recentlyViewed')) || [];
-
-      // Eliminar si el producto ya está en la lista para moverlo al principio
       recentlyViewed = recentlyViewed.filter(item => item.id !== productId);
-
-      // Añadir el producto actual al principio de la lista
       recentlyViewed.unshift(productDataForHistory);
-
-      // Limitar la lista a un máximo de 5 productos
       if (recentlyViewed.length > 5) {
         recentlyViewed.pop();
       }
-
-      // Guardar la lista actualizada en localStorage
       localStorage.setItem('recentlyViewed', JSON.stringify(recentlyViewed));
+
+      // 2. Cargar y mostrar la lista de productos vistos
+      loadRecentlyViewed();
     });
 
     async function loadRecentlyViewed() {
@@ -522,15 +517,15 @@ $canonical_url = "https://www.stetsonlatam.com/producto/" . $product_id;
       const jwt = localStorage.getItem('jwt');
       let fetchUrl = '/php/user/get_recently_viewed';
 
-      // Si el usuario NO está logueado, obtenemos los IDs de localStorage y los enviamos
+      // Si el usuario NO está logueado, enviamos los IDs desde localStorage
       if (!jwt) {
-        const recentlyViewed = JSON.parse(localStorage.getItem('recentlyViewed')) || [];
-        const productIds = recentlyViewed.map(item => item.id);
+        const recentlyViewedLocal = JSON.parse(localStorage.getItem('recentlyViewed')) || [];
+        const productIds = recentlyViewedLocal.map(item => item.id);
 
-        if (productIds.length > 0) {
+        if (productIds.length > 1) { // Solo si hay otros productos vistos
           fetchUrl += `?ids=${JSON.stringify(productIds)}`;
         } else {
-          container.style.display = 'none'; // Ocultar sección si no hay historial
+          container.parentElement.style.display = 'none'; // Ocultar la sección entera
           return;
         }
       }
@@ -544,33 +539,37 @@ $canonical_url = "https://www.stetsonlatam.com/producto/" . $product_id;
         const data = await res.json();
 
         if (data.success && data.products.length > 0) {
-          container.innerHTML = ''; // Limpiar
+          container.innerHTML = '';
+          let itemsToShow = 0;
           data.products.forEach(product => {
             // No mostrar el producto que ya se está viendo en la página actual
             if (product.id !== productId) {
+              itemsToShow++;
               const productCard = document.createElement('div');
               productCard.className = 'product-card';
               productCard.innerHTML = `
-                        <a href="/producto${product.id}">
-                            <img src="/${product.image}" alt="${product.name}">
-                        </a>
-                        <div class="info">
-                            <h3>${product.name}</h3>
-                        </div>
-                    `;
+                                <a href="/producto${product.id}">
+                                    <img src="/${product.image}" alt="${product.name}">
+                                </a>
+                                <div class="info">
+                                    <h3>${product.name}</h3>
+                                </div>`;
               container.appendChild(productCard);
             }
           });
+          // Si después de filtrar solo queda el producto actual, ocultar la sección
+          if (itemsToShow === 0) {
+            container.parentElement.style.display = 'none';
+          }
+
         } else {
-          container.style.display = 'none'; // Ocultar si no hay productos que mostrar
+          container.parentElement.style.display = 'none';
         }
       } catch (error) {
         console.error("Error al cargar productos vistos recientemente:", error);
+        container.parentElement.style.display = 'none';
       }
     }
-
-    // Llamar a la función cuando el DOM esté listo
-    document.addEventListener('DOMContentLoaded', loadRecentlyViewed);
 
     async function fetchReviews(productId) {
       try {
