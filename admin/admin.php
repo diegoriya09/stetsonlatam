@@ -698,34 +698,27 @@ if ($view === 'stock') {
                 const API_KEY = 'AIzaSyCDdhdm97FumsspWsBESskjQFvPHBl_6MY';
 
                 let tokenClient;
+                const gapiScript = document.createElement('script');
+                const gisScript = document.createElement('script');
                 const signInButton = document.getElementById('ga-signin-button');
                 const chartsContainer = document.getElementById('ga-charts');
 
-                // Carga la librería GAPI (para hacer peticiones a la API)
-                const gapiScript = document.createElement('script');
-                gapiScript.src = 'https://apis.google.com/js/api.js';
-                gapiScript.onload = () => gapi.load('client', initializeGapiClient);
-                document.body.appendChild(gapiScript);
-
-                // Carga la librería GIS (para manejar el inicio de sesión)
-                const gisScript = document.createElement('script');
-                gisScript.src = 'https://accounts.google.com/gsi/client';
-                gisScript.onload = initializeGisClient;
-                document.body.appendChild(gisScript);
+                function gapiLoaded() {
+                    gapi.load('client', initializeGapiClient);
+                }
 
                 function initializeGapiClient() {
                     gapi.client.init({
                         apiKey: API_KEY,
                         discoveryDocs: ['https://analyticsdata.googleapis.com/$discovery/rest?version=v1beta'],
                     }).then(() => {
-                        // Si ya tenemos un token guardado, intentamos mostrar los reportes
                         if (gapi.client.getToken() !== null) {
                             showReportsUI();
                         }
                     });
                 }
 
-                function initializeGisClient() {
+                function gisLoaded() {
                     tokenClient = google.accounts.oauth2.initTokenClient({
                         client_id: CLIENT_ID,
                         scope: 'https://www.googleapis.com/auth/analytics.readonly',
@@ -735,25 +728,22 @@ if ($view === 'stock') {
                             }
                         },
                     });
-                    // Mostrar el botón solo si no estamos ya autorizados
-                    if (gapi.client.getToken() === null) {
+                    if (gapi.client && gapi.client.getToken() === null) {
                         signInButton.style.display = 'inline-block';
                     }
                 }
 
                 function handleAuthClick() {
                     if (tokenClient) {
-                        // Pedir al usuario que seleccione su cuenta y autorice
                         tokenClient.requestAccessToken({
                             prompt: 'consent'
                         });
                     }
                 }
 
-                // Función para ocultar el botón y mostrar los gráficos
                 function showReportsUI() {
                     signInButton.style.display = 'none';
-                    document.querySelector('#ga-container p').style.display = 'none'; // Ocultar el texto de ayuda
+                    document.querySelector('#ga-container p').style.display = 'none';
                     chartsContainer.style.display = 'flex';
                     displayReports();
                 }
@@ -779,7 +769,7 @@ if ($view === 'stock') {
                         });
 
                         const result = response.result;
-                        if (!result.rows) {
+                        if (!result.rows || result.rows.length === 0) {
                             chartsContainer.innerHTML = '<p>No hay datos de Analytics para este período.</p>';
                             return;
                         }
@@ -800,6 +790,10 @@ if ($view === 'stock') {
                 function renderGAChart(containerId, label, labels, data) {
                     const canvas = document.getElementById(containerId);
                     if (!canvas) return;
+
+                    const chartContainer = canvas.parentElement;
+                    chartContainer.style.width = '48%';
+                    chartContainer.style.minWidth = '300px';
 
                     new Chart(canvas.getContext('2d'), {
                         type: 'line',
@@ -824,7 +818,19 @@ if ($view === 'stock') {
                     });
                 }
 
-                // Asignar el evento al botón
+                // Cargar librerías
+                gapiScript.src = 'https://apis.google.com/js/api.js';
+                gapiScript.async = true;
+                gapiScript.defer = true;
+                gapiScript.onload = gapiLoaded;
+                document.body.appendChild(gapiScript);
+
+                gisScript.src = 'https://accounts.google.com/gsi/client';
+                gisScript.async = true;
+                gisScript.defer = true;
+                gisScript.onload = gisLoaded;
+                document.body.appendChild(gisScript);
+
                 signInButton.innerHTML = '<button type="button" style="padding: 8px 15px; background: #4285F4; color: white; border-radius: 5px; border: none; cursor: pointer;">Autorizar Acceso a Google Analytics</button>';
                 signInButton.onclick = handleAuthClick;
             }
