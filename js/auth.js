@@ -28,7 +28,7 @@ async function handleGoogleCredentialResponse(response) {
             }).then(() => {
                 // Redirigir según el rol
                 if (userRole === 'admin') {
-                    window.location.href = '/admin/admin'; // Redirige al admin
+                    window.location.href = '../admin/admin'; // Redirige al admin
                 } else {
                     window.location.reload(); // Recarga la página para el usuario normal
                 }
