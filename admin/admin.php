@@ -498,8 +498,8 @@ if ($view === 'stock') {
                 <div id="ga-signin-button" style="margin-top: 15px; display: inline-block;"></div>
 
                 <div id="ga-charts" style="display:none; flex-wrap: wrap; gap: 20px; justify-content: center; margin-top: 20px;">
-                    <div id="users-chart"></div>
-                    <div id="sessions-chart"></div>
+                    <div style="width: 45%;"><canvas id="users-chart"></canvas></div>
+                    <div style="width: 45%;"><canvas id="sessions-chart"></canvas></div>
                 </div>
             </div>
             <hr>
@@ -690,7 +690,7 @@ if ($view === 'stock') {
                 });
             }
 
-            // --- LÓGICA CORREGIDA PARA GOOGLE ANALYTICS ---
+            // --- LÓGICA FINAL PARA GOOGLE ANALYTICS ---
             if (document.getElementById('ga-container')) {
 
                 const CLIENT_ID = '282246016442-c80i2g1c3ls9fn43okgpq7jr3dck06ij.apps.googleusercontent.com';
@@ -698,46 +698,64 @@ if ($view === 'stock') {
                 const API_KEY = 'AIzaSyCDdhdm97FumsspWsBESskjQFvPHBl_6MY';
 
                 let tokenClient;
-                const gapiScript = document.createElement('script');
-                const gisScript = document.createElement('script');
                 const signInButton = document.getElementById('ga-signin-button');
+                const chartsContainer = document.getElementById('ga-charts');
 
-                function gapiLoaded() {
-                    gapi.load('client', function() {
-                        gapi.client.init({
-                            'apiKey': API_KEY,
-                            'discoveryDocs': ['https://analyticsdata.googleapis.com/$discovery/rest?version=v1beta'],
-                        }).then(() => {
-                            if (gapi.client.getToken() !== null) {
-                                displayReports(); // Si ya hay token, mostrar reportes
-                            }
-                        });
+                // Carga la librería GAPI (para hacer peticiones a la API)
+                const gapiScript = document.createElement('script');
+                gapiScript.src = 'https://apis.google.com/js/api.js';
+                gapiScript.onload = () => gapi.load('client', initializeGapiClient);
+                document.body.appendChild(gapiScript);
+
+                // Carga la librería GIS (para manejar el inicio de sesión)
+                const gisScript = document.createElement('script');
+                gisScript.src = 'https://accounts.google.com/gsi/client';
+                gisScript.onload = initializeGisClient;
+                document.body.appendChild(gisScript);
+
+                function initializeGapiClient() {
+                    gapi.client.init({
+                        apiKey: API_KEY,
+                        discoveryDocs: ['https://analyticsdata.googleapis.com/$discovery/rest?version=v1beta'],
+                    }).then(() => {
+                        // Si ya tenemos un token guardado, intentamos mostrar los reportes
+                        if (gapi.client.getToken() !== null) {
+                            showReportsUI();
+                        }
                     });
                 }
 
-                function gisLoaded() {
+                function initializeGisClient() {
                     tokenClient = google.accounts.oauth2.initTokenClient({
                         client_id: CLIENT_ID,
                         scope: 'https://www.googleapis.com/auth/analytics.readonly',
                         callback: (tokenResponse) => {
                             if (tokenResponse && tokenResponse.access_token) {
-                                signInButton.style.display = 'none';
-                                document.getElementById('ga-charts').style.display = 'flex';
-                                displayReports();
+                                showReportsUI();
                             }
                         },
                     });
+                    // Mostrar el botón solo si no estamos ya autorizados
                     if (gapi.client.getToken() === null) {
-                        signInButton.style.display = 'block'; // Mostrar botón si no hay token
+                        signInButton.style.display = 'inline-block';
                     }
                 }
 
                 function handleAuthClick() {
                     if (tokenClient) {
+                        // Pedir al usuario que seleccione su cuenta y autorice
                         tokenClient.requestAccessToken({
                             prompt: 'consent'
                         });
                     }
+                }
+
+                // Función para ocultar el botón y mostrar los gráficos
+                function showReportsUI() {
+                    signInButton.style.display = 'none';
+                    document.querySelector('#ga-container p').style.display = 'none'; // Ocultar el texto de ayuda
+                    chartsContainer.style.display = 'flex';
+                    displayReports();
                 }
 
                 async function displayReports() {
@@ -761,6 +779,11 @@ if ($view === 'stock') {
                         });
 
                         const result = response.result;
+                        if (!result.rows) {
+                            chartsContainer.innerHTML = '<p>No hay datos de Analytics para este período.</p>';
+                            return;
+                        }
+
                         const labels = result.rows.map(row => row.dimensionValues[0].value.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3'));
                         const usersData = result.rows.map(row => parseInt(row.metricValues[0].value, 10));
                         const sessionsData = result.rows.map(row => parseInt(row.metricValues[1].value, 10));
@@ -770,15 +793,14 @@ if ($view === 'stock') {
 
                     } catch (err) {
                         console.error("Error al obtener datos de GA4:", err);
-                        document.getElementById('ga-charts').innerHTML = `<p style="color:red;">Error: ${err.result.error.message}</p>`;
+                        chartsContainer.innerHTML = `<p style="color:red;">Error al cargar los datos: ${err.result?.error?.message || 'Revisa la consola.'}</p>`;
                     }
                 }
 
                 function renderGAChart(containerId, label, labels, data) {
                     const canvas = document.getElementById(containerId);
                     if (!canvas) return;
-                    // Damos un tamaño fijo al contenedor del canvas para que se vea bien
-                    canvas.parentElement.style.width = '45%';
+
                     new Chart(canvas.getContext('2d'), {
                         type: 'line',
                         data: {
@@ -791,18 +813,16 @@ if ($view === 'stock') {
                             }]
                         },
                         options: {
-                            responsive: true
+                            responsive: true,
+                            plugins: {
+                                title: {
+                                    display: true,
+                                    text: label
+                                }
+                            }
                         }
                     });
                 }
-
-                gapiScript.src = 'https://apis.google.com/js/api.js';
-                gapiScript.onload = gapiLoaded;
-                document.body.appendChild(gapiScript);
-
-                gisScript.src = 'https://accounts.google.com/gsi/client';
-                gisScript.onload = gisLoaded;
-                document.body.appendChild(gisScript);
 
                 // Asignar el evento al botón
                 signInButton.innerHTML = '<button type="button" style="padding: 8px 15px; background: #4285F4; color: white; border-radius: 5px; border: none; cursor: pointer;">Autorizar Acceso a Google Analytics</button>';
