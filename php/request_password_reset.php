@@ -35,7 +35,7 @@ if ($user) {
     $stmt_update->close();
 
     // 4. Enviar el correo electrónico con PHPMailer
-    $reset_link = "https://stetsonlatam.com/reset-password?token=" . $token;
+    $reset_link = "https://stetsonlatam.com/reset-password.php?token=" . $token;
     
     $mail = new PHPMailer(true);
     try {

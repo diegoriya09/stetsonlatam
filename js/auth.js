@@ -12,7 +12,9 @@ async function handleGoogleCredentialResponse(response) {
 
             localStorage.setItem('jwt', data.token);
 
-            const jwt = data.token;
+            const logoutBtn = document.getElementById('logout-btn');
+            if (logoutBtn) logoutBtn.style.display = 'inline-flex';
+            
             const payload = JSON.parse(atob(jwt.split('.')[1]));
             const userRole = payload.data.role;
 
