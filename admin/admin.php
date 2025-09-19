@@ -491,6 +491,15 @@ if ($view === 'stock') {
             </table>
         <?php endif; ?>
         <?php if ($view === 'reports'): ?>
+            <h2>Reporte de Tráfico (Google Analytics)</h2>
+            <div id="ga-container" style="margin-bottom: 40px;">
+                <div id="ga-signin-button"></div>
+                <div id="ga-charts" style="display:none; display: flex; gap: 20px; justify-content: center;">
+                    <div id="users-chart"></div>
+                    <div id="sessions-chart"></div>
+                </div>
+            </div>
+            <hr>
             <h2>Reporte de Ventas</h2>
             <div class="report-filters" style="max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 8px;">
                 <form id="reports-filter-form" style="display: flex; gap: 15px; align-items: center; justify-content: center; box-shadow: none; padding: 0; background: none;">
@@ -719,6 +728,74 @@ if ($view === 'stock') {
                         });
                 }
             });
+        });
+    </script>
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Solo ejecutar si estamos en la vista de reportes
+            if (document.getElementById('ga-container')) {
+                gapi.load('auth2', function() {
+                    gapi.auth2.init({
+                        client_id: '282246016442-c80i2g1c3ls9fn43okgpq7jr3dck06ij.apps.googleusercontent.com',
+                    });
+                });
+
+                gapi.load('analytics', function() {
+                    const authorizeButton = document.getElementById('ga-signin-button');
+                    const chartsContainer = document.getElementById('ga-charts');
+
+                    const viewSelector = new gapi.analytics.ViewSelector({
+                        container: 'ga-signin-button'
+                    });
+
+                    viewSelector.on('change', function(ids) {
+                        if (ids) {
+                            authorizeButton.style.display = 'none';
+                            chartsContainer.style.display = 'flex';
+
+                            const dataChart1 = new gapi.analytics.googleCharts.DataChart({
+                                query: {
+                                    'ids': ids,
+                                    'start-date': '30daysAgo',
+                                    'end-date': 'yesterday',
+                                    'metrics': 'ga:users',
+                                    'dimensions': 'ga:date'
+                                },
+                                chart: {
+                                    'container': 'users-chart',
+                                    'type': 'LINE',
+                                    'options': {
+                                        'width': '100%',
+                                        'title': 'Usuarios'
+                                    }
+                                }
+                            });
+
+                            const dataChart2 = new gapi.analytics.googleCharts.DataChart({
+                                query: {
+                                    'ids': ids,
+                                    'start-date': '30daysAgo',
+                                    'end-date': 'yesterday',
+                                    'metrics': 'ga:sessions',
+                                    'dimensions': 'ga:date'
+                                },
+                                chart: {
+                                    'container': 'sessions-chart',
+                                    'type': 'LINE',
+                                    'options': {
+                                        'width': '100%',
+                                        'title': 'Sesiones'
+                                    }
+                                }
+                            });
+
+                            dataChart1.execute();
+                            dataChart2.execute();
+                        }
+                    });
+                });
+            }
         });
     </script>
 </body>
