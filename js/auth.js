@@ -9,7 +9,15 @@ async function handleGoogleCredentialResponse(response) {
         const data = await res.json();
 
         if (data.success && data.token) {
+            // ¡Éxito! El backend nos devolvió NUESTRO propio token JWT
             localStorage.setItem('jwt', data.token);
+
+            // --- CÓDIGO AÑADIDO: Lógica de decodificación y redirección ---
+            // (Copiada de tu función de login normal)
+            const jwt = data.token;
+            const payload = JSON.parse(atob(jwt.split('.')[1]));
+            const userRole = payload.data.role;
+
             Swal.fire({
                 title: '¡Bienvenido!',
                 text: 'Inicio de sesión con Google exitoso.',
@@ -18,8 +26,15 @@ async function handleGoogleCredentialResponse(response) {
                 showConfirmButton: false,
                 timerProgressBar: true
             }).then(() => {
-                window.location.reload();
+                // Redirigir según el rol
+                if (userRole === 'admin') {
+                    window.location.href = '/admin/admin'; // Redirige al admin
+                } else {
+                    window.location.reload(); // Recarga la página para el usuario normal
+                }
             });
+            // --- FIN DEL CÓDIGO AÑADIDO ---
+            
         } else {
             Swal.fire('Error', data.message || 'No se pudo iniciar sesión con Google.', 'error');
         }
