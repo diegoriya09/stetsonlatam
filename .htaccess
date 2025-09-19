@@ -40,6 +40,9 @@ RewriteRule ^admin/export_report$ /admin/export_report.php [NC,L]
 
 RewriteRule ^php/google_signin$ /php/google_signin.php [NC,L]
 
+# --- NUEVA REGLA PARA RESETEAR CONTRASEÑA ---
+RewriteRule ^reset-password$ /reset-password.php [NC,L]
+
 # Regla para pasar el Header de Autorización a PHP
 RewriteCond %{HTTP:Authorization} .
 RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
