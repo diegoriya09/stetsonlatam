@@ -53,6 +53,7 @@ if (!empty($categorias_flat)) {
 <head>
   <meta charset="UTF-8">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 
 

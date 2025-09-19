@@ -27,33 +27,33 @@ if (empty($_SESSION['csrf_token'])) {
         <div class="relative w-full max-w-md mx-auto bg-white rounded-2xl shadow-2xl p-8 animate-fade-in">
             <button type="button" class="close absolute top-4 right-4 text-3xl text-[#b0a99f] hover:text-[#3f1e1f] transition-colors" style="background:none;border:none;cursor:pointer;z-index:10001;">&times;</button>
             <h1 class="text-[#3c3737] text-2xl font-extrabold text-center mb-2">Bienvenido a Stetson Latam</h1>
-                    <div class="flex justify-center mb-6">
-                        <button id="switch-to-login" class="px-4 py-2 font-bold border-b-2 border-[#3c3737] text-[#3c3737] focus:outline-none transition-colors">Iniciar sesión</button>
-                        <button id="switch-to-register" class="px-4 py-2 font-bold border-b-2 border-transparent text-[#7a7671] focus:outline-none transition-colors">Registrarse</button>
-                    </div>
-                    <script>
-                        // Corrige el subrayado de la pestaña activa
-                        document.addEventListener('DOMContentLoaded', function() {
-                            const loginTab = document.getElementById('switch-to-login');
-                            const registerTab = document.getElementById('switch-to-register');
-                            const loginForm = document.getElementById('login-form');
-                            const registerForm = document.getElementById('register-form');
-                            if (loginTab && registerTab && loginForm && registerForm) {
-                                loginTab.addEventListener('click', function() {
-                                    loginTab.classList.add('border-[#3c3737]', 'text-[#3c3737]');
-                                    loginTab.classList.remove('border-transparent', 'text-[#3c3737]');
-                                    registerTab.classList.remove('border-[#3c3737]', 'text-[#3c3737]');
-                                    registerTab.classList.add('border-transparent', 'text-[#3c3737]');
-                                });
-                                registerTab.addEventListener('click', function() {
-                                    registerTab.classList.add('border-[#3c3737]', 'text-[#3c3737]');
-                                    registerTab.classList.remove('border-transparent', 'text-[#3c3737]');
-                                    loginTab.classList.remove('border-[#3c3737]', 'text-[#3c3737]');
-                                    loginTab.classList.add('border-transparent', 'text-[#3c3737]');
-                                });
-                            }
+            <div class="flex justify-center mb-6">
+                <button id="switch-to-login" class="px-4 py-2 font-bold border-b-2 border-[#3c3737] text-[#3c3737] focus:outline-none transition-colors">Iniciar sesión</button>
+                <button id="switch-to-register" class="px-4 py-2 font-bold border-b-2 border-transparent text-[#7a7671] focus:outline-none transition-colors">Registrarse</button>
+            </div>
+            <script>
+                // Corrige el subrayado de la pestaña activa
+                document.addEventListener('DOMContentLoaded', function() {
+                    const loginTab = document.getElementById('switch-to-login');
+                    const registerTab = document.getElementById('switch-to-register');
+                    const loginForm = document.getElementById('login-form');
+                    const registerForm = document.getElementById('register-form');
+                    if (loginTab && registerTab && loginForm && registerForm) {
+                        loginTab.addEventListener('click', function() {
+                            loginTab.classList.add('border-[#3c3737]', 'text-[#3c3737]');
+                            loginTab.classList.remove('border-transparent', 'text-[#3c3737]');
+                            registerTab.classList.remove('border-[#3c3737]', 'text-[#3c3737]');
+                            registerTab.classList.add('border-transparent', 'text-[#3c3737]');
                         });
-                    </script>
+                        registerTab.addEventListener('click', function() {
+                            registerTab.classList.add('border-[#3c3737]', 'text-[#3c3737]');
+                            registerTab.classList.remove('border-transparent', 'text-[#3c3737]');
+                            loginTab.classList.remove('border-[#3c3737]', 'text-[#3c3737]');
+                            loginTab.classList.add('border-transparent', 'text-[#3c3737]');
+                        });
+                    }
+                });
+            </script>
             <!-- Login Form -->
             <div id="login-form" style="display:block;">
                 <form id="login-form-inner" autocomplete="on" class="space-y-4">
@@ -61,6 +61,21 @@ if (empty($_SESSION['csrf_token'])) {
                     <input name="password" type="password" placeholder="Contraseña" required class="w-full rounded-lg border border-[#e2e1df] bg-white px-4 py-3 text-base text-[#3c3737] placeholder-[#3c3737] focus:border-[#3f1e1f] focus:ring-2 focus:ring-[#3f1e1f] transition" />
                     <button type="submit" class="w-full rounded-lg bg-[#3f1e1f] text-white font-bold py-3 mt-2 hover:bg-[#2c1516] transition">Iniciar sesión</button>
                 </form>
+                <div class="google-signin-container" style="margin-top: 15px; display: flex; justify-content: center;">
+                    <div id="g_id_onload"
+                        data-client_id="TU_ID_DE_CLIENTE.apps.googleusercontent.com" data-callback="handleGoogleCredentialResponse"
+                        data-login_uri="https://stetsonlatam.com"
+                        data-auto_select="false">
+                    </div>
+                    <div class="g_id_signin"
+                        data-type="standard"
+                        data-size="large"
+                        data-theme="outline"
+                        data-text="sign_in_with"
+                        data-shape="rectangular"
+                        data-logo_alignment="left">
+                    </div>
+                </div>
             </div>
             <!-- Register Form -->
             <div id="register-form" style="display:none;">

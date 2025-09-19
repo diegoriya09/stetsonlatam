@@ -257,4 +257,37 @@ document.addEventListener("DOMContentLoaded", () => {
         notificationWrapper.style.display = 'block';
     }
 
+    async function handleGoogleCredentialResponse(response) {
+        // La 'response.credential' es un Token JWT que nos da Google
+        try {
+            const res = await fetch('/php/auth/google_signin.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ credential: response.credential })
+            });
+
+            const data = await res.json();
+
+            if (data.success && data.token) {
+                // ¡Éxito! El backend nos devolvió NUESTRO propio token JWT
+                localStorage.setItem('jwt', data.token);
+                Swal.fire({
+                    title: '¡Bienvenido!',
+                    text: 'Inicio de sesión con Google exitoso.',
+                    icon: 'success',
+                    timer: 2000,
+                    showConfirmButton: false
+                }).then(() => {
+                    window.location.reload(); // Recargar la página para actualizar el estado
+                });
+            } else {
+                Swal.fire('Error', data.message || 'No se pudo iniciar sesión con Google.', 'error');
+            }
+        } catch (error) {
+            Swal.fire('Error', 'Ocurrió un problema de conexión.', 'error');
+        }
+    }
+
 });
