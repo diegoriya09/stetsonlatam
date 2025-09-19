@@ -61,6 +61,15 @@ if (empty($_SESSION['csrf_token'])) {
                     <input name="password" type="password" placeholder="Contraseña" required class="w-full rounded-lg border border-[#e2e1df] bg-white px-4 py-3 text-base text-[#3c3737] placeholder-[#3c3737] focus:border-[#3f1e1f] focus:ring-2 focus:ring-[#3f1e1f] transition" />
                     <button type="submit" class="w-full rounded-lg bg-[#3f1e1f] text-white font-bold py-3 mt-2 hover:bg-[#2c1516] transition">Iniciar sesión</button>
                 </form>
+                <a href="#" id="forgot-password-link" style="text-align:center; display:block; margin-top:10px;">¿Olvidaste tu contraseña?</a>
+                <div id="forgot-password-form" style="display:none;">
+                    <p style="text-align:center; margin-bottom:15px;">Introduce tu correo y te enviaremos un enlace para recuperar tu contraseña.</p>
+                    <form id="forgot-password-form-inner">
+                        <input name="email" type="email" placeholder="Email" required class="..." />
+                        <button type="submit">Enviar Enlace</button>
+                        <a href="#" id="back-to-login-link" style="text-align:center; display:block; margin-top:10px;">Volver a Iniciar Sesión</a>
+                    </form>
+                </div>
                 <div class="google-signin-container" style="margin-top: 15px; display: flex; justify-content: center;">
                     <div id="g_id_onload"
                         data-client_id="282246016442-c80i2g1c3ls9fn43okgpq7jr3dck06ij.apps.googleusercontent.com" data-callback="handleGoogleCredentialResponse"

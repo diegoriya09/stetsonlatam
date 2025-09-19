@@ -165,6 +165,35 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    const forgotPasswordLink = document.getElementById('forgot-password-link');
+    const backToLoginLink = document.getElementById('back-to-login-link');
+    const loginFormSection = document.getElementById('login-form');
+    const forgotFormSection = document.getElementById('forgot-password-form');
+    const forgotForm = document.getElementById('forgot-password-form-inner');
+
+    forgotPasswordLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        loginFormSection.style.display = 'none';
+        forgotFormSection.style.display = 'block';
+    });
+    backToLoginLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        forgotFormSection.style.display = 'none';
+        loginFormSection.style.display = 'block';
+    });
+
+    forgotForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData(forgotForm);
+        const res = await fetch('/php/request_password_reset', { method: 'POST', body: formData });
+        const data = await res.json();
+        if (data.success) {
+            Swal.fire('¡Revisa tu correo!', data.message, 'success');
+        } else {
+            Swal.fire('Error', data.message, 'error');
+        }
+    });
+
     // --- Lógica de Sesión (Logout, Mostrar/Ocultar, etc.) ---
     if (logoutBtn) {
         logoutBtn.style.display = token ? 'inline-block' : 'none';
