@@ -693,26 +693,26 @@ if ($view === 'stock') {
             // --- LÓGICA CORREGIDA PARA GOOGLE ANALYTICS ---
             if (document.getElementById('ga-container')) {
 
-                const CLIENT_ID = '282246016442-c80i2g1c3ls9fn43okgpq7jr3dck06ij.apps.googleusercontent.com'; // <-- PEGA TU ID DE CLIENTE AQUÍ
-                const PROPERTY_ID = '505821510'; // <-- PEGA EL ID DE TU PROPIEDAD DE GA4 AQUÍ
+                const CLIENT_ID = '282246016442-c80i2g1c3ls9fn43okgpq7jr3dck06ij.apps.googleusercontent.com';
+                const PROPERTY_ID = '505821510';
+                const API_KEY = 'AIzaSyCDdhdm97FumsspWsBESskjQFvPHBl_6MY';
 
                 let tokenClient;
-
-                function initGapiClient() {
-                    gapi.client.init({
-                        'apiKey': 'AIzaSyCDdhdm97FumsspWsBESskjQFvPHBl_6MY', 
-                        'discoveryDocs': ['https://analyticsdata.googleapis.com/$discovery/rest?version=v1beta'],
-                    }).then(() => {
-                        console.log('GAPI client initialized.');
-                        // Llama a la función para mostrar los reportes si ya hay un token
-                        if (gapi.client.getToken() !== null) {
-                            displayReports();
-                        }
-                    });
-                }
+                const gapiScript = document.createElement('script');
+                const gisScript = document.createElement('script');
+                const signInButton = document.getElementById('ga-signin-button');
 
                 function gapiLoaded() {
-                    gapi.load('client', initGapiClient);
+                    gapi.load('client', function() {
+                        gapi.client.init({
+                            'apiKey': API_KEY,
+                            'discoveryDocs': ['https://analyticsdata.googleapis.com/$discovery/rest?version=v1beta'],
+                        }).then(() => {
+                            if (gapi.client.getToken() !== null) {
+                                displayReports(); // Si ya hay token, mostrar reportes
+                            }
+                        });
+                    });
                 }
 
                 function gisLoaded() {
@@ -721,49 +721,45 @@ if ($view === 'stock') {
                         scope: 'https://www.googleapis.com/auth/analytics.readonly',
                         callback: (tokenResponse) => {
                             if (tokenResponse && tokenResponse.access_token) {
-                                document.getElementById('ga-signin-button').style.display = 'none';
+                                signInButton.style.display = 'none';
                                 document.getElementById('ga-charts').style.display = 'flex';
                                 displayReports();
                             }
                         },
                     });
-                    // Mostrar botón si no hay token
                     if (gapi.client.getToken() === null) {
-                        document.getElementById('ga-signin-button').style.display = 'block';
+                        signInButton.style.display = 'block'; // Mostrar botón si no hay token
                     }
                 }
 
                 function handleAuthClick() {
-                    if (gapi.client.getToken() === null) {
+                    if (tokenClient) {
                         tokenClient.requestAccessToken({
                             prompt: 'consent'
-                        });
-                    } else {
-                        tokenClient.requestAccessToken({
-                            prompt: ''
                         });
                     }
                 }
 
-                function displayReports() {
-                    gapi.client.analyticsdata.properties.runReport({
-                        property: `properties/${PROPERTY_ID}`,
-                        resource: {
-                            dateRanges: [{
-                                "startDate": "28daysAgo",
-                                "endDate": "today"
-                            }],
-                            dimensions: [{
-                                "name": "date"
-                            }],
-                            metrics: [{
-                                "name": "activeUsers"
-                            }, {
-                                "name": "sessions"
-                            }]
-                        }
-                    }).then(function(response) {
-                        // Procesar la respuesta y dibujar los gráficos con Chart.js
+                async function displayReports() {
+                    try {
+                        const response = await gapi.client.analyticsdata.properties.runReport({
+                            property: `properties/${PROPERTY_ID}`,
+                            resource: {
+                                dateRanges: [{
+                                    "startDate": "28daysAgo",
+                                    "endDate": "today"
+                                }],
+                                dimensions: [{
+                                    "name": "date"
+                                }],
+                                metrics: [{
+                                    "name": "activeUsers"
+                                }, {
+                                    "name": "sessions"
+                                }]
+                            }
+                        });
+
                         const result = response.result;
                         const labels = result.rows.map(row => row.dimensionValues[0].value.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3'));
                         const usersData = result.rows.map(row => parseInt(row.metricValues[0].value, 10));
@@ -772,15 +768,18 @@ if ($view === 'stock') {
                         renderGAChart('users-chart', 'Usuarios', labels, usersData);
                         renderGAChart('sessions-chart', 'Sesiones', labels, sessionsData);
 
-                    }).catch(function(err) {
+                    } catch (err) {
                         console.error("Error al obtener datos de GA4:", err);
-                    });
+                        document.getElementById('ga-charts').innerHTML = `<p style="color:red;">Error: ${err.result.error.message}</p>`;
+                    }
                 }
 
                 function renderGAChart(containerId, label, labels, data) {
-                    const ctx = document.getElementById(containerId);
-                    if (!ctx) return;
-                    new Chart(ctx.getContext('2d'), {
+                    const canvas = document.getElementById(containerId);
+                    if (!canvas) return;
+                    // Damos un tamaño fijo al contenedor del canvas para que se vea bien
+                    canvas.parentElement.style.width = '45%';
+                    new Chart(canvas.getContext('2d'), {
                         type: 'line',
                         data: {
                             labels: labels,
@@ -790,24 +789,23 @@ if ($view === 'stock') {
                                 borderColor: '#3c3737',
                                 tension: 0.1
                             }]
+                        },
+                        options: {
+                            responsive: true
                         }
                     });
                 }
 
-                // Cargar las librerías necesarias
-                const gapiScript = document.createElement('script');
                 gapiScript.src = 'https://apis.google.com/js/api.js';
                 gapiScript.onload = gapiLoaded;
                 document.body.appendChild(gapiScript);
 
-                const gisScript = document.createElement('script');
                 gisScript.src = 'https://accounts.google.com/gsi/client';
                 gisScript.onload = gisLoaded;
                 document.body.appendChild(gisScript);
 
                 // Asignar el evento al botón
-                const signInButton = document.getElementById('ga-signin-button');
-                signInButton.innerHTML = '<button type="button">Autorizar Acceso a Google Analytics</button>';
+                signInButton.innerHTML = '<button type="button" style="padding: 8px 15px; background: #4285F4; color: white; border-radius: 5px; border: none; cursor: pointer;">Autorizar Acceso a Google Analytics</button>';
                 signInButton.onclick = handleAuthClick;
             }
 
