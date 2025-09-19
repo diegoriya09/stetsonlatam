@@ -698,14 +698,22 @@ if ($view === 'stock') {
                 const API_KEY = 'AIzaSyCDdhdm97FumsspWsBESskjQFvPHBl_6MY';
 
                 let tokenClient;
-                const gapiScript = document.createElement('script');
-                const gisScript = document.createElement('script');
                 const signInButton = document.getElementById('ga-signin-button');
                 const chartsContainer = document.getElementById('ga-charts');
 
-                function gapiLoaded() {
-                    gapi.load('client', initializeGapiClient);
-                }
+                const gapiScript = document.createElement('script');
+                gapiScript.src = 'https://apis.google.com/js/api.js';
+                gapiScript.async = true;
+                gapiScript.defer = true;
+                gapiScript.onload = () => gapi.load('client', initializeGapiClient);
+                document.body.appendChild(gapiScript);
+
+                const gisScript = document.createElement('script');
+                gisScript.src = 'https://accounts.google.com/gsi/client';
+                gisScript.async = true;
+                gisScript.defer = true;
+                gisScript.onload = initializeGisClient;
+                document.body.appendChild(gisScript);
 
                 function initializeGapiClient() {
                     gapi.client.init({
@@ -718,7 +726,7 @@ if ($view === 'stock') {
                     });
                 }
 
-                function gisLoaded() {
+                function initializeGisClient() {
                     tokenClient = google.accounts.oauth2.initTokenClient({
                         client_id: CLIENT_ID,
                         scope: 'https://www.googleapis.com/auth/analytics.readonly',
@@ -791,10 +799,6 @@ if ($view === 'stock') {
                     const canvas = document.getElementById(containerId);
                     if (!canvas) return;
 
-                    const chartContainer = canvas.parentElement;
-                    chartContainer.style.width = '48%';
-                    chartContainer.style.minWidth = '300px';
-
                     new Chart(canvas.getContext('2d'), {
                         type: 'line',
                         data: {
@@ -817,19 +821,6 @@ if ($view === 'stock') {
                         }
                     });
                 }
-
-                // Cargar librerías
-                gapiScript.src = 'https://apis.google.com/js/api.js';
-                gapiScript.async = true;
-                gapiScript.defer = true;
-                gapiScript.onload = gapiLoaded;
-                document.body.appendChild(gapiScript);
-
-                gisScript.src = 'https://accounts.google.com/gsi/client';
-                gisScript.async = true;
-                gisScript.defer = true;
-                gisScript.onload = gisLoaded;
-                document.body.appendChild(gisScript);
 
                 signInButton.innerHTML = '<button type="button" style="padding: 8px 15px; background: #4285F4; color: white; border-radius: 5px; border: none; cursor: pointer;">Autorizar Acceso a Google Analytics</button>';
                 signInButton.onclick = handleAuthClick;
