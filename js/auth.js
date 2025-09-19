@@ -26,7 +26,7 @@ async function handleGoogleCredentialResponse(response) {
             }).then(() => {
                 // Redirigir según el rol
                 if (userRole === 'admin') {
-                    window.location.href = 'admin'; // Redirige al admin
+                    window.location.href = '../admin/admin'; // Redirige al admin
                 } else {
                     window.location.reload(); // Recarga la página para el usuario normal
                 }
@@ -124,7 +124,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         icon: 'success', timer: 1500, showConfirmButton: false
                     }).then(() => {
                         if (userRole === 'admin') {
-                            window.location.href = 'admin';
+                            window.location.href = '../admin/admin';
                         } else {
                             window.location.reload();
                         }
