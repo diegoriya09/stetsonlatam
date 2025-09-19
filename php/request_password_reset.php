@@ -49,7 +49,7 @@ if ($user) {
         $mail->Port       = 465;
 
         // Destinatarios
-        $mail->setFrom('no-reply@stetsonlatam.com', 'Stetson Latam');
+        $mail->setFrom('stetsonlatam@stetsonlatam.com', 'Stetson Latam');
         $mail->addAddress($email);
 
         // Contenido
