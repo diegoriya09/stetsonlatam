@@ -45,7 +45,7 @@ if ($user) {
         $mail->SMTPAuth   = true;
         $mail->Username   = 'stetsonlatam@stetsonlatam.com';
         $mail->Password   = 'Dinalsom1977@';
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
         $mail->Port       = 465;
 
         // Destinatarios
@@ -54,6 +54,7 @@ if ($user) {
 
         // Contenido
         $mail->isHTML(true);
+        $mail->CharSet = 'UTF-8';
         $mail->Subject = 'Recuperación de Contraseña - Stetson Latam';
         $mail->Body    = "Hola,<br><br>Hemos recibido una solicitud para restablecer tu contraseña. Haz clic en el siguiente enlace para continuar:<br><br><a href='{$reset_link}'>Restablecer Contraseña</a><br><br>Si no solicitaste esto, puedes ignorar este correo. El enlace expirará en 1 hora.";
         

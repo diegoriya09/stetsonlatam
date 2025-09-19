@@ -70,6 +70,7 @@ function openAuthModal(showRegister = false) {
 document.addEventListener("DOMContentLoaded", () => {
     const token = localStorage.getItem('jwt');
     const modal = document.getElementById('user-modal');
+    const logoutBtn = document.getElementById('logout-btn');
 
     if (!modal) return; // Si no hay modal en la página, no hacer nada
 
@@ -126,7 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     const logoutBtn = document.getElementById('logout-btn');
                     if (logoutBtn) logoutBtn.style.display = 'inline-flex';
-                    
+
                     const payload = JSON.parse(atob(result.token.split('.')[1]));
                     const userRole = payload.data.role;
 
