@@ -540,6 +540,31 @@ if ($view === 'stock') {
     </div>
 
     <script>
+        function showOrderDetails(orderId) {
+            const modal = document.querySelector('.ordermodal');
+            const detailsDiv = document.getElementById('admin-order-details');
+
+            fetch(`/php/order/get_detail_order${orderId}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success && data.details.length > 0) {
+                        let html = "<ul>";
+                        data.details.forEach(item => {
+                            html += `<li>${item.name} - Cant: ${item.cantidad} - Precio: $${item.price} - Talla: ${item.size_nombre || "N/A"} - Color: ${item.color_nombre || "N/A"}</li>`;
+                        });
+                        html += "</ul>";
+                        detailsDiv.innerHTML = html;
+                    } else {
+                        detailsDiv.innerHTML = "<p>No se encontraron productos para este pedido.</p>";
+                    }
+                    modal.classList.remove("hidden");
+                })
+                .catch(() => {
+                    detailsDiv.innerHTML = "<p>Error al cargar los detalles.</p>";
+                    modal.classList.remove("hidden");
+                });
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
 
             // --- LÓGICA PARA REPORTES Y EXPORTACIÓN ---
@@ -651,31 +676,6 @@ if ($view === 'stock') {
                 });
             }
 
-            function showOrderDetails(orderId) {
-                const modal = document.querySelector('.ordermodal');
-                const detailsDiv = document.getElementById('admin-order-details');
-
-                fetch(`/php/order/get_detail_order${orderId}`)
-                    .then(res => res.json())
-                    .then(data => {
-                        if (data.success && data.details.length > 0) {
-                            let html = "<ul>";
-                            data.details.forEach(item => {
-                                html += `<li>${item.name} - Cant: ${item.cantidad} - Precio: $${item.price} - Talla: ${item.size_nombre || "N/A"} - Color: ${item.color_nombre || "N/A"}</li>`;
-                            });
-                            html += "</ul>";
-                            detailsDiv.innerHTML = html;
-                        } else {
-                            detailsDiv.innerHTML = "<p>No se encontraron productos para este pedido.</p>";
-                        }
-                        modal.classList.remove("hidden");
-                    })
-                    .catch(() => {
-                        detailsDiv.innerHTML = "<p>Error al cargar los detalles.</p>";
-                        modal.classList.remove("hidden");
-                    });
-            }
-
             const ordermodal = document.querySelector(".ordermodal");
             if (ordermodal) {
                 const closeBtn = document.querySelector(".close-modal-order");
@@ -687,52 +687,6 @@ if ($view === 'stock') {
                 });
             }
 
-            document.addEventListener('submit', function(e) {
-                if (e.target.matches('.reply-form')) {
-                    e.preventDefault();
-                    const form = e.target;
-                    const reviewId = form.dataset.reviewId;
-                    const replyText = form.querySelector('textarea[name="reply_text"]').value;
-                    const jwt = localStorage.getItem('jwt'); // O usa la sesión de admin si es necesario
-
-                    fetch('reply_to_review', { // Asume que reply_to_review.php está en la misma carpeta /admin/
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                // Si tu script de respuesta usa JWT, descomenta la siguiente línea
-                                // 'Authorization': 'Bearer ' + jwt 
-                            },
-                            body: JSON.stringify({
-                                review_id: reviewId,
-                                reply_text: replyText
-                            })
-                        })
-                        .then(res => res.json())
-                        .then(data => {
-                            if (data.success) {
-                                Swal.fire('¡Éxito!', 'Respuesta enviada correctamente.', 'success');
-                                // Actualizar la UI sin recargar la página
-                                const replyCell = document.getElementById(`reply-cell-${reviewId}`);
-                                replyCell.innerHTML = `
-                            <div class="existing-reply">
-                                <p>${replyText}</p>
-                            </div>
-                        `;
-                            } else {
-                                Swal.fire('Error', data.message || 'No se pudo enviar la respuesta.', 'error');
-                            }
-                        })
-                        .catch(err => {
-                            console.error('Error:', err);
-                            Swal.fire('Error', 'Ocurrió un problema de conexión.', 'error');
-                        });
-                }
-            });
-        });
-    </script>
-    <script src="https://apis.google.com/js/api.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
             // Solo ejecutar si estamos en la vista de reportes
             if (document.getElementById('ga-container')) {
                 gapi.load('auth2', function() {
@@ -796,8 +750,51 @@ if ($view === 'stock') {
                     });
                 });
             }
+
+            document.addEventListener('submit', function(e) {
+                if (e.target.matches('.reply-form')) {
+                    e.preventDefault();
+                    const form = e.target;
+                    const reviewId = form.dataset.reviewId;
+                    const replyText = form.querySelector('textarea[name="reply_text"]').value;
+                    const jwt = localStorage.getItem('jwt'); // O usa la sesión de admin si es necesario
+
+                    fetch('reply_to_review', { // Asume que reply_to_review.php está en la misma carpeta /admin/
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                // Si tu script de respuesta usa JWT, descomenta la siguiente línea
+                                // 'Authorization': 'Bearer ' + jwt 
+                            },
+                            body: JSON.stringify({
+                                review_id: reviewId,
+                                reply_text: replyText
+                            })
+                        })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.success) {
+                                Swal.fire('¡Éxito!', 'Respuesta enviada correctamente.', 'success');
+                                // Actualizar la UI sin recargar la página
+                                const replyCell = document.getElementById(`reply-cell-${reviewId}`);
+                                replyCell.innerHTML = `
+                            <div class="existing-reply">
+                                <p>${replyText}</p>
+                            </div>
+                        `;
+                            } else {
+                                Swal.fire('Error', data.message || 'No se pudo enviar la respuesta.', 'error');
+                            }
+                        })
+                        .catch(err => {
+                            console.error('Error:', err);
+                            Swal.fire('Error', 'Ocurrió un problema de conexión.', 'error');
+                        });
+                }
+            });
         });
     </script>
+    <script src="https://apis.google.com/js/api.js"></script>
 </body>
 
 </html>
