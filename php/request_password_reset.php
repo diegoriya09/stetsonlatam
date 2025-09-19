@@ -41,12 +41,12 @@ if ($user) {
     try {
         // Configuración del servidor SMTP (reemplaza con tus datos)
         $mail->isSMTP();
-        $mail->Host       = 'smtp.example.com'; // Servidor SMTP de tu hosting
+        $mail->Host       = 'lin409.loading.es'; // Servidor SMTP de tu hosting
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'tu_email@example.com';
-        $mail->Password   = 'tu_contraseña';
+        $mail->Username   = 'stetsonlatam@stetsonlatam.com';
+        $mail->Password   = 'Dinalsom1977@';
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port       = 587;
+        $mail->Port       = 465;
 
         // Destinatarios
         $mail->setFrom('no-reply@stetsonlatam.com', 'Stetson Latam');
