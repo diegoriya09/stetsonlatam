@@ -7,33 +7,26 @@ async function handleGoogleCredentialResponse(response) {
             body: JSON.stringify({ credential: response.credential })
         });
         const data = await res.json();
-
         if (data.success && data.token) {
-
             localStorage.setItem('jwt', data.token);
 
+            // --- AÑADIDO: Mostrar el botón de logout ---
             const logoutBtn = document.getElementById('logout-btn');
-            if (logoutBtn) logoutBtn.style.display = 'inline-flex';
+            if (logoutBtn) logoutBtn.style.display = 'inline-flex'; // Usamos inline-flex para centrar el ícono
+            // --- FIN ---
 
-            const payload = JSON.parse(atob(jwt.split('.')[1]));
+            const payload = JSON.parse(atob(data.token.split('.')[1]));
             const userRole = payload.data.role;
-
             Swal.fire({
-                title: '¡Bienvenido!',
-                text: 'Inicio de sesión con Google exitoso.',
-                icon: 'success',
-                timer: 1500,
-                showConfirmButton: false,
-                timerProgressBar: true
+                title: '¡Bienvenido!', text: 'Inicio de sesión con Google exitoso.',
+                icon: 'success', timer: 1500, showConfirmButton: false, timerProgressBar: true
             }).then(() => {
-                // Redirigir según el rol
                 if (userRole === 'admin') {
-                    window.location.href = '../admin/admin'; // Redirige al admin
+                    window.location.href = '../admin/admin';
                 } else {
-                    window.location.reload(); // Recarga la página para el usuario normal
+                    window.location.reload();
                 }
             });
-
         } else {
             Swal.fire('Error', data.message || 'No se pudo iniciar sesión con Google.', 'error');
         }
