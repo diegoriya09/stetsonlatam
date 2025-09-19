@@ -97,6 +97,7 @@ if ($view === 'stock') {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://apis.google.com/js/api.js"></script>
     <style>
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
@@ -492,9 +493,11 @@ if ($view === 'stock') {
         <?php endif; ?>
         <?php if ($view === 'reports'): ?>
             <h2>Reporte de Tráfico (Google Analytics)</h2>
-            <div id="ga-container" style="margin-bottom: 40px;">
-                <div id="ga-signin-button"></div>
-                <div id="ga-charts" style="display:none; display: flex; gap: 20px; justify-content: center;">
+            <div id="ga-container" style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 40px; text-align: center;">
+                <p>Para ver los datos, por favor, autoriza el acceso a tu cuenta de Google Analytics.</p>
+                <div id="ga-signin-button" style="margin-top: 15px; display: inline-block;"></div>
+
+                <div id="ga-charts" style="display:none; flex-wrap: wrap; gap: 20px; justify-content: center; margin-top: 20px;">
                     <div id="users-chart"></div>
                     <div id="sessions-chart"></div>
                 </div>
@@ -691,10 +694,10 @@ if ($view === 'stock') {
             if (document.getElementById('ga-container')) {
                 gapi.load('auth2', function() {
                     gapi.auth2.init({
+                        // PEGA AQUÍ TU ID DE CLIENTE OBTENIDO DE GOOGLE CLOUD
                         client_id: '282246016442-c80i2g1c3ls9fn43okgpq7jr3dck06ij.apps.googleusercontent.com',
                     });
                 });
-
                 gapi.load('analytics', function() {
                     const authorizeButton = document.getElementById('ga-signin-button');
                     const chartsContainer = document.getElementById('ga-charts');
@@ -703,6 +706,10 @@ if ($view === 'stock') {
                         container: 'ga-signin-button'
                     });
 
+                    // Renderizar el selector de vistas de GA
+                    viewSelector.execute();
+
+                    // Cuando el admin selecciona una vista, se disparan los gráficos
                     viewSelector.on('change', function(ids) {
                         if (ids) {
                             authorizeButton.style.display = 'none';
@@ -721,11 +728,10 @@ if ($view === 'stock') {
                                     'type': 'LINE',
                                     'options': {
                                         'width': '100%',
-                                        'title': 'Usuarios'
+                                        'title': 'Usuarios (Últimos 30 días)'
                                     }
                                 }
                             });
-
                             const dataChart2 = new gapi.analytics.googleCharts.DataChart({
                                 query: {
                                     'ids': ids,
@@ -739,7 +745,7 @@ if ($view === 'stock') {
                                     'type': 'LINE',
                                     'options': {
                                         'width': '100%',
-                                        'title': 'Sesiones'
+                                        'title': 'Sesiones (Últimos 30 días)'
                                     }
                                 }
                             });
@@ -750,7 +756,6 @@ if ($view === 'stock') {
                     });
                 });
             }
-
             document.addEventListener('submit', function(e) {
                 if (e.target.matches('.reply-form')) {
                     e.preventDefault();
@@ -794,7 +799,7 @@ if ($view === 'stock') {
             });
         });
     </script>
-    <script src="https://apis.google.com/js/api.js"></script>
+
 </body>
 
 </html>
