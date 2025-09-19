@@ -61,14 +61,8 @@ if (empty($_SESSION['csrf_token'])) {
                     <input name="password" type="password" placeholder="Contraseña" required class="w-full rounded-lg border border-[#e2e1df] bg-white px-4 py-3 text-base text-[#3c3737] placeholder-[#3c3737] focus:border-[#3f1e1f] focus:ring-2 focus:ring-[#3f1e1f] transition" />
                     <button type="submit" class="w-full rounded-lg bg-[#3f1e1f] text-white font-bold py-3 mt-2 hover:bg-[#2c1516] transition">Iniciar sesión</button>
                 </form>
-                <a href="#" id="forgot-password-link" style="text-align:center; display:block; margin-top:10px;">¿Olvidaste tu contraseña?</a>
-                <div id="forgot-password-form" style="display:none;">
-                    <p style="text-align:center; margin-bottom:15px;">Introduce tu correo y te enviaremos un enlace para recuperar tu contraseña.</p>
-                    <form id="forgot-password-form-inner">
-                        <input name="email" type="email" placeholder="Email" required class="..." />
-                        <button type="submit">Enviar Enlace</button>
-                        <a href="#" id="back-to-login-link" style="text-align:center; display:block; margin-top:10px;">Volver a Iniciar Sesión</a>
-                    </form>
+                <div class="text-center mt-4">
+                    <a href="#" id="forgot-password-link" class="text-sm text-[#3f1e1f] hover:underline">¿Olvidaste tu contraseña?</a>
                 </div>
                 <div class="google-signin-container" style="margin-top: 15px; display: flex; justify-content: center;">
                     <div id="g_id_onload"
@@ -94,6 +88,16 @@ if (empty($_SESSION['csrf_token'])) {
                     <input name="password" type="password" placeholder="Contraseña" required class="w-full rounded-lg border border-[#e2e1df] bg-white px-4 py-3 text-base text-[#3c3737] placeholder-[#3c3737] focus:border-[#3f1e1f] focus:ring-2 focus:ring-[#3f1e1f] transition" />
                     <button type="submit" class="w-full rounded-lg bg-[#3f1e1f] text-white font-bold py-3 mt-2 hover:bg-[#2c1516] transition">Registrar</button>
                 </form>
+            </div>
+            <div id="forgot-password-form" style="display:none;">
+                <p class="text-center text-gray-600 mb-6">Introduce tu correo y te enviaremos un enlace para recuperar tu contraseña.</p>
+                <form id="forgot-password-form-inner" class="space-y-4">
+                    <input name="email" type="email" placeholder="Email" required class="w-full rounded-lg border border-[#e2e1df] bg-white px-4 py-3 text-base text-[#3c3737] placeholder-[#3c3737] focus:border-[#3f1e1f] focus:ring-2 focus:ring-[#3f1e1f] transition" />
+                    <button type="submit" class="w-full rounded-lg bg-[#3f1e1f] text-white font-bold py-3 mt-2 hover:bg-[#2c1516] transition">Enviar Enlace de Recuperación</button>
+                </form>
+                <div class="text-center mt-4">
+                    <a href="#" id="back-to-login-link" class="text-sm text-[#3f1e1f] hover:underline">Volver a Iniciar Sesión</a>
+                </div>
             </div>
         </div>
     </div>
