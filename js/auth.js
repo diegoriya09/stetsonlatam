@@ -260,7 +260,7 @@ document.addEventListener("DOMContentLoaded", () => {
     async function handleGoogleCredentialResponse(response) {
         // La 'response.credential' es un Token JWT que nos da Google
         try {
-            const res = await fetch('/php/google_signin', {
+            const res = await fetch('php/google_signin', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

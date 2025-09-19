@@ -63,7 +63,7 @@ if (empty($_SESSION['csrf_token'])) {
                 </form>
                 <div class="google-signin-container" style="margin-top: 15px; display: flex; justify-content: center;">
                     <div id="g_id_onload"
-                        data-client_id="http://282246016442-c80i2g1c3ls9fn43okgpq7jr3dck06ij.apps.googleusercontent.com" data-callback="handleGoogleCredentialResponse"
+                        data-client_id="282246016442-c80i2g1c3ls9fn43okgpq7jr3dck06ij.apps.googleusercontent.com" data-callback="handleGoogleCredentialResponse"
                         data-login_uri="https://stetsonlatam.com"
                         data-auto_select="false">
                     </div>

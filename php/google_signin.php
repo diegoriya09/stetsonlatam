@@ -17,7 +17,7 @@ if (!$id_token) {
 }
 
 // TU ID DE CLIENTE (el mismo que usaste en el frontend)
-$CLIENT_ID = 'TU_ID_DE_CLIENTE.apps.googleusercontent.com';
+$CLIENT_ID = '282246016442-c80i2g1c3ls9fn43okgpq7jr3dck06ij.apps.googleusercontent.com';
 
 $client = new Google_Client(['client_id' => $CLIENT_ID]);
 $payload = $client->verifyIdToken($id_token);
