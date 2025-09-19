@@ -38,6 +38,8 @@ RewriteRule ^php/user/get_wishlist_status([0-9]+)$ /php/user/get_wishlist_status
 RewriteRule ^admin/get_sales_report$ /admin/get_sales_report.php [NC,L]
 RewriteRule ^admin/export_report$ /admin/export_report.php [NC,L]
 
+RewriteRule ^php/google_signin$ /php/google_signin.php [NC,L]
+
 # Regla para pasar el Header de Autorización a PHP
 RewriteCond %{HTTP:Authorization} .
 RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]

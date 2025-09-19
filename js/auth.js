@@ -1,3 +1,33 @@
+// La función de callback de Google DEBE ser global, así que la dejamos aquí fuera.
+async function handleGoogleCredentialResponse(response) {
+    try {
+        const res = await fetch('/php/google_signin', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ credential: response.credential })
+        });
+        const data = await res.json();
+
+        if (data.success && data.token) {
+            localStorage.setItem('jwt', data.token);
+            Swal.fire({
+                title: '¡Bienvenido!',
+                text: 'Inicio de sesión con Google exitoso.',
+                icon: 'success',
+                timer: 1500,
+                showConfirmButton: false,
+                timerProgressBar: true
+            }).then(() => {
+                window.location.reload();
+            });
+        } else {
+            Swal.fire('Error', data.message || 'No se pudo iniciar sesión con Google.', 'error');
+        }
+    } catch (error) {
+        Swal.fire('Error', 'Ocurrió un problema de conexión.', 'error');
+    }
+}
+
 function openAuthModal(showRegister = false) {
     const modal = document.getElementById('user-modal');
     if (!modal) return;
@@ -75,7 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const formData = new FormData(loginForm);
 
             try {
-                const response = await fetch('../php/login', {
+                const response = await fetch('/php/login', {
                     method: 'POST',
                     body: formData,
                     credentials: 'same-origin'
@@ -128,7 +158,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const formData = new FormData(registerForm);
 
             try {
-                const response = await fetch('php/register', {
+                const response = await fetch('/php/register', {
                     method: 'POST',
                     body: formData,
                     credentials: 'same-origin'
@@ -204,7 +234,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 timerProgressBar: true
             }).then(async () => {
                 // Llamada al backend para destruir la sesión
-                await fetch('php/logout', { method: 'POST' });
+                await fetch('/php/logout', { method: 'POST' });
 
                 // Limpiar JWT del localStorage
                 localStorage.removeItem('jwt');
@@ -256,38 +286,4 @@ document.addEventListener("DOMContentLoaded", () => {
     if (token && notificationWrapper) { // Reutilizamos la variable 'token' que ya está definida en este archivo
         notificationWrapper.style.display = 'block';
     }
-
-    async function handleGoogleCredentialResponse(response) {
-        // La 'response.credential' es un Token JWT que nos da Google
-        try {
-            const res = await fetch('php/google_signin', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ credential: response.credential })
-            });
-
-            const data = await res.json();
-
-            if (data.success && data.token) {
-                // ¡Éxito! El backend nos devolvió NUESTRO propio token JWT
-                localStorage.setItem('jwt', data.token);
-                Swal.fire({
-                    title: '¡Bienvenido!',
-                    text: 'Inicio de sesión con Google exitoso.',
-                    icon: 'success',
-                    timer: 2000,
-                    showConfirmButton: false
-                }).then(() => {
-                    window.location.reload(); // Recargar la página para actualizar el estado
-                });
-            } else {
-                Swal.fire('Error', data.message || 'No se pudo iniciar sesión con Google.', 'error');
-            }
-        } catch (error) {
-            Swal.fire('Error', 'Ocurrió un problema de conexión.', 'error');
-        }
-    }
-
 });
