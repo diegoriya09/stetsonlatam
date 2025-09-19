@@ -68,40 +68,45 @@ function openAuthModal(showRegister = false) {
 document.addEventListener("DOMContentLoaded", () => {
     const token = localStorage.getItem('jwt');
     const modal = document.getElementById('user-modal');
-    const logoutBtn = document.getElementById('logout-btn');
 
-    // --- Lógica del Modal (Cerrar y Cambiar Pestañas) ---
-    if (modal) {
-        const closeBtn = modal.querySelector('.close');
-        if (closeBtn) {
-            closeBtn.addEventListener('click', () => modal.style.display = 'none');
-        }
-        window.addEventListener('click', (e) => {
-            if (e.target == modal) {
-                modal.style.display = 'none';
-            }
-        });
+    if (!modal) return; // Si no hay modal en la página, no hacer nada
 
-        const loginFormSection = document.getElementById('login-form');
-        const registerFormSection = document.getElementById('register-form');
-        const switchToRegister = document.getElementById('switch-to-register');
-        const switchToLogin = document.getElementById('switch-to-login');
+    // --- Lógica del Modal (Cerrar y Cambiar Vistas) ---
+    const closeBtn = modal.querySelector('.close');
+    const loginFormSection = document.getElementById('login-form');
+    const registerFormSection = document.getElementById('register-form');
+    const forgotFormSection = document.getElementById('forgot-password-form');
+    const switchToRegister = document.getElementById('switch-to-register');
+    const switchToLogin = document.getElementById('switch-to-login');
+    const forgotPasswordLink = document.getElementById('forgot-password-link');
+    const backToLoginLink = document.getElementById('back-to-login-link');
 
-        if (switchToRegister) {
-            switchToRegister.addEventListener('click', (e) => {
-                e.preventDefault();
-                loginFormSection.style.display = 'none';
-                registerFormSection.style.display = 'block';
-            });
-        }
-        if (switchToLogin) {
-            switchToLogin.addEventListener('click', (e) => {
-                e.preventDefault();
-                registerFormSection.style.display = 'none';
-                loginFormSection.style.display = 'block';
-            });
-        }
+    if (closeBtn) {
+        closeBtn.addEventListener('click', () => modal.style.display = 'none');
     }
+    window.addEventListener('click', (e) => {
+        if (e.target == modal) modal.style.display = 'none';
+    });
+
+    switchToRegister.addEventListener('click', () => {
+        loginFormSection.style.display = 'none';
+        forgotFormSection.style.display = 'none';
+        registerFormSection.style.display = 'block';
+    });
+    switchToLogin.addEventListener('click', () => {
+        registerFormSection.style.display = 'none';
+        forgotFormSection.style.display = 'none';
+        loginFormSection.style.display = 'block';
+    });
+    forgotPasswordLink.addEventListener('click', () => {
+        loginFormSection.style.display = 'none';
+        registerFormSection.style.display = 'none';
+        forgotFormSection.style.display = 'block';
+    });
+    backToLoginLink.addEventListener('click', () => {
+        forgotFormSection.style.display = 'none';
+        loginFormSection.style.display = 'block';
+    });
 
     // --- Lógica de Formularios ---
     const loginForm = document.getElementById('login-form-inner');
@@ -165,32 +170,20 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    const forgotPasswordLink = document.getElementById('forgot-password-link');
-    const backToLoginLink = document.getElementById('back-to-login-link');
-    const loginFormSection = document.getElementById('login-form');
-    const forgotFormSection = document.getElementById('forgot-password-form');
-
-    forgotPasswordLink.addEventListener('click', (e) => {
-        e.preventDefault();
-        loginFormSection.style.display = 'none';
-        forgotFormSection.style.display = 'block';
-    });
-    backToLoginLink.addEventListener('click', (e) => {
-        e.preventDefault();
-        forgotFormSection.style.display = 'none';
-        loginFormSection.style.display = 'block';
-    });
-
+    // --- NUEVO: Lógica para el formulario de recuperar contraseña ---
     const forgotForm = document.getElementById('forgot-password-form-inner');
     if (forgotForm) {
         forgotForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const formData = new FormData(forgotForm);
             try {
-                const res = await fetch('/php/request_password_reset', { method: 'POST', body: formData }); // RUTA CORREGIDA
+                const res = await fetch('/php/request_password_reset', { method: 'POST', body: formData });
                 const data = await res.json();
                 if (data.success) {
                     Swal.fire('¡Revisa tu correo!', data.message, 'success');
+                    // Volver a la vista de login después de enviar
+                    forgotFormSection.style.display = 'none';
+                    loginFormSection.style.display = 'block';
                 } else {
                     Swal.fire('Error', data.message, 'error');
                 }
