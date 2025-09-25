@@ -230,4 +230,15 @@ document.addEventListener("DOMContentLoaded", () => {
             openAuthModal();
         });
     }
+
+    // Botón Sign Up (Join Stetson Community) también llama a la función global
+    const signUpBtn = document.getElementById('open-user-modal');
+    if (signUpBtn) {
+        signUpBtn.addEventListener('click', () => {
+            if (typeof openAuthModal === 'function') {
+                // El 'true' le indica a la función que muestre la pestaña de registro
+                openAuthModal(true); 
+            }
+        });
+    }
 });
