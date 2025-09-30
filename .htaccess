@@ -44,9 +44,9 @@ RewriteRule ^php/google_signin$ /php/google_signin.php [NC,L]
 RewriteRule ^reset-password$ /reset-password.php [NC,L]
 
 # --- NUEVAS REGLAS PARA PÁGINAS DE RESPUESTA DE PAGO ---
-RewriteRule ^pago/exitoso/([0-9]+)$ /pago_exitoso.php?pedido_id=$1 [NC,L]
-RewriteRule ^pago/fallido$ /pago_fallido.php [NC,L]
-RewriteRule ^pago/pendiente$ /pago_pendiente.php [NC,L]
+RewriteRule ^pagoexitoso/([0-9]+)$ /pago_exitoso.php?id=$1 [NC,L]
+RewriteRule ^pagofallido$ /pago_fallido.php [NC,L]
+RewriteRule ^pagopendiente$ /pago_pendiente.php [NC,L]
 
 # Regla para pasar el Header de Autorización a PHP
 RewriteCond %{HTTP:Authorization} .
