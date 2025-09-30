@@ -145,6 +145,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // 4.3. Convertimos el array a formato JSON
         $preference_payload = json_encode($preference_data);
 
+        $log_file_checkout = __DIR__ . '/checkout_log.txt';
+        file_put_contents($log_file_checkout, "Payload a enviar a MP: \n" . $preference_payload . "\n\n", FILE_APPEND);
+
         // 4.4. Configuramos y ejecutamos la petición cURL
         $curl = curl_init();
 
