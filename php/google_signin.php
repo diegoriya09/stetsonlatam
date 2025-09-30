@@ -54,6 +54,11 @@ if ($payload) {
         $stmt_insert->close();
     }
     
+    if (session_status() !== PHP_SESSION_ACTIVE) {
+        session_start();
+    }
+    $_SESSION['user_id'] = $user_id;
+
     // --- GENERAR NUESTRO PROPIO TOKEN JWT PARA EL USUARIO ---
     $secret_key = "StetsonLatam1977";
     $issuer_claim = "stetsonlatam.com";
@@ -83,7 +88,6 @@ if ($payload) {
 
     $jwt = JWT::encode($token_payload, $secret_key, 'HS256');
     echo json_encode(['success' => true, 'token' => $jwt]);
-
 } else {
     // Token de Google inválido
     http_response_code(401);
@@ -91,4 +95,3 @@ if ($payload) {
 }
 
 $conn->close();
-?>
