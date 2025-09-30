@@ -12,7 +12,7 @@
     $user_name = '';
 
     if ($user_id) {
-        // Obtener datos básicos del usuario (nombre, email)
+        // 1. Obtener datos básicos del usuario (nombre, email)
         $stmt_user = $conn->prepare("SELECT name, email FROM users WHERE id = ?");
         $stmt_user->bind_param("i", $user_id);
         if ($stmt_user->execute()) {
@@ -24,13 +24,13 @@
         }
         $stmt_user->close();
 
-        // ADAPTADO: Leer las columnas correctas de tu tabla user_addresses
-        $stmt_addr = $conn->prepare("SELECT id, street_address, city, state, postal_code, country, is_default FROM user_addresses WHERE user_id = ?");
+        // 2. Leer las direcciones guardadas del usuario
+        $stmt_addr = $conn->prepare("SELECT id, street_address, city, state, postal_code, country FROM user_addresses WHERE user_id = ?");
         $stmt_addr->bind_param("i", $user_id);
         $stmt_addr->execute();
         $result_addr = $stmt_addr->get_result();
         while ($row = $result_addr->fetch_assoc()) {
-            $saved_addresses[] = $row;
+            $saved_addresses[] = $row; // Llenamos el array
         }
         $stmt_addr->close();
 
@@ -78,10 +78,10 @@
                                     <label class="flex flex-col flex-1">
                                         <p>Elige una dirección guardada</p>
                                         <select name="address_id" id="address-select" class="form-input h-14">
-                                            <option value="new">-- Añadir una nueva dirección --</option>
+                                            <option value="new">-- Usar una nueva dirección --</option>
                                             <?php foreach ($saved_addresses as $addr): ?>
                                                 <option value='<?php echo json_encode($addr); ?>'>
-                                                    <?php echo htmlspecialchars($addr['street_address'] . ', ' . $addr['city'] . ', ' . $addr['country']); ?>
+                                                    <?php echo htmlspecialchars($addr['street_address'] . ', ' . $addr['city']); ?>
                                                 </option>
                                             <?php endforeach; ?>
                                         </select>
@@ -150,9 +150,10 @@
                                 const addressSelect = document.getElementById('address-select');
                                 const form = document.getElementById('checkout-form');
 
-                                // Lógica para auto-rellenar dirección
+                                // Si el menú de direcciones existe, le añadimos un listener
                                 if (addressSelect) {
                                     addressSelect.addEventListener('change', function() {
+                                        // Si el usuario elige 'Usar una nueva dirección'
                                         if (this.value === 'new') {
                                             form.direccion.value = '';
                                             form.ciudad.value = '';
@@ -160,6 +161,7 @@
                                             form.zip.value = '';
                                             form.pais.value = '';
                                         } else {
+                                            // Si elige una dirección guardada
                                             const selectedAddr = JSON.parse(this.value);
                                             form.direccion.value = selectedAddr.street_address || '';
                                             form.ciudad.value = selectedAddr.city || '';
