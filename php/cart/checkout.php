@@ -44,8 +44,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         $jwt = trim(str_replace('Bearer', '', $authHeader));
         $secret_key = "StetsonLatam1977";
-        $decoded = JWT::decode($jwt, new Key($secret_key, 'HS260'));
+        $decoded = JWT::decode($jwt, new Key($secret_key, 'HS256'));
         $user_id = $decoded->data->id;
+
+        if (isset($_POST['save_address']) && $_POST['save_address'] === 'true') {
+            $stmt_save_addr = $conn->prepare(
+                "INSERT INTO user_addresses (user_id, street_address, city, state, postal_code, country) VALUES (?, ?, ?, ?, ?, ?)"
+            );
+            // Tomamos los datos del formulario POST
+            $stmt_save_addr->bind_param("isssss", 
+                $user_id, 
+                $_POST['direccion'], 
+                $_POST['ciudad'], 
+                $_POST['estado'], 
+                $_POST['zip'], 
+                $_POST['pais']
+            );
+            $stmt_save_addr->execute();
+            $stmt_save_addr->close();
+        }
+        
         $conn->begin_transaction();
         $transaction_started = true;
         $stmt_cart = $conn->prepare("SELECT c.*, p.name AS nombre, p.price AS precio FROM cart c JOIN productos p ON c.producto_id = p.id WHERE c.users_id = ?");
