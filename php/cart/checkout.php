@@ -67,7 +67,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $conn->begin_transaction();
         $transaction_started = true;
-        $stmt_cart = $conn->prepare("SELECT c.*, p.name AS nombre, p.price AS precio FROM cart c JOIN productos p ON c.producto_id = p.id WHERE c.users_id = ?");
+        $stmt_cart = $conn->prepare("
+            SELECT c.*, p.name AS nombre, p.price AS precio, col.name AS color_nombre, s.name AS size_nombre 
+            FROM cart c 
+            JOIN productos p ON c.producto_id = p.id 
+            LEFT JOIN colors col ON c.color_id = col.id 
+            LEFT JOIN sizes s ON c.size_id = s.id 
+            WHERE c.users_id = ?
+        ");
         $stmt_cart->bind_param("i", $user_id);
         $stmt_cart->execute();
         $items_carrito = $stmt_cart->get_result()->fetch_all(MYSQLI_ASSOC);
@@ -85,12 +92,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt_order->execute();
         $pedido_id = $conn->insert_id;
         $stmt_order->close();
-        $stmt_detail = $conn->prepare("INSERT INTO pedido_detalle (pedido_id, producto_id, nombre_producto, precio, cantidad) VALUES (?, ?, ?, ?, ?)");
+        $stmt_detail = $conn->prepare("
+            INSERT INTO pedido_detalle 
+            (pedido_id, producto_id, nombre_producto, precio, cantidad, color_id, color_nombre, size_id, size_nombre) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ");
         foreach ($items_carrito as $item) {
-            $stmt_detail->bind_param("iisdi", $pedido_id, $item['producto_id'], $item['nombre'], $item['precio'], $item['quantity']);
+            $stmt_detail->bind_param(
+                "iisdiisis",
+                $pedido_id,
+                $item['producto_id'],
+                $item['nombre'],
+                $item['precio'],
+                $item['quantity'],
+                $item['color_id'], 
+                $item['color_nombre'],  
+                $item['size_id'],      
+                $item['size_nombre']  
+            );
             $stmt_detail->execute();
         }
-        $stmt_detail->close();
 
         // 4. CREAMOS LA PREFERENCIA DE PAGO (MANUALMENTE)
 
