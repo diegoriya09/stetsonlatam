@@ -101,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'title' => $item['nombre'],
                 'quantity' => (int)$item['quantity'],
                 'unit_price' => (float)$item['precio'],
-                'currency_id' => 'COP'
+                'currency_id' => 'USD'
             ];
         }
 
