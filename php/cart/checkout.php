@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $transaction_started = false;
     try {
         // 2. CONFIGURA TUS CREDENCIALES DE MERCADO PAGO (SANDBOX PARA PRUEBAS)
-        $access_token = "TEST-3762198536527067-092911-dd7a950172bba5d75e411c879063f4d4-2715303423";
+        $access_token = "APP_USR-2361135011239748-093013-7a52458d79c759cd0385c0bc97cfbf43-2717621919";
 
         // (Aquí va tu código para validar el JWT y obtener el user_id... es el mismo que ya tienes)
         $authHeader = getAuthorizationHeader();

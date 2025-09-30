@@ -6,7 +6,7 @@ require_once 'conexion.php';
 
 // 1. CONFIGURA TU ACCESS TOKEN
 // Debe ser el mismo que usaste para crear el pago (Sandbox o Producción).
-$access_token = "TEST-3762198536527067-092911-dd7a950172bba5d75e411c879063f4d4-2715303423";
+$access_token = "APP_USR-2361135011239748-093013-7a52458d79c759cd0385c0bc97cfbf43-2717621919";
 
 // 2. RECIBE LA NOTIFICACIÓN
 $body = file_get_contents('php://input');
