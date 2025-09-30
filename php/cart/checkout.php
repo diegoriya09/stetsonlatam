@@ -108,12 +108,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $preference_data = [
             'items' => $mp_items,
             'back_urls' => [
-                'success' => 'https://stetsonlatam.com/pago_exitoso.php?pedido_id=' . $pedido_id,
-                'failure' => 'https://stetsonlatam.com/pago_fallido.php',
-                'pending' => 'https://stetsonlatam.com/pago_pendiente.php'
+                'success' => 'https://stetsonlatam.com/pago_exitoso?pedido_id=' . $pedido_id,
+                'failure' => 'https://stetsonlatam.com/pago_fallido',
+                'pending' => 'https://stetsonlatam.com/pago_pendiente'
             ],
             'auto_return' => 'approved',
-            'notification_url' => 'https://stetsonlatam.com/php/webhook_mercado_pago.php',
+            'notification_url' => 'https://stetsonlatam.com/php/webhook_mercado_pago',
             'external_reference' => (string)$pedido_id
         ];
 
