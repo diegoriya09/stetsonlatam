@@ -435,7 +435,8 @@ if ($view === 'stock') {
                                     <form method='POST' action='update_order_status' style='margin:0;padding:0;background:none;box-shadow:none;'>
                                         <input type='hidden' name='order_id' value='{$row['id']}'>
                                         <select name='estado'>
-                                            <option value='Pendiente' " . ($row['estado'] == 'Pendiente' ? 'selected' : '') . ">Pendiente</option>
+                                            <option value='PendienteDePago' " . ($row['estado'] == 'PendienteDePago' ? 'selected' : '') . ">Pendiente de Pago</option>
+                                            <option value='Pagado' " . ($row['estado'] == 'Pagado' ? 'selected' : '') . ">Pagado</option>
                                             <option value='Enviado' " . ($row['estado'] == 'Enviado' ? 'selected' : '') . ">Enviado</option>
                                             <option value='Cancelado' " . ($row['estado'] == 'Cancelado' ? 'selected' : '') . ">Cancelado</option>
                                         </select>

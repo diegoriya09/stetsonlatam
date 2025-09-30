@@ -55,17 +55,6 @@ $conn->close();
     <link href="css/index.css?v=<?php echo time(); ?>" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <style>
-        .save-option {
-            margin-top: 15px;
-            display: flex;
-            align-items: center;
-        }
-
-        .save-option input {
-            margin-right: 10px;
-        }
-    </style>
 </head>
 
 <body>
@@ -127,30 +116,9 @@ $conn->close();
                                 </label></div>
                         </div>
 
-                        <div id="save-address-option" class="save-option px-4 py-3">
-                            <input type="checkbox" id="save-address" name="save_address" value="true">
-                            <label for="save-address">Guardar esta dirección para futuras compras</label>
-                        </div>
-
                         <hr class="my-6">
 
                         <h2 class="text-xl font-bold px-4 py-3">Método de Pago</h2>
-
-                        <?php if (!empty($saved_payment_methods)): ?>
-                            <div class="flex max-w-[480px] gap-4 px-4 py-3">
-                                <label class="flex flex-col flex-1">
-                                    <p>Elige un método de pago guardado</p>
-                                    <select name="payment_id" id="payment-select" class="form-input h-14">
-                                        <option value="new">-- Añadir un nuevo método de pago --</option>
-                                        <?php foreach ($saved_payment_methods as $pay): ?>
-                                            <option value='<?php echo json_encode($pay); ?>'>
-                                                <?php echo htmlspecialchars(ucfirst($pay['card_type']) . ' terminada en ' . $pay['last_four_digits'] . ' (Expira: ' . $pay['expiry_date'] . ')'); ?>
-                                            </option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </label>
-                            </div>
-                        <?php endif; ?>
 
                         <div id="new-payment-fields">
                             <div class="flex max-w-[480px] gap-4 px-4 py-3">
@@ -158,40 +126,13 @@ $conn->close();
                                     <p>Método de Pago</p>
                                     <select name="metodo" id="metodo-select" class="form-input h-14" required>
                                         <option value="">Selecciona un método de pago</option>
-                                        <option value="tarjeta">Añadir Tarjeta de Crédito/Débito</option>
-                                        <option value="pse">Añadir PSE</option>
+                                        <option value="transferencia">🏦 Transferencia Bancaria Directa</option>
+                                        <option value="mercadopago">💳 Mercado Pago (Tarjetas, Saldo)</option>
+                                        <option value="pse">🏛️ PSE (Pagos Seguros en Línea)</option>
+                                        <option value="addi">✨ A cuotas con Addi</option>
                                     </select>
                                 </label>
                             </div>
-                            <div id="tarjeta-fields" class="hidden">
-                                <div class="flex max-w-[480px] gap-4 px-4 py-3"><label class="flex flex-col flex-1">
-                                        <p>Número de Tarjeta</p><input name="numero_tarjeta" placeholder="1234 5678 9012 3456" class="form-input h-14" />
-                                    </label></div>
-                                <div class="flex max-w-[480px] gap-4 px-4 py-3"><label class="flex flex-col flex-1">
-                                        <p>Nombre en la Tarjeta</p><input name="nombre_tarjeta" placeholder="John Doe" class="form-input h-14" />
-                                    </label></div>
-                                <div class="flex max-w-[480px] gap-4 px-4 py-3"><label class="flex flex-col flex-1">
-                                        <p>Fecha de Expiración</p><input name="expiracion" placeholder="MM/YY" class="form-input h-14" />
-                                    </label><label class="flex flex-col flex-1">
-                                        <p>CVV</p><input name="cvv" placeholder="123" class="form-input h-14" />
-                                    </label></div>
-                            </div>
-                            <div id="pse-fields" class="hidden">
-                                <div class="flex max-w-[480px] gap-4 px-4 py-3"><label class="flex flex-col flex-1">
-                                        <p>Banco</p><input name="banco_pse" placeholder="Ingresa el nombre del banco" class="form-input h-14" />
-                                    </label></div>
-                                <div class="flex max-w-[480px] gap-4 px-4 py-3"><label class="flex flex-col flex-1">
-                                        <p>Tipo de Cuenta</p><input name="tipo_cuenta_pse" placeholder="Ahorros/Corriente" class="form-input h-14" />
-                                    </label></div>
-                                <div class="flex max-w-[480px] gap-4 px-4 py-3"><label class="flex flex-col flex-1">
-                                        <p>Documento</p><input name="documento_pse" placeholder="Ingresa tu documento" class="form-input h-14" />
-                                    </label></div>
-                            </div>
-                        </div>
-
-                        <div id="save-payment-option" class="save-option px-4 py-3">
-                            <input type="checkbox" id="save-payment" name="save_payment" value="true">
-                            <label for="save-payment">Guardar este método de pago para futuras compras</label>
                         </div>
 
                         <div class="flex px-4 py-3">
@@ -202,10 +143,7 @@ $conn->close();
                     <script>
                         document.addEventListener('DOMContentLoaded', function() {
                             const addressSelect = document.getElementById('address-select');
-                            const paymentSelect = document.getElementById('payment-select');
                             const form = document.getElementById('checkout-form');
-                            const saveAddressCheckboxContainer = document.getElementById('save-address')?.parentElement;
-                            const savePaymentCheckboxContainer = document.getElementById('save-payment')?.parentElement;
 
                             // Lógica para auto-rellenar dirección
                             if (addressSelect) {
@@ -216,7 +154,6 @@ $conn->close();
                                         form.estado.value = '';
                                         form.zip.value = '';
                                         form.pais.value = '';
-                                        saveAddressCheckboxContainer.style.display = 'flex';
                                     } else {
                                         const selectedAddr = JSON.parse(this.value);
                                         form.direccion.value = selectedAddr.street_address || '';
@@ -224,40 +161,9 @@ $conn->close();
                                         form.estado.value = selectedAddr.state || '';
                                         form.zip.value = selectedAddr.postal_code || '';
                                         form.pais.value = selectedAddr.country || '';
-                                        saveAddressCheckboxContainer.style.display = 'none';
                                     }
                                 });
                             }
-
-                            // Lógica para auto-rellenar método de pago
-                            if (paymentSelect) {
-                                paymentSelect.addEventListener('change', function() {
-                                    if (this.value === 'new') {
-                                        document.getElementById('new-payment-fields').style.display = 'block';
-                                        document.getElementById('metodo-select').required = true;
-                                        savePaymentCheckboxContainer.style.display = 'flex';
-                                    } else {
-                                        const selectedPay = JSON.parse(this.value);
-                                        // Ocultar los campos de pago manual
-                                        document.getElementById('new-payment-fields').style.display = 'none';
-                                        document.getElementById('metodo-select').required = false;
-                                        // Aquí no rellenamos nada, el ID del método se enviará
-                                        // con el select payment_id
-                                        savePaymentCheckboxContainer.style.display = 'none';
-                                    }
-                                });
-                            }
-
-                            // Lógica para mostrar campos de tarjeta/pse
-                            document.querySelector('select[name="metodo"]').addEventListener('change', function() {
-                                document.getElementById('tarjeta-fields').classList.add('hidden');
-                                document.getElementById('pse-fields').classList.add('hidden');
-                                if (this.value === 'tarjeta') {
-                                    document.getElementById('tarjeta-fields').classList.remove('hidden');
-                                } else if (this.value === 'pse') {
-                                    document.getElementById('pse-fields').classList.remove('hidden');
-                                }
-                            });
 
                             // Lógica de envío del formulario
                             form.addEventListener('submit', function(e) {
@@ -277,37 +183,49 @@ $conn->close();
                                         },
                                         body: formData
                                     })
-                                    .then(res => {
-                                        if (!res.ok) {
-                                            return res.json().then(errorData => {
-                                                throw new Error(errorData.message || 'Error del servidor');
-                                            });
-                                        }
-                                        return res.json();
-                                    })
+                                    .then(res => res.json())
                                     .then(data => {
+                                        // CASO 1: Redirección a pasarela de pago
+                                        if (data.redirect_url) {
+                                            window.location.href = data.redirect_url;
+                                            return;
+                                        }
+
+                                        // CASO 2: Éxito (ej. Transferencia bancaria)
                                         if (data.success) {
+                                            let successMessage = `<p>Tu número de pedido es <strong>#${data.pedido_id}</strong></p>`;
+
+                                            // Mensaje especial para transferencia
+                                            if (data.payment_details && data.payment_details.type === 'transferencia') {
+                                                successMessage += '<hr style="margin: 15px 0;"><h4>Datos para la transferencia:</h4>' +
+                                                    `<p><strong>Banco:</strong> ${data.payment_details.banco}</p>` +
+                                                    `<p><strong>Cuenta:</strong> ${data.payment_details.cuenta}</p>` +
+                                                    `<p><strong>Titular:</strong> ${data.payment_details.titular}</p>` +
+                                                    '<p style="margin-top:10px;">Por favor, envía el comprobante a nuestro email para confirmar tu pedido.</p>';
+                                            }
+
                                             Swal.fire({
                                                 icon: 'success',
-                                                title: 'Pedido Realizado',
-                                                html: `<p>Tu número de pedido es <strong>#${data.pedido_id}</strong></p>`,
+                                                title: 'Pedido Creado',
+                                                html: successMessage,
                                                 confirmButtonText: 'OK'
                                             }).then(() => {
-                                                window.location.href = 'https://stetsonlatam.com/';
+                                                window.location.href = 'https://stetsonlatam.com/'; // O a una página de "gracias"
                                             });
                                         } else {
+                                            // CASO 3: Error devuelto por el backend
                                             Swal.fire({
                                                 icon: 'error',
                                                 title: 'Error',
-                                                text: data.message
+                                                text: data.message || 'Ocurrió un error inesperado.'
                                             });
                                         }
                                     })
                                     .catch(err => {
                                         Swal.fire({
                                             icon: 'error',
-                                            title: 'Error',
-                                            text: err.message || 'Algo salió mal. Intenta de nuevo.'
+                                            title: 'Error de Conexión',
+                                            text: 'No se pudo procesar tu solicitud. Intenta de nuevo.'
                                         });
                                     });
                             });

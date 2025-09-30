@@ -2,6 +2,7 @@
     "require": {
         "firebase/php-jwt": "^6.11",
         "google/apiclient": "^2.18",
-        "phpmailer/phpmailer": "^6.10"
+        "phpmailer/phpmailer": "^6.10",
+        "mercadopago/dx-php": "^3.0"
     }
 }
