@@ -114,7 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'pending' => 'https://stetsonlatam.com/pago/pendiente'
             ],
             'auto_return' => 'approved',
-            'notification_url' => 'https://stetsonlatam.com/php/webhook_mercado_pago',
+            'notification_url' => 'https://stetsonlatam.com/php/webhook_mercado_pago.php',
             'external_reference' => (string)$pedido_id
         ];
 
