@@ -107,6 +107,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // 4.2. Construimos el cuerpo completo de la petición (el "payload")
         $preference_data = [
+            'payer' => [
+                'email' => 'TESTUSER4249767510907688856@testuser.com'
+            ],
             'items' => $mp_items,
             'back_urls' => [
                 'success' => 'https://stetsonlatam.com/pago/exitoso/' . $pedido_id,
