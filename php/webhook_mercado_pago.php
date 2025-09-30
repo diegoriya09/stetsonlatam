@@ -5,6 +5,11 @@
 require_once 'conexion.php';
 
 // 1. CONFIGURA TU ACCESS TOKEN
+
+$log_file = __DIR__ . '/webhook_log.txt';
+$log_message = "[" . date("Y-m-d H:i:s") . "] " . file_get_contents('php://input') . "\n\n";
+file_put_contents($log_file, $log_message, FILE_APPEND);
+
 // Debe ser el mismo que usaste para crear el pago (Sandbox o Producción).
 $access_token = "APP_USR-2361135011239748-093013-7a52458d79c759cd0385c0bc97cfbf43-2717621919";
 
