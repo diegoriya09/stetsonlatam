@@ -52,18 +52,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 "INSERT INTO user_addresses (user_id, street_address, city, state, postal_code, country) VALUES (?, ?, ?, ?, ?, ?)"
             );
             // Tomamos los datos del formulario POST
-            $stmt_save_addr->bind_param("isssss", 
-                $user_id, 
-                $_POST['direccion'], 
-                $_POST['ciudad'], 
-                $_POST['estado'], 
-                $_POST['zip'], 
+            $stmt_save_addr->bind_param(
+                "isssss",
+                $user_id,
+                $_POST['direccion'],
+                $_POST['ciudad'],
+                $_POST['estado'],
+                $_POST['zip'],
                 $_POST['pais']
             );
             $stmt_save_addr->execute();
             $stmt_save_addr->close();
         }
-        
+
         $conn->begin_transaction();
         $transaction_started = true;
         $stmt_cart = $conn->prepare("SELECT c.*, p.name AS nombre, p.price AS precio FROM cart c JOIN productos p ON c.producto_id = p.id WHERE c.users_id = ?");
@@ -108,9 +109,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $preference_data = [
             'items' => $mp_items,
             'back_urls' => [
-                'success' => 'https://stetsonlatam.com/pago_exitoso?pedido_id=' . $pedido_id,
-                'failure' => 'https://stetsonlatam.com/pago_fallido',
-                'pending' => 'https://stetsonlatam.com/pago_pendiente'
+                'success' => 'https://stetsonlatam.com/pago/exitoso/' . $pedido_id,
+                'failure' => 'https://stetsonlatam.com/pago/fallido',
+                'pending' => 'https://stetsonlatam.com/pago/pendiente'
             ],
             'auto_return' => 'approved',
             'notification_url' => 'https://stetsonlatam.com/php/webhook_mercado_pago',
