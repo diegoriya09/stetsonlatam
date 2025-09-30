@@ -80,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // 3. CREAMOS EL PEDIDO EN NUESTRA BASE DE DATOS con estado 'Pendiente de Pago'
         $metodo_pago = $_POST['metodo'] ?? '';
-        $stmt_order = $conn->prepare("INSERT INTO pedidos (user_id, total, estado, nombre_cliente, email_cliente, pais, ciudad, direccion, telefono, metodo_pago) VALUES (?, ?, 'Pendiente de Pago', ?, ?, ?, ?, ?, ?, ?)");
+        $stmt_order = $conn->prepare("INSERT INTO pedidos (user_id, total, estado, nombre_cliente, email_cliente, pais, ciudad, direccion, telefono, metodo_pago) VALUES (?, ?, 'PendienteDePago', ?, ?, ?, ?, ?, ?, ?)");
         $stmt_order->bind_param("idsssssss", $user_id, $total, $_POST['nombre'], $_POST['email'], $_POST['pais'], $_POST['ciudad'], $_POST['direccion'], $_POST['telefono'], $metodo_pago);
         $stmt_order->execute();
         $pedido_id = $conn->insert_id;
