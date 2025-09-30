@@ -61,7 +61,7 @@ if (isset($data['type']) && $data['type'] === 'payment') {
          $pedido = $stmt_check->get_result()->fetch_assoc();
          $stmt_check->close();
 
-         if ($pedido && $pedido['estado'] === 'Pendiente de Pago') {
+         if ($pedido && $pedido['estado'] === 'PendienteDePago') {
             // ACCIÓN 1: ACTUALIZAR ESTADO A 'PAGADO'
             $stmt_update = $conn->prepare("UPDATE pedidos SET estado = 'Pagado' WHERE id = ?");
             $stmt_update->bind_param("i", $pedido_id);
