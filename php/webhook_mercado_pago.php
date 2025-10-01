@@ -2,7 +2,7 @@
 // php/webhook_mercado_pago.php (VERSIÓN CON cURL - SIN SDK)
 
 // Solo requerimos la conexión a nuestra base de datos.
-require_once 'conexion.php';
+require 'conexion.php';
 
 // 1. CONFIGURA TU ACCESS TOKEN
 
