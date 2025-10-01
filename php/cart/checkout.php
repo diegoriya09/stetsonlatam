@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $transaction_started = false;
     try {
         // 2. CONFIGURA TUS CREDENCIALES DE MERCADO PAGO (SANDBOX PARA PRUEBAS)
-        $access_token = "APP_USR-2361135011239748-093013-7a52458d79c759cd0385c0bc97cfbf43-2717621919";
+        $access_token = "APP_USR-7626658846247622-093012-6510f25d4a7274a53553bfd26c2fd6ec-2715303423";
 
         // (Aquí va tu código para validar el JWT y obtener el user_id... es el mismo que ya tienes)
         $authHeader = getAuthorizationHeader();
@@ -129,7 +129,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // 4.2. Construimos el cuerpo completo de la petición (el "payload")
         $preference_data = [
             'payer' => [
-                'email' => 'TESTUSER4249767510907688856@testuser.com'
+                'email' => $_POST['email']
             ],
             'items' => $mp_items,
             'back_urls' => [
