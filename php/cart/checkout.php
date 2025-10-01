@@ -105,10 +105,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $item['nombre'],
                 $item['precio'],
                 $item['quantity'],
-                $item['color_id'], 
-                $item['color_nombre'],  
-                $item['size_id'],      
-                $item['size_nombre']  
+                $item['color_id'],
+                $item['color_nombre'],
+                $item['size_id'],
+                $item['size_nombre']
             );
             $stmt_detail->execute();
         }
@@ -122,14 +122,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'title' => $item['nombre'],
                 'quantity' => (int)$item['quantity'],
                 'unit_price' => (float)$item['precio'],
-                'currency_id' => 'COP'
+                'currency_id' => 'USD'
             ];
         }
 
+
+        // Dividimos el nombre completo en nombre y apellido para el payer
+        $nombre_completo = explode(' ', $_POST['nombre'], 2);
+        $first_name = $nombre_completo[0];
+        $last_name = $nombre_completo[1] ?? '';
         // 4.2. Construimos el cuerpo completo de la petición (el "payload")
         $preference_data = [
             'payer' => [
-                'email' => $_POST['email']
+                'first_name' => $first_name,
+                'last_name' => $last_name,
+                'email' => $_POST['email'],
+                'identification' => [
+                    'type' => $_POST['docType'],
+                    'number' => $_POST['docNumber']
+                ]
             ],
             'items' => $mp_items,
             'back_urls' => [
@@ -153,8 +164,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         curl_setopt_array($curl, [
             CURLOPT_URL => 'https://api.mercadopago.com/checkout/preferences', // URL del API
-            CURLOPT_RETURNTRANSFER => true,    // Devuelve el resultado en lugar de imprimirlo
-            CURLOPT_ENCODING => '',
+            CURLOPT_RETURNTRANSFER => true,
             CURLOPT_MAXREDIRS => 10,
             CURLOPT_TIMEOUT => 30,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,

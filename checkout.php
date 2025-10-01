@@ -93,6 +93,21 @@
                                 <div class="flex max-w-[480px] gap-4 px-4 py-3"><label class="flex flex-col flex-1">
                                         <p>Nombre completo</p><input name="nombre" placeholder="Ingresa tu nombre completo" class="form-input h-14" value="<?php echo htmlspecialchars($user_name); ?>" required />
                                     </label></div>
+                                <div class="flex max-w-[480px] gap-4 px-4 py-3">
+                                    <label class="flex flex-col w-1/3">
+                                        <p>Tipo Doc.</p>
+                                        <select name="docType" class="form-input h-14" required>
+                                            <option value="CC">CC</option>
+                                            <option value="CE">CE</option>
+                                            <option value="NIT">NIT</option>
+                                            <option value="PAS">PAS</option>
+                                        </select>
+                                    </label>
+                                    <label class="flex flex-col flex-1">
+                                        <p>Número de Documento</p>
+                                        <input name="docNumber" placeholder="Tu número de documento" class="form-input h-14" required />
+                                    </label>
+                                </div>
                                 <div class="flex max-w-[480px] gap-4 px-4 py-3"><label class="flex flex-col flex-1">
                                         <p>Email</p><input type="email" name="email" placeholder="Ingresa tu email" class="form-input h-14" value="<?php echo htmlspecialchars($user_email); ?>" required />
                                     </label></div>
