@@ -270,7 +270,7 @@ if (!empty($categorias_flat)) {
 
       try {
         // <-- CORRECCIÓN 1: Usamos la URL amigable definida en .htaccess
-        const res = await fetch("search/" + encodeURIComponent(q), {
+        const res = await fetch("/php/search/" + encodeURIComponent(q), {
           signal: controller.signal
         });
 
