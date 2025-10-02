@@ -10,7 +10,7 @@ RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 # ===================================================================
 
 # --- REGLA DE BÚSQUEDA (MOVIDA HACIA ARRIBA) ---
-RewriteRule ^search/(.+)$ /php/search.php?q=$1 [NC,L]
+RewriteRule ^search(.+)$ /php/search.php?q=$1 [NC,L]
 
 # --- URLs amigables para la tienda ---
 RewriteRule ^categoria([0-9]+)$ /categoria.php?id=$1 [NC,L]
