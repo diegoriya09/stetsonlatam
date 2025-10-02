@@ -10,8 +10,22 @@ header('Content-Type: application/json');
 
 // --- Bloque de Autenticación (sin cambios) ---
 function getAuthorizationHeader()
-{ /* ... */
-} // Usa tu función
+{
+    if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
+        return trim($_SERVER["HTTP_AUTHORIZATION"]);
+    } elseif (isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION'])) {
+        return trim($_SERVER["REDIRECT_HTTP_AUTHORIZATION"]);
+    } elseif (function_exists('apache_request_headers')) {
+        $requestHeaders = apache_request_headers();
+        foreach ($requestHeaders as $key => $value) {
+            if (strtolower($key) === 'authorization') {
+                return trim($value);
+            }
+        }
+    }
+    return null;
+}
+
 $authHeader = getAuthorizationHeader();
 if (!$authHeader || !str_starts_with($authHeader, 'Bearer ')) {
     echo json_encode(['success' => false, 'message' => 'Token no proporcionado']);
