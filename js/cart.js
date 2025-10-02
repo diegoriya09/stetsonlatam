@@ -114,9 +114,9 @@ function renderCart(items) {
                     ${item.color_name ? `<p>Color: ${item.color_name}</p>` : ''}
                 </div>
                 <div class="item-quantity" data-stock="${item.stock}">
-                    <button class="qty-btn" data-id="${item.cart_item_id}">-</button>
+                    <button class="qty-btn" data-action="decrease" data-id="${item.cart_item_id}">-</button>
                     <input type="text" value="${item.quantity}" readonly>
-                    <button class="qty-btn" data-id="${item.cart_item_id}">+</button>
+                    <button class="qty-btn" data-action="increase" data-id="${item.cart_item_id}">+</button>
                 </div>
                 <div class="item-total">$${itemTotal.toFixed(2)}</div>
                 <button class="item-remove" data-id="${item.cart_item_id}"><i class="fas fa-trash-alt"></i></button>
@@ -156,16 +156,20 @@ document.getElementById('cart-items-container')?.addEventListener('click', async
   const jwt = localStorage.getItem("jwt");
   if (!jwt) return; // No hacer nada si no hay sesión
 
+  const quantityButton = e.target.closest('.qty-btn');
+  const removeButton = e.target.closest('.item-remove');
+
   // --- LÓGICA PARA BOTONES DE CANTIDAD (+ y -) ---
-  if (e.target.matches('.qty-btn')) {
-    const cart_item_id = e.target.dataset.id;
-    const quantityContainer = e.target.parentElement;
+  if (quantityButton) {
+    const cart_item_id = quantityButton.dataset.id;
+    const action = quantityButton.dataset.action;
+    const quantityContainer = quantityButton.parentElement;
     const input = quantityContainer.querySelector('input');
     const stock = parseInt(quantityContainer.dataset.stock); // Leemos el stock del data-attribute
     const currentQty = parseInt(input.value);
     let newQty;
 
-    if (e.target.textContent === '+') {
+    if (action === 'increase') {
       // ¡VERIFICACIÓN DE STOCK!
       if (currentQty >= stock) {
         Swal.fire({ icon: 'warning', title: 'Stock máximo alcanzado', text: `Solo hay ${stock} unidades disponibles.` });
@@ -177,19 +181,24 @@ document.getElementById('cart-items-container')?.addEventListener('click', async
     }
 
     if (newQty < 1) {
-      // Lógica para eliminar el producto si la cantidad es 0
-      const itemElement = e.target.closest('.cart-item');
-      if (itemElement) {
-        const removeButton = itemElement.querySelector('.item-remove');
-        if (removeButton) {
-          removeButton.click(); // Esto activará la alerta de confirmación que ya tienes.
-        }
+      const itemElement = quantityButton.closest('.cart-item');
+      const associatedRemoveButton = itemElement.querySelector('.item-remove');
+      if (associatedRemoveButton) {
+        associatedRemoveButton.click();
       }
       return;
     }
 
-    await postToCartAPI('/php/cart/update_cart', { cart_item_id: cart_item_id, cantidad: newQty });
-    loadCart(); // Recarga el carrito para mostrar el cambio
+    input.value = newQty;
+
+    const result = await postToCartAPI('/php/cart/update_cart', { cart_item_id: cart_item_id, cantidad: newQty });
+    if (result.success) {
+      loadCart(); // Recarga todo el carrito para asegurar la consistencia de los totales
+    } else {
+      // Si falla, revierte la UI y muestra error
+      input.value = currentQty;
+      Swal.fire('Error', 'No se pudo actualizar la cantidad.', 'error');
+    }
   }
 
   // --- LÓGICA PARA BOTÓN DE ELIMINAR ---
