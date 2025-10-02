@@ -140,15 +140,17 @@ async function postToCartAPI(endpoint, body) {
       headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + jwt },
       body: JSON.stringify(body)
     });
-    const contentType = res.headers.get("content-type");
-    if (contentType && contentType.indexOf("application/json") !== -1) {
-      return await res.json();
-    } else {
-      const textResponse = await res.text();
-      throw new Error(`Server returned non-JSON response: ${textResponse}`);
+
+    if (res.status === 204 || !res.headers.get("content-length") || res.headers.get("content-length") === "0") {
+      return { success: true };
     }
+
+    // Si hay contenido, intentamos leerlo como JSON
+    const data = await res.json();
+    return data;
   } catch (error) {
-    console.error(`Error al publicar en ${endpoint}:`, error);
+    console.error(`Error en postToCartAPI para ${endpoint}:`, error);
+    return { success: false, message: 'Error de comunicación con el servidor.' };
   }
 }
 
@@ -192,13 +194,12 @@ document.getElementById('cart-items-container')?.addEventListener('click', async
     input.value = newQty;
 
     const result = await postToCartAPI('/php/cart/update_cart', { cart_item_id: cart_item_id, cantidad: newQty });
-    if (result.success) {
-      loadCart(); // Recarga todo el carrito para asegurar la consistencia de los totales
-    } else {
+    if (!result.success) {
       // Si falla, revierte la UI y muestra error
       input.value = currentQty;
-      Swal.fire('Error', 'No se pudo actualizar la cantidad.', 'error');
+      Swal.fire('Error', result.message || 'No se pudo actualizar la cantidad.', 'error');
     }
+    loadCart();
   }
 
   // --- LÓGICA PARA BOTÓN DE ELIMINAR ---
