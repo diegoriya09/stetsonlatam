@@ -195,6 +195,7 @@ document.getElementById('cart-items-container')?.addEventListener('click', async
 
     const result = await postToCartAPI('/php/cart/update_cart', { cart_item_id: cart_item_id, cantidad: newQty });
     console.log('Resultado de la actualización del carrito:', result);
+    console.log('Cantidad actual:', currentQty, 'Nueva cantidad:', newQty);
     if (!result.success) {
       // Si falla, revierte la UI y muestra error
       input.value = currentQty;
