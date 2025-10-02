@@ -5,7 +5,41 @@ RewriteEngine On
 RewriteCond %{HTTPS} off
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
-# --- REGLA 1: Quitar la extensión .php de los archivos ---
+# ===================================================================
+# --- REGLAS ESPECÍFICAS (VAN PRIMERO) ---
+# ===================================================================
+
+# --- REGLA DE BÚSQUEDA (MOVIDA HACIA ARRIBA) ---
+RewriteRule ^search/(.+)$ /php/search.php?q=$1 [NC,L]
+
+# --- URLs amigables para la tienda ---
+RewriteRule ^categoria([0-9]+)$ /categoria.php?id=$1 [NC,L]
+RewriteRule ^producto([0-9]+)$ /producto.php?id=$1 [NC,L]
+
+# --- URLs para Páginas de Respuesta de Pago ---
+RewriteRule ^pago/exitoso/([0-9]+)$ /pago_exitoso.php?pedido_id=$1 [NC,L]
+RewriteRule ^pago/fallido$ /pago_fallido.php [NC,L]
+RewriteRule ^pago/pendiente$ /pago_pendiente.php [NC,L]
+
+# --- URLs amigables para APIs y otras páginas ---
+RewriteRule ^admin/edit([0-9]+)$ /admin/edit_product.php?id=$1 [NC,L]
+RewriteRule ^admin/delete([0-9]+)$ /admin/delete_product.php?id=$1 [NC,L]
+RewriteRule ^admin/update_order_status$ /admin/update_order_status.php [NC,L]
+RewriteRule ^admin/add_product$ /admin/add_product.php [NC,L]
+RewriteRule ^admin/stockedit([0-9]+)$ /admin/edit_stock.php?id=$1 [NC,L]
+RewriteRule ^php/order/get_detail_order([0-9]+)$ /php/order/get_detail_order.php?id=$1 [NC,L]
+RewriteRule ^php/reviews/get_reviews([0-9]+)$ /php/reviews/get_reviews.php?id=$1 [NC,L]
+RewriteRule ^php/user/get_wishlist_status([0-9]+)$ /php/user/get_wishlist_status.php?id=$1 [NC,L]
+RewriteRule ^admin/get_sales_report$ /admin/get_sales_report.php [NC,L]
+RewriteRule ^admin/export_report$ /admin/export_report.php [NC,L]
+RewriteRule ^php/google_signin$ /php/google_signin.php [NC,L]
+RewriteRule ^reset-password$ /reset-password.php [NC,L]
+
+# ===================================================================
+# --- REGLAS GENERALES (VAN AL FINAL, ANTES DE LA CONFIGURACIÓN) ---
+# ===================================================================
+
+# --- REGLA para quitar la extensión .php de los archivos ---
 RewriteCond %{THE_REQUEST} \s/+(.+?)\.php[\s?] [NC]
 RewriteRule ^ %1 [R=301,L]
 
@@ -14,41 +48,7 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{DOCUMENT_ROOT}/%{REQUEST_URI}.php -f
 RewriteRule ^(.*?)/?$ $1.php [L]
 
-# --- REGLA 2: URLs amigables para la tienda ---
-RewriteRule ^categoria([0-9]+)$ /categoria.php?id=$1 [NC,L]
-RewriteRule ^producto([0-9]+)$ /producto.php?id=$1 [NC,L]
-
-# --- REGLA 3: URLs amigables para el Panel de Administración ---
-# Asume que tus archivos de admin están en una carpeta /admin/
-RewriteRule ^admin/edit([0-9]+)$ /admin/edit_product.php?id=$1 [NC,L]
-RewriteRule ^admin/delete([0-9]+)$ /admin/delete_product.php?id=$1 [NC,L]
-RewriteRule ^admin/update_order_status$ /admin/update_order_status.php [NC,L]
-RewriteRule ^admin/add_product$ /admin/add_product.php [NC,L]
-
-# --- NUEVA REGLA PARA EL STOCK ---
-RewriteRule ^admin/stockedit([0-9]+)$ /admin/edit_stock.php?id=$1 [NC,L]
-
-# --- REGLA 4: URLs amigables para APIs ---
-RewriteRule ^php/order/get_detail_order([0-9]+)$ /php/order/get_detail_order.php?id=$1 [NC,L]
-
-RewriteRule ^php/reviews/get_reviews([0-9]+)$ /php/reviews/get_reviews.php?id=$1 [NC,L]
-
-RewriteRule ^php/user/get_wishlist_status([0-9]+)$ /php/user/get_wishlist_status.php?id=$1 [NC,L]
-
-RewriteRule ^admin/get_sales_report$ /admin/get_sales_report.php [NC,L]
-RewriteRule ^admin/export_report$ /admin/export_report.php [NC,L]
-
-RewriteRule ^php/google_signin$ /php/google_signin.php [NC,L]
-
-# --- NUEVA REGLA PARA RESETEAR CONTRASEÑA ---
-RewriteRule ^reset-password$ /reset-password.php [NC,L]
-
-# --- NUEVAS REGLAS PARA PÁGINAS DE RESPUESTA DE PAGO ---
-RewriteRule ^pago/exitoso/([0-9]+)$ /pago_exitoso.php?pedido_id=$1 [NC,L]
-RewriteRule ^pago/fallido$ /pago_fallido.php [NC,L]
-RewriteRule ^pago/pendiente$ /pago_pendiente.php [NC,L]
-
-RewriteRule ^search/(.+)$ /php/search.php?q=$1 [NC,L]
+# ===================================================================
 
 # Regla para pasar el Header de Autorización a PHP
 RewriteCond %{HTTP:Authorization} .
