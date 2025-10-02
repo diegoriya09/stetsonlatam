@@ -253,7 +253,8 @@ if (!empty($categorias_flat)) {
         mobileNavPanel.classList.remove('open');
       });
     }
-    // Tu script de búsqueda va aquí... (lo he omitido por brevedad, pero debe estar)
+
+    // --- LÓGICA DE BÚSQUEDA CORREGIDA ---
     const input = document.getElementById("search-input");
     const resultsBox = document.getElementById("search-results");
 
@@ -268,9 +269,11 @@ if (!empty($categorias_flat)) {
       }
 
       try {
-        const res = await fetch("php/search?q=" + encodeURIComponent(q), {
+        // <-- CORRECCIÓN 1: Usamos la URL amigable definida en .htaccess
+        const res = await fetch("search/" + encodeURIComponent(q), {
           signal: controller.signal
         });
+
         if (!res.ok) throw new Error("HTTP " + res.status);
         const data = await res.json();
 
@@ -278,23 +281,41 @@ if (!empty($categorias_flat)) {
           resultsBox.innerHTML = "<p class='p-2 text-gray-500'>No se han encontrado resultados.</p>";
         } else {
           let html = "";
+          // Bloque para mostrar productos
           if (data.productos.length) {
             html += "<h4 class='px-2 py-1 font-bold text-sm text-gray-600'>Productos</h4>";
             data.productos.forEach(p => {
               html += `
-                                <a href="${p.url}" class="flex items-center gap-2 p-2 hover:bg-gray-100">
+                            <a href="${p.url}" class="flex items-center gap-2 p-2 hover:bg-gray-100">
                                 <img src="${p.image}" class="w-10 h-10 object-contain rounded">
                                 <span>${p.title}</span>
-                                </a>
-                                `;
+                            </a>
+                        `;
             });
           }
+
+          // <-- CORRECCIÓN 2: Añadido bloque para mostrar categorías
+          if (data.categorias.length) {
+            html += "<h4 class='px-2 py-1 font-bold text-sm text-gray-600'>Categorías</h4>";
+            data.categorias.forEach(c => {
+              html += `
+                            <a href="${c.url}" class="block p-2 hover:bg-gray-100">
+                                <span>${c.title}</span>
+                            </a>
+                        `;
+            });
+          }
+
           resultsBox.innerHTML = html;
         }
 
         resultsBox.classList.remove("hidden");
       } catch (err) {
-        if (err.name !== "AbortError") console.error(err);
+        if (err.name !== "AbortError") {
+          console.error(err);
+          resultsBox.innerHTML = "<p class='p-2 text-red-500'>Error al realizar la búsqueda.</p>";
+          resultsBox.classList.remove("hidden");
+        }
       }
     }
 
@@ -302,6 +323,13 @@ if (!empty($categorias_flat)) {
     input.addEventListener("input", () => {
       clearTimeout(timer);
       timer = setTimeout(() => doSearch(input.value), 300);
+    });
+
+    // Ocultar resultados si se hace clic fuera
+    document.addEventListener('click', (e) => {
+      if (!input.contains(e.target) && !resultsBox.contains(e.target)) {
+        resultsBox.classList.add('hidden');
+      }
     });
   });
 </script>
