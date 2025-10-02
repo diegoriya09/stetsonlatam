@@ -178,7 +178,13 @@ document.getElementById('cart-items-container')?.addEventListener('click', async
 
     if (newQty < 1) {
       // Lógica para eliminar el producto si la cantidad es 0
-      e.target.closest('.item-remove').click(); // Simula un click en el botón de eliminar
+      const itemElement = e.target.closest('.cart-item');
+      if (itemElement) {
+        const removeButton = itemElement.querySelector('.item-remove');
+        if (removeButton) {
+          removeButton.click(); // Esto activará la alerta de confirmación que ya tienes.
+        }
+      }
       return;
     }
 
