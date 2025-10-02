@@ -48,7 +48,7 @@ RewriteRule ^pago/exitoso/([0-9]+)$ /pago_exitoso.php?pedido_id=$1 [NC,L]
 RewriteRule ^pago/fallido$ /pago_fallido.php [NC,L]
 RewriteRule ^pago/pendiente$ /pago_pendiente.php [NC,L]
 
-RewriteRule ^search/(.+)$ /php/search.php?q=$1 [NC,L]
+RewriteRule ^php/search(.+)$ /php/search.php?q=$1 [NC,L]
 
 # Regla para pasar el Header de Autorización a PHP
 RewriteCond %{HTTP:Authorization} .
