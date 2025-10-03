@@ -232,13 +232,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Botón Sign Up (Join Stetson Community) también llama a la función global
-    const signUpBtn = document.getElementById('signup-section');
-    if (signUpBtn) {
-        signUpBtn.addEventListener('click', () => {
-            if (typeof openAuthModal === 'function') {
-                // El 'true' le indica a la función que muestre la pestaña de registro
-                openAuthModal(true); 
-            }
-        });
+    // Busca la sección de registro por su ID
+    const signupSection = document.getElementById('signup-section');
+
+    // Si la sección existe en la página y el token también existe...
+    if (signupSection && jwt) {
+        // ...oculta la sección.
+        signupSection.style.display = 'none';
     }
 });
