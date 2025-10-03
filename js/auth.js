@@ -232,7 +232,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Botón Sign Up (Join Stetson Community) también llama a la función global
-    const signUpBtn = document.getElementById('open-user-modal');
+    const signUpBtn = document.getElementById('signup-section');
     if (signUpBtn) {
         signUpBtn.addEventListener('click', () => {
             if (typeof openAuthModal === 'function') {
