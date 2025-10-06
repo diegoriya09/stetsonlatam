@@ -238,108 +238,73 @@ if (!empty($categorias_flat)) {
   </style>
 
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const hamburgerBtn = document.getElementById('hamburger-btn');
-      const closeNavBtn = document.getElementById('close-nav-btn');
-      const mobileNavPanel = document.getElementById('mobile-nav-panel');
+    document.addEventListener('DOMContentLoaded', function() {
+      const input = document.getElementById('search-input');
+      const resultsBox = document.getElementById('search-results');
+      let controller = null;
 
-      if (hamburgerBtn) {
-        hamburgerBtn.addEventListener('click', () => {
-          mobileNavPanel.classList.add('open');
-        });
-      }
-
-      if (closeNavBtn) {
-        closeNavBtn.addEventListener('click', () => {
-          mobileNavPanel.classList.remove('open');
-        });
-      }
-
-      // --- LÓGICA DE BÚSQUEDA CORREGIDA ---
-      const input = document.getElementById("search-input");
-      const resultsBox = document.getElementById("search-results");
-
-      input.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") {
-          doSearch(input.value);
-          resultsBox.classList.remove("hidden");
-        }
+      // Mostrar resultados al escribir
+      input.addEventListener('input', function() {
+        clearTimeout(window.searchTimer);
+        window.searchTimer = setTimeout(() => doSearch(input.value), 300);
       });
 
-      let controller = null;
-      async function doSearch(q) {
-        console.log("Buscando:", q);
-        if (controller) controller.abort();
-        controller = new AbortController();
-
-        if (q.trim() === "") {
-          resultsBox.classList.add("hidden");
-          return;
+      // Mostrar resultados al presionar Enter
+      input.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+          doSearch(input.value);
+          resultsBox.classList.remove('hidden');
         }
-
-        try {
-          // <-- CORRECCIÓN 1: Usamos la URL amigable definida en .htaccess
-          const res = await fetch("/php/search.php?q=" + encodeURIComponent(q), {
-            signal: controller.signal
-          });
-
-          if (!res.ok) throw new Error("HTTP " + res.status);
-          const data = await res.json();
-
-          if (!data.productos.length && !data.categorias.length) {
-            resultsBox.innerHTML = "<p class='p-2 text-gray-500'>No se han encontrado resultados.</p>";
-          } else {
-            let html = "";
-            // Bloque para mostrar productos
-            if (data.productos.length) {
-              html += "<h4 class='px-2 py-1 font-bold text-sm text-gray-600'>Productos</h4>";
-              data.productos.forEach(p => {
-                html += `
-                            <a href="${p.url}" class="flex items-center gap-2 p-2 hover:bg-gray-100">
-                                <img src="${p.image}" class="w-10 h-10 object-contain rounded">
-                                <span>${p.title}</span>
-                            </a>
-                        `;
-              });
-            }
-
-            // <-- CORRECCIÓN 2: Añadido bloque para mostrar categorías
-            if (data.categorias.length) {
-              html += "<h4 class='px-2 py-1 font-bold text-sm text-gray-600'>Categorías</h4>";
-              data.categorias.forEach(c => {
-                html += `
-                            <a href="${c.url}" class="block p-2 hover:bg-gray-100">
-                                <span>${c.title}</span>
-                            </a>
-                        `;
-              });
-            }
-
-            resultsBox.innerHTML = html;
-          }
-
-          resultsBox.classList.remove("hidden");
-        } catch (err) {
-          if (err.name !== "AbortError") {
-            console.error(err);
-            resultsBox.innerHTML = "<p class='p-2 text-red-500'>Error al realizar la búsqueda.</p>";
-            resultsBox.classList.remove("hidden");
-          }
-        }
-      }
-
-      let timer;
-      input.addEventListener("input", () => {
-        clearTimeout(timer);
-        timer = setTimeout(() => doSearch(input.value), 300);
       });
 
       // Ocultar resultados si se hace clic fuera
-      document.addEventListener('click', (e) => {
+      document.addEventListener('click', function(e) {
         if (!input.contains(e.target) && !resultsBox.contains(e.target)) {
           resultsBox.classList.add('hidden');
         }
       });
+
+      async function doSearch(q) {
+        console.log('Buscando:', q); // Depuración
+        if (controller) controller.abort();
+        controller = new AbortController();
+        if (q.trim() === '') {
+          resultsBox.classList.add('hidden');
+          return;
+        }
+        try {
+          const res = await fetch('/php/search.php?q=' + encodeURIComponent(q), {
+            signal: controller.signal
+          });
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+          const data = await res.json();
+          if ((!data.productos || !data.productos.length) && (!data.categorias || !data.categorias.length)) {
+            resultsBox.innerHTML = "<p class='p-2 text-gray-500'>No se han encontrado resultados.</p>";
+          } else {
+            let html = '';
+            if (data.productos && data.productos.length) {
+              html += "<h4 class='px-2 py-1 font-bold text-sm text-gray-600'>Productos</h4>";
+              data.productos.forEach(p => {
+                html += `<a href="${p.url}" class="flex items-center gap-2 p-2 hover:bg-gray-100"><img src="${p.image}" class="w-10 h-10 object-contain rounded"><span>${p.title}</span></a>`;
+              });
+            }
+            if (data.categorias && data.categorias.length) {
+              html += "<h4 class='px-2 py-1 font-bold text-sm text-gray-600'>Categorías</h4>";
+              data.categorias.forEach(c => {
+                html += `<a href="${c.url}" class="block p-2 hover:bg-gray-100"><span>${c.title}</span></a>`;
+              });
+            }
+            resultsBox.innerHTML = html;
+          }
+          resultsBox.classList.remove('hidden');
+        } catch (err) {
+          if (err.name !== 'AbortError') {
+            console.error(err);
+            resultsBox.innerHTML = "<p class='p-2 text-red-500'>Error al realizar la búsqueda.</p>";
+            resultsBox.classList.remove('hidden');
+          }
+        }
+      }
     });
   </script>
 </body>
