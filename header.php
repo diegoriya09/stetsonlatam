@@ -259,8 +259,16 @@ if (!empty($categorias_flat)) {
       const input = document.getElementById("search-input");
       const resultsBox = document.getElementById("search-results");
 
+      input.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          doSearch(input.value);
+          resultsBox.classList.remove("hidden");
+        }
+      });
+
       let controller = null;
       async function doSearch(q) {
+        console.log("Buscando:", q);
         if (controller) controller.abort();
         controller = new AbortController();
 
