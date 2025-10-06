@@ -9,19 +9,23 @@ RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 # --- REGLAS ESPECÍFICAS (VAN PRIMERO) ---
 # ===================================================================
 
-# --- REGLA DE BÚSQUEDA (MOVIDA HACIA ARRIBA) ---
+# --- REGLA DE BÚSQUEDA ---
+# Esta regla permite acceder a search.php usando /php/search/termino_de_busqueda
 RewriteRule ^php/search(.+)$ /php/search.php?q=$1 [NC,L]
 
 # --- URLs amigables para la tienda ---
+# Estas reglas permiten acceder a categoria.php y producto.php usando URLs más amigables
 RewriteRule ^categoria([0-9]+)$ /categoria.php?id=$1 [NC,L]
 RewriteRule ^producto([0-9]+)$ /producto.php?id=$1 [NC,L]
 
 # --- URLs para Páginas de Respuesta de Pago ---
+# Estas reglas permiten acceder a las páginas de respuesta de pago usando URLs más amigables
 RewriteRule ^pago/exitoso/([0-9]+)$ /pago_exitoso.php?pedido_id=$1 [NC,L]
 RewriteRule ^pago/fallido$ /pago_fallido.php [NC,L]
 RewriteRule ^pago/pendiente$ /pago_pendiente.php [NC,L]
 
 # --- URLs amigables para APIs y otras páginas ---
+# Estas reglas permiten acceder a las APIs y otras páginas usando URLs más amigables
 RewriteRule ^admin/edit([0-9]+)$ /admin/edit_product.php?id=$1 [NC,L]
 RewriteRule ^admin/delete([0-9]+)$ /admin/delete_product.php?id=$1 [NC,L]
 RewriteRule ^admin/update_order_status$ /admin/update_order_status.php [NC,L]
@@ -40,18 +44,26 @@ RewriteRule ^reset-password$ /reset-password.php [NC,L]
 # ===================================================================
 
 # --- REGLA para quitar la extensión .php de los archivos ---
+# Esta regla redirige las URLs que terminan en .php a la misma URL sin la extensión
 RewriteCond %{THE_REQUEST} \s/+(.+?)\.php[\s?] [NC]
 RewriteRule ^ %1 [R=301,L]
 
+# --- REGLA para añadir la extensión .php internamente ---
+# Esta regla añade la extensión .php a las URLs que no terminan en un directorio o archivo existente
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{DOCUMENT_ROOT}/%{REQUEST_URI}.php -f
 RewriteRule ^(.*?)/?$ $1.php [L]
 
 # ===================================================================
+# --- CONFIGURACIÓN ADICIONAL ---
+# ===================================================================
 
-# Regla para pasar el Header de Autorización a PHP
+# --- Regla para pasar el Header de Autorización a PHP ---
+# Esta regla permite que PHP acceda al Header de Autorización
 RewriteCond %{HTTP:Authorization} .
 RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
+# --- Configuración de codificación de caracteres ---
+# Esta configuración asegura que los archivos se sirvan con la codificación UTF-8
 AddCharset UTF-8 .php .css .js
