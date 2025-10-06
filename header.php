@@ -118,34 +118,30 @@ if (!empty($categorias_flat)) {
           <?php endif; ?>
         </div>
       </div>
-    </nav>
-
-    <div class="flex-1 flex justify-end items-center gap-4">
-      <div class="hidden md:block desktop-search">
-        <label class="relative flex items-center">
-          <div class="absolute left-3 text-[#3c3737]">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256">
-              <path
-                d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z">
-              </path>
-            </svg>
+        <header class="flex items-center justify-center whitespace-nowrap border-b border-solid border-b-[#f3f2f2] px-10 py-5 h-20">
+          <div class="flex-1 flex justify-start">
+            <a href="https://stetsonlatam.com/" aria-label="Stetson Latam">
+              <img src="img/logo.svg" alt="Logo de Stetson Latam" class="h-5 w-auto">
+            </a>
           </div>
-          <input id="search-input" name="q" placeholder="Search..." autocomplete="off"
-            class="w-full h-10 pl-10 pr-4 placeholder-[#3c3737] bg-[#f1eeea] rounded-lg border-2 border-transparent focus:border-transparent focus:ring-2 focus:ring-[#3f1e1f]" />
-          <div id="search-results"
-            class="absolute top-full mt-1 left-0 w-full bg-white border rounded-lg shadow-lg hidden z-50 max-h-80 overflow-y-auto">
+          <!-- ...existing nav/menu code... -->
+          <div class="flex-1 flex justify-end items-center gap-4">
+            <div class="hidden md:block desktop-search">
+              <label class="relative flex items-center">
+                <div class="absolute left-3 text-[#3c3737]">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256">
+                    <path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path>
+                  </svg>
+                </div>
+                <input id="search-input" name="q" placeholder="Search..." autocomplete="off"
+                  class="w-full h-10 pl-10 pr-4 placeholder-[#3c3737] bg-[#f1eeea] rounded-lg border-2 border-transparent focus:border-transparent focus:ring-2 focus:ring-[#3f1e1f]" />
+                <div id="search-results"
+                  class="absolute top-full mt-1 left-0 w-full bg-white border rounded-lg shadow-lg hidden z-50 max-h-80 overflow-y-auto"></div>
+              </label>
+            </div>
+            <!-- ...existing icons/buttons code... -->
           </div>
-        </label>
-      </div>
-      <div class="flex gap-2">
-        <button id="logout-btn" style="display:none;"
-          class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-[#f1eeea] text-[#3c3737] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
-          <div class="text-[#3c3737]" data-icon="SignOut" data-size="24px" data-weight="regular">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256">
-              <path
-                d="M216,128a8,8,0,0,1-8,8H104v16a8,8,0,0,1-13.66,5.66l-32-32a8,8,0,0,1,0-11.32l32-32A8,8,0,0,1,104,104v16h104A8,8,0,0,1,216,128ZM128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Z">
-              </path>
-            </svg>
+        </header>
           </div>
         </button>
         <button id="user-btn" class="p-2 h-10 w-10 flex items-center justify-center bg-[#f1eeea] rounded-lg">
@@ -238,108 +234,85 @@ if (!empty($categorias_flat)) {
   </style>
 
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', function() {
+      // Menú móvil
       const hamburgerBtn = document.getElementById('hamburger-btn');
       const closeNavBtn = document.getElementById('close-nav-btn');
       const mobileNavPanel = document.getElementById('mobile-nav-panel');
-
       if (hamburgerBtn) {
-        hamburgerBtn.addEventListener('click', () => {
-          mobileNavPanel.classList.add('open');
-        });
+        hamburgerBtn.addEventListener('click', () => mobileNavPanel.classList.add('open'));
       }
-
       if (closeNavBtn) {
-        closeNavBtn.addEventListener('click', () => {
-          mobileNavPanel.classList.remove('open');
-        });
+        closeNavBtn.addEventListener('click', () => mobileNavPanel.classList.remove('open'));
       }
 
-      // --- LÓGICA DE BÚSQUEDA CORREGIDA ---
-      const input = document.getElementById("search-input");
-      const resultsBox = document.getElementById("search-results");
+      // --- Búsqueda interactiva ---
+      const input = document.getElementById('search-input');
+      const resultsBox = document.getElementById('search-results');
+      let controller = null;
 
-      input.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") {
-          doSearch(input.value);
-          resultsBox.classList.remove("hidden");
-        }
+      // Mostrar resultados al escribir
+      input.addEventListener('input', function() {
+        clearTimeout(window.searchTimer);
+        window.searchTimer = setTimeout(() => doSearch(input.value), 300);
       });
 
-      let controller = null;
-      async function doSearch(q) {
-        console.log("Buscando:", q);
-        if (controller) controller.abort();
-        controller = new AbortController();
-
-        if (q.trim() === "") {
-          resultsBox.classList.add("hidden");
-          return;
+      // Mostrar resultados al presionar Enter
+      input.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+          doSearch(input.value);
+          resultsBox.classList.remove('hidden');
         }
-
-        try {
-          // <-- CORRECCIÓN 1: Usamos la URL amigable definida en .htaccess
-          const res = await fetch("/php/search.php?q=" + encodeURIComponent(q), {
-            signal: controller.signal
-          });
-
-          if (!res.ok) throw new Error("HTTP " + res.status);
-          const data = await res.json();
-
-          if (!data.productos.length && !data.categorias.length) {
-            resultsBox.innerHTML = "<p class='p-2 text-gray-500'>No se han encontrado resultados.</p>";
-          } else {
-            let html = "";
-            // Bloque para mostrar productos
-            if (data.productos.length) {
-              html += "<h4 class='px-2 py-1 font-bold text-sm text-gray-600'>Productos</h4>";
-              data.productos.forEach(p => {
-                html += `
-                            <a href="${p.url}" class="flex items-center gap-2 p-2 hover:bg-gray-100">
-                                <img src="${p.image}" class="w-10 h-10 object-contain rounded">
-                                <span>${p.title}</span>
-                            </a>
-                        `;
-              });
-            }
-
-            // <-- CORRECCIÓN 2: Añadido bloque para mostrar categorías
-            if (data.categorias.length) {
-              html += "<h4 class='px-2 py-1 font-bold text-sm text-gray-600'>Categorías</h4>";
-              data.categorias.forEach(c => {
-                html += `
-                            <a href="${c.url}" class="block p-2 hover:bg-gray-100">
-                                <span>${c.title}</span>
-                            </a>
-                        `;
-              });
-            }
-
-            resultsBox.innerHTML = html;
-          }
-
-          resultsBox.classList.remove("hidden");
-        } catch (err) {
-          if (err.name !== "AbortError") {
-            console.error(err);
-            resultsBox.innerHTML = "<p class='p-2 text-red-500'>Error al realizar la búsqueda.</p>";
-            resultsBox.classList.remove("hidden");
-          }
-        }
-      }
-
-      let timer;
-      input.addEventListener("input", () => {
-        clearTimeout(timer);
-        timer = setTimeout(() => doSearch(input.value), 300);
       });
 
       // Ocultar resultados si se hace clic fuera
-      document.addEventListener('click', (e) => {
+      document.addEventListener('click', function(e) {
         if (!input.contains(e.target) && !resultsBox.contains(e.target)) {
           resultsBox.classList.add('hidden');
         }
       });
+
+      async function doSearch(q) {
+        console.log('Buscando:', q); // Depuración
+        if (controller) controller.abort();
+        controller = new AbortController();
+        if (q.trim() === '') {
+          resultsBox.classList.add('hidden');
+          return;
+        }
+        try {
+          const res = await fetch('/php/search.php?q=' + encodeURIComponent(q), {
+            signal: controller.signal
+          });
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+          const data = await res.json();
+          if ((!data.productos || !data.productos.length) && (!data.categorias || !data.categorias.length)) {
+            resultsBox.innerHTML = "<p class='p-2 text-gray-500'>No se han encontrado resultados.</p>";
+          } else {
+            let html = '';
+            if (data.productos && data.productos.length) {
+              html += "<h4 class='px-2 py-1 font-bold text-sm text-gray-600'>Productos</h4>";
+              data.productos.forEach(p => {
+                html += `<a href="${p.url}" class="flex items-center gap-2 p-2 hover:bg-gray-100"><img src="${p.image}" class="w-10 h-10 object-contain rounded"><span>${p.title}</span></a>`;
+              });
+            }
+            if (data.categorias && data.categorias.length) {
+              html += "<h4 class='px-2 py-1 font-bold text-sm text-gray-600'>Categorías</h4>";
+              data.categorias.forEach(c => {
+                html += `<a href="${c.url}" class="block p-2 hover:bg-gray-100"><span>${c.title}</span></a>`;
+              });
+            }
+            resultsBox.innerHTML = html;
+          }
+          resultsBox.classList.remove('hidden');
+        } catch (err) {
+          if (err.name !== 'AbortError') {
+            console.error(err);
+            resultsBox.innerHTML = "<p class='p-2 text-red-500'>Error al realizar la búsqueda.</p>";
+            resultsBox.classList.remove('hidden');
+          }
+        }
+      }
     });
   </script>
 </body>
