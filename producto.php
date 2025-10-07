@@ -89,6 +89,8 @@ $canonical_url = "https://www.stetsonlatam.com/producto/" . $product_id;
   <link href="/css/producto.css?v=<?php echo time(); ?>" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/drift-zoom/dist/drift-basic.min.css">
+  <script src="https://unpkg.com/drift-zoom/dist/Drift.min.js" defer></script>
   <meta name="description" content="<?php echo $meta_description; ?>">
   <link rel="canonical" href="<?php echo $canonical_url; ?>" />
   <meta property="og:title" content="<?php echo $page_title; ?>" />
@@ -223,6 +225,68 @@ $canonical_url = "https://www.stetsonlatam.com/producto/" . $product_id;
     .product-card .info {
       padding: 10px;
     }
+
+    /* --- ESTILOS PARA LA NUEVA GALERÍA AVANZADA --- */
+    .product-gallery-advanced {
+      display: flex;
+      gap: 15px;
+      /* Espacio entre miniaturas e imagen principal */
+    }
+
+    .thumbnail-container-vertical {
+      display: flex;
+      flex-direction: column;
+      /* Apila las imágenes verticalmente */
+      gap: 10px;
+      width: 80px;
+      /* Ancho de la columna de miniaturas */
+      flex-shrink: 0;
+      max-height: 500px;
+      /* Altura máxima, ajusta según tu diseño */
+      overflow-y: auto;
+      /* Scroll si hay muchas imágenes */
+    }
+
+    .thumbnail-image {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border: 2px solid transparent;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+
+    .thumbnail-image:hover {
+      border-color: #ccc;
+    }
+
+    .thumbnail-image.active {
+      border-color: #3c3737;
+      /* Borde para la miniatura activa */
+    }
+
+    .main-image-zoom-container {
+      flex-grow: 1;
+      /* Ocupa el resto del espacio */
+      position: relative;
+      /* Necesario para la librería de zoom */
+    }
+
+    #main-product-image {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+
+    /* Estilos para la ventana de zoom (puedes personalizarlos) */
+    .drift-zoom-pane {
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
   </style>
 </head>
 
@@ -233,11 +297,13 @@ $canonical_url = "https://www.stetsonlatam.com/producto/" . $product_id;
 
       <main class="product-main">
         <div class="product-container">
-          <div class="product-gallery">
-            <div class="main-image-container">
-              <img id="main-product-image" src="" alt="<?php echo htmlspecialchars($producto['name']); ?>">
+          <div class="product-gallery-advanced">
+            <div class="thumbnail-container-vertical" id="thumbnail-container">
             </div>
-            <div class="thumbnail-container" id="thumbnail-container">
+
+            <div class="main-image-zoom-container">
+              <img id="main-product-image" src=""
+                data-zoom="" alt="<?php echo htmlspecialchars($producto['name']); ?>">
             </div>
           </div>
           <div class="product-details">
@@ -329,49 +395,65 @@ $canonical_url = "https://www.stetsonlatam.com/producto/" . $product_id;
     const productVariants = <?php echo json_encode($variants_stock); ?>;
     const productId = <?php echo $producto['id']; ?>;
     const imagesByColor = <?php echo json_encode($images_by_color); ?>;
+    const defaultImage = '/<?php echo htmlspecialchars($producto['image']); ?>';
 
     document.addEventListener('DOMContentLoaded', function() {
       const jwt = localStorage.getItem('jwt');
 
       const mainImage = document.getElementById('main-product-image');
       const thumbnailContainer = document.getElementById('thumbnail-container');
+      let driftZoom = null; // Variable para guardar la instancia del zoom
 
       function updateImageGallery(colorId) {
         // Obtenemos las imágenes para el color seleccionado, o las 'default' si no hay específicas
-        const images = imagesByColor[colorId] || imagesByColor['default'] || [];
+        const defaultImages = imagesByColor['default'] || [defaultImage.substring(1)]; // Usa la imagen principal si no hay default
+        const images = imagesByColor[colorId] || defaultImages;
 
         // Limpiamos la galería actual
         thumbnailContainer.innerHTML = '';
 
         if (images.length > 0) {
-          // La primera imagen del array será la principal
-          mainImage.src = '/' + images[0];
-
           // Creamos las miniaturas
-          images.forEach(imgUrl => {
+          images.forEach((imgUrl, index) => {
             const thumb = document.createElement('img');
             thumb.src = '/' + imgUrl;
             thumb.className = 'thumbnail-image';
             thumbnailContainer.appendChild(thumb);
 
-            // Añadimos un listener para que al hacer clic en una miniatura, cambie la imagen principal
+            // Al hacer clic en una miniatura, se actualiza la imagen principal
             thumb.addEventListener('click', () => {
-              mainImage.src = thumb.src;
-              // Opcional: resaltar la miniatura activa
+              setMainImage('/' + imgUrl);
               document.querySelectorAll('.thumbnail-image').forEach(t => t.classList.remove('active'));
               thumb.classList.add('active');
             });
+
+            // La primera imagen del array será la principal por defecto
+            if (index === 0) {
+              setMainImage('/' + imgUrl);
+              thumb.classList.add('active');
+            }
           });
-
-          // Activamos la primera miniatura por defecto
-          if (thumbnailContainer.firstChild) {
-            thumbnailContainer.firstChild.classList.add('active');
-          }
-
         } else {
-          // Si no hay ninguna imagen, usamos la imagen principal del producto
-          mainImage.src = '/<?php echo htmlspecialchars($producto['image']); ?>';
+          // Si no hay ninguna imagen para ese color, mostramos la imagen principal del producto
+          setMainImage(defaultImage);
         }
+      }
+
+      function setMainImage(imageUrl) {
+        // Si ya existe una instancia de zoom, la destruimos antes de crear una nueva
+        if (driftZoom) {
+          driftZoom.destroy();
+        }
+
+        mainImage.src = imageUrl;
+        mainImage.dataset.zoom = imageUrl; // Actualizamos el atributo data-zoom para la nueva imagen
+
+        // Creamos una nueva instancia de Drift para la imagen principal
+        driftZoom = new Drift(mainImage, {
+          paneContainer: mainImage.parentElement, // El zoom aparecerá junto a la imagen
+          inlinePane: 768, // Si la pantalla es menor a 768px, el zoom es sobre la imagen
+          hoverBoundingBox: true
+        });
       }
 
       // --- Lógica de selección de variantes ---
@@ -405,6 +487,14 @@ $canonical_url = "https://www.stetsonlatam.com/producto/" . $product_id;
           updateStock();
         });
       });
+      // Carga inicial de la galería
+      if (colorBtns.length > 0) {
+        // Simulamos un clic en el primer color disponible para cargar sus imágenes
+        colorBtns[0].click();
+      } else {
+        // Si no hay colores, cargamos las imágenes por defecto
+        updateImageGallery('default');
+      }
       sizeBtns.forEach(btn => {
         btn.addEventListener('click', function() {
           sizeBtns.forEach(b => b.classList.remove('selected'));
