@@ -2,6 +2,9 @@
 // --- 1. CONFIGURACIÓN DE LA BASE DE DATOS ---
 require 'php/conexion.php';
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 try {
   // Esta es la consulta que ya tienes
   $stmt = $conn->prepare("SELECT id, nombre, categoria_padre_id FROM categorias ORDER BY nombre");
