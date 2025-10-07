@@ -715,7 +715,7 @@ $canonical_url = "https://www.stetsonlatam.com/producto/" . $product_id;
               productCard.className = 'product-card';
               productCard.innerHTML = `
                                 <a href="/producto${product.id}">
-                                    <img src="/${product.image}" alt="${product.name}">
+                                    <img src="/${product.image}" alt="${product.name}" loading="lazy">
                                 </a>
                                 <div class="info">
                                     <h3>${product.name}</h3>
