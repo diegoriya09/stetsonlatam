@@ -42,6 +42,20 @@ try {
   $variants_stock = $stmt_variants->get_result()->fetch_all(MYSQLI_ASSOC);
   $stmt_variants->close();
 
+  $stmt_images = $conn->prepare("SELECT color_id, image_url FROM product_images WHERE product_id = ? ORDER BY id");
+  $stmt_images->bind_param("i", $product_id);
+  $stmt_images->execute();
+  $images_result = $stmt_images->get_result();
+
+  $images_by_color = [];
+  while ($row = $images_result->fetch_assoc()) {
+    // Usamos 'default' como clave para imágenes sin color específico (NULL)
+    $key = $row['color_id'] ?? 'default';
+    // Agrupamos las URLs de las imágenes por su clave (color_id o 'default')
+    $images_by_color[$key][] = $row['image_url'];
+  }
+  $stmt_images->close();
+
   $user_id = $_SESSION['user_id'] ?? null;
   if ($user_id !== null) {
     $stmt_visit = $conn->prepare("INSERT INTO user_visits (user_id, product_id, visited_at) VALUES (?, ?, NOW()) ON DUPLICATE KEY UPDATE visited_at = NOW()");
@@ -221,7 +235,9 @@ $canonical_url = "https://www.stetsonlatam.com/producto/" . $product_id;
         <div class="product-container">
           <div class="product-gallery">
             <div class="main-image-container">
-              <img id="main-product-image" src="/<?php echo htmlspecialchars($producto['image']); ?>" alt="<?php echo htmlspecialchars($producto['name']); ?>">
+              <img id="main-product-image" src="" alt="<?php echo htmlspecialchars($producto['name']); ?>">
+            </div>
+            <div class="thumbnail-container" id="thumbnail-container">
             </div>
           </div>
           <div class="product-details">
@@ -312,9 +328,51 @@ $canonical_url = "https://www.stetsonlatam.com/producto/" . $product_id;
   <script>
     const productVariants = <?php echo json_encode($variants_stock); ?>;
     const productId = <?php echo $producto['id']; ?>;
+    const imagesByColor = <?php echo json_encode($images_by_color); ?>;
 
     document.addEventListener('DOMContentLoaded', function() {
       const jwt = localStorage.getItem('jwt');
+
+      const mainImage = document.getElementById('main-product-image');
+      const thumbnailContainer = document.getElementById('thumbnail-container');
+
+      function updateImageGallery(colorId) {
+        // Obtenemos las imágenes para el color seleccionado, o las 'default' si no hay específicas
+        const images = imagesByColor[colorId] || imagesByColor['default'] || [];
+
+        // Limpiamos la galería actual
+        thumbnailContainer.innerHTML = '';
+
+        if (images.length > 0) {
+          // La primera imagen del array será la principal
+          mainImage.src = '/' + images[0];
+
+          // Creamos las miniaturas
+          images.forEach(imgUrl => {
+            const thumb = document.createElement('img');
+            thumb.src = '/' + imgUrl;
+            thumb.className = 'thumbnail-image';
+            thumbnailContainer.appendChild(thumb);
+
+            // Añadimos un listener para que al hacer clic en una miniatura, cambie la imagen principal
+            thumb.addEventListener('click', () => {
+              mainImage.src = thumb.src;
+              // Opcional: resaltar la miniatura activa
+              document.querySelectorAll('.thumbnail-image').forEach(t => t.classList.remove('active'));
+              thumb.classList.add('active');
+            });
+          });
+
+          // Activamos la primera miniatura por defecto
+          if (thumbnailContainer.firstChild) {
+            thumbnailContainer.firstChild.classList.add('active');
+          }
+
+        } else {
+          // Si no hay ninguna imagen, usamos la imagen principal del producto
+          mainImage.src = '/<?php echo htmlspecialchars($producto['image']); ?>';
+        }
+      }
 
       // --- Lógica de selección de variantes ---
       let selectedColorId = null;
@@ -343,6 +401,7 @@ $canonical_url = "https://www.stetsonlatam.com/producto/" . $product_id;
           colorBtns.forEach(b => b.classList.remove('selected'));
           this.classList.add('selected');
           selectedColorId = this.dataset.colorId;
+          updateImageGallery(selectedColorId);
           updateStock();
         });
       });
@@ -396,6 +455,13 @@ $canonical_url = "https://www.stetsonlatam.com/producto/" . $product_id;
         };
         addToCart(cartData);
       });
+
+      const initialColorId = colorBtns.length > 0 ? colorBtns[0].dataset.colorId : 'default';
+      if (colorBtns.length > 0) {
+        colorBtns[0].click(); // Simulamos un clic en el primer color para iniciar todo
+      } else {
+        updateImageGallery('default'); // Si no hay colores, cargamos las default
+      }
 
       // --- Lógica para Reseñas ---
       const reviewFormContainer = document.getElementById('review-form-container');
