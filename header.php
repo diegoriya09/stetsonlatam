@@ -241,6 +241,10 @@ if (!empty($categorias_flat)) {
   </style>
 
   <script>
+    const BASE_URL = "<?php echo rtrim(dirname($_SERVER['SCRIPT_NAME']), '/'); ?>";
+  </script>
+
+  <script>
     document.addEventListener('DOMContentLoaded', function() {
       const input = document.getElementById('search-input');
       const resultsBox = document.getElementById('search-results');
@@ -276,7 +280,7 @@ if (!empty($categorias_flat)) {
           return;
         }
         try {
-          const res = await fetch('/search/' + encodeURIComponent(q), {
+          const res = await fetch(BASE_URL + '/search/' + encodeURIComponent(q), {
             signal: controller.signal
           });
           if (!res.ok) throw new Error('HTTP ' + res.status);
