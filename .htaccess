@@ -1,69 +1,77 @@
+# ===================================================================
+# STETSON LATAM HTACCESS - VERSIÓN ORGANIZADA Y DEFINITIVA
+# ===================================================================
+
+# -------------------------------------------------------------------
+# CONFIGURACIÓN DEL MOTOR Y REGLAS GLOBALES
+# -------------------------------------------------------------------
+
 # Activa el motor de reescritura de URLs
 RewriteEngine On
 
-# Redirige a HTTPS si no se está usando
+# Redirige todo el tráfico a HTTPS (Recomendado para producción)
 RewriteCond %{HTTPS} off
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
-# ===================================================================
-# --- REGLAS ESPECÍFICAS (VAN PRIMERO) ---
-# ===================================================================
+# Permite que PHP reciba el Header de Autorización para JWT
+RewriteCond %{HTTP:Authorization} .
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
-# --- REGLA DE BÚSQUEDA ---
-# Esta regla permite acceder a search.php usando /php/search/termino_de_busqueda
-RewriteRule ^php/search(.+)$ /php/search.php?q=$1 [NC,L]
+# -------------------------------------------------------------------
+# REGLAS DE REESCRITURA ESPECÍFICAS (ORDENADAS DE MÁS A MENOS ESPECÍFICAS)
+# Estas reglas convierten URLs amigables en rutas de archivos reales.
+# DEBEN IR ANTES DE LAS REGLAS GENERALES para que no entren en conflicto.
+# -------------------------------------------------------------------
 
-# --- URLs amigables para la tienda ---
-# Estas reglas permiten acceder a categoria.php y producto.php usando URLs más amigables
+# --- Regla de Búsqueda ---
+# Transforma /search/texto-buscado -> /php/search.php?q=texto-buscado
+RewriteRule ^search/(.+)$ /php/search.php?q=$1 [NC,L]
+
+# --- Reglas de la Tienda ---
+# Transforma /categoria123 -> /categoria.php?id=123
 RewriteRule ^categoria([0-9]+)$ /categoria.php?id=$1 [NC,L]
+# Transforma /producto456 -> /producto.php?id=456
 RewriteRule ^producto([0-9]+)$ /producto.php?id=$1 [NC,L]
 
-# --- URLs para Páginas de Respuesta de Pago ---
-# Estas reglas permiten acceder a las páginas de respuesta de pago usando URLs más amigables
+# --- Reglas para Páginas de Respuesta de Pago ---
 RewriteRule ^pago/exitoso/([0-9]+)$ /pago_exitoso.php?pedido_id=$1 [NC,L]
 RewriteRule ^pago/fallido$ /pago_fallido.php [NC,L]
 RewriteRule ^pago/pendiente$ /pago_pendiente.php [NC,L]
 
-# --- URLs amigables para APIs y otras páginas ---
-# Estas reglas permiten acceder a las APIs y otras páginas usando URLs más amigables
+# --- Reglas para el Panel de Administración ---
 RewriteRule ^admin/edit([0-9]+)$ /admin/edit_product.php?id=$1 [NC,L]
 RewriteRule ^admin/delete([0-9]+)$ /admin/delete_product.php?id=$1 [NC,L]
 RewriteRule ^admin/update_order_status$ /admin/update_order_status.php [NC,L]
 RewriteRule ^admin/add_product$ /admin/add_product.php [NC,L]
 RewriteRule ^admin/stockedit([0-9]+)$ /admin/edit_stock.php?id=$1 [NC,L]
+RewriteRule ^admin/get_sales_report$ /admin/get_sales_report.php [NC,L]
+RewriteRule ^admin/export_report$ /admin/export_report.php [NC,L]
+
+# --- Reglas para APIs y Páginas Específicas ---
 RewriteRule ^php/order/get_detail_order([0-9]+)$ /php/order/get_detail_order.php?id=$1 [NC,L]
 RewriteRule ^php/reviews/get_reviews([0-9]+)$ /php/reviews/get_reviews.php?id=$1 [NC,L]
 RewriteRule ^php/user/get_wishlist_status([0-9]+)$ /php/user/get_wishlist_status.php?id=$1 [NC,L]
-RewriteRule ^admin/get_sales_report$ /admin/get_sales_report.php [NC,L]
-RewriteRule ^admin/export_report$ /admin/export_report.php [NC,L]
 RewriteRule ^php/google_signin$ /php/google_signin.php [NC,L]
 RewriteRule ^reset-password$ /reset-password.php [NC,L]
 
-# ===================================================================
-# --- REGLAS GENERALES (VAN AL FINAL, ANTES DE LA CONFIGURACIÓN) ---
-# ===================================================================
+# -------------------------------------------------------------------
+# REGLAS DE REESCRITURA GENERALES (PARA OCULTAR .php)
+# Estas reglas son menos específicas y por eso deben ir al final.
+# -------------------------------------------------------------------
 
-# --- REGLA para quitar la extensión .php de los archivos ---
-# Esta regla redirige las URLs que terminan en .php a la misma URL sin la extensión
+# 1. Redirige al usuario si escribe ".php" en la URL (ej: /pagina.php -> /pagina)
 RewriteCond %{THE_REQUEST} \s/+(.+?)\.php[\s?] [NC]
 RewriteRule ^ %1 [R=301,L]
 
-# --- REGLA para añadir la extensión .php internamente ---
-# Esta regla añade la extensión .php a las URLs que no terminan en un directorio o archivo existente
+# 2. Reescribe internamente la URL limpia al archivo .php (ej: el servidor recibe /pagina y busca /pagina.php)
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{DOCUMENT_ROOT}/%{REQUEST_URI}.php -f
 RewriteRule ^(.*?)/?$ $1.php [L]
 
-# ===================================================================
-# --- CONFIGURACIÓN ADICIONAL ---
-# ===================================================================
+# -------------------------------------------------------------------
+# CONFIGURACIÓN FINAL DEL SERVIDOR
+# -------------------------------------------------------------------
 
-# --- Regla para pasar el Header de Autorización a PHP ---
-# Esta regla permite que PHP acceda al Header de Autorización
-RewriteCond %{HTTP:Authorization} .
-RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
-
-# --- Configuración de codificación de caracteres ---
-# Esta configuración asegura que los archivos se sirvan con la codificación UTF-8
+# Asegura la codificación de caracteres correcta
 AddCharset UTF-8 .php .css .js
