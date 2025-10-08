@@ -276,7 +276,7 @@ if (!empty($categorias_flat)) {
           return;
         }
         try {
-          const res = await fetch('/php/search?q=' + encodeURIComponent(q), {
+          const res = await fetch('/search' + encodeURIComponent(q), {
             signal: controller.signal
           });
           if (!res.ok) throw new Error('HTTP ' + res.status);
