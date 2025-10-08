@@ -279,7 +279,7 @@ if (!empty($categorias_flat)) {
           const res = await fetch('/php/search?q=' + encodeURIComponent(q), {
             signal: controller.signal
           });
-          if (!res.ok) throw new Error('HTTPS ' + res.status);
+          if (!res.ok) throw new Error('HTTP ' + res.status);
           const data = await res.json();
           if ((!data.productos || !data.productos.length) && (!data.categorias || !data.categorias.length)) {
             resultsBox.innerHTML = "<p class='p-2 text-gray-500'>No se han encontrado resultados.</p>";
