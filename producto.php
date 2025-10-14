@@ -405,39 +405,45 @@ $canonical_url = "https://www.stetsonlatam.com/producto/" . $product_id;
       let driftZoom = null; // Variable para guardar la instancia del zoom
 
       function updateImageGallery(colorId) {
-        // Obtenemos las imágenes para el color específico (si existen)
-        const colorImages = imagesByColor[colorId] || [];
-        // Obtenemos las imágenes genéricas (guardadas con color_id NULL)
         const genericImages = imagesByColor['default'] || [];
-        // Combinamos ambos arrays. Las del color irán primero.
-        const images = [...colorImages, ...genericImages];
+        const colorImages = imagesByColor[colorId] || [];
+        let imagesToShow = [];
 
-        // Limpiamos la galería actual
+        if (colorImages.length > 0) {
+          // ESCENARIO 1: SÍ hay imágenes para el color seleccionado.
+          // Combinamos las imágenes de ese color con las genéricas.
+          imagesToShow = [...colorImages, ...genericImages];
+        } else {
+          // ESCENARIO 2: NO hay imágenes para el color seleccionado.
+          // Usamos la imagen principal del producto y la combinamos con las genéricas.
+          // El `substring(1)` es para quitar la barra "/" inicial de la variable defaultImage.
+          imagesToShow = [defaultImage.substring(1), ...genericImages];
+        }
+
+        // Usamos 'Set' para asegurarnos de que no haya imágenes duplicadas en la galería
+        imagesToShow = [...new Set(imagesToShow)];
+
         thumbnailContainer.innerHTML = '';
 
-        if (images.length > 0) {
-          // Creamos las miniaturas
-          images.forEach((imgUrl, index) => {
+        if (imagesToShow.length > 0) {
+          imagesToShow.forEach((imgUrl, index) => {
             const thumb = document.createElement('img');
             thumb.src = '/' + imgUrl;
             thumb.className = 'thumbnail-image';
             thumbnailContainer.appendChild(thumb);
 
-            // Al hacer clic en una miniatura, se actualiza la imagen principal
             thumb.addEventListener('click', () => {
               setMainImage('/' + imgUrl);
               document.querySelectorAll('.thumbnail-image').forEach(t => t.classList.remove('active'));
               thumb.classList.add('active');
             });
 
-            // La primera imagen del array será la principal por defecto
             if (index === 0) {
               setMainImage('/' + imgUrl);
               thumb.classList.add('active');
             }
           });
         } else {
-          // Si no hay ninguna imagen para ese color, mostramos la imagen principal del producto
           setMainImage(defaultImage);
         }
       }
