@@ -405,9 +405,12 @@ $canonical_url = "https://www.stetsonlatam.com/producto/" . $product_id;
       let driftZoom = null; // Variable para guardar la instancia del zoom
 
       function updateImageGallery(colorId) {
-        // Obtenemos las imágenes para el color seleccionado, o las 'default' si no hay específicas
-        const defaultImages = imagesByColor['default'] || [defaultImage.substring(1)]; // Usa la imagen principal si no hay default
-        const images = imagesByColor[colorId] || defaultImages;
+        // Obtenemos las imágenes para el color específico (si existen)
+        const colorImages = imagesByColor[colorId] || [];
+        // Obtenemos las imágenes genéricas (guardadas con color_id NULL)
+        const genericImages = imagesByColor['default'] || [];
+        // Combinamos ambos arrays. Las del color irán primero.
+        const images = [...colorImages, ...genericImages];
 
         // Limpiamos la galería actual
         thumbnailContainer.innerHTML = '';
