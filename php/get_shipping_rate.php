@@ -4,7 +4,7 @@ require_once 'conexion.php';
 header('Content-Type: application/json');
 
 // --- CONFIGURACIÓN ---
-$api_key = 'TU_API_KEY_DE_EXCHANGERATE-API'; // <-- PEGA AQUÍ TU API KEY
+$api_key = 'fb6bafe141d0995b2110e976'; // <-- PEGA AQUÍ TU API KEY
 $base_currency = 'COP'; // Moneda en la que están guardados tus precios
 $target_currency = 'USD'; // Moneda a la que quieres convertir
 
