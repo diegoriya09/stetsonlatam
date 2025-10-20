@@ -80,15 +80,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $items_carrito = $stmt_cart->get_result()->fetch_all(MYSQLI_ASSOC);
         $stmt_cart->close();
         if (count($items_carrito) === 0) throw new Exception("Tu carrito está vacío.");
-        $total = 0;
+        $cart_total = 0;
         foreach ($items_carrito as $item) {
-            $total += $item['precio'] * $item['quantity'];
+            $cart_total += $item['precio'] * $item['quantity'];
         }
+
+        // 2. Calcular el costo de envío (verificándolo en el backend por seguridad)
+        $shipping_cost = 0;
+        $department = $_POST['estado'] ?? ''; // 'estado' es el name de tu campo de departamento
+
+        if (!empty($department)) {
+            $stmt_rate = $conn->prepare("SELECT price FROM shipping_rates WHERE departamento = ?");
+            $stmt_rate->bind_param("s", $department);
+            $stmt_rate->execute();
+            $rate_result = $stmt_rate->get_result()->fetch_assoc();
+            if ($rate_result) {
+                $shipping_cost = (float)$rate_result['price'];
+            }
+            $stmt_rate->close();
+        }
+
+        // 3. Calcular el total final
+        $total_final = $cart_total + $shipping_cost;
 
         // 3. CREAMOS EL PEDIDO EN NUESTRA BASE DE DATOS con estado 'Pendiente de Pago'
         $metodo_pago = $_POST['metodo'] ?? '';
         $stmt_order = $conn->prepare("INSERT INTO pedidos (user_id, total, estado, nombre_cliente, email_cliente, pais, ciudad, direccion, telefono, metodo_pago) VALUES (?, ?, 'PendienteDePago', ?, ?, ?, ?, ?, ?, ?)");
-        $stmt_order->bind_param("idsssssss", $user_id, $total, $_POST['nombre'], $_POST['email'], $_POST['pais'], $_POST['ciudad'], $_POST['direccion'], $_POST['telefono'], $metodo_pago);
+        $stmt_order->bind_param("idsssssss", $user_id, $total_final, $_POST['nombre'], $_POST['email'], $_POST['pais'], $_POST['ciudad'], $_POST['direccion'], $_POST['telefono'], $metodo_pago);
         $stmt_order->execute();
         $pedido_id = $conn->insert_id;
         $stmt_order->close();
@@ -123,6 +141,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'quantity' => (int)$item['quantity'],
                 'unit_price' => (float)$item['precio'],
                 'currency_id' => 'USD'
+            ];
+        }
+
+        // Añadimos el envío como un ítem más en el desglose de Mercado Pago
+        if ($shipping_cost > 0) {
+            $mp_items[] = [
+                'title' => 'Costo de Envío',
+                'quantity' => 1,
+                'unit_price' => $shipping_cost,
+                'currency_id' => 'COP'
             ];
         }
 

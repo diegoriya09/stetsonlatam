@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('add-address-form')?.addEventListener('submit', async function (e) {
         e.preventDefault();
         const data = Object.fromEntries(new FormData(this).entries());
-        const result = await postData('php/user/add_address.php', data);
+        const result = await postData('php/user/add_address', data);
         if (result.success) {
             Swal.fire('¡Éxito!', result.message, 'success');
             closeModal(addressModal);

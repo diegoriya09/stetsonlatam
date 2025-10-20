@@ -135,6 +135,12 @@
                                 <input type="checkbox" id="save-address" name="save_address" value="true" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
                                 <label for="save-address" class="block text-sm text-gray-900">Guardar esta dirección para futuras compras</label>
                             </div>
+                            <div id="shipping-options-container" class="px-4 py-3" style="display: none;">
+                                <h3 class="text-lg font-bold mb-2">Método de Envío</h3>
+                                <div id="shipping-options-list">
+                                </div>
+                            </div>
+                            <div id="shipping-error" class="px-4 text-red-500 font-medium"></div>
 
                             <hr class="my-6">
 
@@ -160,102 +166,183 @@
                             </div>
                         </form>
 
-                        <script>
-                            document.addEventListener('DOMContentLoaded', function() {
-                                const addressSelect = document.getElementById('address-select');
-                                const form = document.getElementById('checkout-form');
-
-                                // Si el menú de direcciones existe, le añadimos un listener
-                                if (addressSelect) {
-                                    addressSelect.addEventListener('change', function() {
-                                        // Si el usuario elige 'Usar una nueva dirección'
-                                        if (this.value === 'new') {
-                                            form.direccion.value = '';
-                                            form.ciudad.value = '';
-                                            form.estado.value = '';
-                                            form.zip.value = '';
-                                            form.pais.value = '';
-                                        } else {
-                                            // Si elige una dirección guardada
-                                            const selectedAddr = JSON.parse(this.value);
-                                            form.direccion.value = selectedAddr.street_address || '';
-                                            form.ciudad.value = selectedAddr.city || '';
-                                            form.estado.value = selectedAddr.state || '';
-                                            form.zip.value = selectedAddr.postal_code || '';
-                                            form.pais.value = selectedAddr.country || '';
-                                        }
-                                    });
-                                }
-
-                                // Lógica de envío del formulario
-                                form.addEventListener('submit', function(e) {
-                                    e.preventDefault();
-                                    const formData = new FormData(this);
-                                    const jwt = localStorage.getItem('jwt');
-
-                                    if (!jwt) {
-                                        Swal.fire('Error', 'Debes iniciar sesión para completar la compra.', 'error');
-                                        return;
-                                    }
-
-                                    fetch('php/cart/checkout', {
-                                            method: 'POST',
-                                            headers: {
-                                                'Authorization': 'Bearer ' + jwt
-                                            },
-                                            body: formData
-                                        })
-                                        .then(res => res.json())
-                                        .then(data => {
-                                            // CASO 1: Redirección a pasarela de pago
-                                            if (data.redirect_url) {
-                                                window.location.href = data.redirect_url;
-                                                return;
-                                            }
-
-                                            // CASO 2: Éxito (ej. Transferencia bancaria)
-                                            if (data.success) {
-                                                let successMessage = `<p>Tu número de pedido es <strong>#${data.pedido_id}</strong></p>`;
-
-                                                // Mensaje especial para transferencia
-                                                if (data.payment_details && data.payment_details.type === 'transferencia') {
-                                                    successMessage += '<hr style="margin: 15px 0;"><h4>Datos para la transferencia:</h4>' +
-                                                        `<p><strong>Banco:</strong> ${data.payment_details.banco}</p>` +
-                                                        `<p><strong>Cuenta:</strong> ${data.payment_details.cuenta}</p>` +
-                                                        `<p><strong>Titular:</strong> ${data.payment_details.titular}</p>` +
-                                                        '<p style="margin-top:10px;">Por favor, envía el comprobante a nuestro email para confirmar tu pedido.</p>';
-                                                }
-
-                                                Swal.fire({
-                                                    icon: 'success',
-                                                    title: 'Pedido Creado',
-                                                    html: successMessage,
-                                                    confirmButtonText: 'OK'
-                                                }).then(() => {
-                                                    window.location.href = 'https://stetsonlatam.com/'; // O a una página de "gracias"
-                                                });
-                                            } else {
-                                                // CASO 3: Error devuelto por el backend
-                                                Swal.fire({
-                                                    icon: 'error',
-                                                    title: 'Error',
-                                                    text: data.message || 'Ocurrió un error inesperado.'
-                                                });
-                                            }
-                                        })
-                                        .catch(err => {
-                                            Swal.fire({
-                                                icon: 'error',
-                                                title: 'Error de Conexión',
-                                                text: 'No se pudo procesar tu solicitud. Intenta de nuevo.'
-                                            });
-                                        });
-                                });
-                            });
-                        </script>
                     </div>
+                    <aside>
+                        <h2>Resumen del pedido</h2>
+                        <div>
+                            <span>Subtotal</span>
+                            <span id="summary-subtotal">$150,000.00</span>
+                        </div>
+                        <div>
+                            <span>Envío</span>
+                            <span id="summary-shipping">--</span>
+                        </div>
+                        <hr>
+                        <div>
+                            <span>Total</span>
+                            <span id="summary-total">$150,000.00</span>
+                        </div>
+                    </aside>
                 </div>
                 <?php include 'footer.php'; ?>
+
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        // --- SELECCIÓN DE ELEMENTOS ---
+                        const form = document.getElementById('checkout-form');
+                        const addressSelect = document.getElementById('address-select');
+                        const cityInput = document.querySelector('input[name="ciudad"]');
+                        const departmentInput = document.querySelector('input[name="estado"]');
+
+                        const shippingCostEl = document.getElementById('summary-shipping');
+                        const totalEl = document.getElementById('summary-total');
+                        const subtotalEl = document.getElementById('summary-subtotal');
+
+                        const shippingContainer = document.getElementById('shipping-options-container');
+                        const shippingList = document.getElementById('shipping-options-list');
+                        const shippingError = document.getElementById('shipping-error');
+
+                        let currentShippingCost = 0;
+                        // Simulación del subtotal del carrito. En una implementación real,
+                        // este valor vendría de otra llamada a la API o se pasaría desde la página anterior.
+                        let cartSubtotal = 150000;
+                        subtotalEl.textContent = formatCurrency(cartSubtotal);
+                        updateTotal();
+
+                        // --- FUNCIONES AUXILIARES ---
+                        function formatCurrency(value) {
+                            return `$${parseFloat(value).toLocaleString('es-CO', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
+                        }
+
+                        function updateTotal() {
+                            const subtotal = cartSubtotal;
+                            const newTotal = subtotal + currentShippingCost;
+                            totalEl.textContent = formatCurrency(newTotal);
+                        }
+
+                        // --- FUNCIÓN PRINCIPAL PARA OBTENER TARIFA DE ENVÍO ---
+                        async function getShippingRate() {
+                            const department = departmentInput.value;
+
+                            if (department.trim().length < 3) {
+                                shippingCostEl.textContent = '--';
+                                shippingContainer.style.display = 'none';
+                                shippingError.textContent = '';
+                                currentShippingCost = 0;
+                                updateTotal();
+                                return;
+                            }
+
+                            shippingCostEl.textContent = 'Calculando...';
+                            shippingError.textContent = '';
+
+                            try {
+                                // Usamos la ruta amigable del .htaccess
+                                const res = await fetch(`/php/shipping-rate?departamento=${encodeURIComponent(department)}`);
+                                const data = await res.json();
+
+                                if (data.success) {
+                                    if (data.requires_quote) {
+                                        shippingError.textContent = data.message;
+                                        shippingContainer.style.display = 'none';
+                                        currentShippingCost = 0;
+                                    } else {
+                                        currentShippingCost = parseFloat(data.price);
+                                        shippingCostEl.textContent = formatCurrency(currentShippingCost);
+                                        shippingList.innerHTML = `
+                            <div style="display: flex; justify-content: space-between; border: 1px solid #e5e5e5; padding: 12px; border-radius: 8px;">
+                                <label for="shipping_rate_std">Envío Estándar</label>
+                                <span>${formatCurrency(currentShippingCost)}</span>
+                                <input type="radio" id="shipping_rate_std" name="shipping_option" value="${currentShippingCost}" checked style="display:none;">
+                            </div>`;
+                                        shippingContainer.style.display = 'block';
+                                    }
+                                } else {
+                                    shippingError.textContent = data.message;
+                                    shippingContainer.style.display = 'none';
+                                    currentShippingCost = 0;
+                                }
+                            } catch (error) {
+                                shippingError.textContent = 'Error al calcular el envío.';
+                                shippingContainer.style.display = 'none';
+                                currentShippingCost = 0;
+                            }
+                            updateTotal();
+                        }
+
+                        // --- ASIGNACIÓN DE EVENTOS ---
+
+                        // 1. Calcular envío cuando se llene el campo "Departamento"
+                        if (departmentInput) {
+                            departmentInput.addEventListener('blur', getShippingRate);
+                        }
+
+                        // 2. Autocompletar formulario si se elige una dirección guardada
+                        if (addressSelect) {
+                            addressSelect.addEventListener('change', function() {
+                                // Limpia todos los campos de dirección antes de llenarlos
+                                ['direccion', 'ciudad', 'estado', 'zip', 'pais'].forEach(name => {
+                                    const field = form.querySelector(`[name="${name}"]`);
+                                    if (field) field.value = '';
+                                });
+
+                                if (this.value !== 'new') {
+                                    const selectedAddr = JSON.parse(this.value);
+                                    form.direccion.value = selectedAddr.street_address || '';
+                                    form.ciudad.value = selectedAddr.city || '';
+                                    form.estado.value = selectedAddr.state || '';
+                                    form.zip.value = selectedAddr.postal_code || '';
+                                    form.pais.value = selectedAddr.country || '';
+
+                                    // Disparamos el evento 'blur' en el campo de departamento para que recalcule el envío
+                                    if (departmentInput) {
+                                        departmentInput.dispatchEvent(new Event('blur'));
+                                    }
+                                }
+                            });
+                        }
+
+                        // 3. Lógica de envío del formulario
+                        if (form) {
+                            form.addEventListener('submit', function(e) {
+                                e.preventDefault();
+                                const formData = new FormData(this);
+                                const jwt = localStorage.getItem('jwt');
+                                if (!jwt) {
+                                    Swal.fire('Error', 'Debes iniciar sesión para completar la compra.', 'error');
+                                    return;
+                                }
+
+                                // Añadimos el costo de envío al FormData que se envía al backend
+                                const selectedShipping = form.querySelector('input[name="shipping_option"]:checked');
+                                if (selectedShipping) {
+                                    formData.append('shipping_cost', selectedShipping.value);
+                                } else {
+                                    formData.append('shipping_cost', '0');
+                                }
+
+                                fetch('php/cart/checkout', {
+                                        method: 'POST',
+                                        headers: {
+                                            'Authorization': 'Bearer ' + jwt
+                                        },
+                                        body: formData
+                                    })
+                                    .then(res => res.json())
+                                    .then(data => {
+                                        if (data.redirect_url) {
+                                            window.location.href = data.redirect_url;
+                                        } else {
+                                            Swal.fire('Error', data.message || 'Ocurrió un error inesperado.', 'error');
+                                        }
+                                    })
+                                    .catch(err => {
+                                        Swal.fire('Error', 'No se pudo procesar tu solicitud. Intenta de nuevo.', 'error');
+                                    });
+                            });
+                        }
+                    });
+                </script>
             </div>
         </div>
         <?php include 'modal.php'; ?>
