@@ -28,7 +28,7 @@ RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 RewriteRule ^search/(.+)$ /php/search.php?q=$1 [NC,L]
 
 # --- REGLA PARA API DE ENVÍO ---
-RewriteRule ^api/shipping-rate$ /php/get_shipping_rate.php [NC,L]
+RewriteRule ^php/shipping-rate$ /php/get_shipping_rate.php [NC,L]
 
 # --- Reglas de la Tienda ---
 # Transforma /categoria123 -> /categoria.php?id=123

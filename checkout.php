@@ -45,6 +45,16 @@
         $stmt_pay->close();
     }
 
+    $cart_subtotal = 0;
+    if ($user_id) {
+        $stmt_cart = $conn->prepare("SELECT SUM(p.price * c.quantity) as subtotal FROM cart c JOIN productos p ON c.producto_id = p.id WHERE c.users_id = ?");
+        $stmt_cart->bind_param("i", $user_id);
+        $stmt_cart->execute();
+        $result = $stmt_cart->get_result()->fetch_assoc();
+        $cart_subtotal = $result['subtotal'] ?? 0;
+        $stmt_cart->close();
+    }
+
     $conn->close();
     ?>
     <html>
@@ -55,297 +65,294 @@
         <link href="css/index.css?v=<?php echo time(); ?>" rel="stylesheet">
         <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <style>
+            .checkout-grid {
+                display: grid;
+                grid-template-columns: 2fr 1fr;
+                gap: 50px;
+                max-width: 1280px;
+                margin: auto;
+                padding: 2rem;
+            }
+
+            .order-summary {
+                background-color: #f7f7f7;
+                padding: 2rem;
+                border-radius: 8px;
+                height: fit-content;
+            }
+
+            .summary-row {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 1rem;
+                color: #555;
+            }
+
+            .summary-total {
+                display: flex;
+                justify-content: space-between;
+                font-weight: bold;
+                font-size: 1.25rem;
+                margin-top: 1rem;
+                padding-top: 1rem;
+                border-top: 1px solid #ddd;
+            }
+
+            .form-input {
+                width: 100%;
+                border: 1px solid #ccc;
+                padding: 0.75rem;
+                border-radius: 5px;
+            }
+
+            .checkout-button {
+                display: block;
+                width: 100%;
+                background-color: #e68019;
+                color: #181411;
+                text-align: center;
+                padding: 1rem;
+                border-radius: 5px;
+                font-weight: bold;
+                margin-top: 1.5rem;
+                text-decoration: none;
+            }
+        </style>
     </head>
 
+
     <body>
-        <div class="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden">
-            <div class="layout-container flex h-full grow flex-col">
-                <?php include 'header.php'; ?>
-                <div class="px-40 flex flex-1 justify-center py-5">
-                    <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
-                        <form id="checkout-form" method="POST" action="php/cart/checkout" class="flex flex-col">
+        <?php include 'header.php'; ?>
 
-                            <div class="flex flex-wrap gap-2 p-4">
-                                <a class="text-[#887563] text-base font-medium" href="cart">Carrito</a>
-                                <span class="text-[#3c3737] text-base font-medium">/</span>
-                                <span class="text-[#3c3737] text-base font-medium">Finalizar compra</span>
-                            </div>
+        <main class="checkout-grid">
 
-                            <h2 class="text-xl font-bold px-4 py-3">Información de Envío</h2>
-
-                            <?php if (!empty($saved_addresses)): ?>
-                                <div class="flex max-w-[480px] gap-4 px-4 py-3">
-                                    <label class="flex flex-col flex-1">
-                                        <p>Elige una dirección guardada</p>
-                                        <select name="address_id" id="address-select" class="form-input h-14">
-                                            <option value="new">-- Usar una nueva dirección --</option>
-                                            <?php foreach ($saved_addresses as $addr): ?>
-                                                <option value='<?php echo json_encode($addr); ?>'>
-                                                    <?php echo htmlspecialchars($addr['street_address'] . ', ' . $addr['city']); ?>
-                                                </option>
-                                            <?php endforeach; ?>
-                                        </select>
-                                    </label>
-                                </div>
-                            <?php endif; ?>
-
-                            <div id="address-fields">
-                                <div class="flex max-w-[480px] gap-4 px-4 py-3"><label class="flex flex-col flex-1">
-                                        <p>Nombre completo</p><input name="nombre" placeholder="Ingresa tu nombre completo" class="form-input h-14" value="<?php echo htmlspecialchars($user_name); ?>" required />
-                                    </label></div>
-                                <div class="flex max-w-[480px] gap-4 px-4 py-3">
-                                    <label class="flex flex-col w-1/3">
-                                        <p>Tipo Doc.</p>
-                                        <select name="docType" class="form-input h-14" required>
-                                            <option value="CC">CC</option>
-                                            <option value="CE">CE</option>
-                                            <option value="NIT">NIT</option>
-                                            <option value="PAS">PAS</option>
-                                        </select>
-                                    </label>
-                                    <label class="flex flex-col flex-1">
-                                        <p>Número de Documento</p>
-                                        <input name="docNumber" placeholder="Tu número de documento" class="form-input h-14" required />
-                                    </label>
-                                </div>
-                                <div class="flex max-w-[480px] gap-4 px-4 py-3"><label class="flex flex-col flex-1">
-                                        <p>Email</p><input type="email" name="email" placeholder="Ingresa tu email" class="form-input h-14" value="<?php echo htmlspecialchars($user_email); ?>" required />
-                                    </label></div>
-                                <div class="flex max-w-[480px] gap-4 px-4 py-3"><label class="flex flex-col flex-1">
-                                        <p>Dirección</p><input name="direccion" placeholder="Ingresa tu dirección" class="form-input h-14" required />
-                                    </label></div>
-                                <div class="flex max-w-[480px] gap-4 px-4 py-3"><label class="flex flex-col flex-1">
-                                        <p>Ciudad</p><input name="ciudad" placeholder="Ingresa tu ciudad" class="form-input h-14" required />
-                                    </label></div>
-                                <div class="flex max-w-[480px] gap-4 px-4 py-3"><label class="flex flex-col flex-1">
-                                        <p>Departamento</p><input name="estado" placeholder="Ingresa tu departamento" class="form-input h-14" />
-                                    </label></div>
-                                <div class="flex max-w-[480px] gap-4 px-4 py-3"><label class="flex flex-col flex-1">
-                                        <p>Código Postal</p><input name="zip" placeholder="Ingresa tu código postal" class="form-input h-14" />
-                                    </label></div>
-                                <div class="flex max-w-[480px] gap-4 px-4 py-3"><label class="flex flex-col flex-1">
-                                        <p>País</p><input name="pais" placeholder="Ingresa tu país" class="form-input h-14" required />
-                                    </label></div>
-                                <div class="flex max-w-[480px] gap-4 px-4 py-3"><label class="flex flex-col flex-1">
-                                        <p>Número de Teléfono</p><input name="telefono" placeholder="Ingresa tu número de teléfono" class="form-input h-14" required />
-                                    </label></div>
-                            </div>
-
-                            <div class="flex max-w-[480px] items-center gap-4 px-4 py-3">
-                                <input type="checkbox" id="save-address" name="save_address" value="true" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                                <label for="save-address" class="block text-sm text-gray-900">Guardar esta dirección para futuras compras</label>
-                            </div>
-                            <div id="shipping-options-container" class="px-4 py-3" style="display: none;">
-                                <h3 class="text-lg font-bold mb-2">Método de Envío</h3>
-                                <div id="shipping-options-list">
-                                </div>
-                            </div>
-                            <div id="shipping-error" class="px-4 text-red-500 font-medium"></div>
-
-                            <hr class="my-6">
-
-                            <h2 class="text-xl font-bold px-4 py-3">Método de Pago</h2>
-
-                            <div id="new-payment-fields">
-                                <div class="flex max-w-[480px] gap-4 px-4 py-3">
-                                    <label class="flex flex-col flex-1">
-                                        <p>Método de Pago</p>
-                                        <select name="metodo" id="metodo-select" class="form-input h-14" required>
-                                            <option value="">Selecciona un método de pago</option>
-                                            <option value="transferencia">🏦 Transferencia Bancaria Directa</option>
-                                            <option value="mercadopago">💳 Mercado Pago (Tarjetas, Saldo)</option>
-                                            <option value="pse">🏛️ PSE (Pagos Seguros en Línea)</option>
-                                            <option value="addi">✨ A cuotas con Addi</option>
-                                        </select>
-                                    </label>
-                                </div>
-                            </div>
-
-                            <div class="flex px-4 py-3">
-                                <button type="submit" class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center rounded-lg h-12 px-5 flex-1 bg-[#e68019] text-[#181411] font-bold">Continuar al Pago</button>
-                            </div>
-                        </form>
-
-                    </div>
-                    <aside>
-                        <h2>Resumen del pedido</h2>
-                        <div>
-                            <span>Subtotal</span>
-                            <span id="summary-subtotal">$150,000.00</span>
-                        </div>
-                        <div>
-                            <span>Envío</span>
-                            <span id="summary-shipping">--</span>
-                        </div>
-                        <hr>
-                        <div>
-                            <span>Total</span>
-                            <span id="summary-total">$150,000.00</span>
-                        </div>
-                    </aside>
+            <div>
+                <div class="flex flex-wrap gap-2 p-4 border-b mb-6">
+                    <a class="text-[#887563]" href="cart">Carrito</a>
+                    <span>/</span>
+                    <span>Finalizar compra</span>
                 </div>
-                <?php include 'footer.php'; ?>
 
-                <script>
-                    document.addEventListener('DOMContentLoaded', function() {
-                        // --- SELECCIÓN DE ELEMENTOS ---
-                        const form = document.getElementById('checkout-form');
-                        const addressSelect = document.getElementById('address-select');
-                        const cityInput = document.querySelector('input[name="ciudad"]');
-                        const departmentInput = document.querySelector('input[name="estado"]');
+                <form id="checkout-form" method="POST">
+                    <h2 class="text-2xl font-bold mb-6">Información de Envío</h2>
 
-                        const shippingCostEl = document.getElementById('summary-shipping');
-                        const totalEl = document.getElementById('summary-total');
-                        const subtotalEl = document.getElementById('summary-subtotal');
+                    <?php if (!empty($saved_addresses)): ?>
+                        <div class="mb-4">
+                            <label class="block mb-1">Elige una dirección guardada</label>
+                            <select name="address_id" id="address-select" class="form-input">
+                                <option value="new">-- Usar una nueva dirección --</option>
+                                <?php foreach ($saved_addresses as $addr): ?>
+                                    <option value='<?php echo json_encode($addr); ?>'><?php echo htmlspecialchars($addr['street_address'] . ', ' . $addr['city']); ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    <?php endif; ?>
 
-                        const shippingContainer = document.getElementById('shipping-options-container');
-                        const shippingList = document.getElementById('shipping-options-list');
-                        const shippingError = document.getElementById('shipping-error');
+                    <input name="nombre" class="form-input" placeholder="Nombre completo" value="<?php echo htmlspecialchars($user_name); ?>" required>
+                    <input type="email" name="email" class="form-input" placeholder="Email" value="<?php echo htmlspecialchars($user_email); ?>" required>
+                    <input name="direccion" class="form-input" placeholder="Dirección" required>
+                    <div class="grid grid-cols-2 gap-4">
+                        <input name="ciudad" class="form-input" placeholder="Ciudad" required>
+                        <input name="estado" class="form-input" placeholder="Departamento" required>
+                    </div>
+                    <input name="pais" class="form-input" placeholder="País" value="Colombia" required>
+                    <input name="telefono" class="form-input" placeholder="Teléfono" required>
 
-                        let currentShippingCost = 0;
-                        // Simulación del subtotal del carrito. En una implementación real,
-                        // este valor vendría de otra llamada a la API o se pasaría desde la página anterior.
-                        let cartSubtotal = 150000;
-                        subtotalEl.textContent = formatCurrency(cartSubtotal);
+                    <div id="shipping-options-container" class="mt-6" style="display: none;">
+                        <h3 class="text-lg font-bold mb-2">Método de Envío</h3>
+                        <div id="shipping-options-list"></div>
+                    </div>
+                    <div id="shipping-error" class="text-red-500 font-medium mt-2"></div>
+
+                    <hr class="my-8">
+                    <h2 class="text-2xl font-bold mb-6">Método de Pago</h2>
+                    <select name="metodo" class="form-input" required>
+                        <option value="mercadopago">Mercado Pago</option>
+                        <option value="transferencia">Transferencia Bancaria</option>
+                    </select>
+                </form>
+            </div>
+
+            <aside class="order-summary">
+                <h2 class="text-xl">Resumen del pedido</h2>
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <span id="summary-subtotal">$0.00</span>
+                </div>
+                <div class="summary-row">
+                    <span>Envío</span>
+                    <span id="summary-shipping">--</span>
+                </div>
+                <div class="summary-total">
+                    <span>Total</span>
+                    <span id="summary-total">$0.00</span>
+                </div>
+                <button type="submit" form="checkout-form" class="checkout-button">Continuar al Pago</button>
+            </aside>
+
+        </main>
+
+        <?php include 'footer.php'; ?>
+        <?php include 'modal.php'; ?>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // --- SELECCIÓN DE ELEMENTOS ---
+                const form = document.getElementById('checkout-form');
+                const addressSelect = document.getElementById('address-select');
+                const departmentInput = document.querySelector('input[name="estado"]');
+
+                const shippingCostEl = document.getElementById('summary-shipping');
+                const totalEl = document.getElementById('summary-total');
+                const subtotalEl = document.getElementById('summary-subtotal');
+
+                const shippingContainer = document.getElementById('shipping-options-container');
+                const shippingList = document.getElementById('shipping-options-list');
+                const shippingError = document.getElementById('shipping-error');
+
+                let currentShippingCost = 0;
+                // Simulación del subtotal del carrito. En una implementación real,
+                // este valor vendría de otra llamada a la API o se pasaría desde la página anterior.
+                let cartSubtotal = <?php echo $cart_subtotal; ?>;
+
+                // --- FUNCIONES AUXILIARES ---
+                function formatCurrency(value) {
+                    return `$${parseFloat(value).toLocaleString('es-CO', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
+                }
+
+                function updateTotal() {
+                    const newTotal = cartSubtotal + currentShippingCost;
+                    subtotalEl.textContent = formatCurrency(cartSubtotal);
+                    shippingCostEl.textContent = currentShippingCost > 0 ? formatCurrency(currentShippingCost) : '--';
+                    totalEl.textContent = formatCurrency(newTotal);
+                }
+
+                // --- FUNCIÓN PRINCIPAL PARA OBTENER TARIFA DE ENVÍO ---
+                async function getShippingRate() {
+                    const department = departmentInput.value;
+
+                    if (department.trim().length < 3) {
+                        shippingContainer.style.display = 'none';
+                        shippingError.textContent = '';
+                        currentShippingCost = 0;
                         updateTotal();
+                        return;
+                    }
 
-                        // --- FUNCIONES AUXILIARES ---
-                        function formatCurrency(value) {
-                            return `$${parseFloat(value).toLocaleString('es-CO', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
-                        }
+                    shippingContainer.style.display = 'block';
+                    shippingList.innerHTML = 'Calculando...';
+                    shippingError.textContent = '';
 
-                        function updateTotal() {
-                            const subtotal = cartSubtotal;
-                            const newTotal = subtotal + currentShippingCost;
-                            totalEl.textContent = formatCurrency(newTotal);
-                        }
+                    try {
+                        const res = await fetch(`/php/shipping-rate?departamento=${encodeURIComponent(department)}`);
+                        const data = await res.json();
 
-                        // --- FUNCIÓN PRINCIPAL PARA OBTENER TARIFA DE ENVÍO ---
-                        async function getShippingRate() {
-                            const department = departmentInput.value;
-
-                            if (department.trim().length < 3) {
-                                shippingCostEl.textContent = '--';
+                        if (data.success) {
+                            if (data.requires_quote) {
+                                shippingError.textContent = data.message;
                                 shippingContainer.style.display = 'none';
-                                shippingError.textContent = '';
                                 currentShippingCost = 0;
-                                updateTotal();
-                                return;
-                            }
-
-                            shippingCostEl.textContent = 'Calculando...';
-                            shippingError.textContent = '';
-
-                            try {
-                                // Usamos la ruta amigable del .htaccess
-                                const res = await fetch(`/php/shipping-rate?departamento=${encodeURIComponent(department)}`);
-                                const data = await res.json();
-
-                                if (data.success) {
-                                    if (data.requires_quote) {
-                                        shippingError.textContent = data.message;
-                                        shippingContainer.style.display = 'none';
-                                        currentShippingCost = 0;
-                                    } else {
-                                        currentShippingCost = parseFloat(data.price);
-                                        shippingCostEl.textContent = formatCurrency(currentShippingCost);
-                                        shippingList.innerHTML = `
-                            <div style="display: flex; justify-content: space-between; border: 1px solid #e5e5e5; padding: 12px; border-radius: 8px;">
-                                <label for="shipping_rate_std">Envío Estándar</label>
-                                <span>${formatCurrency(currentShippingCost)}</span>
-                                <input type="radio" id="shipping_rate_std" name="shipping_option" value="${currentShippingCost}" checked style="display:none;">
+                            } else {
+                                currentShippingCost = parseFloat(data.price);
+                                shippingList.innerHTML = `
+                            <div class="flex items-center justify-between border p-3 rounded-lg bg-gray-50">
+                                <div>
+                                    <input type="radio" id="shipping_rate_std" name="shipping_option" value="${currentShippingCost}" checked class="h-4 w-4 text-indigo-600 border-gray-300">
+                                    <label for="shipping_rate_std" class="ml-3 font-medium text-gray-700">Envío Estándar</label>
+                                </div>
+                                <span class="font-bold text-gray-900">${formatCurrency(currentShippingCost)}</span>
                             </div>`;
-                                        shippingContainer.style.display = 'block';
-                                    }
-                                } else {
-                                    shippingError.textContent = data.message;
-                                    shippingContainer.style.display = 'none';
-                                    currentShippingCost = 0;
-                                }
-                            } catch (error) {
-                                shippingError.textContent = 'Error al calcular el envío.';
-                                shippingContainer.style.display = 'none';
-                                currentShippingCost = 0;
                             }
-                            updateTotal();
+                        } else {
+                            shippingError.textContent = data.message;
+                            shippingContainer.style.display = 'none';
+                            currentShippingCost = 0;
                         }
+                    } catch (error) {
+                        shippingError.textContent = 'Error al calcular el envío.';
+                        shippingContainer.style.display = 'none';
+                        currentShippingCost = 0;
+                    }
+                    updateTotal();
+                }
 
-                        // --- ASIGNACIÓN DE EVENTOS ---
+                // --- ASIGNACIÓN DE EVENTOS ---
 
-                        // 1. Calcular envío cuando se llene el campo "Departamento"
-                        if (departmentInput) {
-                            departmentInput.addEventListener('blur', getShippingRate);
-                        }
+                // 1. Calcular envío cuando se llene el campo "Departamento"
+                if (departmentInput) {
+                    departmentInput.addEventListener('blur', getShippingRate);
+                }
 
-                        // 2. Autocompletar formulario si se elige una dirección guardada
-                        if (addressSelect) {
-                            addressSelect.addEventListener('change', function() {
-                                // Limpia todos los campos de dirección antes de llenarlos
-                                ['direccion', 'ciudad', 'estado', 'zip', 'pais'].forEach(name => {
-                                    const field = form.querySelector(`[name="${name}"]`);
-                                    if (field) field.value = '';
-                                });
+                // 2. Autocompletar formulario si se elige una dirección guardada
+                if (addressSelect) {
+                    addressSelect.addEventListener('change', function() {
+                        // Limpia todos los campos de dirección antes de llenarlos
+                        ['direccion', 'ciudad', 'estado', 'zip', 'pais'].forEach(name => {
+                            const field = form.querySelector(`[name="${name}"]`);
+                            if (field) field.value = '';
+                        });
 
-                                if (this.value !== 'new') {
-                                    const selectedAddr = JSON.parse(this.value);
-                                    form.direccion.value = selectedAddr.street_address || '';
-                                    form.ciudad.value = selectedAddr.city || '';
-                                    form.estado.value = selectedAddr.state || '';
-                                    form.zip.value = selectedAddr.postal_code || '';
-                                    form.pais.value = selectedAddr.country || '';
+                        if (this.value !== 'new') {
+                            const selectedAddr = JSON.parse(this.value);
+                            form.direccion.value = selectedAddr.street_address || '';
+                            form.ciudad.value = selectedAddr.city || '';
+                            form.estado.value = selectedAddr.state || '';
+                            form.zip.value = selectedAddr.postal_code || '';
+                            form.pais.value = selectedAddr.country || '';
 
-                                    // Disparamos el evento 'blur' en el campo de departamento para que recalcule el envío
-                                    if (departmentInput) {
-                                        departmentInput.dispatchEvent(new Event('blur'));
-                                    }
-                                }
-                            });
-                        }
-
-                        // 3. Lógica de envío del formulario
-                        if (form) {
-                            form.addEventListener('submit', function(e) {
-                                e.preventDefault();
-                                const formData = new FormData(this);
-                                const jwt = localStorage.getItem('jwt');
-                                if (!jwt) {
-                                    Swal.fire('Error', 'Debes iniciar sesión para completar la compra.', 'error');
-                                    return;
-                                }
-
-                                // Añadimos el costo de envío al FormData que se envía al backend
-                                const selectedShipping = form.querySelector('input[name="shipping_option"]:checked');
-                                if (selectedShipping) {
-                                    formData.append('shipping_cost', selectedShipping.value);
-                                } else {
-                                    formData.append('shipping_cost', '0');
-                                }
-
-                                fetch('php/cart/checkout', {
-                                        method: 'POST',
-                                        headers: {
-                                            'Authorization': 'Bearer ' + jwt
-                                        },
-                                        body: formData
-                                    })
-                                    .then(res => res.json())
-                                    .then(data => {
-                                        if (data.redirect_url) {
-                                            window.location.href = data.redirect_url;
-                                        } else {
-                                            Swal.fire('Error', data.message || 'Ocurrió un error inesperado.', 'error');
-                                        }
-                                    })
-                                    .catch(err => {
-                                        Swal.fire('Error', 'No se pudo procesar tu solicitud. Intenta de nuevo.', 'error');
-                                    });
-                            });
+                            // Disparamos el evento 'blur' en el campo de departamento para que recalcule el envío
+                            if (departmentInput) {
+                                departmentInput.dispatchEvent(new Event('blur'));
+                            }
                         }
                     });
-                </script>
-            </div>
-        </div>
-        <?php include 'modal.php'; ?>
+                }
+
+                // 3. Lógica de envío del formulario
+                if (form) {
+                    form.addEventListener('submit', function(e) {
+                        e.preventDefault();
+                        const formData = new FormData(this);
+                        const jwt = localStorage.getItem('jwt');
+                        if (!jwt) {
+                            Swal.fire('Error', 'Debes iniciar sesión para completar la compra.', 'error');
+                            return;
+                        }
+
+                        // Añadimos el costo de envío al FormData que se envía al backend
+                        const selectedShipping = form.querySelector('input[name="shipping_option"]:checked');
+                        if (selectedShipping) {
+                            formData.append('shipping_cost', selectedShipping.value);
+                        } else {
+                            formData.append('shipping_cost', '0');
+                        }
+
+                        fetch('php/cart/checkout', {
+                                method: 'POST',
+                                headers: {
+                                    'Authorization': 'Bearer ' + jwt
+                                },
+                                body: formData
+                            })
+                            .then(res => res.json())
+                            .then(data => {
+                                if (data.redirect_url) {
+                                    window.location.href = data.redirect_url;
+                                } else {
+                                    Swal.fire('Error', data.message || 'Ocurrió un error inesperado.', 'error');
+                                }
+                            })
+                            .catch(err => {
+                                Swal.fire('Error', 'No se pudo procesar tu solicitud. Intenta de nuevo.', 'error');
+                            });
+                    });
+                }
+
+                updateTotal();
+            });
+        </script>
+
     </body>
 
     </html>
