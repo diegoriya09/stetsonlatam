@@ -330,7 +330,7 @@
                         }
 
                         // Petición con diagnóstico: uso de ruta absoluta y lectura en texto para depurar
-                        fetch('/php/cart/checkout.php', {
+                        fetch('php/cart/checkout.php', {
                                 method: 'POST',
                                 headers: {
                                     'Authorization': 'Bearer ' + jwt
