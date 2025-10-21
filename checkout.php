@@ -219,7 +219,7 @@
 
                 // --- FUNCIONES AUXILIARES ---
                 function formatCurrency(value) {
-                    return `$${parseFloat(value).toLocaleString('es-CO', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
+                    return `$${parseFloat(value).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
                 }
 
                 function updateTotal() {
