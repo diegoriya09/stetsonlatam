@@ -329,15 +329,31 @@
                             formData.append('shipping_cost', '0');
                         }
 
-                        fetch('php/cart/checkout', {
+                        // Petición con diagnóstico: uso de ruta absoluta y lectura en texto para depurar
+                        fetch('/php/cart/checkout.php', {
                                 method: 'POST',
                                 headers: {
                                     'Authorization': 'Bearer ' + jwt
                                 },
                                 body: formData
                             })
-                            .then(res => res.json())
+                            .then(async res => {
+                                const text = await res.text();
+                                console.log('checkout response status:', res.status, 'body snippet:', text.slice(0, 1000));
+                                let data = null;
+                                try {
+                                    data = text ? JSON.parse(text) : null;
+                                } catch (err) {
+                                    console.error('Respuesta no JSON del servidor:', text);
+                                    throw new Error('Respuesta no JSON del servidor. Revisa la consola y los logs en servidor.');
+                                }
+                                return data;
+                            })
                             .then(data => {
+                                if (!data) {
+                                    Swal.fire('Error', 'Respuesta vacía del servidor.', 'error');
+                                    return;
+                                }
                                 if (data.redirect_url) {
                                     window.location.href = data.redirect_url;
                                 } else {
@@ -345,7 +361,8 @@
                                 }
                             })
                             .catch(err => {
-                                Swal.fire('Error', 'No se pudo procesar tu solicitud. Intenta de nuevo.', 'error');
+                                console.error('Fetch error checkout:', err);
+                                Swal.fire('Error', 'No se pudo procesar tu solicitud. Revisa la consola y los logs del servidor.', 'error');
                             });
                     });
                 }

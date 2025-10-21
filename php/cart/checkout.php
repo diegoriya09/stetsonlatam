@@ -13,6 +13,19 @@ use Firebase\JWT\Key;
 
 header('Content-Type: application/json');
 
+// --- LOGGING TEMPORAL PARA DEPURAR PETICIONES ---
+$debug_log = __DIR__ . '/checkout_debug.log';
+try {
+    $all_headers = function_exists('getallheaders') ? json_encode(getallheaders()) : json_encode($_SERVER);
+    file_put_contents($debug_log, "[" . date('Y-m-d H:i:s') . "] Headers: " . $all_headers . PHP_EOL, FILE_APPEND);
+    $raw = file_get_contents('php://input');
+    file_put_contents($debug_log, "[" . date('Y-m-d H:i:s') . "] Raw POST: " . $raw . PHP_EOL, FILE_APPEND);
+    $auth = $_SERVER['HTTP_AUTHORIZATION'] ?? ($_SERVER['REDIRECT_HTTP_AUTHORIZATION'] ?? null);
+    file_put_contents($debug_log, "[" . date('Y-m-d H:i:s') . "] Authorization: " . ($auth ?? 'NULL') . PHP_EOL, FILE_APPEND);
+} catch (Exception $e) {
+    // no bloquear si falla el logging
+}
+
 // (Aquí va tu función getAuthorizationHeader()... es la misma que ya tienes)
 function getAuthorizationHeader()
 {
