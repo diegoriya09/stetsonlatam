@@ -69,10 +69,10 @@
             .checkout-grid {
                 display: grid;
                 grid-template-columns: 2fr 1fr;
-                gap: 50px;
+                gap: 40px;
                 max-width: 1280px;
                 margin: auto;
-                padding: 2rem;
+                padding: 20px;
             }
 
             .order-summary {
@@ -86,7 +86,6 @@
                 display: flex;
                 justify-content: space-between;
                 margin-bottom: 1rem;
-                color: #555;
             }
 
             .summary-total {
@@ -102,8 +101,9 @@
             .form-input {
                 width: 100%;
                 border: 1px solid #ccc;
-                padding: 0.75rem;
+                padding: 10px;
                 border-radius: 5px;
+                margin-bottom: 15px;
             }
 
             .checkout-button {
@@ -116,7 +116,7 @@
                 border-radius: 5px;
                 font-weight: bold;
                 margin-top: 1.5rem;
-                text-decoration: none;
+                cursor: pointer;
             }
         </style>
     </head>
@@ -171,24 +171,15 @@
                         <option value="mercadopago">Mercado Pago</option>
                         <option value="transferencia">Transferencia Bancaria</option>
                     </select>
+                    <button type="submit" class="checkout-button">Continuar al Pago</button>
                 </form>
             </div>
 
             <aside class="order-summary">
                 <h2 class="text-xl">Resumen del pedido</h2>
-                <div class="summary-row">
-                    <span>Subtotal</span>
-                    <span id="summary-subtotal">$0.00</span>
-                </div>
-                <div class="summary-row">
-                    <span>Envío</span>
-                    <span id="summary-shipping">--</span>
-                </div>
-                <div class="summary-total">
-                    <span>Total</span>
-                    <span id="summary-total">$0.00</span>
-                </div>
-                <button type="submit" id="submit-checkout-btn" class="checkout-button">Continuar al Pago</button>
+                <div class="summary-row"><span>Subtotal</span><span id="summary-subtotal">$0.00</span></div>
+                <div class="summary-row"><span>Envío</span><span id="summary-shipping">--</span></div>
+                <div class="summary-total"><span>Total</span><span id="summary-total">$0.00</span></div>
             </aside>
 
         </main>
@@ -200,7 +191,6 @@
             document.addEventListener('DOMContentLoaded', function() {
                 // --- SELECCIÓN DE ELEMENTOS ---
                 const form = document.getElementById('checkout-form');
-                const submitButton = document.getElementById('submit-checkout-btn');
                 const addressSelect = document.getElementById('address-select');
                 const departmentInput = document.querySelector('input[name="estado"]');
 
@@ -311,42 +301,43 @@
                 }
 
                 // 3. Lógica de envío del formulario
-                if (submitButton) {
-                    submitButton.addEventListener('click', function(e) {
+                if (form) {
+                    // ¡AQUÍ ESTÁ LA CORRECCIÓN CLAVE! Añadimos 'async' a la función.
+                    form.addEventListener('submit', async function(e) {
                         e.preventDefault();
-                        const formData = new FormData(form);
                         const jwt = localStorage.getItem('jwt');
                         if (!jwt) {
                             Swal.fire('Error', 'Debes iniciar sesión para completar la compra.', 'error');
                             return;
                         }
 
-                        // Añadimos el costo de envío al FormData que se envía al backend
-                        const selectedShipping = form.querySelector('input[name="shipping_option"]:checked');
-                        if (selectedShipping) {
-                            formData.append('shipping_cost', selectedShipping.value);
-                        } else {
-                            formData.append('shipping_cost', '0');
-                        }
+                        const formData = new FormData(form);
 
-                        fetch('php/cart/checkout', {
+                        try {
+                            // Ahora el 'await' es válido
+                            const res = await fetch('/php/cart/checkout', {
                                 method: 'POST',
                                 headers: {
                                     'Authorization': 'Bearer ' + jwt
                                 },
                                 body: formData
-                            })
-                            .then(res => res.json())
-                            .then(data => {
-                                if (data.redirect_url) {
-                                    window.location.href = data.redirect_url;
-                                } else {
-                                    Swal.fire('Error', data.message || 'Ocurrió un error inesperado.', 'error');
-                                }
-                            })
-                            .catch(err => {
-                                Swal.fire('Error', 'No se pudo procesar tu solicitud. Intenta de nuevo.', 'error');
                             });
+
+                            if (!res.ok) {
+                                throw new Error(`Error del servidor: ${res.status}`);
+                            }
+
+                            const data = await res.json();
+
+                            if (data.redirect_url) {
+                                window.location.href = data.redirect_url;
+                            } else {
+                                Swal.fire('Error', data.message || 'Ocurrió un error desde el backend.', 'error');
+                            }
+                        } catch (err) {
+                            console.error('Error en la petición FETCH:', err);
+                            Swal.fire('Error', 'No se pudo procesar tu solicitud. Revisa la consola para más detalles.', 'error');
+                        }
                     });
                 }
 
