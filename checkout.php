@@ -109,8 +109,8 @@
             .checkout-button {
                 display: block;
                 width: 100%;
-                background-color: #e68019;
-                color: #181411;
+                background-color: #3F1E1F;
+                color: #f1eeea;
                 text-align: center;
                 padding: 1rem;
                 border-radius: 5px;
