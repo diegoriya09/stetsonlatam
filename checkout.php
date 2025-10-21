@@ -134,7 +134,7 @@
                     <span>Finalizar compra</span>
                 </div>
 
-                <form method="POST">
+                <form id="checkout-form" method="POST">
                     <h2 class="text-2xl font-bold mb-6">Información de Envío</h2>
 
                     <?php if (!empty($saved_addresses)): ?>
@@ -188,7 +188,7 @@
                     <span>Total</span>
                     <span id="summary-total">$0.00</span>
                 </div>
-                <button type="submit" id="checkout-form" class="checkout-button">Continuar al Pago</button>
+                <button type="submit" id="submit-checkout-btn" class="checkout-button">Continuar al Pago</button>
             </aside>
 
         </main>
@@ -200,6 +200,7 @@
             document.addEventListener('DOMContentLoaded', function() {
                 // --- SELECCIÓN DE ELEMENTOS ---
                 const form = document.getElementById('checkout-form');
+                const submitButton = document.getElementById('submit-checkout-btn');
                 const addressSelect = document.getElementById('address-select');
                 const departmentInput = document.querySelector('input[name="estado"]');
 
@@ -310,10 +311,10 @@
                 }
 
                 // 3. Lógica de envío del formulario
-                if (form) {
-                    form.addEventListener('submit', function(e) {
+                if (submitButton) {
+                    submitButton.addEventListener('click', function(e) {
                         e.preventDefault();
-                        const formData = new FormData(this);
+                        const formData = new FormData(form);
                         const jwt = localStorage.getItem('jwt');
                         if (!jwt) {
                             Swal.fire('Error', 'Debes iniciar sesión para completar la compra.', 'error');
