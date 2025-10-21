@@ -134,7 +134,7 @@
                     <span>Finalizar compra</span>
                 </div>
 
-                <form id="checkout-form" method="POST">
+                <form method="POST">
                     <h2 class="text-2xl font-bold mb-6">Información de Envío</h2>
 
                     <?php if (!empty($saved_addresses)): ?>
