@@ -188,7 +188,7 @@
                     <span>Total</span>
                     <span id="summary-total">$0.00</span>
                 </div>
-                <button type="submit" form="checkout-form" class="checkout-button">Continuar al Pago</button>
+                <button type="submit" id="checkout-form" class="checkout-button">Continuar al Pago</button>
             </aside>
 
         </main>
