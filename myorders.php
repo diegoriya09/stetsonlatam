@@ -49,7 +49,6 @@
             </div>
          </div>
          <?php include 'footer.php'; ?>
-         <?php include 'modal.php'; ?>
       </div>
    </div>
    <script src="js/myorders.js?v=<?php echo time(); ?>"></script>
