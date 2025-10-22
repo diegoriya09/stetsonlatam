@@ -53,12 +53,6 @@ if (!empty($categorias_flat)) {
 }
 ?>
 
-<head>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
-</head>
-
 <header
   class="flex items-center justify-center whitespace-nowrap border-b border-solid border-b-[#f3f2f2] px-10 py-5 h-20">
   <div class="flex-1 flex justify-start">
@@ -312,3 +306,4 @@ if (!empty($categorias_flat)) {
     }
   });
 </script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
