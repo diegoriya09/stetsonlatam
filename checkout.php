@@ -306,46 +306,42 @@
                 }
 
                 // 3. Lógica de envío del formulario
-                if (form) {
-                    // ¡AQUÍ ESTÁ LA CORRECCIÓN CLAVE! Añadimos 'async' a la función.
-                    form.addEventListener('submit', async function(e) {
-                        e.preventDefault();
-                        const jwt = localStorage.getItem('jwt');
-                        if (!jwt) {
-                            Swal.fire('Error', 'Debes iniciar sesión para completar la compra.', 'error');
-                            return;
+                form.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    const jwt = localStorage.getItem('jwt');
+                    if (!jwt) {
+                        Swal.fire('Error', 'Debes iniciar sesión para completar la compra.', 'error');
+                        return;
+                    }
+
+                    const formData = new FormData(form);
+
+                    try {
+                        // Ahora el 'await' es válido
+                        const res = await fetch('/php/cart/checkout', {
+                            method: 'POST',
+                            headers: {
+                                'Authorization': 'Bearer ' + jwt
+                            },
+                            body: formData
+                        });
+
+                        if (!res.ok) {
+                            throw new Error(`Error del servidor: ${res.status}`);
                         }
 
-                        const formData = new FormData(form);
+                        const data = await res.json();
 
-                        try {
-                            // Ahora el 'await' es válido
-                            const res = await fetch('/php/cart/checkout', {
-                                method: 'POST',
-                                headers: {
-                                    'Authorization': 'Bearer ' + jwt
-                                },
-                                body: formData
-                            });
-
-                            if (!res.ok) {
-                                throw new Error(`Error del servidor: ${res.status}`);
-                            }
-
-                            const data = await res.json();
-
-                            if (data.redirect_url) {
-                                window.location.href = data.redirect_url;
-                            } else {
-                                Swal.fire('Error', data.message || 'Ocurrió un error desde el backend.', 'error');
-                            }
-                        } catch (err) {
-                            console.error('Error en la petición FETCH:', err);
-                            Swal.fire('Error', 'No se pudo procesar tu solicitud. Revisa la consola para más detalles.', 'error');
+                        if (data.redirect_url) {
+                            window.location.href = data.redirect_url;
+                        } else {
+                            Swal.fire('Error', data.message || 'Ocurrió un error desde el backend.', 'error');
                         }
-                    });
-                }
-
+                    } catch (err) {
+                        console.error('Error en la petición FETCH:', err);
+                        Swal.fire('Error', 'No se pudo procesar tu solicitud. Revisa la consola para más detalles.', 'error');
+                    }
+                });
                 updateTotal();
             });
         </script>
