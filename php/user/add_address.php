@@ -12,9 +12,20 @@ use Firebase\JWT\Key;
 header('Content-Type: application/json');
 
 // --- INICIO: Bloque de Autenticación JWT (puedes moverlo a un archivo común) ---
-function getAuthorizationHeader(){
-    if (isset($_SERVER['HTTP_AUTHORIZATION'])) { return trim($_SERVER["HTTP_AUTHORIZATION"]); }
-    if (isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION'])) { return trim($_SERVER["REDIRECT_HTTP_AUTHORIZATION"]); }
+function getAuthorizationHeader()
+{
+    if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
+        return trim($_SERVER["HTTP_AUTHORIZATION"]);
+    }
+    if (isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION'])) {
+        return trim($_SERVER["REDIRECT_HTTP_AUTHORIZATION"]);
+    }
+    if (function_exists('apache_request_headers')) {
+        $requestHeaders = apache_request_headers();
+        if (isset($requestHeaders['Authorization'])) {
+            return trim($requestHeaders['Authorization']);
+        }
+    }
     return null;
 }
 
@@ -55,12 +66,13 @@ try {
         "INSERT INTO user_addresses (user_id, street_address, city, state, postal_code, country) VALUES (?, ?, ?, ?, ?, ?)"
     );
     // 'isssss' significa: integer, string, string, string, string, string
-    $stmt->bind_param("isssss", 
-        $user_id, 
-        $data['street_address'], 
-        $data['city'], 
-        $data['state'], 
-        $data['postal_code'], 
+    $stmt->bind_param(
+        "isssss",
+        $user_id,
+        $data['street_address'],
+        $data['city'],
+        $data['state'],
+        $data['postal_code'],
         $data['country']
     );
 
@@ -77,4 +89,3 @@ try {
 }
 
 $conn->close();
-?>

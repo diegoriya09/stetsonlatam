@@ -20,6 +20,12 @@ function getAuthorizationHeader()
     if (isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION'])) {
         return trim($_SERVER["REDIRECT_HTTP_AUTHORIZATION"]);
     }
+    if (function_exists('apache_request_headers')) {
+        $requestHeaders = apache_request_headers();
+        if (isset($requestHeaders['Authorization'])) {
+            return trim($requestHeaders['Authorization']);
+        }
+    }
     return null;
 }
 

@@ -12,9 +12,20 @@ use Firebase\JWT\Key;
 header('Content-Type: application/json');
 
 // (Función getAuthorizationHeader)
-function getAuthorizationHeader(){
-    if (isset($_SERVER['HTTP_AUTHORIZATION'])) { return trim($_SERVER["HTTP_AUTHORIZATION"]); }
-    if (isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION'])) { return trim($_SERVER["REDIRECT_HTTP_AUTHORIZATION"]); }
+function getAuthorizationHeader()
+{
+    if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
+        return trim($_SERVER["HTTP_AUTHORIZATION"]);
+    }
+    if (isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION'])) {
+        return trim($_SERVER["REDIRECT_HTTP_AUTHORIZATION"]);
+    }
+    if (function_exists('apache_request_headers')) {
+        $requestHeaders = apache_request_headers();
+        if (isset($requestHeaders['Authorization'])) {
+            return trim($requestHeaders['Authorization']);
+        }
+    }
     return null;
 }
 
@@ -39,9 +50,7 @@ try {
     $addresses = $result->fetch_all(MYSQLI_ASSOC);
 
     echo json_encode(['success' => true, 'addresses' => $addresses]);
-
 } catch (Exception $e) {
     http_response_code(401);
     echo json_encode(['success' => false, 'message' => 'Token inválido', 'error' => $e->getMessage()]);
 }
-?>
