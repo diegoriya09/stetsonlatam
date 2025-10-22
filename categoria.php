@@ -276,37 +276,71 @@ $num_productos = count($productos);
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
+            // --- LÓGICA DE FILTROS (TALLA Y COLOR) ---
             const sizeBtn = document.getElementById("size-filter-btn");
             const sizeDropdown = document.getElementById("size-dropdown");
             const colorBtn = document.getElementById("color-filter-btn");
             const colorDropdown = document.getElementById("color-dropdown");
 
-            if (sizeBtn) sizeBtn.addEventListener("click", () => sizeDropdown.classList.toggle("hidden"));
-            if (colorBtn) colorBtn.addEventListener("click", () => colorDropdown.classList.toggle("hidden"));
+            if (sizeBtn) {
+                sizeBtn.addEventListener("click", () => sizeDropdown.classList.toggle("hidden"));
+            }
+            if (colorBtn) {
+                colorBtn.addEventListener("click", () => colorDropdown.classList.toggle("hidden"));
+            }
 
-            document.querySelectorAll(".size-check, .color-check").forEach(input => {
-                input.addEventListener("change", () => {
-                    const params = new URLSearchParams();
-                    document.querySelectorAll(".size-check:checked").forEach(cb => params.append("sizes[]", cb.value));
-                    document.querySelectorAll(".color-check:checked").forEach(cb => params.append("colors[]", cb.value));
-                    window.location.href = "?" + params.toString();
+            // --- FUNCIÓN PARA APLICAR FILTROS ---
+            const aplicarFiltros = () => {
+                const params = new URLSearchParams();
+
+                // ¡IMPORTANTE! Re-agregar el ID de la categoría actual para no perderlo
+                const currentUrl = new URL(window.location.href);
+                const categoriaId = currentUrl.searchParams.get('id');
+                if (categoriaId) {
+                    params.append("id", categoriaId);
+                }
+
+                // Agregar los filtros de talla seleccionados
+                document.querySelectorAll(".size-check:checked").forEach(cb => {
+                    params.append("sizes[]", cb.value);
                 });
+
+                // Agregar los filtros de color seleccionados
+                document.querySelectorAll(".color-check:checked").forEach(cb => {
+                    params.append("colors[]", cb.value);
+                });
+
+                // Recargar la página con los nuevos parámetros
+                window.location.href = "?" + params.toString();
+            };
+
+            // Asignar el evento a todos los checkboxes de filtro
+            document.querySelectorAll(".size-check, .color-check").forEach(input => {
+                input.addEventListener("change", aplicarFiltros);
             });
 
+            // --- LÓGICA DE ORDENAR POR PRECIO ---
             const sortBtn = document.getElementById("sort-btn");
             const productosContainer = document.getElementById("productos-container");
             let ascending = true;
 
             if (sortBtn) {
                 sortBtn.addEventListener("click", () => {
+                    // Obtener todos los productos como un array
                     let productos = Array.from(productosContainer.querySelectorAll(".producto-item"));
+
+                    // Ordenar el array
                     productos.sort((a, b) => {
                         let priceA = parseFloat(a.dataset.price);
                         let priceB = parseFloat(b.dataset.price);
                         return ascending ? priceA - priceB : priceB - priceA;
                     });
+
+                    // Limpiar el contenedor y volver a agregar los productos ordenados
                     productosContainer.innerHTML = "";
                     productos.forEach(p => productosContainer.appendChild(p));
+
+                    // Invertir el orden para el próximo clic
                     ascending = !ascending;
                 });
             }
