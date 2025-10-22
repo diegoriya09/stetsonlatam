@@ -152,7 +152,7 @@
                     <input name="nombre" class="form-input" placeholder="Nombre completo" value="<?php echo htmlspecialchars($user_name); ?>" required>
                     <div class="flex gap-4">
                         <label class="flex flex-col" style="width: 33.33%;">
-                            <p class="text-sm font-medium text-gray-700 mb-1">Tipo Doc.</p>
+                            <p class="text-sm font-medium text-gray-700 mb-1">Tipo Documento</p>
                             <select name="docType" class="form-input" required>
                                 <option value="CC">CC</option>
                                 <option value="CE">CE</option>
@@ -161,7 +161,6 @@
                             </select>
                         </label>
                         <label class="flex flex-col flex-1">
-                            <p class="text-sm font-medium text-gray-700 mb-1">Número de Documento</p>
                             <input name="docNumber" placeholder="Tu número de documento" class="form-input" required />
                         </label>
                     </div>
