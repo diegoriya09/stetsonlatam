@@ -134,7 +134,7 @@
                     <span>Finalizar compra</span>
                 </div>
 
-                <form id="checkout-form" method="POST">
+                <form id="checkout-form" method="POST" action="php/cart/checkout">
                     <h2 class="text-2xl font-bold mb-6">Información de Envío</h2>
 
                     <?php if (!empty($saved_addresses)): ?>
@@ -158,6 +158,11 @@
                     </div>
                     <input name="pais" class="form-input" placeholder="País" value="Colombia" required>
                     <input name="telefono" class="form-input" placeholder="Teléfono" required>
+
+                    <div class="flex max-w-[480px] items-center gap-4 px-4 py-3">
+                        <input type="checkbox" id="save-address" name="save_address" value="true" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                        <label for="save-address" class="block text-sm text-gray-900">Guardar esta dirección para futuras compras</label>
+                    </div>
 
                     <div id="shipping-options-container" class="mt-6" style="display: none;">
                         <h3 class="text-lg font-bold mb-2">Método de Envío</h3>
