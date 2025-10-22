@@ -155,6 +155,7 @@
                     <div class="grid grid-cols-2 gap-4">
                         <input name="ciudad" class="form-input" placeholder="Ciudad" required>
                         <input name="estado" class="form-input" placeholder="Departamento" required>
+                        <input name="zip" class="form-input" placeholder="Código Postal" required>
                     </div>
                     <input name="pais" class="form-input" placeholder="País" value="Colombia" required>
                     <input name="telefono" class="form-input" placeholder="Teléfono" required>
