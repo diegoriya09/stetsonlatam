@@ -160,9 +160,7 @@
                                 <option value="PAS">PAS</option>
                             </select>
                         </label>
-                        <label class="flex flex-col flex-1">
-                            <input name="docNumber" placeholder="Tu número de documento" class="form-input" required />
-                        </label>
+                        <input name="docNumber" placeholder="Tu número de documento" class="form-input" required />
                     </div>
                     <input type="email" name="email" class="form-input" placeholder="Email" value="<?php echo htmlspecialchars($user_email); ?>" required>
                     <input name="direccion" class="form-input" placeholder="Dirección" required>
