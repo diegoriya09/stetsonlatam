@@ -7,8 +7,8 @@
    <link rel="icon" href="img/logo.webp" type="image/x-icon" loading="lazy">
    <link href="css/index.css?v=<?php echo time(); ?>" rel="stylesheet">
 
-  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -49,9 +49,9 @@
             </div>
          </div>
          <?php include 'footer.php'; ?>
+         <?php include 'modal.php'; ?>
       </div>
    </div>
-   <?php include 'modal.php'; ?>
    <script src="js/myorders.js?v=<?php echo time(); ?>"></script>
 
 </body>
