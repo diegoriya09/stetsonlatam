@@ -48,9 +48,9 @@
                </div>
             </div>
          </div>
-         <?php include 'footer.php'; ?>
       </div>
    </div>
+   <?php include 'footer.php'; ?>
    <script src="js/myorders.js?v=<?php echo time(); ?>"></script>
 
 </body>
