@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $stmt->close();
 
       // --- NUEVO: Lógica de Notificación de Stock Bajo ---
-      define('LOW_STOCK_THRESHOLD', 10); // Define el umbral de stock bajo
+      define('LOW_STOCK_THRESHOLD', 5); // Define el umbral de stock bajo
       $admin_user_id = 1; // ID del administrador que recibirá las notificaciones
 
       $product_name_stmt = $conn->prepare("SELECT name FROM productos WHERE id = ?");
