@@ -11,7 +11,7 @@ $log_message = "[" . date("Y-m-d H:i:s") . "] " . file_get_contents('php://input
 file_put_contents($log_file, $log_message, FILE_APPEND);
 
 // Debe ser el mismo que usaste para crear el pago (Sandbox o Producción).
-$access_token = "APP_USR-7626658846247622-093012-6510f25d4a7274a53553bfd26c2fd6ec-2715303423";
+$access_token = "APP_USR-7493389823882807-112515-74cf048ad84435669297aeae24865865-12742422";
 
 // 2. RECIBE LA NOTIFICACIÓN
 $body = file_get_contents('php://input');
